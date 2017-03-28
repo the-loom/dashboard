@@ -41,6 +41,9 @@ group :development, :test do
   gem 'byebug', platform: :mri
 end
 
+gem 'dotenv-rails', groups: [:development, :test]
+gem 'omniauth-github', '1.2.3'
+
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console', '>= 3.3.0'
