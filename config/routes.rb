@@ -1,8 +1,13 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  root to: "users#new"
-  get "/auth/:provider/callback" => "sessions#create"
-  get "/signout" => "sessions#destroy", :as => :signout
+  root 'pages#welcome'
+
+  get '/auth/github', as: :login
+  get '/auth/github/callback' => 'sessions#create'
+  get '/logout' => 'sessions#destroy', as: :logout
+
+  get '/profile' => 'users#show', as: :profile
+  get '/u/:nickname' => 'users#show'
 
 end
