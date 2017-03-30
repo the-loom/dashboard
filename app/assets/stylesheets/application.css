@@ -14,3 +14,11 @@
  *= require bootstrap/dist/css/bootstrap
  *= require_self
  */
+
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.navbar {
+    margin-bottom: 0;
+}

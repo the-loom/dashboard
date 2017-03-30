@@ -1,1 +1,14 @@
-<%= @user.nickname %>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  <div class="fb-profile">
+    <img align="left" class="fb-image-lg" src="http://lorempixel.com/850/280/abstract/2/" alt="Profile image example"/>
+    <img align="left" class="fb-image-profile thumbnail" src="<%= @user.image %>" alt="Profile image example"/>
+    <div class="fb-profile-text">
+      <h1>
+        <%= @user.name %>
+        <small><%= @user.nickname %></small>
+      </h1>
+      <p>Some catchy phrase...</p>
+    </div>
+  </div>
+
+<%= link_to 'Imprimir credencial', card_url %>

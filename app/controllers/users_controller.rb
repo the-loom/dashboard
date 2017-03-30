@@ -5,4 +5,9 @@ class UsersController < ApplicationController
     @user ||= current_user
   end
 
+  def card
+    @user = current_user
+    render :layout => false
+  end
+
 end
