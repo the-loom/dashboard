@@ -10,6 +10,4 @@ Rails.application.routes.draw do
   get '/profile' => 'users#show', as: :profile
   get '/u/:nickname' => 'users#show'
 
-  get '/card' => 'users#card', as: :card
-
 end
