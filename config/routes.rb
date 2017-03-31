@@ -9,5 +9,6 @@ Rails.application.routes.draw do
 
   get '/profile' => 'users#show', as: :profile
   get '/u/:nickname' => 'users#show'
+  get '/students' => 'users#index', as: :students
 
 end

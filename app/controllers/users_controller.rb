@@ -5,4 +5,8 @@ class UsersController < ApplicationController
     @user ||= current_user
   end
 
+  def index
+    @students = User.student.sorted
+  end
+
 end

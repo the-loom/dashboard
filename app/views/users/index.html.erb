@@ -1,0 +1,19 @@
+<legend>Miembros de <em>loom</em></legend>
+<table class="members table table-hover">
+  <thead>
+  <tr>
+    <th>Foto</th>
+    <th>Nickname</th>
+    <th>Nombre</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @students.each do |student| %>
+    <tr>
+      <td><img class="avatar" src="<%= student.image %>"></td>
+      <td><%= student.nickname %></td>
+      <td><%= student.name %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

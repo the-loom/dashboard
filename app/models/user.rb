@@ -1,5 +1,14 @@
 class User < ApplicationRecord
 
+  enum role: {
+      student: 0,
+      teacher: 1
+  }
+
+  def self.sorted
+    self.order(:nickname)
+  end
+
   def self.by_omniauth(auth)
     user = self.find_by(provider: auth["provider"], uid: auth["uid"]) || self.create_with_omniauth(auth)
     user.update_attribute(:image, auth['info']['image'])
