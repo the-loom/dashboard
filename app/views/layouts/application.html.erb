@@ -24,19 +24,17 @@
       <a class="navbar-brand" href="#">loom</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Perfil</a></li>
-      </ul>
+      <!--<ul class="nav navbar-nav">
+        <li class="active"><a href="/profile">Perfil</a></li>
+      </ul>-->
       <ul class="nav navbar-nav navbar-right">
         <li>
           <% if current_user %>
             <%= link_to 'Salir', '/logout' %>
-          <% else %>
-            <%= link_to 'Ingresar', login_url %>
           <% end %>
         </li>
       </ul>
-    </div><!--/.nav-collapse -->
+    </div>
   </div>
 </nav>
 

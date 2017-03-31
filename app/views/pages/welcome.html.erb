@@ -1,2 +1,27 @@
-<h1>Bienvenido a Loom</h1>
+<div class="jumbotron">
+  <audio id="loom-audio" src="http://dictionary.cambridge.org/media/english/uk_pron/u/ukl/uklon/uklonel023.mp3"></audio>
 
+  <h1>¡Bienvenido a Loom!</h1>
+
+  <blockquote>
+    <span class="pronunciation" onclick="document.getElementById('loom-audio').play()">
+    <strong>loom</strong> <em>/luːm/</em>
+    </span>
+    : telar. Se denomina telar al dispositivo que se utiliza para tejer.
+  </blockquote>
+
+  <p><strong>Loom</strong> es una plataforma evolutiva que te acompañará
+    durante la cursada. ¡Estate atento a los cambios semanales!</p>
+  <p>Por el momento... comenzá ingresando con tu cuenta de
+    <a href="https://github.com/">GitHub</a>.
+  </p>
+
+  <div class="alert alert-warning">
+    <p>Si no tenés una cuenta en GitHub, te recomendamos
+      primero dirigirte allí y crearla.</p>
+  </div>
+
+  <p>
+    <%= link_to 'Ingresar a loom', login_url, class: 'btn btn-lg btn-success' %>
+  </p>
+</div>
