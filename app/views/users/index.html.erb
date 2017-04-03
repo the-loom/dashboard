@@ -3,16 +3,22 @@
   <thead>
   <tr>
     <th>Foto</th>
-    <th>Nickname</th>
     <th>Nombre</th>
+    <th>Enlaces</th>
   </tr>
   </thead>
   <tbody>
   <% @students.each do |student| %>
     <tr>
       <td><img class="avatar" src="<%= student.image %>"></td>
-      <td><%= student.nickname %></td>
       <td><%= student.name %></td>
+      <td>
+        <%= link_to "https://www.github.com/#{student.nickname}" do %>
+          https://www.github.com/<%= student.nickname %> <i class="fa fa-external-link"></i>
+        <% end %>
+        <br/>
+        <%= link_to student.nickname, user_details_url(student.nickname) %>
+      </td>
     </tr>
   <% end %>
   </tbody>

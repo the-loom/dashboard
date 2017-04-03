@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   get '/logout' => 'sessions#destroy', as: :logout
 
   get '/profile' => 'users#show', as: :profile
-  get '/u/:nickname' => 'users#show'
+  get '/u/:nickname' => 'users#show', as: :user_details
   get '/students' => 'users#index', as: :students
 
 end
