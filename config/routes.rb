@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   get '/profile' => 'users#show', as: :profile
   get '/u/:nickname' => 'users#show', as: :user_details
+  get '/profile/edit' => 'users#edit', as: :edit_profile
+  patch '/profile/edit' => 'users#update', as: :update_user
   get '/students' => 'users#index', as: :students
 
 end
