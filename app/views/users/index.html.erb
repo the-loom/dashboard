@@ -5,6 +5,7 @@
     <th>Foto</th>
     <th>Nombre</th>
     <th>Enlaces</th>
+    <th>Correo electrónico</th>
   </tr>
   </thead>
   <tbody>
@@ -19,6 +20,7 @@
         <br/>
         <%= link_to student.nickname, user_details_url(student.nickname) %>
       </td>
+      <td><%= mail_to student.email %></td>
     </tr>
   <% end %>
   </tbody>

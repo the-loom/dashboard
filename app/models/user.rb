@@ -6,7 +6,7 @@ class User < ApplicationRecord
   }
 
   def self.sorted
-    self.order(:nickname)
+    self.order(:name)
   end
 
   def self.by_omniauth(auth)
