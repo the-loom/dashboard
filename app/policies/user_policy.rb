@@ -5,4 +5,7 @@ class UserPolicy < ApplicationPolicy
   def update?
     user.teacher?
   end
+  def impersonate?
+    user.teacher?
+  end
 end

@@ -47,6 +47,13 @@
 
 <div class="container">
 
+  <% if flash[:alert] %>
+    <div class="alert alert-danger" role="alert">
+      <strong>¡Oops!</strong>
+      <%= flash[:alert] %>
+    </div>
+  <% end %>
+
   <%= yield %>
 
 </div> <!-- /container -->

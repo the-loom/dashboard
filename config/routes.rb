@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get '/u/:nickname' => 'users#show', as: :user_details
   get '/profile/edit' => 'users#edit', as: :edit_profile
   patch '/profile/edit' => 'users#update', as: :update_user
+  get '/u/:nickname/impersonate' => 'users#impersonate', as: :impersonate_user
   get '/students' => 'users#index', as: :students
 
 end
