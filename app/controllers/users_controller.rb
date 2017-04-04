@@ -26,6 +26,18 @@ class UsersController < ApplicationController
     redirect_to profile_url
   end
 
+  def bulk_edit
+    if params[:mark_as_guest]
+      role = :guest
+    elsif params[:mark_as_teacher]
+      role = :teacher
+    elsif params[:mark_as_student]
+      role = :student
+    end
+    User.where("id IN (?)", params[:students][:ids].map(&:to_i)).update_all(role: role)
+    redirect_to students_url
+  end
+
   private
 
   def set_user

@@ -13,5 +13,6 @@ Rails.application.routes.draw do
   patch '/profile/edit' => 'users#update', as: :update_user
   get '/u/:nickname/impersonate' => 'users#impersonate', as: :impersonate_user
   get '/students' => 'users#index', as: :students
+  post '/u/bulk_edit' => 'users#bulk_edit', as: :bulk_edit_users
 
 end
