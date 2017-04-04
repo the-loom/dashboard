@@ -96,6 +96,8 @@ GEM
       omniauth (~> 1.2)
     pg (0.20.0)
     puma (3.8.2)
+    pundit (1.1.0)
+      activesupport (>= 3.0.0)
     rack (2.0.1)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -172,6 +174,7 @@ DEPENDENCIES
   omniauth-github (= 1.2.3)
   pg
   puma (~> 3.0)
+  pundit
   rails (~> 5.0.2)
   sass-rails (~> 5.0)
   spring
