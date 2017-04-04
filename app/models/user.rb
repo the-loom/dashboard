@@ -1,8 +1,9 @@
 class User < ApplicationRecord
 
   enum role: {
-      student: 0,
-      teacher: 1
+      guest: 0,
+      student: 1,
+      teacher: 2
   }
 
   def self.sorted
