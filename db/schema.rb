@@ -10,10 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170404114712) do
+ActiveRecord::Schema.define(version: 20170405135138) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "events", force: :cascade do |t|
+    t.string  "name"
+    t.string  "description"
+    t.integer "batch_size"
+    t.integer "points_per_batch"
+  end
+
+  create_table "occurrences", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "event_id"
+    t.integer  "points"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "provider"
@@ -25,6 +40,7 @@ ActiveRecord::Schema.define(version: 20170404114712) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.integer  "role",       default: 0
+    t.integer  "points",     default: 0
   end
 
 end

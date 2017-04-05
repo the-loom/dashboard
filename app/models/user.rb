@@ -6,6 +6,20 @@ class User < ApplicationRecord
       teacher: 2
   }
 
+  has_many :occurrences
+  has_many :events, through: :occurrences
+
+  def register(event)
+    events_count = events.count { |x| x.name == event.name } + 1
+    if events_count % event.batch_size == 0
+      points_per_event = event.points_per_batch
+    else
+      points_per_event = 0
+    end
+    occurrences.create(event: event, points: 0)
+    self.points = self.points + points_per_event
+  end
+
   def self.sorted
     self.order(:name)
   end
