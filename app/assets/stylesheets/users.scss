@@ -2,6 +2,31 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.student.dashboard {
+  .box {
+    height: 1.5em;
+    border: 1px solid #4cae4c;
+    border-radius: 5px;
+    position: relative;
+    font-size: 3em;
+    vertical-align: middle;
+    .number {
+      color: #4cae4c;
+      display: inline;
+      text-align: center;
+    }
+    label {
+      display: inline;
+      position: absolute;
+      background-color: #4cae4c;
+      color: white;
+      right: 0;
+      height: 100%;
+      padding: 0 0.5em;
+    }
+  }
+}
+
 .members {
   .avatar {
     width: 100px;

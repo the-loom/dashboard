@@ -1,11 +1,21 @@
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-  <div class="fb-profile">
-    <img align="left" class="fb-image-lg" src="http://lorempixel.com/850/280/abstract/2/" alt="Profile image example"/>
-    <img align="left" class="fb-image-profile thumbnail" src="<%= @user.image %>" alt="Profile image example"/>
-    <div class="fb-profile-text">
-      <h1>
-        <%= @user.name %>
-        <small><%= @user.nickname %></small>
-      </h1>
-    </div>
+<div class="fb-profile">
+  <img align="left" class="fb-image-lg" src="http://lorempixel.com/850/280/abstract/2/" alt="Profile image example"/>
+  <img align="left" class="fb-image-profile thumbnail" src="<%= @user.image %>" alt="Profile image example"/>
+  <div class="fb-profile-text">
+    <h1>
+      <%= @user.name %>
+      <small><%= @user.nickname %></small>
+    </h1>
   </div>
+</div>
+
+<div class="clearfix"></div>
+
+<div class="student dashboard">
+  <div class="col-md-4 box">
+    <span class="number"><%= @user.points %></span>
+    <label title="Experiencia">XP</label>
+  </div>
+
+</div>

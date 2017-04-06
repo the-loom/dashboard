@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   get '/students' => 'users#index', as: :students
   post '/u/bulk_edit' => 'users#bulk_edit', as: :bulk_edit_users
 
-  get '/event/:event_id/register/:nickname' => 'events#register', as: :register_event
+
+  get '/events/' => 'events#index', as: :events_list
+  get '/events/:event_id/show' => 'events#show', as: :event_details
+  get '/events/:event_id/register/:nickname' => 'events#register', as: :register_event
 
 end

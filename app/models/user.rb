@@ -16,8 +16,9 @@ class User < ApplicationRecord
     else
       points_per_event = 0
     end
-    occurrences.create(event: event, points: 0)
+    occurrences.create(event: event, points: points_per_event)
     self.points = self.points + points_per_event
+    self.save!
   end
 
   def self.sorted
