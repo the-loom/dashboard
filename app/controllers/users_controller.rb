@@ -11,9 +11,16 @@ class UsersController < ApplicationController
     @user = User.where(nickname: params[:nickname]).first if params[:nickname]
   end
 
+  def comment
+    @user = User.where(nickname: params[:nickname]).first
+    authorize @user, :comment?
+    @user.comments.create(body: params[:comment][:body], commenter: current_user, mood: params[:comment][:mood].to_i)
+    redirect_to user_details_url(@user.nickname)
+  end
+
   def impersonate
     @user = User.where(nickname: params[:nickname]).first
-    authorize current_user, :impersonate?
+    authorize @user, :impersonate?
     session[:user_id] = @user.id
     redirect_to profile_url
   end

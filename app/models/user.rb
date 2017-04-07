@@ -8,6 +8,7 @@ class User < ApplicationRecord
 
   has_many :occurrences
   has_many :events, through: :occurrences
+  has_many :comments
 
   def register(event)
     events_count = events.count { |x| x.name == event.name } + 1

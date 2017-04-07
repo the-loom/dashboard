@@ -11,4 +11,7 @@ class UserPolicy < ApplicationPolicy
   def impersonate?
     user.teacher?
   end
+  def comment?
+    user.teacher?
+  end
 end
