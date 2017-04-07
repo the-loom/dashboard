@@ -1,4 +1,7 @@
 class UserPolicy < ApplicationPolicy
+  def manage?
+    user.teacher?
+  end
   def index?
     user.teacher?
   end

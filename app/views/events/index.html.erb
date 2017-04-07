@@ -3,6 +3,7 @@
   <tr>
     <th>Evento</th>
     <th>Descripción</th>
+    <th>Otorgamientos</th>
     <th>Puntos</th>
   </tr>
   </thead>
@@ -14,6 +15,9 @@
       </td>
       <td>
         <%= event.description %>
+      </td>
+      <td>
+        <%= event.occurrences.size %> veces
       </td>
       <td>
         <%= event.points_per_batch %> pts. c/<%= event.batch_size %>

@@ -1,4 +1,7 @@
 class EventPolicy < ApplicationPolicy
+  def manage?
+    user.teacher?
+  end
   def register?
     user.teacher?
   end
