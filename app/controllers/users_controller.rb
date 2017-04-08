@@ -7,6 +7,11 @@ class UsersController < ApplicationController
     @students = User.student.sorted
   end
 
+  def guests
+    authorize User
+    @guests = User.guest.sorted
+  end
+
   def show
     @user = User.where(nickname: params[:nickname]).first if params[:nickname]
   end

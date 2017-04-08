@@ -1,0 +1,57 @@
+<legend>Miembros de <em>loom</em> -
+  <small><%= @guests.size %> miembros</small>
+</legend>
+<%= form_tag bulk_edit_users_path do %>
+
+  <div class="form-group controls" style="display: none;">
+    <%= submit_tag 'Marcar como invitados', name: 'mark_as_guest', class: 'btn btn-primary' %>
+    <%= submit_tag 'Marcar como profesores', name: 'mark_as_teacher', class: 'btn btn-primary' %>
+    <%= submit_tag 'Marcar como estudiantes', name: 'mark_as_student', class: 'btn btn-primary' %>
+  </div>
+
+  <div class="table-responsive">
+    <table class="members table table-hover">
+      <thead>
+      <tr>
+        <th>&nbsp;</th>
+        <th>Foto</th>
+        <th>Nombre</th>
+        <th>Enlaces</th>
+        <th>Correo electrónico</th>
+        <th>Acciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @guests.each do |student| %>
+        <tr>
+          <td>
+            <%= check_box_tag "students[ids][]", student.id %>
+          </td>
+          <td>
+            <img class="avatar" src="<%= student.image %>"></td>
+          <td><%= student.name %></td>
+          <td>
+            <%= link_to "https://www.github.com/#{student.nickname}" do %>
+              https://www.github.com/<%= student.nickname %> <i class="fa fa-external-link"></i>
+            <% end %>
+            <br/>
+            <%= link_to student.nickname, user_details_url(student.nickname) %>
+          </td>
+          <td><%= mail_to student.email %></td>
+          <td>
+            <%= link_to 'Personificar', impersonate_user_url(student.nickname), class: 'btn btn-default' %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
+
+<script>
+    $(function () {
+        $('input').on('click', function () {
+            $('.controls').toggle($('input:checked').length > 0);
+        });
+    });
+</script>
