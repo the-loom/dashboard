@@ -19,6 +19,8 @@ Rails.application.routes.draw do
 
 
   get '/events/' => 'events#index', as: :events_list
+  get '/events/new' => 'events#new', as: :new_event
+  post '/events/new' => 'events#create', as: :create_event
   get '/events/:event_id/show' => 'events#show', as: :event_details
   get '/events/:event_id/register/:nickname' => 'events#register', as: :register_event
 

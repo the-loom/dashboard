@@ -1,0 +1,28 @@
+<legend>Nuevo evento</legend>
+
+<%= form_for @event, url: create_event_url do |f| %>
+  <div class="form-group">
+    <%= f.label :name, 'Nombre' %>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :description, 'Descripción' %>
+    <%= f.text_field :description, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :batch_size, 'Tamaño del lote para puntuar' %>
+    <%= f.number_field :batch_size, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :points_per_batch, 'Puntos por lote' %>
+    <%= f.number_field :points_per_batch, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit "Crear evento", class: "btn btn-primary" %>
+  </div>
+
+<% end %>
