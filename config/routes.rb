@@ -24,4 +24,10 @@ Rails.application.routes.draw do
   get '/events/:event_id/show' => 'events#show', as: :event_details
   get '/events/:event_id/register/:nickname' => 'events#register', as: :register_event
 
+  get '/badges/' => 'badges#index', as: :badges_list
+  get '/badges/new' => 'badges#new', as: :new_badge
+  post '/badges/new' => 'badges#create', as: :create_badge
+  get '/badges/:badge_id/show' => 'badges#show', as: :badge_details
+  get '/badges/:badge_id/register/:nickname' => 'badges#register', as: :register_badge
+
 end

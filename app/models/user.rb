@@ -8,6 +8,10 @@ class User < ApplicationRecord
 
   has_many :occurrences
   has_many :events, through: :occurrences
+
+  has_many :earnings
+  has_many :badges, through: :earnings
+
   has_many :comments
 
   def register(event)
@@ -20,6 +24,10 @@ class User < ApplicationRecord
     occurrences.create(event: event, points: points_per_event)
     self.points = self.points + points_per_event
     self.save!
+  end
+
+  def earn(badge)
+    earnings.create(badge: badge)
   end
 
   def self.sorted
