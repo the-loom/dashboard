@@ -30,4 +30,7 @@ Rails.application.routes.draw do
   get '/badges/:badge_id/show' => 'badges#show', as: :badge_details
   get '/badges/:badge_id/register/:nickname' => 'badges#register', as: :register_badge
 
+  get '/teams' => 'teams#index', as: :teams
+  get '/teams/:nickname' => 'teams#show', as: :team_profile
+
 end

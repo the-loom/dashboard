@@ -1,0 +1,31 @@
+<legend>Equipos en <em>loom</em> -
+  <small><%= @teams.size %> equipos</small>
+</legend>
+<div class="table-responsive">
+  <table class="members table table-hover">
+    <thead>
+    <tr>
+      <th>Foto</th>
+      <th>Nombre</th>
+      <th>Enlaces</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @teams.each do |team| %>
+      <tr>
+        <td>
+          <img class="avatar" src="<%= team.image %>"></td>
+        <td><%= team.name %></td>
+        <td>
+          <%= link_to "https://www.github.com/#{team.nickname}" do %>
+            https://www.github.com/<%= team.nickname %> <i class="fa fa-external-link"></i>
+          <% end %>
+          <br/>
+          <%= link_to team.nickname, team_profile_url(team.nickname) %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+

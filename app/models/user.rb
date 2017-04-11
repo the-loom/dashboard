@@ -14,6 +14,8 @@ class User < ApplicationRecord
 
   has_many :comments
 
+  belongs_to :team
+
   def register(event)
     events_count = events.count { |x| x.name == event.name } + 1
     if events_count % event.batch_size == 0

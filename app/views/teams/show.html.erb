@@ -1,0 +1,28 @@
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<div class="fb-profile">
+  <img align="left" class="fb-image-lg" src="http://lorempixel.com/850/280/abstract/2/" alt="Profile image example"/>
+  <img align="left" class="fb-image-profile thumbnail" src="<%= @team.image %>" alt="Profile image example"/>
+  <div class="fb-profile-text">
+    <h1>
+      <%= @team.name %>
+      <small><%= @team.nickname %></small>
+    </h1>
+  </div>
+</div>
+
+<div class="clearfix"></div>
+
+<div class="students mosaic">
+  <div class="row">
+    <% @team.users.each do |student| %>
+      <div class="col-md-2 col-xs-6 student-box">
+        <% if student %>
+          <img class="avatar" src="<%= student.image %>">
+          <p class="data"><%= student.nickname %><br/>
+            <small><%= student.name %></small>
+          </p>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
