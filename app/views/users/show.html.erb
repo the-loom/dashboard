@@ -59,7 +59,7 @@
               <%= earning.badge.name %>
             </div>
             <div class="panel-body">
-              <img class="loom-badge" src="<%= image_url("badges/#{earning.badge.slug}.png") %>">
+              <img class="loom-badge" src="<%= image_url("badges/#{earning.badge.slug}.png") %>"/>
             </div>
             <div class="panel-footer">
               <%= l earning.created_at.in_time_zone('Buenos Aires') %>
@@ -128,7 +128,7 @@
                   <span class="text-muted"><%= l comment.created_at.in_time_zone('Buenos Aires') %></span>
                 </div>
                 <div class="panel-body">
-                  <%= comment.body %>
+                  <%= simple_format(comment.body) %>
                 </div>
               </div>
             </div>
