@@ -34,7 +34,7 @@
         <% @user.occurrences.each do |occurrence| %>
           <tr>
             <td><%= occurrence.event.name %></td>
-            <td><%= occurrence.created_at %></td>
+            <td><%= l occurrence.created_at.in_time_zone('Buenos Aires') %></td>
           </tr>
         <% end %>
         </tbody>
@@ -62,7 +62,7 @@
               <img class="loom-badge" src="<%= image_url("badges/#{earning.badge.slug}.png") %>">
             </div>
             <div class="panel-footer">
-              <%= earning.created_at %>
+              <%= l earning.created_at.in_time_zone('Buenos Aires') %>
             </div>
           </div>
         </div>
@@ -125,7 +125,7 @@
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <strong><%= comment.commenter.nickname %> (<%= comment.mood %>)</strong>
-                  <span class="text-muted"><%= comment.created_at %></span>
+                  <span class="text-muted"><%= l comment.created_at.in_time_zone('Buenos Aires') %></span>
                 </div>
                 <div class="panel-body">
                   <%= comment.body %>
