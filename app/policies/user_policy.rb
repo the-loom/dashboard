@@ -12,7 +12,7 @@ class UserPolicy < ApplicationPolicy
     user.teacher?
   end
   def update?
-    user.teacher?
+    user.teacher? || (user == record && !record.locked?)
   end
   def impersonate?
     user.teacher?

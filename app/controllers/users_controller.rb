@@ -32,9 +32,11 @@ class UsersController < ApplicationController
   end
 
   def edit
+    authorize @user, :update?
   end
 
   def update
+    authorize @user, :update?
     @user.update(user_params)
     redirect_to profile_url
   end

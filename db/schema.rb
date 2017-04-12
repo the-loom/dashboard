@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170411223843) do
+ActiveRecord::Schema.define(version: 20170412122728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,11 +65,12 @@ ActiveRecord::Schema.define(version: 20170411223843) do
     t.string   "nickname"
     t.string   "email"
     t.string   "image"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.integer  "role",       default: 0
     t.integer  "points",     default: 0
     t.integer  "team_id"
+    t.boolean  "locked",     default: false
   end
 
 end
