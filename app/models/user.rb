@@ -14,7 +14,7 @@ class User < ApplicationRecord
 
   has_many :comments
 
-  belongs_to :team
+  belongs_to :team, optional: true
 
   def register(event)
     events_count = events.count { |x| x.name == event.name } + 1
