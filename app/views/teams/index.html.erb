@@ -7,6 +7,7 @@
     <tr>
       <th>Foto</th>
       <th>Nombre</th>
+      <th>Integrantes</th>
       <th>Enlaces</th>
     </tr>
     </thead>
@@ -16,6 +17,7 @@
         <td>
           <img class="avatar" src="<%= team.image %>"></td>
         <td><%= team.name %></td>
+        <td><%= team.members.size %></td>
         <td>
           <%= link_to "https://www.github.com/#{team.nickname}" do %>
             https://www.github.com/<%= team.nickname %> <i class="fa fa-external-link"></i>

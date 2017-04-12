@@ -14,9 +14,9 @@
 
 <div class="students mosaic">
   <div class="row">
-    <% @team.users.each do |student| %>
+    <% @team.members.each do |student| %>
       <div class="col-md-2 col-xs-6 student-box">
-        <% if student %>
+        <%= link_to user_details_url(student.nickname) do %>
           <img class="avatar" src="<%= student.image %>">
           <p class="data"><%= student.nickname %><br/>
             <small><%= student.name %></small>

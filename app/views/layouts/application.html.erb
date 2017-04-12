@@ -31,6 +31,11 @@
               <%= link_to "Estudiantes", students_url %>
             </li>
           <% end %>
+          <% if policy(Team).manage? %>
+            <li>
+              <%= link_to "Equipos", teams_url %>
+            </li>
+          <% end %>
           <% if policy(Event).manage? %>
             <li>
               <%= link_to "Eventos", events_list_url %>
