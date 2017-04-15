@@ -28,7 +28,10 @@
             <%= check_box_tag "students[ids][]", student.id %>
           </td>
           <td>
-            <img class="avatar" src="<%= student.image %>"></td>
+            <%= link_to user_details_url(student.nickname) do %>
+              <img class="avatar" src="<%= student.image %>">
+            <% end %>
+          </td>
           <td><%= student.name %></td>
           <td>
             <%= link_to "https://www.github.com/#{student.nickname}" do %>

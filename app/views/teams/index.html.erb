@@ -15,7 +15,10 @@
     <% @teams.each do |team| %>
       <tr>
         <td>
-          <img class="avatar" src="<%= team.image %>"></td>
+          <%= link_to team_profile_url(team.nickname) do %>
+            <img class="avatar" src="<%= team.image %>">
+          <% end %>
+        </td>
         <td><%= team.name %></td>
         <td><%= team.members.size %></td>
         <td>
