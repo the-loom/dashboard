@@ -33,4 +33,10 @@ Rails.application.routes.draw do
   get '/teams' => 'teams#index', as: :teams
   get '/teams/:nickname' => 'teams#show', as: :team_profile
 
+  get '/readings/' => 'readings#index', as: :readings_list
+  get '/readings/new' => 'readings#new', as: :new_reading
+  post '/readings/new' => 'readings#create', as: :create_reading
+  get '/readings/:slug/show' => 'readings#show', as: :reading_details
+  post '/readings/:slug/register' => 'readings#register', as: :register_reading
+
 end

@@ -1,0 +1,29 @@
+<legend>
+  Listado de mediciones
+  <%= link_to 'Nueva medición', new_reading_url, class: 'btn btn-primary pull-right' %>
+</legend>
+
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th>Nombre</th>
+    <th>Descripción</th>
+    <th>Otorgamientos</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @readings.each do |reading| %>
+    <tr>
+      <td>
+        <%= link_to reading.name, reading_details_url(reading.slug) %>
+      </td>
+      <td>
+        <%= reading.description %>
+      </td>
+      <td>
+        <%= reading.measurements.size %> veces
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
