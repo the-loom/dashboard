@@ -16,7 +16,7 @@ class BadgesController < ApplicationController
     badge = Badge.find(params[:badge_id])
     student = User.where(nickname: params[:nickname]).first if params[:nickname]
     student.earn(badge)
-    flash[:info] = "Se asignó correctamente el badgeo #{badge.name} a #{student.name}"
+    flash[:info] = "Se asignó correctamente el emblema #{badge.name} a #{student.name}"
     redirect_to badge_details_url(badge.id)
   end
 
@@ -29,7 +29,7 @@ class BadgesController < ApplicationController
     authorize Badge, :create?
     @badge = Badge.new(badge_params)
     if @badge.save
-      flash[:notice] = "Se creo correctamente el badgeo"
+      flash[:notice] = "Se creo correctamente el emblema"
     end
     redirect_to badges_list_url
   end
