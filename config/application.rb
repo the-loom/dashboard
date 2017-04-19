@@ -13,6 +13,9 @@ module LoomDashboard
     # -- all .rb files in that directory are automatically loaded.
 
     config.assets.paths << Rails.root.join('vendor', 'assets', 'components')
+    config.after_initialize do |app|
+      app.config.paths.add 'app/presenters', eager_load: true
+    end
 
   end
 end

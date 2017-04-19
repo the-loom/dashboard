@@ -12,6 +12,7 @@
 
 <div class="clearfix"></div>
 
+<legend>Integrantes</legend>
 <div class="students mosaic">
   <div class="row">
     <% @team.members.each do |student| %>
@@ -27,33 +28,34 @@
   </div>
 </div>
 
-<% @team.readings.uniq.each do |reading| %>
-  <div id="chart-<%= reading.slug %>"></div>
-<% end %>
+<% if policy(Team).manage? %>
 
-<script>
-    <% @team.measurements.group_by { |m| m.reading }.each do | reading, measurements| %>
-    c3.generate({
-        bindto: '#chart-<%= reading.slug %>',
-        data: {
-            x: 'x',
-            columns: [
-                ['x', <%= measurements.collect { |m| "'#{m.created_at.strftime('%F')}'" }.join(', ').html_safe  %>],
-                ['<%= reading.slug %>', <%= measurements.collect(&:value).join(', ') %>]
-            ]
-        },
-        axis: {
-            x: {
-                type: 'timeseries',
-                tick: {
-                    format: '%Y-%m-%d'
-                }
-            }
-        },
-        type: 'spline',
-        line: {
-            connectNull: true
-        }
-    });
-    <% end %>
-</script>
+  <legend>Métricas</legend>
+  <div id="chart"></div>
+
+  <script>
+      c3.generate({
+          bindto: '#chart',
+          data: {
+              x: 'x',
+              columns: [
+                  <%= @presenter.c3_dates_row.html_safe %>,
+                  <%= @presenter.c3_data_rows.html_safe %>
+              ]
+          },
+          axis: {
+              x: {
+                  type: 'timeseries',
+                  tick: {
+                      format: '%Y-%m-%d'
+                  }
+              }
+          },
+          type: 'spline',
+          line: {
+              connectNull: true
+          }
+      });
+  </script>
+
+<% end %>
