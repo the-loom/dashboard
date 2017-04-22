@@ -2,7 +2,7 @@ class TeamsController < ApplicationController
 
   def index
     authorize Team
-    @teams = Team.all
+    @teams = Team.sorted
   end
 
   def show
