@@ -27,7 +27,7 @@
 
 <div class="student dashboard">
   <div class="col-md-6">
-    <h3>Eventos registrados</h3>
+    <legend>Eventos registrados</legend>
 
     <% if @user.occurrences.size == 0 %>
 
@@ -49,7 +49,7 @@
     <% end %>
   </div>
   <div class="col-md-6">
-    <h3>Emblemas</h3>
+    <legend>Emblemas</legend>
 
     <% if @user.earnings.size == 0 %>
 
@@ -58,7 +58,6 @@
       </div>
 
     <% else %>
-
       <% @user.earnings.each do |earning| %>
         <div class="col-md-4 badge-box">
           <div class="panel panel-default">
@@ -66,10 +65,27 @@
               <%= earning.badge.name %>
             </div>
             <div class="panel-body">
-              <img class="loom-badge" src="<%= image_url("badges/#{earning.badge.slug}.png") %>"/>
+              <img class="loom-badge" src="<%= image_url("badges/#{earning.badge.slug}.png") %>" data-toggle="tooltip"
+                   data-placement="bottom" title="<%= earning.badge.description %>"/>
             </div>
             <div class="panel-footer">
               <%= l earning.created_at.in_time_zone('Buenos Aires') %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      <% @missing_badges.each do |badge| %>
+        <div class="col-md-4 badge-box">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <%= badge.name %>
+            </div>
+            <div class="panel-body">
+              <img class="loom-badge" src="<%= image_url("badges/incognito.png") %>" data-toggle="tooltip"
+                   data-placement="bottom" title="<%= badge.description %>"/>
+            </div>
+            <div class="panel-footer">
+              Aún no...
             </div>
           </div>
         </div>
@@ -149,3 +165,9 @@
   </div>
 
 <% end %>
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    });
+</script>

@@ -14,6 +14,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.where(nickname: params[:nickname]).first if params[:nickname]
+    @missing_badges = Badge.all - @user.badges
     authorize @user
   end
 
