@@ -41,7 +41,7 @@
         <% @user.occurrences.each do |occurrence| %>
           <tr>
             <td><%= occurrence.event.name %></td>
-            <td><%= l occurrence.created_at.in_time_zone('Buenos Aires').strftime('%d/%m/%Y') %></td>
+            <td><%= l occurrence.created_at.in_time_zone('Buenos Aires') %></td>
           </tr>
         <% end %>
         </tbody>
@@ -69,7 +69,7 @@
                    data-placement="bottom" title="<%= earning.badge.description %>"/>
             </div>
             <div class="panel-footer">
-              <%= l earning.created_at.in_time_zone('Buenos Aires').strftime('%d/%m/%Y') %>
+              <%= l earning.created_at.in_time_zone('Buenos Aires') %>
             </div>
           </div>
         </div>
