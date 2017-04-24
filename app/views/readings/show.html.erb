@@ -1,7 +1,5 @@
 <legend>Registrar medición "<%= @reading.name %>"</legend>
 
-PENDIENTE
-
 <%= form_for Measurement.new, url: register_reading_url(@reading.slug) do |f| %>
 
   <%= f.hidden_field :reading_id, value: @reading.id %>
@@ -19,6 +17,5 @@ PENDIENTE
   <div class="form-group">
     <%= f.submit "Guardar medición", class: "btn btn-primary" %>
   </div>
-
 
 <% end %>
