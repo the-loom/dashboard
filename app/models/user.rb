@@ -33,7 +33,7 @@ class User < ApplicationRecord
   end
 
   def self.sorted
-    self.order(:name)
+    self.order(points: :desc)
   end
 
   def self.by_omniauth(auth)

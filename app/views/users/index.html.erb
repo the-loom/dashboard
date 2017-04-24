@@ -16,6 +16,7 @@
         <th>&nbsp;</th>
         <th>Foto</th>
         <th>Nombre</th>
+        <th>XP</th>
         <th>Enlaces</th>
         <th>Correo electrónico</th>
         <th>Acciones</th>
@@ -33,6 +34,7 @@
             <% end %>
           </td>
           <td><%= student.name %></td>
+          <td><%= student.points %></td>
           <td>
             <%= link_to "https://www.github.com/#{student.nickname}" do %>
               https://www.github.com/<%= student.nickname %> <i class="fa fa-external-link"></i>

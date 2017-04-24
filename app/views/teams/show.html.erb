@@ -7,6 +7,12 @@
       <%= @team.name %>
       <small><%= @team.nickname %></small>
     </h1>
+    <div class="student dashboard">
+      <div class="col-md-3 box">
+        <span class="number"><%= @team.points %></span>
+        <label title="Experiencia">XP</label>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -53,6 +59,44 @@
             (consigna <i class="fa fa-external-link"></i>)
           <% end %>
         </p>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
+<legend>Emblemas del grupo <small>(<%= @team.badges.uniq.size %> / <%= Badge.count %>)</small></legend>
+
+<% if @team.badges.size == 0 %>
+
+  <div class="alert alert-info">
+    <p>Aún no se te otorgaron emblemas...</p>
+  </div>
+
+<% else %>
+  <% @team.badges.uniq.each do |badge| %>
+    <div class="col-md-4 badge-box">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <%= badge.name %>
+        </div>
+        <div class="panel-body">
+          <img class="loom-badge" src="<%= image_url("badges/#{badge.slug}.png") %>" data-toggle="tooltip"
+               data-placement="bottom" title="<%= badge.description %>"/>
+          <span class="label label-info">&times; <%= @team.badges.count(badge) %></span>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <% (Badge.all - @team.badges).each do |badge| %>
+    <div class="col-md-4 badge-box">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <%= badge.name %>
+        </div>
+        <div class="panel-body">
+          <img class="loom-badge" src="<%= image_url("badges/incognito.png") %>" data-toggle="tooltip"
+               data-placement="bottom" title="<%= badge.description %>"/>
+        </div>
       </div>
     </div>
   <% end %>

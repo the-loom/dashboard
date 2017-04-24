@@ -10,4 +10,12 @@ class Team < ApplicationRecord
   def self.sorted
     self.order(:name)
   end
+
+  def badges
+    members.collect { |member| member.badges }.flatten
+  end
+
+  def points
+    members.sum(&:points) / members.size
+  end
 end

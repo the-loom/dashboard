@@ -49,7 +49,7 @@
     <% end %>
   </div>
   <div class="col-md-6">
-    <legend>Emblemas</legend>
+    <legend>Emblemas <small>(<%= @user.badges.size %> / <%= Badge.count %>)</small></legend>
 
     <% if @user.earnings.size == 0 %>
 
