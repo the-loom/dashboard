@@ -1,0 +1,15 @@
+<legend>Registrar asistencia "<%= @lecture.summary %>"</legend>
+
+<%= form_tag(register_lecture_url(@lecture.id)) do %>
+
+  <%= hidden_field_tag 'lecture_id', @lecture.id %>
+
+  <% @students.each do |student| %>
+    <%= check_box :student_ids, student.id %>
+  <% end %>
+
+  <div class="form-group">
+    <%= submit_tag "Guardar asistencia", class: "btn btn-primary" %>
+  </div>
+
+<% end %>

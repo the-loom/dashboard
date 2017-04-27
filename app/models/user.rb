@@ -12,9 +12,28 @@ class User < ApplicationRecord
   has_many :earnings
   has_many :badges, through: :earnings
 
+  has_many :attendances
+  has_many :lectures, through: :attendances
+
   has_many :comments
 
   belongs_to :team, optional: true
+
+  def unregister_attendance(lecture)
+    if attendances.detect { |a| a.present? && a.lecture == lecture }
+      self.points = self.points - 10
+      self.save!
+    end
+    Attendance.find_by(user: self, lecture: lecture).delete
+  end
+
+  def register_attendance(lecture, condition)
+    if condition == :present
+      self.points = self.points + 10
+      self.save!
+    end
+    attendances.create(lecture: lecture, condition: condition)
+  end
 
   def register(event)
     events_count = events.count { |x| x.name == event.name } + 1

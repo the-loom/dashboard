@@ -45,4 +45,10 @@ Rails.application.routes.draw do
   get '/checkpoints/:checkpoint_id/show' => 'checkpoints#show', as: :checkpoint_details
   post '/checkpoints/:checkpoint_id/register' => 'checkpoints#register', as: :register_checkpoint
 
+  get '/lectures/' => 'lectures#index', as: :lectures_list
+  get '/lectures/new' => 'lectures#new', as: :new_lecture
+  post '/lectures/new' => 'lectures#create', as: :create_lecture
+  get '/lectures/:lecture_id/show' => 'lectures#show', as: :lecture_details
+  post '/lectures/:lecture_id/register' => 'lectures#register', as: :register_lecture
+
 end
