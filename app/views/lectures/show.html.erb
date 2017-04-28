@@ -4,12 +4,37 @@
 
   <%= hidden_field_tag 'lecture_id', @lecture.id %>
 
-  <% @students.each do |student| %>
-    <%= check_box :student_ids, student.id %>
-  <% end %>
-
+  <table class="members table table-hover">
+    <thead></thead>
+    <tbody>
+    <% @students.each do |student| %>
+      <tr class="clickable">
+        <td>
+          <%= check_box :student_ids, student.id, { checked: student.present_at(@lecture) } %>
+        </td>
+        <td>
+          <img class="avatar" src="<%= student.image %>">
+          <br/>
+          <strong><%= student.name %></strong>
+          <br/>
+          (<%= student.nickname %>)
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
   <div class="form-group">
     <%= submit_tag "Guardar asistencia", class: "btn btn-primary" %>
   </div>
 
 <% end %>
+
+<script>
+    $(function () {
+        $('table.members tr').click(function (event) {
+            if (event.target.type !== 'checkbox') {
+                $(':checkbox', this).trigger('click');
+            }
+        });
+    });
+</script>

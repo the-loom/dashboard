@@ -24,7 +24,7 @@ class User < ApplicationRecord
       self.points = self.points - 10
       self.save!
     end
-    Attendance.find_by(user: self, lecture: lecture).delete
+    Attendance.find_by(user: self, lecture: lecture).try(:delete)
   end
 
   def register_attendance(lecture, condition)
@@ -55,10 +55,18 @@ class User < ApplicationRecord
     self.order(points: :desc)
   end
 
+  def self.sorted_by_name
+    self.order(name: :asc)
+  end
+
   def self.by_omniauth(auth)
     user = self.find_by(provider: auth["provider"], uid: auth["uid"]) || self.create_with_omniauth(auth)
     user.update_attribute(:image, auth['info']['image'])
     user
+  end
+
+  def present_at(lecture)
+    attendances.where(lecture: lecture, condition: :present).size > 0
   end
 
   private

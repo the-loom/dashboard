@@ -8,17 +8,21 @@ class LecturesController < ApplicationController
   def show
     authorize Lecture
     @lecture = Lecture.find(params[:lecture_id])
-    @students = User.student.sorted
+    @students = User.student.sorted_by_name
   end
 
   def register
     authorize Lecture
-    5/0
+    lecture = Lecture.find(params[:lecture_id])
 
-    # 1. des-registrar todas las asistencias a esa clase
-    # 2. registrar asistencias a la clase
+    params[:student_ids].each do |student_id, condition|
+      student = User.find(student_id)
+      student.unregister_attendance(lecture)
+      student.register_attendance(lecture, condition.to_i == 1 ? :present : :absent)
+    end
 
-    redirect_to lecture_details_url(check.lecture.id)
+    flash[:notice] = "Se registró la asistencia correctamente"
+    redirect_to lectures_list_url
   end
 
   def new
