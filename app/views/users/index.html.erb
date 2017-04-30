@@ -30,7 +30,7 @@
           </td>
           <td>
             <%= link_to user_details_url(student.nickname) do %>
-              <img class="avatar" src="<%= student.image %>">
+              <img class="avatar<%= ' disabled' unless student.enabled? %>" src="<%= student.image %>">
             <% end %>
           </td>
           <td><%= student.name %></td>

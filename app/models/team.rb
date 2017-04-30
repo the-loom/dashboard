@@ -12,10 +12,10 @@ class Team < ApplicationRecord
   end
 
   def badges
-    members.collect { |member| member.badges }.flatten
+    members.select { |m| m.enabled }.collect { |member| member.badges }.flatten
   end
 
   def points
-    members.sum(&:points) / members.size
+    members.select { |m| m.enabled }.sum(&:points) / members.size
   end
 end

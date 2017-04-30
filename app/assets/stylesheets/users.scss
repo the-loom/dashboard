@@ -4,29 +4,30 @@
 
 .comment-box {
   .panel {
-    position:relative;
+    position: relative;
   }
-  .panel>.panel-heading:after,.panel>.panel-heading:before{
-    position:absolute;
-    top:11px;left:-16px;
-    right:100%;
-    width:0;
-    height:0;
-    display:block;
-    content:" ";
-    border-color:transparent;
-    border-style:solid solid outset;
-    pointer-events:none;
+  .panel > .panel-heading:after, .panel > .panel-heading:before {
+    position: absolute;
+    top: 11px;
+    left: -16px;
+    right: 100%;
+    width: 0;
+    height: 0;
+    display: block;
+    content: " ";
+    border-color: transparent;
+    border-style: solid solid outset;
+    pointer-events: none;
   }
-  .panel>.panel-heading:after{
-    border-width:7px;
-    border-right-color:#f7f7f7;
-    margin-top:1px;
-    margin-left:2px;
+  .panel > .panel-heading:after {
+    border-width: 7px;
+    border-right-color: #f7f7f7;
+    margin-top: 1px;
+    margin-left: 2px;
   }
-  .panel>.panel-heading:before{
-    border-right-color:#ddd;
-    border-width:8px;
+  .panel > .panel-heading:before {
+    border-right-color: #ddd;
+    border-width: 8px;
   }
 }
 
@@ -99,4 +100,10 @@
 
 .badge-box {
   text-align: center;
+}
+
+.avatar.disabled {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+  opacity: 0.2;
 }

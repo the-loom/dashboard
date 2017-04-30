@@ -13,7 +13,7 @@
           <%= check_box :student_ids, student.id, { checked: student.present_at(@lecture) } %>
         </td>
         <td>
-          <img class="avatar" src="<%= student.image %>">
+          <img class="avatar<%= ' disabled' unless student.enabled? %>" src="<%= student.image %>">
           <br/>
           <strong><%= student.name %></strong>
           <br/>

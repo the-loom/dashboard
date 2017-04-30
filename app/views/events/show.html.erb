@@ -10,7 +10,7 @@
         <div class="col-md-2 col-xs-6 student-box">
           <% if student %>
             <%= link_to register_event_url(nickname: student.nickname, event_id: @event.id) do %>
-              <img class="avatar" src="<%= student.image %>">
+              <img class="avatar<%= ' disabled' unless student.enabled? %>" src="<%= student.image %>">
               <p class="data"><%= student.nickname %><br/>
                 <small><%= student.name %></small>
               </p>
