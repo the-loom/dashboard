@@ -51,4 +51,6 @@ Rails.application.routes.draw do
   get '/lectures/:lecture_id/show' => 'lectures#show', as: :lecture_details
   post '/lectures/:lecture_id/register' => 'lectures#register', as: :register_lecture
 
+  get '/lectures/summary' => 'lectures#summary', as: :attendance
+
 end

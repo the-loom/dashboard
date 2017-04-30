@@ -5,6 +5,14 @@ class LecturesController < ApplicationController
     @lectures = Lecture.all
   end
 
+  def summary
+    authorize Lecture
+    @lectures = Lecture.all
+    @attendances = Attendance.all
+    @attendances_per_student = @attendances.group_by { |a| a.user }
+    @students =  @attendances_per_student.keys.sort {|a,b| a.name <=> b.name }
+  end
+
   def show
     authorize Lecture
     @lecture = Lecture.find(params[:lecture_id])

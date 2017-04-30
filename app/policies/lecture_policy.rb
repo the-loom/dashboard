@@ -2,6 +2,9 @@ class LecturePolicy < ApplicationPolicy
   def manage?
     user.teacher?
   end
+  def summary?
+    user.teacher?
+  end
   def register?
     user.teacher?
   end

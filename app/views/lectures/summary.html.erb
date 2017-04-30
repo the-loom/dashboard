@@ -1,0 +1,37 @@
+<legend>
+  Resumen de asistencas
+</legend>
+
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th>Estudiante</th>
+    <% @lectures.each do |lecture| %>
+      <th title="<%= lecture.summary %>"><%= lecture.date.strftime('%d/%m') %></th>
+    <% end %>
+  </tr>
+  </thead>
+  <tbody>
+  <% @students.each do |student| %>
+    <tr>
+      <td>
+        <%= link_to student.name, user_details_url(student.nickname) %>
+      </td>
+      <% @lectures.each do |lecture| %>
+        <td>
+          <% present = @attendances_per_student[student].find { |a| a.lecture == lecture }.condition == 'present' %>
+          <label class="label label-<%= present ? 'success' : 'danger' %>">
+            &nbsp;
+          </label>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+  </tbody>
+  <tfoot>
+  <th>Totales</th>
+  <% @lectures.each do |lecture| %>
+    <th><%= @attendances.select { |a| a.lecture == lecture && a.condition == 'present' }.size %></th>
+  <% end %>
+  </tfoot>
+</table>
