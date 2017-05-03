@@ -4,25 +4,23 @@
 
   <%= hidden_field_tag 'lecture_id', @lecture.id %>
 
-  <table class="members table table-hover">
-    <thead></thead>
-    <tbody>
+  <div class="row members attendance">
+
     <% @students.each do |student| %>
-      <tr class="clickable">
-        <td>
+      <div class="col-md-2 box">
+        <img class="avatar<%= ' disabled' unless student.enabled? %>" src="<%= student.image %>">
+        <br/>
+        <div class="data">
           <%= check_box :student_ids, student.id, { checked: student.present_at(@lecture) } %>
-        </td>
-        <td>
-          <img class="avatar<%= ' disabled' unless student.enabled? %>" src="<%= student.image %>">
-          <br/>
           <strong><%= student.name %></strong>
           <br/>
           (<%= student.nickname %>)
-        </td>
-      </tr>
+        </div>
+      </div>
     <% end %>
-    </tbody>
-  </table>
+
+  </div>
+
   <div class="form-group">
     <%= submit_tag "Guardar asistencia", class: "btn btn-primary" %>
   </div>

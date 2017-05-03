@@ -107,3 +107,16 @@
   filter: grayscale(100%);
   opacity: 0.2;
 }
+
+.attendance {
+  .box {
+    .data {
+      height: 5em;
+    }
+    img.avatar {
+      width: 100%;
+      height: auto;
+    }
+  }
+}
+
