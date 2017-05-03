@@ -33,7 +33,10 @@
               <img class="avatar<%= ' disabled' unless student.enabled? %>" src="<%= student.image %>">
             <% end %>
           </td>
-          <td><%= student.name %></td>
+          <td>
+            <span class="badge"><%= student.level %></span>
+            <%= student.name %>
+          </td>
           <td><%= student.points %></td>
           <td>
             <%= link_to "https://www.github.com/#{student.nickname}", target: '_blank' do %>

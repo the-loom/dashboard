@@ -19,6 +19,10 @@ class User < ApplicationRecord
 
   belongs_to :team, optional: true
 
+  def level
+    Level.new(points, badges.size).value
+  end
+
   def unregister_attendance(lecture)
     if attendances.detect { |a| a.present? && a.lecture == lecture }
       self.points = self.points - 10

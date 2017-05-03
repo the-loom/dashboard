@@ -25,15 +25,17 @@
       <div class="col-md-2 col-xs-6 student-box">
         <%= link_to user_details_url(student.nickname) do %>
           <img class="avatar<%= ' disabled' unless student.enabled? %>" src="<%= student.image %>">
-          <p class="data"><%= student.nickname %><br/>
-            <small><%= student.name %></small>
+          <p class="data">
+            <%= student.nickname %><br/>
+            <small><%= student.name %></small><br/>
           </p>
         <% end %>
+        <p>Nivel <span class="badge"><%= student.level %></span> /
+          <%= student.points %> XP</p>
       </div>
     <% end %>
   </div>
 </div>
-
 <div class="col-md-6">
   <legend>Entregas</legend>
 
