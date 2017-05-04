@@ -19,6 +19,10 @@ class User < ApplicationRecord
 
   belongs_to :team, optional: true
 
+  def image
+    secondary_image || read_attribute(:image)
+  end
+
   def level
     Level.new(points, badges.size).value
   end
