@@ -20,7 +20,12 @@ class User < ApplicationRecord
   belongs_to :team, optional: true
 
   def image
-    secondary_image || read_attribute(:image)
+    current_user = User.find(session[:user_id])
+    if current_user.teacher?
+      secondary_image || read_attribute(:image)
+    else
+      read_attribute(:image)
+    end
   end
 
   def level

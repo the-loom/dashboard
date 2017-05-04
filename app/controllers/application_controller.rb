@@ -7,6 +7,14 @@ class ApplicationController < ActionController::Base
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
+  before_filter :_set_current_session
+
+  protected
+  def _set_current_session
+    accessor = instance_variable_get(:@_request)
+    ActiveRecord::Base.send(:define_method, "session", proc {accessor.session})
+  end
+
   private
 
   def user_not_authorized
