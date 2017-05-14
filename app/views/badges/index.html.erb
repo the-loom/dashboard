@@ -16,7 +16,7 @@
   <% @badges.each do |badge| %>
     <tr>
       <td>
-        <img class="loom-badge" src="<%= image_url("badges/#{badge.slug}.png") %>"></td>
+        <img class="loom-badge" src="http://www.delucas.com.ar/loom/badges/<%= badge.slug %>.png"></td>
       </td>
       <td>
         <%= link_to badge.name, badge_details_url(badge.id) %>
