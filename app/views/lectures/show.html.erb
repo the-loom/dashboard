@@ -7,7 +7,7 @@
   <div class="row members attendance">
 
     <% @students.each do |student| %>
-      <div class="col-md-2 box">
+      <div class="col-md-2 col-xs-6 box">
         <img class="avatar<%= ' disabled' unless student.enabled? %>" src="<%= student.image %>">
         <br/>
         <div class="data">
