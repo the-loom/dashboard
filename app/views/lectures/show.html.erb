@@ -29,7 +29,7 @@
 
 <script>
     $(function () {
-        $('table.members tr').click(function (event) {
+        $('.members .box').click(function (event) {
             if (event.target.type !== 'checkbox') {
                 $(':checkbox', this).trigger('click');
             }
