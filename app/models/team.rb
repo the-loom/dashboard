@@ -16,6 +16,7 @@ class Team < ApplicationRecord
   end
 
   def points
-    members.select { |m| m.enabled }.sum(&:points) / members.size
+    enabled_members = members.select { |m| m.enabled }
+    enabled_members.sum(&:points) / enabled_members.size
   end
 end
