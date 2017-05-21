@@ -37,7 +37,8 @@ Rails.application.routes.draw do
   get '/readings/new' => 'readings#new', as: :new_reading
   post '/readings/new' => 'readings#create', as: :create_reading
   get '/readings/:slug/show' => 'readings#show', as: :reading_details
-  post '/readings/:slug/register' => 'readings#register', as: :register_reading
+  get '/readings/register' => 'readings#prepare', as: :pre_register_reading
+  post '/readings/register' => 'readings#register', as: :register_reading
 
   get '/checkpoints/' => 'checkpoints#index', as: :checkpoints_list
   get '/checkpoints/new' => 'checkpoints#new', as: :new_checkpoint

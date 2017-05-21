@@ -5,17 +5,21 @@ class ReadingsController < ApplicationController
     @readings = Reading.all
   end
 
-  def show
-    authorize Reading
-    @reading = Reading.where(slug: params[:slug]).first
+  def prepare
+    authorize Reading, :register?
+    @readings = Reading.all
     @teams = Team.sorted
   end
 
   def register
     authorize Reading
-    measurement = Measurement.create(measurement_params)
-    flash[:info] = "Se guardó correctamente la medición #{measurement.reading.name} a #{measurement.team.name}"
-    redirect_to reading_details_url(measurement.reading.slug)
+    team = Team.find(params[:team_id].to_i)
+    params[:value].each do |k, v|
+      reading = Reading.find(k.to_i)
+      Measurement.create(team: team, reading: reading, value: v.to_i) unless v.blank?
+    end
+    flash[:info] = "Se guardaron correctamente las mediciones para el equipo #{team.name}"
+    redirect_to readings_list_url
   end
 
   def new

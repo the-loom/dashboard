@@ -1,0 +1,21 @@
+<legend>Registrar mediciones</legend>
+
+<%= form_tag(register_reading_url, {class: 'form-horizontal'}) do %>
+
+  <div class="form-group">
+    <%= label_tag :team_id, 'Equipo' %>
+    <%= select_tag(:team_id, options_from_collection_for_select(@teams, :id, :name), { class: 'form-control' }) %>
+  </div>
+
+  <% @readings.each do |reading| %>
+    <div class="form-group">
+      <%= label_tag :"value[#{reading.id}]", reading.name %>
+      <%= number_field_tag :"value[#{reading.id}]", nil, { class: 'form-control' } %>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= submit_tag "Guardar mediciones", class: "btn btn-primary" %>
+  </div>
+
+<% end %>
