@@ -5,7 +5,7 @@ class Team < ApplicationRecord
   has_many :readings, through: :measurements, source: :reading
 
   has_many :checks
-  has_many :checkpoints, through: :checks
+  has_many :checkpoints, -> { order(created_at: :desc) }, through: :checks
 
   def self.sorted
     self.order(:name)

@@ -6,10 +6,10 @@ class User < ApplicationRecord
       teacher: 2
   }
 
-  has_many :occurrences
+  has_many :occurrences, -> { order(created_at: :desc) }
   has_many :events, through: :occurrences
 
-  has_many :earnings
+  has_many :earnings, -> { order(created_at: :desc) }
   has_many :badges, through: :earnings
 
   has_many :attendances

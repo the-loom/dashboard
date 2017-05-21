@@ -35,7 +35,7 @@
 
     <table class="table table-striped table-bordered">
       <tbody>
-      <% @user.attendances.each do |attendance| %>
+      <% @user.attendances.sort_by do |a| a.lecture.date end.each do |attendance| %>
         <tr>
           <td><%= l attendance.lecture.date %></td>
           <td><%= attendance.lecture.summary %></td>
