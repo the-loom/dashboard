@@ -33,17 +33,29 @@
       </small>
     </legend>
 
-    <table class="table table-striped table-bordered">
-      <tbody>
-      <% @user.attendances.sort_by do |a| a.lecture.date end.each do |attendance| %>
-        <tr>
-          <td><%= l attendance.lecture.date %></td>
-          <td><%= attendance.lecture.summary %></td>
-          <td><%= attendance.condition == 'absent' ? 'Ausente' : 'Presente' %></td>
-        </tr>
-      <% end %>
-      </tbody>
-    </table>
+    <% if @user.attendances.size == 0 %>
+
+      <div class="alert alert-info">
+        <p>Aún no se registran asistencias...</p>
+      </div>
+
+    <% else %>
+
+      <table class="table table-striped table-bordered">
+        <tbody>
+        <% @user.attendances.sort_by do |a|
+          a.lecture.date
+        end.each do |attendance| %>
+          <tr>
+            <td><%= l attendance.lecture.date %></td>
+            <td><%= attendance.lecture.summary %></td>
+            <td><%= attendance.condition == 'absent' ? 'Ausente' : 'Presente' %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+
+    <% end %>
 
     <legend>Eventos registrados</legend>
 
