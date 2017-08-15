@@ -21,3 +21,26 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
+.tagsort-tags-container {
+    margin: 1em 0;
+}
+
+.tagsort-tags-container span {
+    display: inline;
+    padding: .2em .6em .3em;
+    font-size: 75%;
+    font-weight: bold;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+    background-color: #777;
+    margin: 0 .2em;
+    font-size: 1.5em;
+}
+
+.tagsort-tags-container span.tagsort-active {
+    background-color: #2b542c;
+}
