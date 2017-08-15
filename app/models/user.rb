@@ -6,6 +6,9 @@ class User < ApplicationRecord
       teacher: 2
   }
 
+  has_many :user_tags
+  has_many :tags, through: :user_tags
+
   has_many :occurrences, -> { order(created_at: :desc) }
   has_many :events, through: :occurrences
 
@@ -18,6 +21,20 @@ class User < ApplicationRecord
   has_many :comments
 
   belongs_to :team, optional: true
+
+  def self.tagged_with(name)
+    Tag.find_by_name!(name).users
+  end
+
+  def all_tags=(names)
+    self.tags = names.split(",").map do |name|
+      Tag.where(name: name.strip).first_or_create!
+    end
+  end
+
+  def all_tags
+    self.tags.map(&:name).join(", ")
+  end
 
   def image
     current_user = User.find(session[:user_id])

@@ -1,5 +1,7 @@
 <legend>Registrar asistencia "<%= @lecture.summary %>"</legend>
 
+<div class="tagsort-tags-container"></div>
+
 <%= form_tag(register_lecture_url(@lecture.id)) do %>
 
   <%= hidden_field_tag 'lecture_id', @lecture.id %>
@@ -7,11 +9,11 @@
   <div class="row members attendance">
 
     <% @students.each do |student| %>
-      <div class="col-md-2 col-xs-6 box">
+      <div class="student col-md-2 col-xs-6 box" data-item-tags="<%= student.tags.map { |t| t.name.gsub(/\s(.)/) { |e| $1.upcase } }.join(',') %>">
         <img class="avatar<%= ' disabled' unless student.enabled? %>" src="<%= student.image %>">
         <br/>
         <div class="data">
-          <%= check_box :student_ids, student.id, { checked: student.present_at(@lecture) } %>
+          <%= check_box :student_ids, student.id, {checked: student.present_at(@lecture)} %>
           <strong><%= student.name %></strong>
           <br/>
           (<%= student.nickname %>)
@@ -33,6 +35,9 @@
             if (event.target.type !== 'checkbox') {
                 $(':checkbox', this).trigger('click');
             }
+        });
+        $('div.tagsort-tags-container').tagSort({
+            items: '.student', tagElement: 'span', itemTagsSeperator: ' / ', sortType: 'exclusive', fadeTime: 0
         });
     });
 </script>
