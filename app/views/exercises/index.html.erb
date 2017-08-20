@@ -1,0 +1,21 @@
+<legend>
+  Listado de ejercicios
+  <%= link_to 'Nuevo ejercicio', new_exercise_path, class: 'btn btn-primary pull-right' %>
+</legend>
+
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th>Nombre</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @exercises.each do |exercise| %>
+    <tr>
+      <td>
+        <%= link_to exercise.name, exercise_path(exercise.id) %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

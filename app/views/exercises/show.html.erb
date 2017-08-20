@@ -1,0 +1,23 @@
+<legend><%= @exercise.name %></legend>
+
+<div class="row">
+  <div class="col-md-6">
+
+    <dl class="dl-horizontal">
+      <dt>Consigna</dt>
+      <dd><%= link_to @exercise.url %></dd>
+      <dt>Aclaraciones</dt>
+      <dd><%= @exercise.notes %></dd>
+    </dl>
+  </div>
+</div>
+
+<div class="row">
+
+  <div class="col-md-6">
+    <div class="alert alert-info">
+      <p>Cuando comiences a resolver un ejercicio, no podrás iniciar otro hasta marcarlo como finalizado.</p>
+    </div>
+    <%= link_to "Comenzar a resolver", root_url, class: 'btn btn-primary' %>
+  </div>
+</div>
