@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 20170817154140) do
     t.integer "points_per_batch"
   end
 
-  create_table "exercise_measurements", force: :cascade do |t|
+  create_table "exercise_timers", force: :cascade do |t|
     t.integer  "solution_id"
     t.integer  "stage"
     t.string   "sub_stage"

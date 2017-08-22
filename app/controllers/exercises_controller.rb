@@ -2,9 +2,11 @@ class ExercisesController < ApplicationController
   def index
     @exercises = Exercise.all
   end
+
   def new
     @exercise = Exercise.new
   end
+
   def create
     authorize Exercise, :create?
     @exercise = Exercise.new(exercise_params)
@@ -17,6 +19,17 @@ class ExercisesController < ApplicationController
   def show
     authorize Lecture
     @exercise = Exercise.find(params[:id])
+  end
+
+  def start
+    if current_user.solutions.where(finished_at: nil).empty?
+      @exercise = Exercise.find(params[:exercise_id])
+      @solution = Solution.create(exercise: @exercise, user: current_user)
+      redirect_to solution_path(@solution.id)
+    else
+      flash[:alert] = "No se puede iniciar una resolución con otra en curso"
+      redirect_to exercises_path
+    end
   end
 
   private

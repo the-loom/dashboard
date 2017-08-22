@@ -18,6 +18,6 @@
     <div class="alert alert-info">
       <p>Cuando comiences a resolver un ejercicio, no podrás iniciar otro hasta marcarlo como finalizado.</p>
     </div>
-    <%= link_to "Comenzar a resolver", root_url, class: 'btn btn-primary' %>
+    <%= link_to "Comenzar a resolver", exercise_start_path(@exercise.id), class: 'btn btn-primary' %>
   </div>
 </div>
