@@ -1,0 +1,39 @@
+body {
+  min-width: 300px;
+}
+
+section.timers {
+  ::-moz-selection{
+    background: #3C3C80;
+    color:#fff;
+    text-shadow: none;
+  }
+  ::selection {
+    background:#3C3C80;
+    color:#fff;
+    text-shadow: none;
+  }
+  label[for] {
+    cursor: pointer;
+    /*text-decoration: underline;*/
+  }
+  .table>tbody>tr:first-child>td {
+    border-top: 0;
+  }
+
+
+  .estimated::-webkit-outer-spin-button,
+  .estimated::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .estimated {
+    width: 50px;
+    -moz-appearance: textfield;
+  }
+
+  .play {
+    margin-left: 20px;
+  }
+}

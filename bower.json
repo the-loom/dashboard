@@ -19,6 +19,8 @@
     "bootstrap": "^3.3.7",
     "components-font-awesome": "^4.7.0",
     "c3": "^0.4.11",
-    "tagsort": "*"
+    "tagsort": "*",
+    "moment": "^2.18.1",
+    "messenger": "^1.5.0"
   }
 }

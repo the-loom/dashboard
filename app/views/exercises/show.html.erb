@@ -14,10 +14,22 @@
 
 <div class="row">
 
+  <% if @solution %>
+
+    <div class="col-md-6">
+      <div class="alert alert-warning">
+        <p>Ya tenés una resolución en curso. Podés continuar con ella.</p>
+      </div>
+      <%= link_to "Continuar", solution_path(@solution.id), class: 'btn btn-primary' %>
+    </div>
+
+    <% else %>
+
   <div class="col-md-6">
     <div class="alert alert-info">
       <p>Cuando comiences a resolver un ejercicio, no podrás iniciar otro hasta marcarlo como finalizado.</p>
     </div>
     <%= link_to "Comenzar a resolver", exercise_start_path(@exercise.id), class: 'btn btn-primary' %>
   </div>
+    <% end %>
 </div>

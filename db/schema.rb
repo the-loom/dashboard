@@ -65,15 +65,6 @@ ActiveRecord::Schema.define(version: 20170817154140) do
     t.integer "points_per_batch"
   end
 
-  create_table "exercise_timers", force: :cascade do |t|
-    t.integer  "solution_id"
-    t.integer  "stage"
-    t.string   "sub_stage"
-    t.integer  "total_time_in_milliseconds"
-    t.integer  "estimated_time_in_milliseconds"
-    t.datetime "started_at"
-  end
-
   create_table "exercises", force: :cascade do |t|
     t.string "name"
     t.string "url"
@@ -124,6 +115,15 @@ ActiveRecord::Schema.define(version: 20170817154140) do
     t.string "name"
     t.string "nickname"
     t.string "image"
+  end
+
+  create_table "timers", force: :cascade do |t|
+    t.integer  "solution_id"
+    t.integer  "stage"
+    t.string   "sub_stage"
+    t.integer  "total_time_in_seconds"
+    t.integer  "estimated_time_in_seconds"
+    t.datetime "started_at"
   end
 
   create_table "user_tags", force: :cascade do |t|

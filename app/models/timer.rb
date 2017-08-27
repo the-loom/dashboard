@@ -1,4 +1,4 @@
-class ExerciseTimer < ApplicationRecord
+class Timer < ApplicationRecord
 
   enum stage: {
       analysis: 0,
@@ -14,15 +14,19 @@ class ExerciseTimer < ApplicationRecord
     started_at != nil
   end
 
-  def start
+  def play
+    return if running?
     self.started_at = Time.zone.now
+    self.save
   end
 
   def pause
+    return unless running?
     now = Time.zone.now
-    self.total_time_in_milliseconds = 0 if self.total_time_in_milliseconds == nil
-    self.total_time_in_milliseconds += now - self.started_at
+    self.total_time_in_seconds = 0 if self.total_time_in_seconds == nil
+    self.total_time_in_seconds += now - self.started_at
     self.started_at = nil
+    self.save
   end
 
 end

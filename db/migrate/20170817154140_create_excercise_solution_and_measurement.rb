@@ -12,12 +12,12 @@ class CreateExcerciseSolutionAndMeasurement < ActiveRecord::Migration[5.0]
       t.text :notes
       t.timestamps
     end
-    create_table :exercise_timers do |t|
+    create_table :timers do |t|
       t.integer :solution_id
       t.integer :stage
       t.string :sub_stage
-      t.integer :total_time_in_milliseconds
-      t.integer :estimated_time_in_milliseconds
+      t.integer :total_time_in_seconds
+      t.integer :estimated_time_in_seconds
       t.datetime :started_at
     end
   end

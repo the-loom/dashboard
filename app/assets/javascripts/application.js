@@ -15,4 +15,6 @@
 //= require d3/d3
 //= require c3/c3
 //= require tagsort/dist/tagsort.min
+//= require moment/moment
+//= require messenger/build/js/messenger
 //= require_tree .

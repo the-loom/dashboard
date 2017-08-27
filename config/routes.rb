@@ -58,6 +58,14 @@ Rails.application.routes.draw do
     get :start
   end
 
-  resources :solutions
+  resources :solutions do
+    get :start
+    patch :finish
+    delete :cancel
+    resources :timers do
+      post :play
+      post :pause
+    end
+  end
 
 end
