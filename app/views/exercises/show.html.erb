@@ -23,13 +23,59 @@
       <%= link_to "Continuar", solution_path(@solution.id), class: 'btn btn-primary' %>
     </div>
 
-    <% else %>
+  <% else %>
 
-  <div class="col-md-6">
-    <div class="alert alert-info">
-      <p>Cuando comiences a resolver un ejercicio, no podrás iniciar otro hasta marcarlo como finalizado.</p>
+    <div class="col-md-6">
+      <div class="alert alert-info">
+        <p>Cuando comiences a resolver un ejercicio, no podrás iniciar otro hasta marcarlo como finalizado.</p>
+      </div>
+      <%= link_to "Comenzar a resolver", exercise_start_path(@exercise.id), class: 'btn btn-primary' %>
     </div>
-    <%= link_to "Comenzar a resolver", exercise_start_path(@exercise.id), class: 'btn btn-primary' %>
-  </div>
+  <% end %>
+</div>
+
+<br/>
+
+<div class="row">
+  <div class="col-md-12">
+    <legend>Soluciones anteriores</legend>
+
+    <% if @solutions.empty? %>
+      <div class="alert alert-info">
+        <p>Aún no tenés soluciones para este ejercicio.</p>
+      </div>
+    <% else %>
+      <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+          <td>Fecha</td>
+          <% Timer.stages.each do |stage| %>
+            <td><%= t("timers.stages.#{stage[0]}") %></td>
+          <% end %>
+          <td>Tiempo total</td>
+        </tr>
+        </thead>
+        <tbody>
+        <% @solutions.each do |solution| %>
+          <tr>
+            <td><%= l solution.created_at %></td>
+            <% Timer.stages.each do |stage| %>
+              <% timer = solution.timers.detect { |t| t.stage == stage[0] } %>
+              <td>
+                <% if timer.total_time_in_seconds %>
+                  <%= Time.at(timer.total_time_in_seconds).utc.strftime("%H:%M:%S") %>
+                  (<%= Time.at(timer.estimated_time_in_seconds).utc.strftime("%H:%M:%S") %>)
+                <% end %>
+              </td>
+            <% end %>
+            <td>
+              <%= Time.at(solution.timers.sum { |t| t.total_time_in_seconds.to_i }).utc.strftime("%H:%M:%S") %>
+              (<%= Time.at(solution.timers.sum { |t| t.estimated_time_in_seconds.to_i }).utc.strftime("%H:%M:%S") %>)
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
     <% end %>
+  </div>
 </div>
