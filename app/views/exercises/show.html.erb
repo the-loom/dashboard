@@ -5,10 +5,15 @@
 
     <dl class="dl-horizontal">
       <dt>Consigna</dt>
-      <dd><%= link_to @exercise.url %></dd>
+      <dd>
+        <%= link_to @exercise.url, target: "_blank" do %>
+          <%= @exercise.url %> <i class="fa fa-external-link"></i>
+        <% end %>
+      </dd>
       <dt>Aclaraciones</dt>
       <dd><%= @exercise.notes %></dd>
     </dl>
+
   </div>
 </div>
 
@@ -53,6 +58,7 @@
             <td><%= t("timers.stages.#{stage[0]}") %></td>
           <% end %>
           <td>Tiempo total</td>
+          <td>Notas</td>
         </tr>
         </thead>
         <tbody>
@@ -71,6 +77,9 @@
             <td>
               <%= Time.at(solution.timers.sum { |t| t.total_time_in_seconds.to_i }).utc.strftime("%H:%M:%S") %>
               (<%= Time.at(solution.timers.sum { |t| t.estimated_time_in_seconds.to_i }).utc.strftime("%H:%M:%S") %>)
+            </td>
+            <td>
+              <pre><%= solution.notes %></pre>
             </td>
           </tr>
         <% end %>
