@@ -1,0 +1,39 @@
+<legend>
+  Listado de ejercicios
+  <% if policy(Exercise).create? %>
+    <%= link_to 'Nuevo ejercicio', new_exercise_path, class: 'btn btn-primary pull-right' %>
+  <% end %>
+</legend>
+
+<% if @exercises.empty? %>
+
+  <div class="alert alert-info">
+    <p>Aún no hay ningún ejercicio para comenzar a resolver</p>
+  </div>
+
+<% else %>
+
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @exercises.each do |exercise| %>
+      <tr>
+        <td>
+          <%= link_to exercise.name, exercise_path(exercise.id) %>
+        </td>
+        <td>
+          <% if exercise.active_solution_for?(current_user) %>
+            <%= link_to 'Continuar resolviendo', solution_path(exercise.active_solution_for?(current_user)), class: 'btn btn-default' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+<% end %>

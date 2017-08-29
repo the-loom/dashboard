@@ -20,6 +20,8 @@ class User < ApplicationRecord
 
   has_many :comments
 
+  has_many :solutions
+
   belongs_to :team, optional: true
 
   def self.tagged_with(name)

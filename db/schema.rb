@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170815012657) do
+ActiveRecord::Schema.define(version: 20170817154140) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,12 @@ ActiveRecord::Schema.define(version: 20170815012657) do
     t.integer "points_per_batch"
   end
 
+  create_table "exercises", force: :cascade do |t|
+    t.string "name"
+    t.string "url"
+    t.text   "notes"
+  end
+
   create_table "lectures", force: :cascade do |t|
     t.date   "date"
     t.string "summary"
@@ -92,6 +98,15 @@ ActiveRecord::Schema.define(version: 20170815012657) do
     t.string "slug"
   end
 
+  create_table "solutions", force: :cascade do |t|
+    t.integer  "exercise_id"
+    t.integer  "user_id"
+    t.datetime "finished_at"
+    t.text     "notes"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "tags", force: :cascade do |t|
     t.string "name"
   end
@@ -100,6 +115,15 @@ ActiveRecord::Schema.define(version: 20170815012657) do
     t.string "name"
     t.string "nickname"
     t.string "image"
+  end
+
+  create_table "timers", force: :cascade do |t|
+    t.integer  "solution_id"
+    t.integer  "stage"
+    t.string   "sub_stage"
+    t.integer  "total_time_in_seconds"
+    t.integer  "estimated_time_in_seconds"
+    t.datetime "started_at"
   end
 
   create_table "user_tags", force: :cascade do |t|

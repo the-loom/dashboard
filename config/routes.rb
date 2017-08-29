@@ -54,4 +54,18 @@ Rails.application.routes.draw do
 
   get '/lectures/summary' => 'lectures#summary', as: :attendance
 
+  resources :exercises do
+    get :start
+  end
+
+  resources :solutions do
+    get :start
+    patch :finish
+    delete :cancel
+    resources :timers do
+      post :play
+      post :pause
+    end
+  end
+
 end
