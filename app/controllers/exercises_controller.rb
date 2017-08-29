@@ -4,6 +4,7 @@ class ExercisesController < ApplicationController
   end
 
   def new
+    authorize Exercise, :new?
     @exercise = Exercise.new
   end
 
