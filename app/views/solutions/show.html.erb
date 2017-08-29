@@ -185,6 +185,14 @@
                     that.initStage(stage);
                 }
             });
+
+            $(window).on('beforeunload', function(e) {
+                if (that.getActiveStage()) {
+                    var dialogText = 'Hay un temporizador en curso. ¿Estás seguro de que deseás salir?';
+                    e.returnValue = dialogText;
+                    return dialogText;
+                }
+            });
         };
 
         this.getMomentInit = function () {
@@ -294,6 +302,11 @@
                 _momentInit = 0;
                 _momentServer = 0;
                 $(".bplay").filter("[data-id='" + stage.getId() + "']").html("<i class='fa fa-play'></i>");
+
+                var $stageTiempo = $(".tiempo").filter("[data-id='" + stage.getId() + "']");
+                var sec = Math.floor(stage.getTotalTimeInSeconds());
+                var show = labelTime(sec);
+                $stageTiempo.html(show);
 
                 endProcessing();
 
@@ -417,7 +430,7 @@
     });
 
 
-    function post(data, url, done, fail) {
+    function request(data, url, done, fail, type) {
         var t_u = typeof undefined;
         if (typeof done === t_u) {
             done = $.noop;
@@ -431,7 +444,7 @@
             progressMessage: 'Sincronizando...'
         }, {
             url: url,
-            type: "POST",
+            type: type,
             data: data,
             dataType: "json",
             timeout: 3000,
@@ -440,27 +453,12 @@
         });
     }
 
+    function post(data, url, done, fail) {
+        request(data, url, done, fail, 'POST');
+    }
+
     function get(data, url, done, fail) {
-        var t_u = typeof undefined;
-        if (typeof done === t_u) {
-            done = $.noop;
-        }
-        if (typeof fail === t_u) {
-            fail = $.noop;
-        }
-        Messenger().run({
-            // successMessage: 'Sincronizado',
-            errorMessage: 'Error sincronizando',
-            progressMessage: 'Sincronizando...'
-        }, {
-            url: url,
-            type: "GET",
-            data: data,
-            dataType: "json",
-            timeout: 3000,
-            success: done,
-            error: fail
-        });
+        request(data, url, done, fail, 'GET');
     }
 
 </script>
