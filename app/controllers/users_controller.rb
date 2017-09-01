@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
 
   before_action :set_user, only: [:show, :edit, :update]
+  before_action :verify_pending_solutions, only: :show
 
   def index
     authorize User

@@ -7,7 +7,7 @@
       <dt>Consigna</dt>
       <dd>
         <%= link_to @exercise.url, target: "_blank" do %>
-          <%= @exercise.url %> <i class="fa fa-external-link"></i>
+          <%= truncate(@exercise.url, length: 40) %> <i class="fa fa-external-link"></i>
         <% end %>
       </dd>
       <dt>Aclaraciones</dt>
@@ -53,18 +53,25 @@
       <table class="table table-bordered table-hover">
         <thead>
         <tr>
-          <td>Fecha</td>
+          <td>Fecha y estudiante</td>
           <% Timer.stages.each do |stage| %>
             <td><%= t("timers.stages.#{stage[0]}") %></td>
           <% end %>
           <td>Tiempo total</td>
+          <td>¿Terminó?</td>
           <td>Notas</td>
+          <% if current_user.teacher? %>
+            <td>&nbsp;</td>
+          <% end %>
         </tr>
         </thead>
         <tbody>
         <% @solutions.each do |solution| %>
           <tr>
-            <td><%= l solution.created_at %></td>
+            <td>
+              <%= l solution.created_at %><br/>
+              <%= solution.user.name %>
+            </td>
             <% Timer.stages.each do |stage| %>
               <% timer = solution.timers.detect { |t| t.stage == stage[0] } %>
               <td>
@@ -78,9 +85,20 @@
               <%= Time.at(solution.timers.sum { |t| t.total_time_in_seconds.to_i }).utc.strftime("%H:%M:%S") %>
               (<%= Time.at(solution.timers.sum { |t| t.estimated_time_in_seconds.to_i }).utc.strftime("%H:%M:%S") %>)
             </td>
+            <td><%= solution.finished_at != nil ? 'Si' : 'No' %></td>
             <td>
-              <pre><%= solution.notes %></pre>
+              <% unless solution.notes.blank? %>
+                <pre><%= solution.notes %></pre>
+              <% end %>
             </td>
+            <% if current_user.teacher? %>
+              <td>
+                <%= button_to solution_cancel_path(solution),
+                              method: :delete, title: 'Esto borrará las métricas', class: 'btn btn-default' do %>
+                  <i class="fa fa-trash"></i>
+                <% end %>
+              </td>
+            <% end %>
           </tr>
         <% end %>
         </tbody>

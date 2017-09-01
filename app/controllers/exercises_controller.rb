@@ -1,4 +1,7 @@
 class ExercisesController < ApplicationController
+
+  before_action :verify_pending_solutions, only: [:show, :index]
+
   def index
     @exercises = Exercise.all
   end

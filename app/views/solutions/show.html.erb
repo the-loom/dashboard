@@ -15,7 +15,7 @@
       <dt>Consigna</dt>
       <dd>
         <%= link_to @solution.exercise.url, target: "_blank" do %>
-          <%= @solution.exercise.url %> <i class="fa fa-external-link"></i>
+          <%= truncate(@solution.exercise.url, length: 40) %> <i class="fa fa-external-link"></i>
         <% end %>
       </dd>
       <dt>Aclaraciones</dt>

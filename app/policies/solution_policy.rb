@@ -12,7 +12,7 @@ class SolutionPolicy < ApplicationPolicy
   end
 
   def cancel?
-    is_own_solution(record, user)
+    is_own_solution(record, user) || user.teacher?
   end
 
   def timer?

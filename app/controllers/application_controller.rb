@@ -15,6 +15,12 @@ class ApplicationController < ActionController::Base
     ActiveRecord::Base.send(:define_method, "session", proc {accessor.session})
   end
 
+  def verify_pending_solutions
+    if current_user.solutions.detect { |s| s.finished_at == nil }
+      flash[:info] = 'Tenés un ejercicio en curso. Si lo olvidaste, podés accederlo y finalizarlo. O eliminarlo'
+    end
+  end
+
   private
 
   def user_not_authorized
