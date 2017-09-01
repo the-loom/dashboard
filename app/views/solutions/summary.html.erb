@@ -1,0 +1,85 @@
+<legend>
+  <%= @solution.exercise.name %>
+</legend>
+
+<div class="row">
+  <div class="col-md-6">
+
+    <dl class="dl-horizontal">
+      <dt>Consigna</dt>
+      <dd>
+        <%= link_to @solution.exercise.url, target: "_blank" do %>
+          <%= truncate(@solution.exercise.url, length: 40) %> <i class="fa fa-external-link"></i>
+        <% end %>
+      </dd>
+      <dt>Aclaraciones</dt>
+      <dd><%= @solution.exercise.notes %></dd>
+    </dl>
+
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <legend>Datos sobre la solución</legend>
+    <dl class="dl-horizontal">
+      <dt>Estudiante</dt>
+      <dd><%= @solution.user.name %></dd>
+      <dt>Inicio</dt>
+      <dd><%= @solution.created_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M") %></dd>
+      <dt>Finalización</dt>
+      <dd><%= @solution.finished_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M") if @solution.finished_at %></dd>
+    </dl>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <legend>Tiempos</legend>
+
+    <table class="table table-bordered table-hover">
+      <thead>
+      <tr>
+        <th>Etapa</th>
+        <th>Estimado</th>
+        <th>Real</th>
+        <th>Diferencia</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @presenter.by_stage.each do |stage| %>
+        <tr>
+          <td><%= t("timers.stages.#{stage[:stage]}") %></td>
+          <td>
+            <%= Time.at(stage[:estimated_time_in_seconds]).utc.strftime("%H:%M:%S") %>
+          </td>
+          <td>
+            <%= Time.at(stage[:total_time_in_seconds]).utc.strftime("%H:%M:%S") %>
+          </td>
+          <td>
+            <%= number_to_percentage stage[:delta_percentage], precision: 0 %>
+            (<%= stage[:delta_over_estimated_time] / 60 %> minutos)
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+      <tfoot>
+      <tr>
+        <th>Totales</th>
+        <th>
+          <%= Time.at(@presenter.totals[:estimated_grand_total_in_seconds]).utc.strftime("%H:%M:%S") %>
+        </th>
+        <th>
+          <%= Time.at(@presenter.totals[:grand_total_in_seconds]).utc.strftime("%H:%M:%S") %>
+        </th>
+        <th>
+          <%= number_to_percentage @presenter.totals[:delta_percentage], precision: 0 %>
+          (<%= @presenter.totals[:delta_over_estimated_grand_total] / 60 %> minutos)
+        </th>
+      </tr>
+      </tfoot>
+    </table>
+
+  </div>
+</div>

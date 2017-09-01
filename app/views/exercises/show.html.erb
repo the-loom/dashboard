@@ -43,7 +43,7 @@
 
 <div class="row">
   <div class="col-md-12">
-    <legend>Soluciones anteriores</legend>
+    <legend>Soluciones anteriores (<%= @solutions.empty? ? 0 : @solutions.count %>)</legend>
 
     <% if @solutions.empty? %>
       <div class="alert alert-info">
@@ -69,8 +69,14 @@
         <% @solutions.each do |solution| %>
           <tr>
             <td>
-              <%= l solution.created_at %><br/>
-              <%= solution.user.name %>
+              <% if current_user.teacher? %>
+                <%= link_to solution_summary_path(solution) do %>
+                  <%= l solution.created_at %><br/>
+                  <%= solution.user.name %>
+                <% end %>
+              <% else %>
+                <%= l solution.created_at %>
+              <% end %>
             </td>
             <% Timer.stages.each do |stage| %>
               <% timer = solution.timers.detect { |t| t.stage == stage[0] } %>

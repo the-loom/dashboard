@@ -60,6 +60,7 @@ Rails.application.routes.draw do
 
   resources :solutions do
     get :start
+    get :summary
     patch :finish
     delete :cancel
     resources :timers do

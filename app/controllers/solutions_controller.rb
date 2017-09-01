@@ -10,6 +10,14 @@ class SolutionsController < ApplicationController
     end
   end
 
+  def summary
+    @solution = Solution.find(params[:solution_id])
+    authorize @solution
+
+    @presenter = SolutionSummaryPresenter.new(@solution)
+
+  end
+
   def start
     solution = Solution.find(params[:solution_id])
     authorize solution

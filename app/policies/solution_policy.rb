@@ -3,6 +3,10 @@ class SolutionPolicy < ApplicationPolicy
     is_own_solution(record, user)
   end
 
+  def summary?
+    is_own_solution(record, user) || user.teacher?
+  end
+
   def start?
     is_own_solution(record, user)
   end
