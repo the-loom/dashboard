@@ -17,4 +17,6 @@
 //= require tagsort/dist/tagsort.min
 //= require moment/moment
 //= require messenger/build/js/messenger
+//= require vue/dist/vue
+//= require handlebars/handlebars
 //= require_tree .

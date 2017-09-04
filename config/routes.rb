@@ -59,6 +59,7 @@ Rails.application.routes.draw do
   end
 
   resources :solutions do
+    get :show2
     get :start
     get :summary
     patch :finish
