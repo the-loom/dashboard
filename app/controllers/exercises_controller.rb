@@ -24,12 +24,12 @@ class ExercisesController < ApplicationController
     @exercise = Exercise.find(params[:id])
     authorize @exercise
 
-    @solution = @exercise.solutions.find { |s| s.user == current_user && !s.finished? }
+    @solution = @exercise.solutions.find { |s| s.users.include?(current_user) && !s.finished? }
 
     if current_user.teacher?
       @solutions = @exercise.solutions
     elsif current_user.student?
-      @solutions = @exercise.solutions.find_all { |s| s.user == current_user && s.finished? }
+      @solutions = @exercise.solutions.find_all { |s| s.user.include?(current_user) && s.finished? }
     end
 
   end

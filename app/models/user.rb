@@ -20,7 +20,8 @@ class User < ApplicationRecord
 
   has_many :comments
 
-  has_many :solutions
+  has_many :user_solutions
+  has_many :solutions, through: :user_solutions
 
   belongs_to :team, optional: true
 

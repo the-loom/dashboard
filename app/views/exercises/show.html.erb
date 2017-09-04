@@ -72,7 +72,7 @@
               <% if current_user.teacher? %>
                 <%= link_to solution_summary_path(solution) do %>
                   <%= l solution.created_at %><br/>
-                  <%= solution.user.name %>
+                  <%= solution.users.collect(&:name) %>
                 <% end %>
               <% else %>
                 <%= l solution.created_at %>
