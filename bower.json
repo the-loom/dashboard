@@ -20,6 +20,7 @@
     "c3": "^0.4.11",
     "tagsort": "*",
     "moment": "^2.18.1",
-    "messenger": "^1.5.0"
+    "messenger": "^1.5.0",
+    "bootstrap3-typeahead": "^4.0.2"
   }
 }

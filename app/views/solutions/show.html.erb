@@ -20,12 +20,39 @@
       </dd>
       <dt>Aclaraciones</dt>
       <dd><%= @solution.exercise.notes %></dd>
+      <dt>Integrantes</dt>
+      <dd>
+        <ul>
+          <% @solution.users.each do |partner| %>
+          <li><%= partner.name %> (<%= partner.nickname %>)</li>
+          <% end %>
+        </ul>
+      </dd>
     </dl>
+
+
+    <%= form_for @solution, url: solution_add_partner_path(@solution), html: { class: 'form-inline' } do |f| %>
+      <div class="form-group">
+        <input id="partner" name="nickname" class="form-control" type="text" data-provide="typeahead" placeholder="Usuario de github">
+      </div>
+      <button type="submit" class="btn">
+        Agregar integrante
+      </button>
+    <% end %>
+
+    <script>
+      $(function(){
+          $.get("/partners", function(data){
+              $("#partner").typeahead({ source:data });
+          },'json');
+      });
+    </script>
 
   </div>
   <div class="col-md-6">
     <blockquote>
       <ul>
+        <li>Podés agregar otros integrantes desde el formulario, a la izquierda. Por ahora, no se pueden eliminar... así que ¡ojo!</li>
         <li>Podés cancelar una planilla de métricas desde el cesto de basura, arriba.</li>
         <li>Para iniciar un temporizador, deberás completar las estimaciones primero. ¡Cuidado! Siempre verificá que haya comenzado.</li>
         <li>Si salís sin finalizar, los temporizadores seguirán corriendo.</li>

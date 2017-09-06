@@ -15,7 +15,15 @@ class SolutionsController < ApplicationController
     authorize @solution
 
     @presenter = SolutionSummaryPresenter.new(@solution)
+  end
 
+  def add_partner
+    @solution = Solution.find(params[:solution_id])
+    @partner = User.where(nickname: params[:nickname])
+    @solution.users << @partner
+    @solution.save!
+
+    redirect_to solution_path(@solution)
   end
 
   def start

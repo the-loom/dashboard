@@ -58,11 +58,14 @@ Rails.application.routes.draw do
     get :start
   end
 
+  resources :partners, only: :index
+
   resources :solutions do
     get :start
     get :summary
     patch :finish
     delete :cancel
+    patch :add_partner
     resources :timers do
       post :play
       post :pause
