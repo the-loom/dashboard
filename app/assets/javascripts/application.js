@@ -17,4 +17,5 @@
 //= require tagsort/dist/tagsort.min
 //= require moment/moment
 //= require messenger/build/js/messenger
+//= require bootstrap3-typeahead/bootstrap3-typeahead
 //= require_tree .
