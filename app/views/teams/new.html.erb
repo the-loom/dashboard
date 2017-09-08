@@ -1,0 +1,23 @@
+<legend>Nuevo equipo</legend>
+
+<%= form_for @team do |f| %>
+  <div class="form-group">
+    <%= f.label :name, 'Nombre' %>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :nickname, 'Nickname' %>
+    <%= f.text_field :nickname, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :image, 'Imagen' %>
+    <%= f.text_field :image, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit "Crear equipo", class: "btn btn-primary" %>
+  </div>
+
+<% end %>
