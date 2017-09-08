@@ -53,7 +53,7 @@
       <table class="table table-bordered table-hover">
         <thead>
         <tr>
-          <td>Fecha y estudiante</td>
+          <td>Fecha y estudiantes</td>
           <% Timer.stages.each do |stage| %>
             <td><%= t("timers.stages.#{stage[0]}") %></td>
           <% end %>
@@ -69,13 +69,13 @@
         <% @solutions.each do |solution| %>
           <tr>
             <td>
-              <% if current_user.teacher? %>
-                <%= link_to solution_summary_path(solution) do %>
-                  <%= l solution.created_at %><br/>
-                  <%= solution.users.collect(&:name) %>
-                <% end %>
-              <% else %>
-                <%= l solution.created_at %>
+              <%= link_to solution_summary_path(solution) do %>
+                <%= l solution.created_at.in_time_zone('Buenos Aires') %>
+                <ul>
+                  <% solution.users.each do |partner| %>
+                    <li><%= partner.name %> (<%= partner.nickname %>)</li>
+                  <% end %>
+                </ul>
               <% end %>
             </td>
             <% Timer.stages.each do |stage| %>

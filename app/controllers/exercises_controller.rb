@@ -29,7 +29,7 @@ class ExercisesController < ApplicationController
     if current_user.teacher?
       @solutions = @exercise.solutions
     elsif current_user.student?
-      @solutions = @exercise.solutions.find_all { |s| s.user.include?(current_user) && s.finished? }
+      @solutions = @exercise.solutions.find_all { |s| s.users.include?(current_user) && s.finished? }
     end
 
   end
@@ -40,7 +40,7 @@ class ExercisesController < ApplicationController
       authorize @exercise
       @solution = Solution.create(
           exercise: @exercise,
-          user: current_user)
+          users: [current_user])
       @solution.prepare_timers!
       redirect_to solution_path(@solution.id)
     else

@@ -19,9 +19,9 @@ class SolutionsController < ApplicationController
 
   def add_partner
     @solution = Solution.find(params[:solution_id])
+    authorize @solution
     @partner = User.where(nickname: params[:nickname])
     @solution.users << @partner
-    @solution.save!
 
     redirect_to solution_path(@solution)
   end

@@ -27,18 +27,18 @@
           <li><%= partner.name %> (<%= partner.nickname %>)</li>
           <% end %>
         </ul>
+
+        <%= form_for @solution, url: solution_add_partner_path(@solution), html: { class: 'form-inline' } do |f| %>
+          <div class="form-group">
+            <input id="partner" name="nickname" class="form-control" type="text" data-provide="typeahead" placeholder="Usuario de github">
+          </div>
+          <button type="submit" class="btn">
+            Agregar integrante
+          </button>
+        <% end %>
+
       </dd>
     </dl>
-
-
-    <%= form_for @solution, url: solution_add_partner_path(@solution), html: { class: 'form-inline' } do |f| %>
-      <div class="form-group">
-        <input id="partner" name="nickname" class="form-control" type="text" data-provide="typeahead" placeholder="Usuario de github">
-      </div>
-      <button type="submit" class="btn">
-        Agregar integrante
-      </button>
-    <% end %>
 
     <script>
       $(function(){
@@ -54,7 +54,7 @@
       <ul>
         <li>Podés agregar otros integrantes desde el formulario, a la izquierda. Por ahora, no se pueden eliminar... así que ¡ojo!</li>
         <li>Podés cancelar una planilla de métricas desde el cesto de basura, arriba.</li>
-        <li>Para iniciar un temporizador, deberás completar las estimaciones primero. ¡Cuidado! Siempre verificá que haya comenzado.</li>
+        <li>Para iniciar un temporizador, deberás completar las estimaciones primero. ¡Cuidado!</li>
         <li>Si salís sin finalizar, los temporizadores seguirán corriendo.</li>
         <li>Para finalizar, debajo de todo podés agregar notas y dar por finalizada la métrica.</li>
       </ul>

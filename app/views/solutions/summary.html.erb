@@ -24,8 +24,12 @@
   <div class="col-md-12">
     <legend>Datos sobre la solución</legend>
     <dl class="dl-horizontal">
-      <dt>Estudiante</dt>
-      <dd><%= @solution.users.collect(&:name) %></dd>
+      <dt>Estudiantes</dt>
+      <dd>
+        <% @solution.users.each do |partner| %>
+          <li><%= partner.name %> (<%= partner.nickname %>)</li>
+        <% end %>
+      </dd>
       <dt>Inicio</dt>
       <dd><%= @solution.created_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M") %></dd>
       <dt>Finalización</dt>

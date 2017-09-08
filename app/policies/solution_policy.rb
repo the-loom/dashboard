@@ -11,6 +11,10 @@ class SolutionPolicy < ApplicationPolicy
     is_own_solution(record, user)
   end
 
+  def add_partner?
+    is_own_solution(record, user)
+  end
+
   def finish?
     is_own_solution(record, user)
   end
