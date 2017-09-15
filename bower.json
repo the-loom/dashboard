@@ -22,6 +22,7 @@
     "moment": "^2.18.1",
     "messenger": "^1.5.0",
     "handlebars": "^4.0.10",
-    "vue": "^2.4.2"
+    "vue": "^2.4.2",
+    "bootstrap3-typeahead": "^4.0.2"
   }
 }

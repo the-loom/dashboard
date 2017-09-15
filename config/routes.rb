@@ -17,7 +17,6 @@ Rails.application.routes.draw do
   post '/u/bulk_edit' => 'users#bulk_edit', as: :bulk_edit_users
   post '/u/:nickname/comment' => 'users#comment', as: :comment_user
 
-
   get '/events/' => 'events#index', as: :events_list
   get '/events/new' => 'events#new', as: :new_event
   post '/events/new' => 'events#create', as: :create_event
@@ -29,9 +28,6 @@ Rails.application.routes.draw do
   post '/badges/new' => 'badges#create', as: :create_badge
   get '/badges/:badge_id/show' => 'badges#show', as: :badge_details
   get '/badges/:badge_id/register/:nickname' => 'badges#register', as: :register_badge
-
-  get '/teams' => 'teams#index', as: :teams
-  get '/teams/:nickname' => 'teams#show', as: :team_profile
 
   get '/readings/' => 'readings#index', as: :readings_list
   get '/readings/new' => 'readings#new', as: :new_reading
@@ -58,16 +54,24 @@ Rails.application.routes.draw do
     get :start
   end
 
+  resources :partners, only: :index
+
   resources :solutions do
     get :show2
     get :start
     get :summary
     patch :finish
     delete :cancel
+    patch :add_partner
     resources :timers do
       post :play
       post :pause
     end
   end
+
+  resources :teams, except: :show do
+    patch :add_member
+  end
+  get '/teams/:nickname' => 'teams#show', as: :team_profile
 
 end

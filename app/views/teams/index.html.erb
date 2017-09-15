@@ -1,5 +1,8 @@
 <legend>Equipos en <em>loom</em> -
   <small><%= @teams.size %> equipos</small>
+
+  <%= link_to 'Nuevo equipo', new_team_path, class: 'btn btn-primary pull-right' %>
+
 </legend>
 <div class="table-responsive">
   <table class="members table table-hover">

@@ -18,5 +18,5 @@
 //= require moment/moment
 //= require messenger/build/js/messenger
 //= require vue/dist/vue
-//= require handlebars/handlebars
+//= require bootstrap3-typeahead/bootstrap3-typeahead
 //= require_tree .

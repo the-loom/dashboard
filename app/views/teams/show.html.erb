@@ -18,23 +18,48 @@
 
 <div class="clearfix"></div>
 
-<legend>Integrantes</legend>
 <div class="students mosaic">
   <div class="row">
-    <% @team.members.each do |student| %>
-      <div class="col-md-2 col-xs-6 student-box">
-        <%= link_to user_details_url(student.nickname) do %>
-          <img class="avatar<%= ' disabled' unless student.enabled? %>" src="<%= student.image %>">
-          <p class="data">
-            <%= student.nickname %><br/>
-            <small><%= student.name %></small><br/>
-          </p>
-        <% end %>
-        <p>Nivel <span class="badge"><%= student.level %></span> /
-          <%= student.points %> XP</p>
-      </div>
-    <% end %>
+    <div class="col-md-12">
+      <legend>Integrantes</legend>
+      <% @team.members.each do |student| %>
+        <div class="col-md-2 col-xs-6 student-box">
+          <%= link_to user_details_url(student.nickname) do %>
+            <img class="avatar<%= ' disabled' unless student.enabled? %>" src="<%= student.image %>">
+            <p class="data">
+              <%= student.nickname %><br/>
+              <small><%= student.name %></small><br/>
+            </p>
+          <% end %>
+          <p>Nivel <span class="badge"><%= student.level %></span> /
+            <%= student.points %> XP</p>
+        </div>
+      <% end %>
+    </div>
   </div>
+
+  <% if policy(Team).manage? %>
+    <div class="row">
+      <div class="col-md-12">
+        <%= form_for @team, url: team_add_member_path(@team), html: { class: 'form-inline' } do |f| %>
+          <div class="form-group">
+            <input id="partner" name="nickname" class="form-control" type="text" data-provide="typeahead" placeholder="Usuario de github">
+          </div>
+          <button type="submit" class="btn">
+            Agregar miembro
+          </button>
+        <% end %>
+      </div>
+      <script>
+          $(function(){
+              $.get("/partners", function(data){
+                  $("#partner").typeahead({ source:data });
+              },'json');
+          });
+      </script>
+      <br/><br/><br/><hr/>
+    </div>
+  <% end %>
 </div>
 <div class="col-md-6">
   <legend>Entregas</legend>
