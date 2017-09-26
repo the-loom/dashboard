@@ -57,7 +57,6 @@ Rails.application.routes.draw do
   resources :partners, only: :index
 
   resources :solutions do
-    get :show2
     get :start
     get :summary
     patch :finish

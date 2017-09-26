@@ -5,22 +5,25 @@ class SolutionPresenter
   end
 
   def to_json
-    stages = []
-    @solution.timers.each { |timer|
-      stages << {
-          id: timer.read_attribute_before_type_cast(:stage),
-          name: I18n.t("timers.stages.#{timer.stage}"),
-          estimated_time_in_seconds: timer.estimated_time_in_seconds,
-          total_time_in_seconds: timer.total_time_in_seconds,
-          started_at: timer.started_at.to_i,
-          running: timer.started_at != nil
-      }
-    }
-
     {
         solution_id: @solution.id,
         now: Time.zone.now.to_i,
-        stages: stages
+        stages: Timer.stages.map do |name, id|
+          {
+              id: id,
+              description: I18n.t("timers.stages.#{name}"),
+              timers: @solution.timers.where(stage: name.to_sym).map do |timer|
+                {
+                    id: timer.id,
+                    estimated_time_in_seconds: timer.estimated_time_in_seconds,
+                    total_time_in_seconds: timer.total_time_in_seconds,
+                    started_at: timer.started_at.to_i,
+                    running: timer.started_at != nil,
+                    description: timer.description
+                }
+              end
+          }
+        end
     }
   end
 end

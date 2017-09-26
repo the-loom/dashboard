@@ -6,6 +6,7 @@ class TimerPresenter
 
   def to_json
     {
+        id: @timer.id,
         stage_id: @timer.read_attribute_before_type_cast(:stage),
         now: Time.zone.now.to_i,
         started_at: @timer.started_at.to_i,

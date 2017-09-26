@@ -16,8 +16,8 @@ class Timer < ApplicationRecord
 
   def play
     return if running?
+
     self.started_at = Time.zone.now
-    self.save
   end
 
   def pause
@@ -26,7 +26,6 @@ class Timer < ApplicationRecord
     self.total_time_in_seconds = 0 if self.total_time_in_seconds == nil
     self.total_time_in_seconds += now - self.started_at
     self.started_at = nil
-    self.save
   end
 
 end

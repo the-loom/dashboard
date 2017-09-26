@@ -15,6 +15,7 @@
  *= require c3/c3
  *= require messenger/build/css/messenger
  *= require messenger/build/css/messenger-theme-air
+ *= require bootstrap-tour/build/css/bootstrap-tour
  *= require_self
  */
 

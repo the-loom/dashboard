@@ -41,7 +41,6 @@ class ExercisesController < ApplicationController
       @solution = Solution.create(
           exercise: @exercise,
           users: [current_user])
-      @solution.prepare_timers!
       redirect_to solution_path(@solution.id)
     else
       flash[:alert] = "No se puede iniciar una resolución con otra en curso"

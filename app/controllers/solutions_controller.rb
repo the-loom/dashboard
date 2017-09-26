@@ -10,15 +10,6 @@ class SolutionsController < ApplicationController
     end
   end
 
-  def show2
-    @solution = Solution.find(params[:solution_id])
-    if @solution.finished?
-      flash[:alert] = 'No se puede volver a trabajar en una solución finalizada'
-      redirect_to exercise_path(@solution.exercise)
-      return
-    end
-  end
-
   def summary
     @solution = Solution.find(params[:solution_id])
     authorize @solution
