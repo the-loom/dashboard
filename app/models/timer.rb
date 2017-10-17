@@ -10,6 +10,8 @@ class Timer < ApplicationRecord
 
   belongs_to :solution
 
+  default_scope { order(id: :asc) }
+
   def running?
     started_at != nil
   end

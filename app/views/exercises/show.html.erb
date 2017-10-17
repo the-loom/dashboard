@@ -79,11 +79,13 @@
               <% end %>
             </td>
             <% Timer.stages.each do |stage| %>
-              <% timer = solution.timers.detect { |t| t.stage == stage[0] } %>
+              <% timers = solution.timers.find_all { |t| t.stage == stage[0] } %>
               <td>
-                <% if timer.total_time_in_seconds %>
-                  <%= Time.at(timer.total_time_in_seconds).utc.strftime("%H:%M:%S") %>
-                  (<%= Time.at(timer.estimated_time_in_seconds).utc.strftime("%H:%M:%S") %>)
+                <% if timers && timers.sum(&:total_time_in_seconds) %>
+                  <%= Time.at(timers.sum(&:total_time_in_seconds)).utc.strftime("%H:%M:%S") %>
+                  (<%= Time.at(timers.sum(&:estimated_time_in_seconds)).utc.strftime("%H:%M:%S") %>)
+                <% else %>
+                  <%= Time.at(0).utc.strftime("%H:%M:%S") %> (<%= Time.at(0).utc.strftime("%H:%M:%S") %>)
                 <% end %>
               </td>
             <% end %>

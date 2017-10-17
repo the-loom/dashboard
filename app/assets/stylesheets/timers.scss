@@ -2,6 +2,16 @@ body {
   min-width: 300px;
 }
 
+legend.with-button {
+  position: relative;
+}
+
+legend.with-button button {
+  position: absolute;
+  right: 0;
+  bottom: 0.3em;
+}
+
 section.timers {
 
   margin-bottom: 2em;

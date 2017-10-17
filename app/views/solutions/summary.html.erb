@@ -46,6 +46,7 @@
       <thead>
       <tr>
         <th>Etapa</th>
+        <th>Descripción</th>
         <th>Estimado</th>
         <th>Real</th>
         <th>Diferencia</th>
@@ -55,6 +56,7 @@
       <% @presenter.by_stage.each do |stage| %>
         <tr>
           <td><%= t("timers.stages.#{stage[:stage]}") %></td>
+          <td><%= stage[:description] %></td>
           <td>
             <%= Time.at(stage[:estimated_time_in_seconds]).utc.strftime("%H:%M:%S") %>
           </td>
@@ -71,6 +73,7 @@
       <tfoot>
       <tr>
         <th>Totales</th>
+        <th>&nbsp;</th>
         <th>
           <%= Time.at(@presenter.totals[:estimated_grand_total_in_seconds]).utc.strftime("%H:%M:%S") %>
         </th>

@@ -8,6 +8,7 @@ class SolutionSummaryPresenter
     @by_stage = solution.timers.sort_by { |t| t.read_attribute_before_type_cast(:stage) }.collect { |timer|
       {
           stage: timer.stage.to_sym,
+          description: timer.description,
           estimated_time_in_seconds: timer.estimated_time_in_seconds || 0,
           total_time_in_seconds: timer.total_time_in_seconds || 0,
           delta_over_estimated_time: (timer.total_time_in_seconds || 0) - (timer.estimated_time_in_seconds || 0),

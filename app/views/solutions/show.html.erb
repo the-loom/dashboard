@@ -1,4 +1,4 @@
-<legend>
+<legend class="with-button">
   <%= @solution.exercise.name %>
 
     <button class="btn btn-success pull-right do-help">
@@ -94,7 +94,7 @@
           </button>
 
           <button class="btn btn-default" v-on:click="removeTimer(stage, timer)" v-if="!timer.estimated">
-            <i class="fa fa-minus"></i>
+            <i class="fa fa-times"></i>
           </button>
         </td>
       </tr>
@@ -397,6 +397,7 @@
 
                     var cb = function (json) {
                         that.running_timer.total_time_in_seconds = json.total_time_in_seconds;
+                        that.running_timer.current_time = json.total_time_in_seconds;
                         that.running_timer = null;
                         that.running = false;
                         that.moment_init = 0;
