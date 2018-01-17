@@ -45,8 +45,9 @@ group :development, :test do
   gem 'sqlite3'
 end
 
-gem 'dotenv-rails', groups: [:development, :test]
-gem 'omniauth-github', '1.2.3'
+gem 'dotenv-rails', '2.2.1', groups: [:development, :test]
+gem 'omniauth-github', '1.3.0'
+gem 'omniauth-google-oauth2', '0.5.2'
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.

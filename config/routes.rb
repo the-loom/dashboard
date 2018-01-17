@@ -3,8 +3,7 @@ Rails.application.routes.draw do
 
   root 'pages#welcome'
 
-  get '/auth/github', as: :login
-  get '/auth/github/callback' => 'sessions#create'
+  match '/auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
   get '/logout' => 'sessions#destroy', as: :logout
 
   get '/profile' => 'users#show', as: :profile
