@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_action :set_user, only: [:show, :edit, :update]
+  before_action :set_user, only: [:show, :edit, :update, :change_identity]
   before_action :verify_pending_solutions, only: :show
 
   def index
@@ -40,6 +40,13 @@ class UsersController < ApplicationController
   def update
     authorize @user, :update?
     @user.update(user_params)
+    redirect_to profile_url
+  end
+
+  def change_identity
+    authorize @user, :update?
+    identity = @user.identities.where(id: params[:identity_id]).first
+    @user.update_with(identity)
     redirect_to profile_url
   end
 

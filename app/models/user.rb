@@ -6,6 +6,8 @@ class User < ApplicationRecord
       teacher: 2
   }
 
+  has_many :identities
+
   has_many :user_tags
   has_many :tags, through: :user_tags
 
@@ -27,6 +29,14 @@ class User < ApplicationRecord
 
   def self.tagged_with(name)
     Tag.find_by_name!(name).users
+  end
+
+  def update_with(identity)
+    self.nickname = identity.nickname
+    self.name = identity.name
+    self.email = identity.email
+    self.image = identity.image
+    self.save
   end
 
   def all_tags=(names)
@@ -92,25 +102,7 @@ class User < ApplicationRecord
     self.order(name: :asc)
   end
 
-  def self.by_omniauth(auth)
-    user = self.find_by(provider: auth["provider"], uid: auth["uid"]) || self.create_with_omniauth(auth)
-    user.update_attribute(:image, auth['info']['image'])
-    user
-  end
-
   def present_at(lecture)
     attendances.where(lecture: lecture, condition: :present).size > 0
-  end
-
-  private
-  def self.create_with_omniauth(auth)
-    create! do |user|
-      user.provider = auth['provider']
-      user.uid = auth['uid']
-      user.name = auth['info']['name']
-      user.nickname = auth['info']['nickname']
-      user.email = auth['info']['email']
-      user.image = auth['info']['image']
-    end
   end
 end

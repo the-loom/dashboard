@@ -15,7 +15,43 @@
       </div>
     <% end %>
 
+  </div>
+
+  <div class="col-md-12">
+
+    <legend>Perfiles registrados</legend>
+
+    <% @user.identities.each do |identity| %>
+
+      <div class="col-md-6">
+
+        <h3><%= identity.provider %></h3>
+
+        <img src="<%= identity.image %>" width="150" height="150"/>
+
+        <dl>
+          <dt>Nombre</dt>
+          <dd><%= identity.name %></dd>
+
+          <dt>Apodo</dt>
+          <dd><%= identity.nickname %></dd>
+
+          <dt>Correo Electrónico</dt>
+          <dd><%= identity.email %></dd>
+
+        </dl>
+
+        <%= link_to change_identity_path(identity.id), class: 'btn btn-default' do %>
+          Utilizar esta identidad
+        <% end %>
+
+      </div>
+
+    <% end %>
+
+
 
   </div>
+
 
 </div>
