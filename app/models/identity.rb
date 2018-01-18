@@ -6,7 +6,7 @@ class Identity < ApplicationRecord
   # https://www.sitepoint.com/rails-authentication-oauth-2-0-omniauth/
   # https://console.developers.google.com/apis/credentials?project=loom-development
   def self.by_omniauth(auth)
-    identity = self.find_by(provider: auth["provider"], uid: auth["uid"]) || self.create_with_omniauth(auth)
+    identity = find_by(provider: auth["provider"], uid: auth["uid"]) || create_with_omniauth(auth)
     identity.update_attribute(:image, auth['info']['image'])
     identity
   end
@@ -17,25 +17,20 @@ class Identity < ApplicationRecord
       identity.provider = auth['provider']
       identity.uid = auth['uid']
       identity.name = auth['info']['name']
-      identity.nickname = auth['info']['nickname'].present? ? auth['info']['nickname'] : auth['info']['email'].split('@').first
+      identity.nickname = extract_nickname(auth['info'])
       identity.email = auth['info']['email']
       identity.image = auth['info']['image']
-      identity.user = self.resolve(auth['info'])
+      identity.user = find_corresponding_user(identity)
     end
   end
 
-  def self.resolve(info)
-    i = Identity.find_by(email: info['email'])
-    if i.present?
-      i.user
-    else
-      User.create! do |user|
-        user.name = info['name']
-        user.nickname = info['nickname']
-        user.email = info['email']
-        user.image = info['image']
-      end
-    end
+  def self.extract_nickname(info)
+    info['nickname'].present? ? info['nickname'] : info['email'].split('@').first
+  end
+
+  def self.find_corresponding_user(identity)
+    u = User.find_or_create_by(email: identity.email)
+    u.update_with(identity)
   end
 
 end

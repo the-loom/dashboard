@@ -27,16 +27,17 @@ class User < ApplicationRecord
 
   belongs_to :team, optional: true
 
-  def self.tagged_with(name)
-    Tag.find_by_name!(name).users
-  end
-
   def update_with(identity)
     self.nickname = identity.nickname
     self.name = identity.name
     self.email = identity.email
     self.image = identity.image
     self.save
+    self
+  end
+
+  def self.tagged_with(name)
+    Tag.find_by_name!(name).users
   end
 
   def all_tags=(names)
