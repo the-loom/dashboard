@@ -132,6 +132,7 @@ ActiveRecord::Schema.define(version: 20180116135417) do
   create_table "timers", force: :cascade do |t|
     t.integer  "solution_id"
     t.integer  "stage"
+    t.string   "sub_stage"
     t.integer  "total_time_in_seconds"
     t.integer  "estimated_time_in_seconds"
     t.datetime "started_at"

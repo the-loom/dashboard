@@ -2,6 +2,16 @@
 
 loom es una aplicación web que acompaña a los estudiantes en su cursada
 
+## Setup
+
+```shell
+  cp .env.example .env
+  nano .env
+  bundle install
+  rake db:reseed
+  rails s
+```
+
 ## Contribuciones
 
 1. Hacer un fork
