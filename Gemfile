@@ -49,6 +49,8 @@ gem 'dotenv-rails', '2.2.1', groups: [:development, :test]
 gem 'omniauth-github', '1.3.0'
 gem 'omniauth-google-oauth2', '0.5.2'
 
+gem 'ffaker', '2.8.0'
+
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console', '>= 3.3.0'

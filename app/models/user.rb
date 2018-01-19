@@ -50,6 +50,8 @@ class User < ApplicationRecord
     self.tags.map(&:name).join(", ")
   end
 
+  # TODO(delucas): remove. Dead feature?
+=begin
   def image
     current_user = User.find(session[:user_id])
     if current_user.teacher?
@@ -58,6 +60,7 @@ class User < ApplicationRecord
       read_attribute(:image)
     end
   end
+=end
 
   def level
     Level.new(points, badges.size).value

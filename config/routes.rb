@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get '/logout' => 'sessions#destroy', as: :logout
 
   get '/profile' => 'users#show', as: :profile
-  get '/u/:nickname' => 'users#show', as: :user_details
+  get '/u/:nickname' => 'users#show', as: :user_details, constraints: { :nickname => /[0-z\.]+/ }
   get '/profile/edit' => 'users#edit', as: :edit_profile
   patch '/profile/edit' => 'users#update', as: :update_user
   get '/profile/change_identity/:identity_id' => 'users#change_identity', as: :change_identity
