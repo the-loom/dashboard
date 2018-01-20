@@ -12,9 +12,6 @@
 
 ActiveRecord::Schema.define(version: 20180116135417) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "attendances", force: :cascade do |t|
     t.integer "user_id"
     t.integer "lecture_id"
@@ -36,19 +33,19 @@ ActiveRecord::Schema.define(version: 20180116135417) do
   create_table "checks", force: :cascade do |t|
     t.integer  "team_id"
     t.integer  "checkpoint_id"
-    t.text     "comments"
+    t.text     "comments",      limit: 65535
     t.integer  "condition"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   create_table "comments", force: :cascade do |t|
-    t.text     "body"
-    t.integer  "mood",         default: 0
+    t.text     "body",         limit: 65535
+    t.integer  "mood",                       default: 0
     t.integer  "user_id"
     t.integer  "commenter_id"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
   end
 
   create_table "earnings", force: :cascade do |t|
@@ -81,7 +78,7 @@ ActiveRecord::Schema.define(version: 20180116135417) do
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_identities_on_user_id", using: :btree
+    t.index ["user_id"], name: "index_identities_on_user_id"
   end
 
   create_table "lectures", force: :cascade do |t|
