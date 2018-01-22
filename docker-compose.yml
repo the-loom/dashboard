@@ -15,6 +15,7 @@ services:
 
   app:
     build: .
+    user: loom
     env_file: .env
     volumes:
       - .:/usr/src/app
