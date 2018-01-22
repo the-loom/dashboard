@@ -1,3 +1,10 @@
+up:
+	docker-compose up -d
+	docker-compose run app rake db:setup db:seed
+
+down:
+	docker-compose down
+
 capture_production_db:
 	heroku pg:backups capture --app the-loom
 	$(MAKE) download_production_db
