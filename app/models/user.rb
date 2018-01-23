@@ -49,7 +49,7 @@ class User < ApplicationRecord
     self.tags.map(&:name).join(", ")
   end
 
-  # TODO(delucas): remove. Dead feature?
+# TODO(delucas): remove. Dead feature?
 =begin
   def image
     current_user = User.find(session[:user_id])
