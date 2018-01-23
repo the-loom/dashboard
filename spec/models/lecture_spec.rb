@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Lecture, :type => :model do
+RSpec.describe Lecture, type: :model do
   it "is assigned correctly" do
     user = User.create!(name: 'John', points: 0)
     lecture = Lecture.create!(date: Date.new(2017, 4, 22))
