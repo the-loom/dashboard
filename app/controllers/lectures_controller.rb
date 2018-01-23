@@ -1,5 +1,4 @@
 class LecturesController < ApplicationController
-
   def index
     authorize Lecture
     @lectures = Lecture.all

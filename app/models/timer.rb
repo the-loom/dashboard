@@ -1,5 +1,4 @@
 class Timer < ApplicationRecord
-
   enum stage: {
       analysis: 0,
       test_preparation: 1,
@@ -29,5 +28,4 @@ class Timer < ApplicationRecord
     self.total_time_in_seconds += now - self.started_at
     self.started_at = nil
   end
-
 end

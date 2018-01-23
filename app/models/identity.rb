@@ -1,5 +1,4 @@
 class Identity < ApplicationRecord
-
   belongs_to :user
 
   # https://github.com/omniauth/omniauth/wiki/Managing-Multiple-Providers
@@ -32,5 +31,4 @@ class Identity < ApplicationRecord
     u = User.find_or_create_by(email: identity.email)
     u.update_with(identity)
   end
-
 end

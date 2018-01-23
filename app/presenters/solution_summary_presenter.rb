@@ -1,5 +1,4 @@
 class SolutionSummaryPresenter
-
   attr_reader :by_stage, :totals
 
   def initialize solution
@@ -29,5 +28,4 @@ class SolutionSummaryPresenter
       d[:stage] == stage
     }
   end
-
 end

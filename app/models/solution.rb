@@ -9,5 +9,4 @@ class Solution < ApplicationRecord
   def finished?
     self.finished_at != nil
   end
-
 end

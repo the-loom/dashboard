@@ -1,5 +1,4 @@
 class Level
-
   def initialize(points, badges)
     @points = points
     @badges = badges
@@ -15,5 +14,4 @@ class Level
     v = 5 if assets > 135
     v
   end
-
 end

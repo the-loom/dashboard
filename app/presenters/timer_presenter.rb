@@ -1,5 +1,4 @@
 class TimerPresenter
-
   def initialize(timer)
     @timer = timer
   end

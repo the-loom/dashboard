@@ -1,5 +1,4 @@
 class SolutionPresenter
-
   def initialize(solution)
     @solution = solution
   end

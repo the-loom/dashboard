@@ -1,5 +1,4 @@
 class ReadingsController < ApplicationController
-
   def index
     authorize Reading
     @readings = Reading.all

@@ -1,5 +1,4 @@
 class ExercisesController < ApplicationController
-
   before_action :verify_pending_solutions, only: [:show, :index]
 
   def index
@@ -52,5 +51,4 @@ class ExercisesController < ApplicationController
   def exercise_params
     params[:exercise].permit(:name, :url, :notes)
   end
-
 end

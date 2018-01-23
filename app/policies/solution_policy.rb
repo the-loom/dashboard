@@ -31,5 +31,4 @@ class SolutionPolicy < ApplicationPolicy
   def is_own_solution(solution, user)
     solution.users.include? user
   end
-
 end

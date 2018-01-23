@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-
   enum role: {
       guest: 0,
       student: 1,

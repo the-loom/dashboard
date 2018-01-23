@@ -1,5 +1,4 @@
 class ReadingsGraphPresenter
-
   attr_reader :readings
 
   def initialize measurements
@@ -26,5 +25,4 @@ class ReadingsGraphPresenter
     end
     rows.join(",\n")
   end
-
 end

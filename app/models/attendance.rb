@@ -1,5 +1,4 @@
 class Attendance < ApplicationRecord
-
   enum condition: {
       absent: 0,
       present: 1

@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-
   before_action :set_user, only: [:show, :edit, :update, :change_identity]
   before_action :verify_pending_solutions, only: :show
 
@@ -71,5 +70,4 @@ class UsersController < ApplicationController
   def user_params
     params[:user].permit(:name)
   end
-
 end

@@ -1,5 +1,4 @@
 class EventsController < ApplicationController
-
   def index
     authorize Event
     @events = Event.all

@@ -1,5 +1,4 @@
 class TeamsController < ApplicationController
-
   def index
     authorize Team
     @teams = Team.sorted
@@ -39,5 +38,4 @@ class TeamsController < ApplicationController
   def team_params
     params[:team].permit(:name, :nickname, :image)
   end
-
 end

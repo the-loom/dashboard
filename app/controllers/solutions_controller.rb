@@ -1,5 +1,4 @@
 class SolutionsController < ApplicationController
-
   def show
     @solution = Solution.find(params[:id])
     authorize @solution

@@ -1,5 +1,4 @@
 class BadgesController < ApplicationController
-
   def index
     authorize Badge
     @badges = Badge.all

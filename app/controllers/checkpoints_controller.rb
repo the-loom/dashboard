@@ -1,5 +1,4 @@
 class CheckpointsController < ApplicationController
-
   def index
     authorize Checkpoint
     @checkpoints = Checkpoint.all

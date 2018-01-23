@@ -16,5 +16,4 @@ class TeamPolicy < ApplicationPolicy
   def add_member?
     user.teacher?
   end
-
 end

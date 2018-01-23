@@ -1,5 +1,4 @@
 class Check < ApplicationRecord
-
   enum condition: {
       bad: -1,
       missing: 0,
