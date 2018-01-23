@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   protected
     def _set_current_session
       accessor = instance_variable_get(:@_request)
-      ActiveRecord::Base.send(:define_method, "session", proc {accessor.session})
+      ActiveRecord::Base.send(:define_method, "session", proc { accessor.session })
     end
 
     def verify_pending_solutions
