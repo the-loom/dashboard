@@ -20,7 +20,7 @@ User.all.update_all(role: :teacher)
   Identity.create(
         user: user,
         provider: "github",
-        uid: rand(10 ** 8),
+        uid: rand(10**8),
         name: user.name,
         nickname: user.nickname,
         email: user.email,
