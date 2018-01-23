@@ -1,7 +1,7 @@
 class SolutionSummaryPresenter
   attr_reader :by_stage, :totals
 
-  def initialize solution
+  def initialize(solution)
     @solution = solution
 
     @by_stage = solution.timers.sort_by { |t| t.read_attribute_before_type_cast(:stage) }.collect { |timer|

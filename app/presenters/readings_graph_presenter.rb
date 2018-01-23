@@ -1,7 +1,7 @@
 class ReadingsGraphPresenter
   attr_reader :readings
 
-  def initialize measurements
+  def initialize(measurements)
     @dates = measurements.collect { |m| m.created_at.beginning_of_day }.uniq
     @readings = measurements.collect(&:reading).uniq
     @measurements_by_reading = {}
