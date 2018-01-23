@@ -37,8 +37,8 @@ class ExercisesController < ApplicationController
       @exercise = Exercise.find(params[:exercise_id])
       authorize @exercise
       @solution = Solution.create(
-          exercise: @exercise,
-          users: [current_user])
+        exercise: @exercise,
+        users: [current_user])
       redirect_to solution_path(@solution.id)
     else
       flash[:alert] = "No se puede iniciar una resolución con otra en curso"
