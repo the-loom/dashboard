@@ -8,7 +8,7 @@ class ReadingsGraphPresenter
     @readings.each do |r|
       ms = []
       @dates.each do |d|
-        ms << measurements.detect{ |mm| mm.reading == r && mm.created_at.beginning_of_day == d }
+        ms << measurements.detect { |mm| mm.reading == r && mm.created_at.beginning_of_day == d }
       end
       @measurements_by_reading[r] = ms
     end
