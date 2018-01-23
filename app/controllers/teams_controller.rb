@@ -31,7 +31,6 @@ class TeamsController < ApplicationController
     @team.members << member
 
     redirect_to team_profile_url(@team.nickname)
-
   end
 
   private

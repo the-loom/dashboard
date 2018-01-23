@@ -30,7 +30,6 @@ class ExercisesController < ApplicationController
     elsif current_user.student?
       @solutions = @exercise.solutions.find_all { |s| s.users.include?(current_user) && s.finished? }
     end
-
   end
 
   def start
