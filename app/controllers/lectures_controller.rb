@@ -47,7 +47,7 @@ class LecturesController < ApplicationController
   end
 
   private
-  def lecture_params
-    params[:lecture].permit(:summary, :date)
-  end
+    def lecture_params
+      params[:lecture].permit(:summary, :date)
+    end
 end

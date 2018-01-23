@@ -28,7 +28,7 @@ class SolutionPolicy < ApplicationPolicy
   end
 
   private
-  def is_own_solution(solution, user)
-    solution.users.include? user
-  end
+    def is_own_solution(solution, user)
+      solution.users.include? user
+    end
 end

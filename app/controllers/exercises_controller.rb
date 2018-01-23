@@ -47,7 +47,7 @@ class ExercisesController < ApplicationController
   end
 
   private
-  def exercise_params
-    params[:exercise].permit(:name, :url, :notes)
-  end
+    def exercise_params
+      params[:exercise].permit(:name, :url, :notes)
+    end
 end

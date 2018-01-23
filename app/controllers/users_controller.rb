@@ -63,9 +63,9 @@ class UsersController < ApplicationController
 
   private
 
-  def set_user
-    @user ||= current_user
-  end
+    def set_user
+      @user ||= current_user
+    end
 
   def user_params
     params[:user].permit(:name)

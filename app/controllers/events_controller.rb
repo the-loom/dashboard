@@ -34,7 +34,7 @@ class EventsController < ApplicationController
   end
 
   private
-  def event_params
-    params[:event].permit(:name, :description, :batch_size, :points_per_batch)
-  end
+    def event_params
+      params[:event].permit(:name, :description, :batch_size, :points_per_batch)
+    end
 end

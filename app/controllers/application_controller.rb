@@ -10,10 +10,10 @@ class ApplicationController < ActionController::Base
   before_filter :_set_current_session
 
   protected
-  def _set_current_session
-    accessor = instance_variable_get(:@_request)
-    ActiveRecord::Base.send(:define_method, "session", proc {accessor.session})
-  end
+    def _set_current_session
+      accessor = instance_variable_get(:@_request)
+      ActiveRecord::Base.send(:define_method, "session", proc {accessor.session})
+    end
 
   def verify_pending_solutions
     if current_user.solutions.detect { |s| s.finished_at == nil }
@@ -23,10 +23,10 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def user_not_authorized
-    flash[:alert] = "No estás autorizado a realizar esa acción"
-    redirect_to(request.referrer || profile_path)
-  end
+    def user_not_authorized
+      flash[:alert] = "No estás autorizado a realizar esa acción"
+      redirect_to(request.referrer || profile_path)
+    end
 
   def authenticate_user!
     unless current_user

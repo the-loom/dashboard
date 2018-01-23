@@ -11,17 +11,17 @@ class Identity < ApplicationRecord
   end
 
   private
-  def self.create_with_omniauth(auth)
-    create! do |identity|
-      identity.provider = auth["provider"]
-      identity.uid = auth["uid"]
-      identity.name = auth["info"]["name"]
-      identity.nickname = extract_nickname(auth["info"])
-      identity.email = auth["info"]["email"]
-      identity.image = auth["info"]["image"]
-      identity.user = find_corresponding_user(identity)
+    def self.create_with_omniauth(auth)
+      create! do |identity|
+        identity.provider = auth["provider"]
+        identity.uid = auth["uid"]
+        identity.name = auth["info"]["name"]
+        identity.nickname = extract_nickname(auth["info"])
+        identity.email = auth["info"]["email"]
+        identity.image = auth["info"]["image"]
+        identity.user = find_corresponding_user(identity)
+      end
     end
-  end
 
   def self.extract_nickname(info)
     info["nickname"].present? ? info["nickname"] : info["email"].split("@").first

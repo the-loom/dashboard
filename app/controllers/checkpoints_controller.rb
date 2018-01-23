@@ -32,9 +32,9 @@ class CheckpointsController < ApplicationController
   end
 
   private
-  def checkpoint_params
-    params[:checkpoint].permit(:name, :link, :due_date)
-  end
+    def checkpoint_params
+      params[:checkpoint].permit(:name, :link, :due_date)
+    end
 
   def check_params
     params[:check][:condition] = params[:check][:condition].to_i

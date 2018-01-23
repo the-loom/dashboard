@@ -36,9 +36,9 @@ class ReadingsController < ApplicationController
   end
 
   private
-  def reading_params
-    params[:reading].permit(:name, :description, :slug)
-  end
+    def reading_params
+      params[:reading].permit(:name, :description, :slug)
+    end
   def measurement_params
     params[:measurement].permit(:team_id, :reading_id, :value)
   end

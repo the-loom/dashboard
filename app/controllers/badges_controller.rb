@@ -34,7 +34,7 @@ class BadgesController < ApplicationController
   end
 
   private
-  def badge_params
-    params[:badge].permit(:name, :description, :slug)
-  end
+    def badge_params
+      params[:badge].permit(:name, :description, :slug)
+    end
 end
