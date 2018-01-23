@@ -3,7 +3,7 @@ class SolutionsController < ApplicationController
     @solution = Solution.find(params[:id])
     authorize @solution
     if @solution.finished?
-      flash[:alert] = 'No se puede volver a trabajar en una solución finalizada'
+      flash[:alert] = "No se puede volver a trabajar en una solución finalizada"
       redirect_to exercise_path(@solution.exercise)
       return
     end

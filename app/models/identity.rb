@@ -6,25 +6,25 @@ class Identity < ApplicationRecord
   # https://console.developers.google.com/apis/credentials?project=loom-development
   def self.by_omniauth(auth)
     identity = find_by(provider: auth["provider"], uid: auth["uid"]) || create_with_omniauth(auth)
-    identity.update_attribute(:image, auth['info']['image'])
+    identity.update_attribute(:image, auth["info"]["image"])
     identity
   end
 
   private
   def self.create_with_omniauth(auth)
     create! do |identity|
-      identity.provider = auth['provider']
-      identity.uid = auth['uid']
-      identity.name = auth['info']['name']
-      identity.nickname = extract_nickname(auth['info'])
-      identity.email = auth['info']['email']
-      identity.image = auth['info']['image']
+      identity.provider = auth["provider"]
+      identity.uid = auth["uid"]
+      identity.name = auth["info"]["name"]
+      identity.nickname = extract_nickname(auth["info"])
+      identity.email = auth["info"]["email"]
+      identity.image = auth["info"]["image"]
       identity.user = find_corresponding_user(identity)
     end
   end
 
   def self.extract_nickname(info)
-    info['nickname'].present? ? info['nickname'] : info['email'].split('@').first
+    info["nickname"].present? ? info["nickname"] : info["email"].split("@").first
   end
 
   def self.find_corresponding_user(identity)

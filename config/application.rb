@@ -1,6 +1,6 @@
-require_relative 'boot'
+require_relative "boot"
 
-require 'rails/all'
+require "rails/all"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -15,9 +15,9 @@ module LoomDashboard
     I18n.config.available_locales = [:es, :en]
     I18n.config.default_locale = :es
 
-    config.assets.paths << Rails.root.join('vendor', 'assets', 'components')
+    config.assets.paths << Rails.root.join("vendor", "assets", "components")
     config.after_initialize do |app|
-      app.config.paths.add 'app/presenters', eager_load: true
+      app.config.paths.add "app/presenters", eager_load: true
     end
   end
 end

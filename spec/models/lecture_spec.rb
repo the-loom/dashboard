@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Lecture, type: :model do
   it "is assigned correctly" do
-    user = User.create!(name: 'John', points: 0)
+    user = User.create!(name: "John", points: 0)
     lecture = Lecture.create!(date: Date.new(2017, 4, 22))
 
     user.register_attendance(lecture, :present)
@@ -10,7 +10,7 @@ RSpec.describe Lecture, type: :model do
     expect(user.lectures).to include(lecture)
   end
   it "earns points when present" do
-    user = User.create!(name: 'John', points: 0)
+    user = User.create!(name: "John", points: 0)
     lecture = Lecture.create!(date: Date.new(2017, 4, 22))
 
     user.register_attendance(lecture, :present)
@@ -18,7 +18,7 @@ RSpec.describe Lecture, type: :model do
     expect(user.points).to eq(10)
   end
   it "doesn't earn points when absent" do
-    user = User.create!(name: 'John', points: 0)
+    user = User.create!(name: "John", points: 0)
     lecture = Lecture.create!(date: Date.new(2017, 4, 22))
 
     user.register_attendance(lecture, :absent)
@@ -26,7 +26,7 @@ RSpec.describe Lecture, type: :model do
     expect(user.points).to eq(0)
   end
   it "can un-register assistance" do
-    user = User.create!(name: 'John', points: 0)
+    user = User.create!(name: "John", points: 0)
     lecture = Lecture.create!(date: Date.new(2017, 4, 22))
     user.register_attendance(lecture, :present)
     expect(user.points).to eq(10)

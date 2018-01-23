@@ -11,8 +11,8 @@ class Check < ApplicationRecord
   default_scope { order(created_at: :asc) }
 
   def css_label
-    'label-info' if missing?
-    'label-danger' if bad?
-    'label-success' if good?
+    "label-info" if missing?
+    "label-danger" if bad?
+    "label-success" if good?
   end
 end
