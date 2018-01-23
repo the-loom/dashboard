@@ -23,12 +23,12 @@ class Identity < ApplicationRecord
       end
     end
 
-  def self.extract_nickname(info)
-    info["nickname"].present? ? info["nickname"] : info["email"].split("@").first
-  end
+    def self.extract_nickname(info)
+      info["nickname"].present? ? info["nickname"] : info["email"].split("@").first
+    end
 
-  def self.find_corresponding_user(identity)
-    u = User.find_or_create_by(email: identity.email)
-    u.update_with(identity)
-  end
+    def self.find_corresponding_user(identity)
+      u = User.find_or_create_by(email: identity.email)
+      u.update_with(identity)
+    end
 end

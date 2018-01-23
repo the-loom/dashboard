@@ -67,7 +67,7 @@ class UsersController < ApplicationController
       @user ||= current_user
     end
 
-  def user_params
-    params[:user].permit(:name)
-  end
+    def user_params
+      params[:user].permit(:name)
+    end
 end

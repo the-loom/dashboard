@@ -36,8 +36,8 @@ class CheckpointsController < ApplicationController
       params[:checkpoint].permit(:name, :link, :due_date)
     end
 
-  def check_params
-    params[:check][:condition] = params[:check][:condition].to_i
-    params[:check].permit(:team_id, :checkpoint_id, :comments, :condition)
-  end
+    def check_params
+      params[:check][:condition] = params[:check][:condition].to_i
+      params[:check].permit(:team_id, :checkpoint_id, :comments, :condition)
+    end
 end

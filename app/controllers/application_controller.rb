@@ -15,11 +15,11 @@ class ApplicationController < ActionController::Base
       ActiveRecord::Base.send(:define_method, "session", proc {accessor.session})
     end
 
-  def verify_pending_solutions
-    if current_user.solutions.detect { |s| s.finished_at == nil }
-      flash[:info] = "Tenés un ejercicio en curso. Si lo olvidaste, podés accederlo y finalizarlo. O eliminarlo"
+    def verify_pending_solutions
+      if current_user.solutions.detect { |s| s.finished_at == nil }
+        flash[:info] = "Tenés un ejercicio en curso. Si lo olvidaste, podés accederlo y finalizarlo. O eliminarlo"
+      end
     end
-  end
 
   private
 
@@ -28,17 +28,17 @@ class ApplicationController < ActionController::Base
       redirect_to(request.referrer || profile_path)
     end
 
-  def authenticate_user!
-    unless current_user
-      redirect_to root_path
+    def authenticate_user!
+      unless current_user
+        redirect_to root_path
+      end
     end
-  end
 
-  def pages_controller?
-    controller_path.starts_with?("pages") || controller_path.starts_with?("sessions")
-  end
+    def pages_controller?
+      controller_path.starts_with?("pages") || controller_path.starts_with?("sessions")
+    end
 
-  def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
-  end
+    def current_user
+      @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    end
 end
