@@ -27,7 +27,7 @@ class SolutionsController < ApplicationController
 
   def start
     solution = Solution.find(params[:solution_id])
-    #authorize solution
+    # authorize solution
     render json: SolutionPresenter.new(solution).to_json
   end
 
