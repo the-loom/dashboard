@@ -1,4 +1,6 @@
-# loom
+[![Build Status](https://travis-ci.org/the-loom/dashboard.svg?branch=master)](https://travis-ci.org/the-loom/dashboard)
+
+# The Loom: dashboard
 
 loom es una aplicación web que acompaña a los estudiantes en su cursada
 
@@ -7,6 +9,7 @@ loom es una aplicación web que acompaña a los estudiantes en su cursada
 ```shell
   cp .env.example .env
   nano .env
+  docker-compose build
 ```
 
 ## Running the app
