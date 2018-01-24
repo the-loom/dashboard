@@ -11,7 +11,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 20180219143000) do
-
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +19,41 @@ ActiveRecord::Schema.define(version: 20180219143000) do
     t.integer "lecture_id"
     t.integer "condition"
     t.integer "course_id"
+  end
+
+  create_table "automatic_correction_issues", force: :cascade do |t|
+    t.string  "issue_type"
+    t.string  "message"
+    t.string  "details"
+    t.string  "payload"
+    t.integer "automatic_correction_result_id"
+    t.index ["automatic_correction_result_id"], name: "ac_issues_index", using: :btree
+  end
+
+  create_table "automatic_correction_repos", force: :cascade do |t|
+    t.string   "user"
+    t.string   "name"
+    t.string   "git_url"
+    t.string   "avatar_url"
+    t.string   "description"
+    t.integer  "parent_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "automatic_correction_results", force: :cascade do |t|
+    t.string  "test_type"
+    t.decimal "score",                            precision: 4, scale: 2
+    t.integer "automatic_correction_test_run_id"
+    t.index ["automatic_correction_test_run_id"], name: "ac_results_index", using: :btree
+  end
+
+  create_table "automatic_correction_test_runs", force: :cascade do |t|
+    t.decimal  "score",                        precision: 4, scale: 2
+    t.integer  "automatic_correction_repo_id"
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
+    t.index ["automatic_correction_repo_id"], name: "ac_test_runs_index", using: :btree
   end
 
   create_table "badges", force: :cascade do |t|
@@ -161,4 +195,5 @@ ActiveRecord::Schema.define(version: 20180219143000) do
     t.boolean  "enabled",    default: true
   end
 
+  add_foreign_key "automatic_correction_repos", "automatic_correction_repos", column: "parent_id"
 end
