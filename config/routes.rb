@@ -54,6 +54,9 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :repos, only: [:index]
+  get "repos/:user/:name" => "repos#show", as: :repo
+
   resources :teams, except: :show do
     patch :add_member
   end

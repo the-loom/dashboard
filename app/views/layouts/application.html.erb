@@ -59,6 +59,11 @@
               <%= link_to "Asistencia", summary_lectures_path %>
             </li>
           <% end %>
+          <% if policy(AutomaticCorrection::Repo).index? %>
+            <li>
+              <%= link_to "Desafíos", repos_path %>
+            </li>
+            <% end %>
           <% if policy(Exercise).index? %>
             <li>
               <%= link_to "Ejercicios", exercises_path %>

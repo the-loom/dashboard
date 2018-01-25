@@ -1,0 +1,27 @@
+<section class="forks">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Iniciador</th>
+      <th>Enlace al desafío</th>
+      <th>Dificultad</th>
+      <th>Autores</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @repos.each do |repo| %>
+      <tr class="fork">
+        <td>
+          <img class="avatar small" src="<%= repo.avatar_url %>" title="<%= repo.user %>" alt="<%= repo.user %>">
+          <%= repo.user %>
+        </td>
+        <td>
+          <%= link_to repo.full_name, repo_path(user: repo.user, name: repo.name) %>
+        </td>
+        <td>N/D</td>
+        <td><%= repo.forks.count %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</section>

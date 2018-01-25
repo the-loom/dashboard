@@ -1,0 +1,27 @@
+<article class="repo row">
+  <div class="col-md-2">
+    <img class="avatar" src="<%= repo.avatar_url %>" title="<%= repo.user %>" alt="<%= repo.user %>">
+  </div>
+  <div class="col-md-10">
+    <h1>
+      <%= repo.full_name %>
+    </h1>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="bs-callout bs-callout-info">
+          <% if repo.parent %>
+            <p>basado en <%= link_to repo.parent.full_name, "/#{repo.parent.full_name}" %></a></p>
+          <% else %>
+            <p><%= repo.description %></p>
+          <% end %>
+          <p>
+            <%= link_to repo.url, target: '_blank' do %>
+              <span class="octicon octicon-mark-github"></span> Ir al código
+            <% end %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
