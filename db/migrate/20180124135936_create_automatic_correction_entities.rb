@@ -1,6 +1,7 @@
 class CreateAutomaticCorrectionEntities < ActiveRecord::Migration[5.0]
   def change
     create_table :automatic_correction_repos do |t|
+      t.integer :author_id
       t.string :user
       t.string :name
       t.string :git_url
@@ -13,6 +14,7 @@ class CreateAutomaticCorrectionEntities < ActiveRecord::Migration[5.0]
 
     create_table :automatic_correction_test_runs do |t|
       t.decimal :score, precision: 4, scale: 2
+      t.string :git_commit_id
       t.references :automatic_correction_repo, index: { name: "ac_test_runs_index" }
       t.timestamps
     end

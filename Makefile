@@ -1,4 +1,5 @@
 up:
+	rm -f tmp/pids/server.pid
 	docker-compose up -d
 	docker-compose run app rake db:setup db:seed
 

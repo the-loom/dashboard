@@ -38,7 +38,6 @@ require "roman"
   end
 end
 
-
 pptlS = AutomaticCorrection::Repo.create(
   user: "the-loom",
   name: "piedra-papel-tijera-lagarto-Spock",
@@ -47,19 +46,21 @@ pptlS = AutomaticCorrection::Repo.create(
   description: "Repo description pending"
 )
 
-
+author = User.last
 fork = AutomaticCorrection::Repo.create(
-  user: "delucas",
+  author: author,
+  user: author.nickname,
   name: "piedra-papel-tijera-lagarto-Spock",
-  git_url: "git@github.com:delucas/piedra-papel-tijera-lagarto-Spock.git",
-  avatar_url: "https://avatars.githubusercontent.com/u/684051?v=3",
+  git_url: "git@github.com:#{author.nickname}/piedra-papel-tijera-lagarto-Spock.git",
+  avatar_url: author.image,
   description: "Repo description pending"
 )
 
 pptlS.forks << fork
 
 first_test_run = AutomaticCorrection::TestRun.create(
-  score: 4.83
+  score: 4.83,
+  git_commit_id: "25def259c9cbe610b1f85867d76b05539585ebe4"
 )
 
 fork.test_runs << first_test_run

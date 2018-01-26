@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20180219143000) do
     t.string   "avatar_url"
     t.string   "description"
     t.integer  "parent_id"
+    t.integer  "author_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -50,6 +51,7 @@ ActiveRecord::Schema.define(version: 20180219143000) do
 
   create_table "automatic_correction_test_runs", force: :cascade do |t|
     t.decimal  "score",                        precision: 4, scale: 2
+    t.string   "git_commit_id"
     t.integer  "automatic_correction_repo_id"
     t.datetime "created_at",                                           null: false
     t.datetime "updated_at",                                           null: false

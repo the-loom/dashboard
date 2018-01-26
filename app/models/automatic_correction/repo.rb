@@ -1,6 +1,8 @@
 class AutomaticCorrection::Repo < ApplicationRecord
   has_many :forks, foreign_key: "parent_id", class_name: "AutomaticCorrection::Repo"
+
   belongs_to :parent, class_name: "AutomaticCorrection::Repo", optional: true
+  belongs_to :author, class_name: "User", optional: true
 
   has_many :test_runs, foreign_key: :automatic_correction_repo_id, class_name: "AutomaticCorrection::TestRun"
 

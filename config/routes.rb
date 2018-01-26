@@ -55,7 +55,7 @@ Rails.application.routes.draw do
   end
 
   resources :repos, only: [:index]
-  get "repos/:user/:name" => "repos#show", as: :repo
+  get "repos/:user/:name" => "repos#show", as: :repo, constraints: { user: /[0-z\.]+/ }
 
   resources :teams, except: :show do
     patch :add_member
