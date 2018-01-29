@@ -7,10 +7,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <%= stylesheet_link_tag 'application', media: 'all' %>
-  <script src="https://use.fontawesome.com/0d95d7e55f.js" async="async"></script>
-  <%= javascript_include_tag 'application' %>
 </head>
 
 <body>
@@ -136,6 +133,10 @@
   <%= yield %>
 
 </div> <!-- /container -->
+
+<%= javascript_include_tag 'application' %>
+<script src="https://use.fontawesome.com/0d95d7e55f.js" async="async"></script>
+<%= yield :javascript %>
 
 </body>
 </html>

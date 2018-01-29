@@ -63,7 +63,8 @@ pptlS = AutomaticCorrection::Repo.create(
   name: "piedra-papel-tijera-lagarto-Spock",
   git_url: "git@github.com:the-loom/piedra-papel-tijera-lagarto-Spock.git",
   avatar_url: "https://avatars.githubusercontent.com/u/5033965?v=3",
-  description: "Repo description pending"
+  description: "Repo description pending",
+  dificulty: 1
 )
 
 author = User.last

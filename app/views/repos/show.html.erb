@@ -84,7 +84,8 @@
     <% end %>
   </div>
 
-  <section class="forks">
+  <% unless @forks.empty? %>
+    <section class="forks">
     <table class="table table-striped">
       <thead>
       <tr>
@@ -94,7 +95,7 @@
       </tr>
       </thead>
       <tbody>
-      <% @repo.forks.each do |fork| %>
+      <% @forks.each do |fork| %>
         <tr class="fork">
           <td>
             <img class="avatar small" src="<%= fork.author.image %>" title="<%= fork.author.nickname %>" alt="<%= fork.author.nickname %>">
@@ -125,6 +126,7 @@
       </tbody>
     </table>
   </section>
+  <% end %>
 
 <% end %>
 

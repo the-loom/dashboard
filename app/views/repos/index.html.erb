@@ -18,7 +18,14 @@
         <td>
           <%= link_to repo.full_name, repo_path(user: repo.user, name: repo.name) %>
         </td>
-        <td>N/D</td>
+        <td>
+          <% repo.dificulty.times do %>
+            <i class="fa fa-star" aria-hidden="true"></i>
+          <% end %>
+          <% (5 - repo.dificulty).times do %>
+            <i class="fa fa-star-o" aria-hidden="true"></i>
+          <% end %>
+        </td>
         <td><%= repo.forks.count %></td>
       </tr>
     <% end %>
