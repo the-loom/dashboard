@@ -7,11 +7,37 @@ class ReposController < ApplicationController
     @repo = AutomaticCorrection::Repo.find_by(user: params[:user], name: params[:name])
   end
 
+  def grade
+    repo = AutomaticCorrection::Repo.find_by(user: params[:user], name: params[:name])
+    if repo.parent == nil
+      fork = AutomaticCorrection::Repo.find_or_create_by(parent: repo, author: current_user, user: current_user.github_username, name: repo.name)
+      fork.update_attributes(pending: true, git_url: "git@github.com:#{current_user.github_username}/#{repo.name}.git")
+    end
+
+    redirect_to repo_path(user: repo.user, name: repo.name)
+  end
+
+  def next_pending_fork
+    if request.headers["x-api-key"] != ENV["GRADER_TOKEN"]
+      render nothing: true, status: :forbidden
+      return
+    end
+
+    fork = AutomaticCorrection::Repo.find_by(user: params[:user], name: params[:name])
+        .forks.where(pending: true).order(updated_at: :asc).first
+    render json: fork.to_json(only: [:id, :user, :name, :git_url ],
+                              include: {
+                                  parent: { only: [:user, :name, :git_url ] }
+                              })
+  end
+
   def update
     if request.headers["x-api-key"] != ENV["GRADER_TOKEN"]
       render nothing: true, status: :forbidden
       return
     end
+
+    5/0
 
     parent = AutomaticCorrection::Repo.where(user: params[:parent][:user], name: params[:parent][:name]).first
 
@@ -59,7 +85,7 @@ class ReposController < ApplicationController
   private
 
     def repo_params(who)
-      params.require(who).permit(:user, :name, :git_url, :avatar_url, :description)
+      params.require(who).permit(:user, :name)
     end
 
     def issue_params(issue)

@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20180219143000) do
     t.string   "description"
     t.integer  "parent_id"
     t.integer  "author_id"
+    t.boolean  "pending",     default: true
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end

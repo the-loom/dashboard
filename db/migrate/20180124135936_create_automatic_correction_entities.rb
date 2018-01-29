@@ -8,6 +8,7 @@ class CreateAutomaticCorrectionEntities < ActiveRecord::Migration[5.0]
       t.string :avatar_url
       t.string :description
       t.integer :parent_id
+      t.boolean :pending, default: true
       t.timestamps
     end
     add_foreign_key :automatic_correction_repos, :automatic_correction_repos, column: :parent_id

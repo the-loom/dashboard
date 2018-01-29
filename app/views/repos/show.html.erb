@@ -68,6 +68,22 @@
 
 <% else %>
 
+  <div class="alert alert-info">
+    <% if current_user.has_github_identity? %>
+      <p>Podés resolver este desafío, y LoomBot&trade; lo corregirá. Para ello, debés segiur estos pasos:</p>
+      <ol>
+        <li>Ingresar al repositorio, y revisar la consigna.</li>
+        <li>Una vez que decidas resolverla, empezá haciendo un fork del repositorio del desafío.</li>
+        <li>Los desafíos están armados para que completes con tu código en ciertos lugares.</li>
+        <li><strong>Importante: podés agregar tus propias clases, pero debés respetar la estructura del proyecto, y no debés eliminar ni modificar las firmas de los métodos existentes</strong></li>
+        <li>Una vez que hayas completado el ejercicio, y hayas hecho un push en tu propio repositorio, solicitá la corrección.</li>
+      </ol>
+    <% else %>
+      <p>Podés resolver este desafío, y LoomBot&trade; lo corregirá. Para ello, primero vinculá tu cuenta de Github con Loom, saliendo y volviendo a ingresar con esa autenticación.</p>
+      <p><strong>Nota:</strong> si tu dirección de correo electrónico es diferente a la de tu cuenta actual, deberás avisarle a tus instructores para que mezclen manualmente tus identidades.</p>
+    <% end %>
+  </div>
+
   <section class="forks">
     <table class="table table-striped">
       <thead>
@@ -81,21 +97,29 @@
       <% @repo.forks.each do |fork| %>
         <tr class="fork">
           <td>
-            <img class="avatar small" src="<%= fork.avatar_url %>" title="<%= fork.user %>" alt="<%= fork.user %>">
-            <%= fork.user %>
+            <img class="avatar small" src="<%= fork.author.image %>" title="<%= fork.author.nickname %>" alt="<%= fork.author.nickname %>">
+            <%= fork.author.name %>
           </td>
           <td>
-            <%= link_to fork.full_name, repo_path(user: fork.user, name: fork.name) %>
+            <% unless fork.pending? %>
+              <%= link_to fork.full_name, repo_path(user: fork.user, name: fork.name) %>
+            <% else %>
+              <%= fork.full_name %>
+            <% end %>
           </td>
           <td>
-            <div class="progress">
-              <div class="progress-bar progress-bar-<%= fork.latest_test_run.score < 4 ? 'danger' : (fork.latest_test_run.score > 7 ? 'success' : 'warning') %>"
-                   role="progressbar" aria-valuenow="<%= fork.latest_test_run.score * 10 %>"
-                   aria-valuemin="0" aria-valuemax="100" style="width: <%= fork.latest_test_run.score * 10 %>%">
-                <%= fork.latest_test_run.score %>/10
+            <% if fork.pending? %>
+              Pendiente...
+            <% else %>
+              <div class="progress">
+                <div class="progress-bar progress-bar-<%= fork.latest_test_run.score < 4 ? 'danger' : (fork.latest_test_run.score > 7 ? 'success' : 'warning') %>"
+                     role="progressbar" aria-valuenow="<%= fork.latest_test_run.score * 10 %>"
+                     aria-valuemin="0" aria-valuemax="100" style="width: <%= fork.latest_test_run.score * 10 %>%">
+                  <%= fork.latest_test_run.score %>/10
+                </div>
               </div>
-            </div>
-            <span class="time-ago" data-time="<%= fork.latest_test_run.created_at.to_i * 1000 %>">TIME AGO</span></td>
+              <span class="time-ago" data-time="<%= fork.latest_test_run.created_at.to_i * 1000 %>">TIME AGO</span></td>
+            <% end %>
         </tr>
       <% end %>
       </tbody>

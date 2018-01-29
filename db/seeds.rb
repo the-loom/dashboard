@@ -1,6 +1,26 @@
 require "ffaker"
 require "roman"
 
+delucas = User.create(
+  name: "Lucas Videla",
+  nickname: "delucas",
+  email: "lucas@wecode.io",
+  image: "https://avatars1.githubusercontent.com/u/684051?v=4",
+  enabled: true,
+  locked: true
+)
+
+Identity.create(
+  user: delucas,
+  provider: "github",
+  uid: "684051",
+  name: "Lucas Videla",
+  nickname: "delucas",
+  email: "lucas@wecode.io",
+  role: :admin,
+  image: "https://avatars1.githubusercontent.com/u/684051?v=4"
+)
+
 # TODO(delucas): organizar esto en grupos
 3.times do
 
@@ -53,7 +73,7 @@ fork = AutomaticCorrection::Repo.create(
   name: "piedra-papel-tijera-lagarto-Spock",
   git_url: "git@github.com:#{author.nickname}/piedra-papel-tijera-lagarto-Spock.git",
   avatar_url: author.image,
-  description: "Repo description pending"
+  pending: false
 )
 
 pptlS.forks << fork

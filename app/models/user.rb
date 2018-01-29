@@ -20,12 +20,26 @@ class User < ApplicationRecord
   has_many :user_solutions
   has_many :solutions, through: :user_solutions
 
+  has_many :repos, foreign_key: :author_id, class_name: "AutomaticCorrection::Repo"
+
   belongs_to :team, optional: true
 
   delegate :points, to: :current_membership
   delegate :level, to: :current_membership
 
   delegate :admin?, to: :current_membership
+
+  def has_github_identity?
+    identities.exists?(provider: "github")
+  end
+
+  def has_pending_correction_on?(repo)
+    repos.exists?(pending: true, id: repo.forks.pluck(:id))
+  end
+
+  def github_username
+    identities.where(provider: "github").first.nickname
+  end
 
   def update_with(identity)
     self.nickname = identity.nickname
