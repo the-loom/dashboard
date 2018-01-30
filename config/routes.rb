@@ -57,7 +57,15 @@ Rails.application.routes.draw do
   resources :repos, only: [:index]
   get "repos/:user/:name" => "repos#show", as: :repo, constraints: { user: /[0-z\.-]+/ }
   get "repos/:user/:name/grade" => "repos#grade", as: :grade, constraints: { user: /[0-z\.-]+/ }
-  get "repos/:user/:name/pending" => "repos#next_pending_fork", constraints: { user: /[0-z\.-]+/ }
+
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      resources :repos do
+        match :pending, via: [:get], on: :collection
+        match :grade, via: [:post], on: :member
+      end
+    end
+  end
 
   resources :teams, except: :show do
     patch :add_member
