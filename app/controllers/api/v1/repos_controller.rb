@@ -24,60 +24,45 @@ module Api
           return
         end
 
-        5 / 0
-        # TODO: mejorar esto
-        # TODO: marcar el repo como que ya no está pendiente
-        # TODO: guardar el sha
+        #TODO: considerar que puede no haber una corrección pendiente (falla el grader?)
+        #TODO: utilizar ese SHA para algo
+        #TODO: metemos un rescue para los casos no contemplados? Se vuelve atras todo?
 
-        parent = AutomaticCorrection::Repo.where(user: params[:parent][:user], name: params[:parent][:name]).first
-
-        unless parent
-          parent = AutomaticCorrection::Repo.create(repo_params(:parent))
-        end
-
-        fork = parent.forks.where(user: params[:fork][:user]).first
-
-        if fork
-          fork.update_attributes(repo_params(:fork))
-        else
-          fork = AutomaticCorrection::Repo.create(repo_params(:fork))
-          parent.forks << fork
-        end
+        fork = AutomaticCorrection::Repo.find(params[:id])
 
         test_run = AutomaticCorrection::TestRun.create(
-          score: params[:test_run][:score][:value],
-          details: params[:test_run][:details]
+          score: params[:test_run][:score],
+          git_commit_id: params[:test_run][:sha]
+          # detalles!
         )
+        fork.test_runs << test_run
 
+        #TODO(delucas): ojo, puede haber DETALLES si es que hay errores, o cosas similares
+        # el caso que contemplo en el que puede no haber resultados, es si no pudo corregir x error de compilacion
         if params[:test_run][:results]
           params[:test_run][:results].each do |result|
 
             res = AutomaticCorrection::Result.create(
               test_type: result[:type],
-              score: result[:score][:value]
+              score: result[:score]
             )
+            test_run.results << res
 
             result[:issues].each do |issue|
               iss = AutomaticCorrection::Issue.create(issue_params(issue))
               res.issues << iss
             end
 
-            test_run.results << res
           end
         end
 
-        fork.test_runs << test_run
+        fork.update_attributes(pending: false)
 
         # TODO: handle errors here
-        render nothing: true, status: :ok
+        head :ok
       end
 
       private
-
-        def repo_params(who)
-          params.require(who).permit(:user, :name)
-        end
-
         def issue_params(issue)
           issue.permit!
         end

@@ -1,6 +1,6 @@
 <article class="repo row">
   <div class="col-md-2">
-    <img class="avatar" src="<%= repo.avatar_url %>" title="<%= repo.user %>" alt="<%= repo.user %>">
+    <img class="avatar" src="<%= repo.avatar_url || repo.author.image %>" title="<%= repo.user %>" alt="<%= repo.user %>">
   </div>
   <div class="col-md-10">
     <h1>
