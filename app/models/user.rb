@@ -1,9 +1,7 @@
 class User < ApplicationRecord
-  enum role: {
-      guest: 0,
-      student: 1,
-      teacher: 2
-  }
+
+  has_many :memberships
+  has_many :courses, through: :memberships
 
   has_many :identities
 
@@ -60,6 +58,18 @@ class User < ApplicationRecord
     end
   end
 =end
+
+  # TODO (ceneon): Temporary shit
+  def teacher?
+    self.memberships.first.try(:teacher?)
+  end
+  def student?
+    self.memberships.first.try(:student?)
+  end
+  def guest?
+    self.memberships.first.try(:guest?)
+  end
+
 
   def level
     Level.new(points, badges.size).value

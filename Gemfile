@@ -9,6 +9,7 @@ gem "therubyracer", platforms: :ruby
 
 gem "pundit"
 gem "rollbar"
+gem "request_store"
 
 group :development, :test do
   gem "byebug", platform: :mri

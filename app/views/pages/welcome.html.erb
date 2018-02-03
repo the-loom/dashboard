@@ -13,8 +13,27 @@
   <p><strong>Loom</strong> es una plataforma evolutiva que te acompañará
     durante la cursada. ¡Estate atento a los cambios semanales!</p>
 
-  <p>
-    <%= link_to 'Ingresar con GitHub', '/auth/github', class: 'btn btn-lg btn-success' %>
-    <%= link_to 'Ingresar con Google', '/auth/google_oauth2', class: 'btn btn-lg btn-success' %>
-  </p>
+  <% if current_user %>
+
+    <p>Cursos de los que sos parte:</p>
+    <ul>
+      <% current_user.courses.each{ |course| %>
+        <li><%= course.name %></li>
+      <% } %>
+    </ul>
+
+    <p>También podés anotarte en los siguientes cursos:</p>
+    <ul>
+      <% Course.where("id not in (?)", (current_user.courses.ids << -1)).each{ |course| %>
+        <li><%= course.name %></li>
+      <% } %>
+    </ul>
+
+
+  <% else %>
+    <p>
+      <%= link_to 'Ingresar con GitHub', '/auth/github', class: 'btn btn-lg btn-success' %>
+      <%= link_to 'Ingresar con Google', '/auth/google_oauth2', class: 'btn btn-lg btn-success' %>
+    </p>
+  <% end %>
 </div>

@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
     auth = request.env["omniauth.auth"]
     identity = Identity.by_omniauth(auth)
     session[:user_id] = identity.user.id
-    redirect_to profile_url, notice: "Signed in!"
+    redirect_to "/", notice: "Signed in!"
   end
 
   def destroy

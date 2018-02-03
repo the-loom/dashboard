@@ -10,42 +10,56 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180116135417) do
+ActiveRecord::Schema.define(version: 20180203211048) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "attendances", force: :cascade do |t|
     t.integer "user_id"
     t.integer "lecture_id"
     t.integer "condition"
+    t.integer "course_id"
   end
 
   create_table "badges", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
-    t.string "slug"
+    t.string  "name"
+    t.string  "description"
+    t.string  "slug"
+    t.integer "course_id"
   end
 
   create_table "checkpoints", force: :cascade do |t|
-    t.string "name"
-    t.string "link"
-    t.date   "due_date"
+    t.string  "name"
+    t.string  "link"
+    t.date    "due_date"
+    t.integer "course_id"
   end
 
   create_table "checks", force: :cascade do |t|
     t.integer  "team_id"
     t.integer  "checkpoint_id"
-    t.text     "comments",      limit: 65535
+    t.text     "comments"
     t.integer  "condition"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "course_id"
   end
 
   create_table "comments", force: :cascade do |t|
-    t.text     "body",         limit: 65535
-    t.integer  "mood",                       default: 0
+    t.text     "body"
+    t.integer  "mood",         default: 0
     t.integer  "user_id"
     t.integer  "commenter_id"
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "course_id"
+  end
+
+  create_table "courses", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "earnings", force: :cascade do |t|
@@ -53,6 +67,7 @@ ActiveRecord::Schema.define(version: 20180116135417) do
     t.integer  "badge_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "course_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -60,12 +75,14 @@ ActiveRecord::Schema.define(version: 20180116135417) do
     t.string  "description"
     t.integer "batch_size"
     t.integer "points_per_batch"
+    t.integer "course_id"
   end
 
   create_table "exercises", force: :cascade do |t|
-    t.string "name"
-    t.string "url"
-    t.text   "notes"
+    t.string  "name"
+    t.string  "url"
+    t.text    "notes"
+    t.integer "course_id"
   end
 
   create_table "identities", force: :cascade do |t|
@@ -78,18 +95,28 @@ ActiveRecord::Schema.define(version: 20180116135417) do
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_identities_on_user_id"
+    t.index ["user_id"], name: "index_identities_on_user_id", using: :btree
   end
 
   create_table "lectures", force: :cascade do |t|
-    t.date   "date"
-    t.string "summary"
+    t.date    "date"
+    t.string  "summary"
+    t.integer "course_id"
   end
 
   create_table "measurements", force: :cascade do |t|
     t.integer  "team_id"
     t.integer  "reading_id"
     t.integer  "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "course_id"
+  end
+
+  create_table "memberships", force: :cascade do |t|
+    t.integer  "course_id"
+    t.integer  "user_id"
+    t.integer  "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -100,12 +127,14 @@ ActiveRecord::Schema.define(version: 20180116135417) do
     t.integer  "points"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "course_id"
   end
 
   create_table "readings", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
-    t.string "slug"
+    t.string  "name"
+    t.string  "description"
+    t.string  "slug"
+    t.integer "course_id"
   end
 
   create_table "solutions", force: :cascade do |t|
@@ -114,6 +143,7 @@ ActiveRecord::Schema.define(version: 20180116135417) do
     t.text     "notes"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "course_id"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -121,9 +151,10 @@ ActiveRecord::Schema.define(version: 20180116135417) do
   end
 
   create_table "teams", force: :cascade do |t|
-    t.string "name"
-    t.string "nickname"
-    t.string "image"
+    t.string  "name"
+    t.string  "nickname"
+    t.string  "image"
+    t.integer "course_id"
   end
 
   create_table "timers", force: :cascade do |t|
@@ -134,11 +165,13 @@ ActiveRecord::Schema.define(version: 20180116135417) do
     t.integer  "estimated_time_in_seconds"
     t.datetime "started_at"
     t.string   "description"
+    t.integer  "course_id"
   end
 
   create_table "user_solutions", force: :cascade do |t|
     t.integer "user_id"
     t.integer "solution_id"
+    t.integer "course_id"
   end
 
   create_table "user_tags", force: :cascade do |t|
@@ -153,7 +186,6 @@ ActiveRecord::Schema.define(version: 20180116135417) do
     t.string   "image"
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
-    t.integer  "role",            default: 0
     t.integer  "points",          default: 0
     t.integer  "team_id"
     t.boolean  "locked",          default: false
