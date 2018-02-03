@@ -17,7 +17,7 @@
 
     <p>Cursos de los que sos parte:</p>
     <ul>
-      <% current_user.courses.each{ |course| %>
+      <% current_user.courses.each{ |course| %>
         <li><%= course.name %></li>
       <% } %>
     </ul>

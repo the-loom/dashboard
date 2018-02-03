@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   get "/students" => "users#index", as: :students
   get "/guests" => "users#guests", as: :guests
   post "/u/bulk_edit" => "users#bulk_edit", as: :bulk_edit_users
-  post "/u/:nickname/comment" => "users#comment", as: :comment_user
+  post "/u/:nickname/comment" => "users#comment", as: :comment_user, constraints: { nickname: /[0-z\.]+/ }
 
   get "/events/" => "events#index", as: :events_list
   get "/events/new" => "events#new", as: :new_event

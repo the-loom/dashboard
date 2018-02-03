@@ -15,6 +15,8 @@ module LoomDashboard
     I18n.config.available_locales = [:es, :en]
     I18n.config.default_locale = :es
 
+    Rails.application.config.autoload_paths += %W(#{config.root}/lib)
+
     config.assets.paths << Rails.root.join("vendor", "assets", "components")
     config.after_initialize do |app|
       app.config.paths.add "app/presenters", eager_load: true
