@@ -1,4 +1,7 @@
 class Measurement < ApplicationRecord
+  
+  include CourseLock
+  
   belongs_to :team
   belongs_to :reading
 

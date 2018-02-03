@@ -1,4 +1,7 @@
 class Comment < ApplicationRecord
+  
+  include CourseLock
+  
   enum mood: {
       bad: -1,
       neutral: 0,

@@ -1,4 +1,7 @@
 class Attendance < ApplicationRecord
+  
+  include CourseLock
+
   enum condition: {
       absent: 0,
       present: 1

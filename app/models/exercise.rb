@@ -1,4 +1,7 @@
 class Exercise < ApplicationRecord
+  
+  include CourseLock
+  
   has_many :solutions
 
   default_scope { order(name: :asc) }
