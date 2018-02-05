@@ -7,6 +7,9 @@ down:
 	docker-compose down
 	rm -f tmp/pids/server.pid
 
+logs:
+	docker-compose logs -tf
+
 capture_production_db:
 	heroku pg:backups capture --app the-loom
 	$(MAKE) download_production_db

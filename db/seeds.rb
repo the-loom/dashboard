@@ -61,10 +61,20 @@ end
 pptlS = AutomaticCorrection::Repo.create(
   user: "the-loom",
   name: "piedra-papel-tijera-lagarto-Spock",
-  git_url: "git@github.com:the-loom/piedra-papel-tijera-lagarto-Spock.git",
+  git_url: "git@github.com:tallerweb/piedra-papel-tijera-lagarto-Spock.git",
   avatar_url: "https://avatars.githubusercontent.com/u/5033965?v=3",
   description: "Repo description pending",
   dificulty: 1
+)
+
+author = User.first
+pptlS.forks << AutomaticCorrection::Repo.create(
+    author: author,
+    user: author.nickname,
+    name: "piedra-papel-tijera-lagarto-Spock",
+    git_url: "git@github.com:#{author.nickname}/piedra-papel-tijera-lagarto-Spock.git",
+    avatar_url: author.image,
+    pending: true
 )
 
 author = User.last

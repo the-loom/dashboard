@@ -20,7 +20,7 @@
               <i class="fa fa-external-link" aria-hidden="true"></i> Ir al código
             <% end %>
           </p>
-          <% if current_user.has_github_identity? and not current_user.has_pending_correction_on?(repo) %>
+          <% if current_user.has_github_identity? and not current_user.has_pending_correction_on?(repo) and repo.parent == nil %>
             <%= link_to 'Solicitar corrección', grade_path(user: repo.user, name: repo.name), class: 'btn btn-primary' %>
           <% end %>
         </div>

@@ -28,38 +28,42 @@ module Api
         #TODO: utilizar ese SHA para algo
         #TODO: metemos un rescue para los casos no contemplados? Se vuelve atras todo?
 
-        fork = AutomaticCorrection::Repo.find(params[:id])
+        AutomaticCorrection::Repo.transaction do
+          fork = AutomaticCorrection::Repo.find(params[:id])
 
-        test_run = AutomaticCorrection::TestRun.create(
-          score: params[:test_run][:score],
-          git_commit_id: params[:test_run][:sha]
-          # detalles!
-        )
-        fork.test_runs << test_run
+          #TODO: si ya se corrigió este SHA, abortar!
 
-        #TODO(delucas): ojo, puede haber DETALLES si es que hay errores, o cosas similares
-        # el caso que contemplo en el que puede no haber resultados, es si no pudo corregir x error de compilacion
-        if params[:test_run][:results]
-          params[:test_run][:results].each do |result|
+          test_run = AutomaticCorrection::TestRun.create(
+            score: params[:test_run][:score],
+            git_commit_id: params[:test_run][:sha],
+            details: params[:test_run][:details]
+          )
+          fork.test_runs << test_run
 
-            res = AutomaticCorrection::Result.create(
-              test_type: result[:type],
-              score: result[:score]
-            )
-            test_run.results << res
+          #TODO(delucas): ojo, puede haber DETALLES si es que hay errores, o cosas similares
+          # el caso que contemplo en el que puede no haber resultados, es si no pudo corregir x error de compilacion
+          if params[:test_run][:results]
+            params[:test_run][:results].each do |result|
 
-            result[:issues].each do |issue|
-              iss = AutomaticCorrection::Issue.create(issue_params(issue))
-              res.issues << iss
+              res = AutomaticCorrection::Result.create(
+                test_type: result[:type],
+                score: result[:score]
+              )
+              test_run.results << res
+
+              result[:issues].each do |issue|
+                iss = AutomaticCorrection::Issue.create(issue_params(issue))
+                res.issues << iss
+              end
+
             end
-
           end
+
+          fork.update_attributes(pending: false)
         end
 
-        fork.update_attributes(pending: false)
-
         # TODO: handle errors here
-        head :ok
+        head :no_content
       end
 
       private

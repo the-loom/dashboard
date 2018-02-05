@@ -7,6 +7,12 @@
       Resultados de la última entrega: <span class="badge score pull-right"><%= @repo.latest_test_run.score %></span>
     </h2>
 
+    <% if @repo.latest_test_run.details %>
+      <pre>
+        <%= @repo.latest_test_run.details %>
+      </pre>
+    <% end %>
+
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
       <% @repo.latest_test_run.results.each_with_index do |result, index| %>
         <div class="panel panel-default">
@@ -64,6 +70,7 @@
         </div>
       <% end %>
     </div>
+
   </section>
 
 <% else %>
