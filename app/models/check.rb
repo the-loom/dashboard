@@ -1,7 +1,6 @@
 class Check < ApplicationRecord
-  
   include CourseLock
-  
+
   enum condition: {
       bad: -1,
       missing: 0,

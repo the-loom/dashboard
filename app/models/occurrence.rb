@@ -1,7 +1,6 @@
 class Occurrence < ApplicationRecord
-  
   include CourseLock
-  
+
   belongs_to :user
   belongs_to :event
 

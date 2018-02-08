@@ -1,5 +1,4 @@
 class Course < ApplicationRecord
-  
   has_many :memberships
   has_many :users, through: :memberships
 
@@ -12,5 +11,4 @@ class Course < ApplicationRecord
   def self.current=(course)
     RequestStore.store[:current_course] = course
   end
-
 end

@@ -31,3 +31,7 @@ loom es una aplicación web que acompaña a los estudiantes en su cursada
 3. Commitear los cambios (`git commit -am 'Add some feature'`)
 4. Hacer push al branch (`git push origin my-new-feature`)
 5. Crear un Pull Request
+
+
+
+docker run --rm -v "$PWD:/home/gradle/project" -w /home/gradle/project gradle:alpine gradle

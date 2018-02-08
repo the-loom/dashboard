@@ -1,16 +1,15 @@
 class AddMultitenancy < ActiveRecord::Migration[5.0]
   def change
-
     create_table :courses do |t|
-    	t.string :name
-    	t.timestamps
+      t.string :name
+      t.timestamps
     end
 
     create_table :memberships do |t|
-    	t.integer :course_id
-    	t.integer :user_id
-    	t.integer :role
-    	t.timestamps
+      t.integer :course_id
+      t.integer :user_id
+      t.integer :role
+      t.timestamps
     end
 
     add_column :attendances, :course_id, :integer
@@ -31,6 +30,5 @@ class AddMultitenancy < ActiveRecord::Migration[5.0]
     add_column :user_solutions, :course_id, :integer
 
     remove_column :users, :role
-
   end
 end

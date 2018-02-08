@@ -4,17 +4,17 @@ class UsersController < ApplicationController
 
   def index
     authorize User
-    @students = Membership.student.collect{ |x| x.user}
+    @students = Membership.student.collect { |x| x.user }
   end
 
   def guests
     authorize User
-    @guests = Membership.guest.collect{ |x| x.user}
+    @guests = Membership.guest.collect { |x| x.user }
   end
 
   def show
     if params[:nickname]
-      unless @user = Membership.includes(:user).where(users: {nickname: params[:nickname]}).first.try(:user)
+      unless @user = Membership.includes(:user).where(users: { nickname: params[:nickname] }).first.try(:user)
         flash[:alert] = "No existe el usuario"
         return redirect_to "/"
       end
@@ -26,9 +26,9 @@ class UsersController < ApplicationController
   end
 
   def comment
-    unless @user = Membership.includes(:user).where(users: {nickname: params[:nickname]}).first.try(:user)
-        flash[:alert] = "No existe el usuario"
-        return redirect_to "/"
+    unless @user = Membership.includes(:user).where(users: { nickname: params[:nickname] }).first.try(:user)
+      flash[:alert] = "No existe el usuario"
+      return redirect_to "/"
     end
     authorize @user, :comment?
     @user.comments.create(body: params[:comment][:body], commenter: current_user, mood: params[:comment][:mood].to_i)

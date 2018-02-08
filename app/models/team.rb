@@ -1,7 +1,6 @@
 class Team < ApplicationRecord
-  
   include CourseLock
-  
+
   has_many :members, class_name: "User"
 
   has_many :measurements

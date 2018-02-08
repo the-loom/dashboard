@@ -2,7 +2,7 @@ require "ffaker"
 require "roman"
 
 # TODO(delucas): organizar esto en grupos
-3.times do 
+3.times do
 
   course = Course.create(
     name: "Programación #{rand(10).roman}"

@@ -1,7 +1,6 @@
 class Timer < ApplicationRecord
-  
   include CourseLock
-  
+
   enum stage: {
       analysis: 0,
       test_preparation: 1,
