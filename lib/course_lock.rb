@@ -6,7 +6,7 @@ module CourseLock
 				if Course.current
 					where(course_id: Course.current.id)
 				else
-					raise NoAccountAvailable
+					raise NoCourseAvailable
 				end
 			}
 			# HELP: http://stackoverflow.com/questions/12667036/default-scope-ignoring-dynamic-value-in-condition/12667077#12667077
@@ -19,13 +19,13 @@ module CourseLock
 
 	def verify_current_course()
 		if self.course != Course.current
-			raise WrongAccountException
+			raise WrongCourseException
 		end
 	end
 end
 
-class WrongAccountException < Exception
+class WrongCourseException < Exception
 end
 
-class NoAccountAvailable < Exception
+class NoCourseAvailable < Exception
 end
