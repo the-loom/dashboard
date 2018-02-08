@@ -1,11 +1,13 @@
 require "ffaker"
+require "roman"
 
 # TODO(delucas): organizar esto en grupos
 3.times do 
 
-  c = Course.create(
-    name: 'Programación ' + rand(10).roman
+  course = Course.create(
+    name: "Programación #{rand(10).roman}"
   )
+  Course.current = course
 
   35.times do
     name = "#{FFaker::NameMX.first_name} #{FFaker::NameMX.last_name}"
@@ -19,9 +21,10 @@ require "ffaker"
       enabled: true,
       locked: true
     )
-    user.memberships << Membership.create(
-      course: c,
-      role: :student
+    Membership.create(
+      course: course,
+      role: :student,
+      user: user
     )
     Identity.create(
       user: user,
