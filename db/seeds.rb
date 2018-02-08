@@ -58,13 +58,22 @@ Identity.create(
   end
 end
 
+AutomaticCorrection::Repo.create(
+    user: "the-loom",
+    name: "hola-mundo",
+    git_url: "git@github.com:the-loom/hola-mundo.git",
+    avatar_url: "https://avatars.githubusercontent.com/u/5033965?v=3",
+    description: "Proyecto para verificar la configuración inicial y la mecánica de la plataforma",
+    dificulty: 1
+)
+
 pptlS = AutomaticCorrection::Repo.create(
   user: "the-loom",
   name: "piedra-papel-tijera-lagarto-Spock",
   git_url: "git@github.com:tallerweb/piedra-papel-tijera-lagarto-Spock.git",
   avatar_url: "https://avatars.githubusercontent.com/u/5033965?v=3",
   description: "Repo description pending",
-  dificulty: 1
+  dificulty: 2
 )
 
 author = User.first
