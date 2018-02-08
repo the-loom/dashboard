@@ -11,7 +11,7 @@
       <div class="col-md-12">
         <div class="bs-callout bs-callout-info">
           <% if repo.parent %>
-            <p>basado en <%= link_to repo.parent.full_name, "/#{repo.parent.full_name}" %></a></p>
+            <p>basado en <%= link_to repo.parent.full_name, repo_path(user: repo.parent.user, name: repo.parent.name) %></p>
           <% else %>
             <p><%= repo.description %></p>
           <% end %>

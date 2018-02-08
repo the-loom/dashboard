@@ -78,30 +78,61 @@ pptlS.forks << AutomaticCorrection::Repo.create(
 )
 
 author = User.last
-fork = AutomaticCorrection::Repo.create(
+pptlS.forks << AutomaticCorrection::Repo.create(
   author: author,
   user: author.nickname,
   name: "piedra-papel-tijera-lagarto-Spock",
   git_url: "git@github.com:#{author.nickname}/piedra-papel-tijera-lagarto-Spock.git",
   avatar_url: author.image,
-  pending: false
+  pending: false,
+  test_runs: [
+      AutomaticCorrection::TestRun.create(
+          score: 4.83,
+          git_commit_id: "25def259c9cbe610b1f85867d76b05539585ebe4",
+          results: [
+              AutomaticCorrection::Result.create(
+                  score: 3.33,
+                  test_type: "junit"
+              ),
+              AutomaticCorrection::Result.create(
+                  score: 1.5,
+                  test_type: "checkstyle"
+              )
+          ]
+      ),
+      AutomaticCorrection::TestRun.create(
+          score: 7.23,
+          git_commit_id: "25def259c9cbe610b1f85867d76b05539585ebe4",
+          results: [
+              AutomaticCorrection::Result.create(
+                  score: 5.23,
+                  test_type: "junit"
+              ),
+              AutomaticCorrection::Result.create(
+                  score: 2,
+                  test_type: "checkstyle"
+              )
+          ]
+      ),
+      AutomaticCorrection::TestRun.create(
+          score: 8.33,
+          git_commit_id: "25def259c9cbe610b1f85867d76b05539585ebe4",
+          results: [
+              AutomaticCorrection::Result.create(
+                  score: 6.33,
+                  test_type: "junit"
+              ),
+              AutomaticCorrection::Result.create(
+                  score: 2,
+                  test_type: "checkstyle"
+              )
+          ]
+      )
+  ]
 )
 
-pptlS.forks << fork
 
-first_test_run = AutomaticCorrection::TestRun.create(
-  score: 4.83,
-  git_commit_id: "25def259c9cbe610b1f85867d76b05539585ebe4"
-)
-
-fork.test_runs << first_test_run
-
-junit_result = AutomaticCorrection::Result.create(
-  score: 3.33,
-  test_type: "junit"
-                                                  )
-first_test_run.results << junit_result
-
+=begin
 junit_result.issues << AutomaticCorrection::Issue.create(
   message: "java.lang.RuntimeException: Pucha che!",
   issue_type: "java.lang.RuntimeException",
@@ -132,12 +163,6 @@ junit_result.issues << AutomaticCorrection::Issue.create(
   }
 )
 
-checkstyle_result = AutomaticCorrection::Result.create(
-  score: 1.5,
-  test_type: "checkstyle"
-)
-first_test_run.results << checkstyle_result
-
 checkstyle_result.issues << AutomaticCorrection::Issue.create(
   message: "Missing a Javadoc comment.",
   issue_type: "error",
@@ -158,3 +183,4 @@ checkstyle_result.issues << AutomaticCorrection::Issue.create(
       filename: "/home/lucas/workspace-grails/loom-daemon/wecodeio-loom-base-repo/src/main/java/edu/tallerweb/conjuntos/Conjunto.java"
   }
 )
+=end

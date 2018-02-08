@@ -14,7 +14,7 @@
     <% end %>
 
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-      <% @repo.latest_test_run.results.each_with_index do |result, index| %>
+      <% @repo.latest_test_run.results.each do |result| %>
         <div class="panel panel-default">
           <div class="panel-heading" role="tab" id="heading<%= result.test_type.capitalize %>">
             <h4 class="panel-title">
@@ -31,7 +31,9 @@
           <div id="collapse<%= result.test_type.capitalize %>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading<%= result.test_type.capitalize %>">
             <div class="panel-body">
 
-              <table class="table table-hover">
+              <% unless result.issues.empty? %>
+
+                <table class="table table-hover">
                 <thead>
                 <tr>
                   <th>Mensaje</th>
@@ -64,6 +66,14 @@
                 <% end %>
                 </tbody>
               </table>
+
+              <% else %>
+
+                <div class="alert alert-info">
+                  <p>No hay incidencias registradas.</p>
+                </div>
+
+              <% end %>
 
             </div>
           </div>
