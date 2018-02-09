@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get "/profile/edit" => "users#edit", as: :edit_profile
   patch "/profile/edit" => "users#update", as: :update_user
   get "/profile/change_identity/:identity_id" => "users#change_identity", as: :change_identity
-  get "/u/:nickname/impersonate" => "users#impersonate", as: :impersonate_user
+  get "/u/:nickname/impersonate" => "users#impersonate", as: :impersonate_user, constraints: { nickname: /[0-z\.]+/ }
   get "/students" => "users#index", as: :students
   get "/guests" => "users#guests", as: :guests
   post "/u/bulk_edit" => "users#bulk_edit", as: :bulk_edit_users
@@ -21,13 +21,13 @@ Rails.application.routes.draw do
   get "/events/new" => "events#new", as: :new_event
   post "/events/new" => "events#create", as: :create_event
   get "/events/:event_id/show" => "events#show", as: :event_details
-  get "/events/:event_id/register/:nickname" => "events#register", as: :register_event
+  get "/events/:event_id/register/:nickname" => "events#register", as: :register_event, constraints: { nickname: /[0-z\.]+/ }
 
   get "/badges/" => "badges#index", as: :badges_list
   get "/badges/new" => "badges#new", as: :new_badge
   post "/badges/new" => "badges#create", as: :create_badge
   get "/badges/:badge_id/show" => "badges#show", as: :badge_details
-  get "/badges/:badge_id/register/:nickname" => "badges#register", as: :register_badge
+  get "/badges/:badge_id/register/:nickname" => "badges#register", as: :register_badge, constraints: { nickname: /[0-z\.]+/ }
 
   get "/readings/" => "readings#index", as: :readings_list
   get "/readings/new" => "readings#new", as: :new_reading
@@ -71,6 +71,13 @@ Rails.application.routes.draw do
   resources :teams, except: :show do
     patch :add_member
   end
-  get "/teams/:nickname" => "teams#show", as: :team_profile
+  get "/teams/:nickname" => "teams#show", as: :team_profile, constraints: { nickname: /[0-z\.]+/ }
+
+  resources :courses, only: [:index] do
+    member do
+      get :enroll
+      get :switch
+    end
+  end
 
 end

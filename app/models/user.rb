@@ -58,17 +58,20 @@ class User < ApplicationRecord
   end
 =end
 
-  # TODO (ceneon): Temporary shit
-  def teacher?
-    self.memberships.first.try(:teacher?)
-  end
-  def student?
-    self.memberships.first.try(:student?)
-  end
-  def guest?
-    self.memberships.first.try(:guest?)
+  def current_membership
+    self.memberships.find_by(course: Course.current)
   end
 
+  def teacher?
+    current_membership.teacher?
+  end
+
+  def student?
+    current_membership.student?
+  end
+  def guest?
+    current_membership.guest?
+  end
 
   def level
     Level.new(points, badges.size).value
