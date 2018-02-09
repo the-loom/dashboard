@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
     identity = Identity.by_omniauth(auth)
     session[:user_id] = identity.user.id
     if identity.user.memberships.count >= 1
-      #TODO(delucas): log into latest used course
+      # TODO(delucas): log into latest used course
       session[:course_id] = identity.user.courses.first.id
     end
     redirect_to profile_url, notice: "Signed in!"

@@ -1,5 +1,4 @@
 class CoursesController < ApplicationController
-
   def index
     @courses = Course.all
   end
@@ -16,5 +15,4 @@ class CoursesController < ApplicationController
     session[:course_id] = course.id
     redirect_to profile_path
   end
-
 end
