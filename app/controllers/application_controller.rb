@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
     end
 
     def verify_pending_solutions
-      if current_user.solutions.detect { |s| s.finished_at == nil }
+      if session[:course_id] && current_user.solutions.detect { |s| s.finished_at == nil }
         flash[:info] = "Tenés un ejercicio en curso. Si lo olvidaste, podés accederlo y finalizarlo. O eliminarlo"
       end
     end

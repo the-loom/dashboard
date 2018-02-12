@@ -4,17 +4,17 @@ class UsersController < ApplicationController
 
   def index
     authorize User
-    @students = Membership.student.collect { |x| x.user }
+    @students = Course.current.memberships.student.collect { |x| x.user }
   end
 
   def guests
     authorize User
-    @guests = Membership.guest.collect { |x| x.user }
+    @guests = Course.current.memberships.guest.collect { |x| x.user }
   end
 
   def show
     if params[:nickname]
-      unless @user = Membership.includes(:user).where(users: { nickname: params[:nickname] }).first.try(:user)
+      unless @user = Course.current.memberships.includes(:user).where(users: { nickname: params[:nickname] }).first.try(:user)
         flash[:alert] = "No existe el usuario"
         return redirect_to "/"
       end
@@ -26,7 +26,7 @@ class UsersController < ApplicationController
   end
 
   def comment
-    unless @user = Membership.includes(:user).where(users: { nickname: params[:nickname] }).first.try(:user)
+    unless @user = Course.current.memberships.includes(:user).where(users: { nickname: params[:nickname] }).first.try(:user)
       flash[:alert] = "No existe el usuario"
       return redirect_to "/"
     end
@@ -67,7 +67,7 @@ class UsersController < ApplicationController
     elsif params[:mark_as_student]
       role = :student
     end
-    Membership.where("user_id IN (?)", params[:students][:ids].map(&:to_i)).update_all(role: role)
+    Course.current.memberships.where("user_id IN (?)", params[:students][:ids].map(&:to_i)).update_all(role: role)
     redirect_to students_url
   end
 

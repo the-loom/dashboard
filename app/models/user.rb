@@ -23,6 +23,9 @@ class User < ApplicationRecord
 
   belongs_to :team, optional: true
 
+  delegate :points, to: :current_membership
+  delegate :level, to: :current_membership
+
   def update_with(identity)
     self.nickname = identity.nickname
     self.name = identity.name
@@ -69,26 +72,21 @@ class User < ApplicationRecord
   def student?
     current_membership.student?
   end
+
   def guest?
     current_membership.guest?
   end
 
-  def level
-    Level.new(points, badges.size).value
-  end
-
   def unregister_attendance(lecture)
     if attendances.detect { |a| a.present? && a.lecture == lecture }
-      self.points = self.points - 10
-      self.save!
+      current_membership.add_points(-10)
     end
     Attendance.find_by(user: self, lecture: lecture).try(:delete)
   end
 
   def register_attendance(lecture, condition)
     if condition == :present
-      self.points = self.points + 10
-      self.save!
+      current_membership.add_points(10)
     end
     attendances.create(lecture: lecture, condition: condition)
   end
@@ -101,7 +99,7 @@ class User < ApplicationRecord
       points_per_event = 0
     end
     occurrences.create(event: event, points: points_per_event)
-    self.points = self.points + points_per_event
+    current_membership.add_points(points_per_event)
     self.save!
   end
 

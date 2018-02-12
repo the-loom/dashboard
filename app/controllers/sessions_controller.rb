@@ -6,8 +6,10 @@ class SessionsController < ApplicationController
     if identity.user.memberships.count >= 1
       # TODO(delucas): log into latest used course
       session[:course_id] = identity.user.courses.first.id
+      redirect_to profile_url, notice: "Signed in!"
+    elsif identity.user.memberships.count == 0
+      redirect_to courses_url
     end
-    redirect_to profile_url, notice: "Signed in!"
   end
 
   def destroy
