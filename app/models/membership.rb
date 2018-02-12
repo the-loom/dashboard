@@ -16,5 +16,4 @@ class Membership < ApplicationRecord
     self.points += value
     self.save!
   end
-
 end
