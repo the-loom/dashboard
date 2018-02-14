@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180212180557) do
+ActiveRecord::Schema.define(version: 20180214133327) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,23 +27,6 @@ ActiveRecord::Schema.define(version: 20180212180557) do
     t.string  "description"
     t.string  "slug"
     t.integer "course_id"
-  end
-
-  create_table "checkpoints", force: :cascade do |t|
-    t.string  "name"
-    t.string  "link"
-    t.date    "due_date"
-    t.integer "course_id"
-  end
-
-  create_table "checks", force: :cascade do |t|
-    t.integer  "team_id"
-    t.integer  "checkpoint_id"
-    t.text     "comments"
-    t.integer  "condition"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.integer  "course_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -104,21 +87,12 @@ ActiveRecord::Schema.define(version: 20180212180557) do
     t.integer "course_id"
   end
 
-  create_table "measurements", force: :cascade do |t|
-    t.integer  "team_id"
-    t.integer  "reading_id"
-    t.integer  "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "course_id"
-  end
-
   create_table "memberships", force: :cascade do |t|
     t.integer  "course_id"
     t.integer  "user_id"
     t.integer  "role"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.integer  "points",     default: 0
   end
 
@@ -131,13 +105,6 @@ ActiveRecord::Schema.define(version: 20180212180557) do
     t.integer  "course_id"
   end
 
-  create_table "readings", force: :cascade do |t|
-    t.string  "name"
-    t.string  "description"
-    t.string  "slug"
-    t.integer "course_id"
-  end
-
   create_table "solutions", force: :cascade do |t|
     t.integer  "exercise_id"
     t.datetime "finished_at"
@@ -145,10 +112,6 @@ ActiveRecord::Schema.define(version: 20180212180557) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "course_id"
-  end
-
-  create_table "tags", force: :cascade do |t|
-    t.string "name"
   end
 
   create_table "teams", force: :cascade do |t|
@@ -175,22 +138,16 @@ ActiveRecord::Schema.define(version: 20180212180557) do
     t.integer "course_id"
   end
 
-  create_table "user_tags", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "tag_id"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "nickname"
     t.string   "email"
     t.string   "image"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.integer  "team_id"
-    t.boolean  "locked",          default: false
-    t.boolean  "enabled",         default: true
-    t.string   "secondary_image"
+    t.boolean  "locked",     default: false
+    t.boolean  "enabled",    default: true
   end
 
 end

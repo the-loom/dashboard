@@ -51,16 +51,6 @@
               <%= link_to "Emblemas", badges_list_url %>
             </li>
           <% end %>
-          <% if policy(Reading).manage? %>
-            <li>
-              <%= link_to "Mediciones", readings_list_url %>
-            </li>
-          <% end %>
-          <% if policy(Checkpoint).manage? %>
-            <li>
-              <%= link_to "Entregas", checkpoints_list_url %>
-            </li>
-          <% end %>
           <% if policy(Lecture).manage? %>
             <li>
               <%= link_to "Clases", lectures_list_url %>

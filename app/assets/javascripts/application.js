@@ -14,7 +14,6 @@
 //= require bootstrap/dist/js/bootstrap
 //= require d3/d3
 //= require c3/c3
-//= require tagsort/dist/tagsort.min
 //= require moment/moment
 //= require messenger/build/js/messenger
 //= require vue/dist/vue
