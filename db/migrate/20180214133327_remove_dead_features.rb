@@ -1,6 +1,5 @@
 class RemoveDeadFeatures < ActiveRecord::Migration[5.0]
   def change
-
     # Removemos Tags
     drop_table :user_tags
     drop_table :tags
@@ -15,6 +14,5 @@ class RemoveDeadFeatures < ActiveRecord::Migration[5.0]
 
     # Removemos imagen secundaria
     remove_column :users, :secondary_image
-
   end
 end

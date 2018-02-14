@@ -17,10 +17,14 @@ class TeamsController < ApplicationController
   def create
     authorize Team, :create?
     @team = Team.new(team_params)
-    if @team.save
+
+    if @team.valid?
+      @team.save
+      redirect_to team_profile_path(@team.nickname)
       flash[:notice] = "Se creo correctamente el equipo"
+    else
+      render action: :new
     end
-    redirect_to teams_path
   end
 
   def add_member

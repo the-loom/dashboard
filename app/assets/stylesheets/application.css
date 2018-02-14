@@ -10,12 +10,12 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
  *= require bootstrap/dist/css/bootstrap
  *= require c3/c3
  *= require messenger/build/css/messenger
  *= require messenger/build/css/messenger-theme-air
  *= require bootstrap-tour/build/css/bootstrap-tour
+ *= require_tree .
  *= require_self
  */
 
