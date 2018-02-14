@@ -13,10 +13,11 @@ class ApplicationController < ActionController::Base
     def _set_current_session
       accessor = instance_variable_get(:@_request)
       ActiveRecord::Base.send(:define_method, "session", proc { accessor.session })
+      Course.current = Course.find(session[:course_id]) if session[:course_id].present?
     end
 
     def verify_pending_solutions
-      if current_user.solutions.detect { |s| s.finished_at == nil }
+      if session[:course_id] && current_user.solutions.detect { |s| s.finished_at == nil }
         flash[:info] = "Tenés un ejercicio en curso. Si lo olvidaste, podés accederlo y finalizarlo. O eliminarlo"
       end
     end

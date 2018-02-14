@@ -15,7 +15,7 @@ class LecturesController < ApplicationController
   def show
     authorize Lecture
     @lecture = Lecture.find(params[:lecture_id])
-    @students = User.student.sorted_by_name
+    @students = Course.current.memberships.student.collect(&:user)
   end
 
   def register

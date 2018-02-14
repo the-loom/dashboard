@@ -30,7 +30,7 @@
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
-        <% if current_user %>
+        <% if current_user and Course.current %>
           <% if policy(User).manage? %>
             <li>
               <%= link_to "Estudiantes", students_url %>
@@ -74,6 +74,23 @@
               <%= link_to "Ejercicios", exercises_path %>
             </li>
           <% end %>
+        <% end %>
+        <% if Course.current %>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle tour-exit" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <%= Course.current.name %> <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+
+              <% current_user.courses.each do |course| %>
+                <li><%= link_to course.name, switch_course_path(course) %></li>
+              <% end %>
+
+              <li role="separator" class="divider"></li>
+              <li><%= link_to 'Otros cursos...', courses_path %></li>
+            </ul>
+          </li>
+
           <li class="dropdown">
             <a href="#" class="dropdown-toggle tour-exit" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
               <%= current_user.nickname %> <span class="caret"></span> </a>

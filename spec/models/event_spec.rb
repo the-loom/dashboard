@@ -2,7 +2,9 @@ require "rails_helper"
 
 RSpec.describe Event, type: :model do
   it "is assigned correctly" do
-    user = User.create!(name: "John", points: 0)
+    Course.current = Course.new(name: "STEM I")
+    user = User.create!(name: "John")
+    user.memberships << Membership.new(course: Course.current, role: :student)
     event = Event.create!(name: "Attendance", batch_size: 5, points_per_batch: 10)
 
     user.register(event)
@@ -11,7 +13,9 @@ RSpec.describe Event, type: :model do
   end
 
   it "computes points after batch_size has been achieved" do
-    user = User.create!(name: "John", points: 0)
+    Course.current = Course.new(name: "STEM I")
+    user = User.create!(name: "John")
+    user.memberships << Membership.new(course: Course.current, role: :student)
     event = Event.create!(name: "Attendance", batch_size: 5, points_per_batch: 10)
 
     expect(user.points).to eq(0)

@@ -1,4 +1,6 @@
 class Solution < ApplicationRecord
+  include CourseLock
+
   belongs_to :exercise
 
   has_many :timers, dependent: :destroy

@@ -1,9 +1,6 @@
 class User < ApplicationRecord
-  enum role: {
-      guest: 0,
-      student: 1,
-      teacher: 2
-  }
+  has_many :memberships
+  has_many :courses, through: :memberships
 
   has_many :identities
 
@@ -25,6 +22,9 @@ class User < ApplicationRecord
   has_many :solutions, through: :user_solutions
 
   belongs_to :team, optional: true
+
+  delegate :points, to: :current_membership
+  delegate :level, to: :current_membership
 
   def update_with(identity)
     self.nickname = identity.nickname
@@ -61,22 +61,32 @@ class User < ApplicationRecord
   end
 =end
 
-  def level
-    Level.new(points, badges.size).value
+  def current_membership
+    self.memberships.find_by(course: Course.current)
+  end
+
+  def teacher?
+    current_membership.teacher?
+  end
+
+  def student?
+    current_membership.student?
+  end
+
+  def guest?
+    current_membership.guest?
   end
 
   def unregister_attendance(lecture)
     if attendances.detect { |a| a.present? && a.lecture == lecture }
-      self.points = self.points - 10
-      self.save!
+      current_membership.add_points(-10)
     end
     Attendance.find_by(user: self, lecture: lecture).try(:delete)
   end
 
   def register_attendance(lecture, condition)
     if condition == :present
-      self.points = self.points + 10
-      self.save!
+      current_membership.add_points(10)
     end
     attendances.create(lecture: lecture, condition: condition)
   end
@@ -89,7 +99,7 @@ class User < ApplicationRecord
       points_per_event = 0
     end
     occurrences.create(event: event, points: points_per_event)
-    self.points = self.points + points_per_event
+    current_membership.add_points(points_per_event)
     self.save!
   end
 

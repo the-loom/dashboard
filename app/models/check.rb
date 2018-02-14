@@ -1,4 +1,6 @@
 class Check < ApplicationRecord
+  include CourseLock
+
   enum condition: {
       bad: -1,
       missing: 0,
@@ -10,6 +12,7 @@ class Check < ApplicationRecord
 
   default_scope { order(created_at: :asc) }
 
+  # TODO(delucas): move to presenter
   def css_label
     "label-info" if missing?
     "label-danger" if bad?

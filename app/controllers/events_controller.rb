@@ -7,7 +7,7 @@ class EventsController < ApplicationController
   def show
     authorize Event
     @event = Event.find(params[:event_id])
-    @students = User.student.sorted
+    @students = Course.current.memberships.student.collect(&:user)
   end
 
   def register

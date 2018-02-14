@@ -1,4 +1,6 @@
 class Earning < ApplicationRecord
+  include CourseLock
+
   belongs_to :user
   belongs_to :badge
 

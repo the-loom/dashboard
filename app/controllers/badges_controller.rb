@@ -7,7 +7,7 @@ class BadgesController < ApplicationController
   def show
     authorize Badge
     @badge = Badge.find(params[:badge_id])
-    @students = User.student.sorted
+    @students = Course.current.memberships.student.collect(&:user)
   end
 
   def register

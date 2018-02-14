@@ -13,8 +13,10 @@
   <p><strong>Loom</strong> es una plataforma evolutiva que te acompañará
     durante la cursada. ¡Estate atento a los cambios semanales!</p>
 
-  <p>
-    <%= link_to 'Ingresar con GitHub', '/auth/github', class: 'btn btn-lg btn-success' %>
-    <%= link_to 'Ingresar con Google', '/auth/google_oauth2', class: 'btn btn-lg btn-success' %>
-  </p>
+  <% unless current_user %>
+    <p>
+      <%= link_to 'Ingresar con GitHub', '/auth/github', class: 'btn btn-lg btn-success' %>
+      <%= link_to 'Ingresar con Google', '/auth/google_oauth2', class: 'btn btn-lg btn-success' %>
+    </p>
+  <% end %>
 </div>

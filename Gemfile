@@ -9,6 +9,7 @@ gem "therubyracer", platforms: :ruby
 
 gem "pundit"
 gem "rollbar"
+gem "request_store"
 
 group :development, :test do
   gem "byebug", platform: :mri
@@ -24,7 +25,7 @@ gem "omniauth-google-oauth2", "0.5.2"
 gem "ffaker", "2.8.0"
 
 group :development do
-  gem 'rack-mini-profiler'
+  gem "rack-mini-profiler"
   gem "web-console", ">= 3.3.0"
   gem "listen", "~> 3.0.5"
   gem "better_errors"

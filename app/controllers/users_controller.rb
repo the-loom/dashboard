@@ -1,25 +1,35 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :change_identity]
+  before_action :set_user, only: [:edit, :update, :change_identity]
   before_action :verify_pending_solutions, only: :show
 
   def index
     authorize User
-    @students = User.student.sorted
+    @students = Course.current.memberships.student.collect { |x| x.user }
   end
 
   def guests
     authorize User
-    @guests = User.guest.sorted
+    @guests = Course.current.memberships.guest.collect { |x| x.user }
   end
 
   def show
-    @user = User.where(nickname: params[:nickname]).first if params[:nickname]
+    if params[:nickname]
+      unless @user = Course.current.memberships.includes(:user).where(users: { nickname: params[:nickname] }).first.try(:user)
+        flash[:alert] = "No existe el usuario"
+        return redirect_to "/"
+      end
+    else
+      @user = current_user
+    end
     @missing_badges = Badge.all - @user.badges
     authorize @user
   end
 
   def comment
-    @user = User.where(nickname: params[:nickname]).first
+    unless @user = Course.current.memberships.includes(:user).where(users: { nickname: params[:nickname] }).first.try(:user)
+      flash[:alert] = "No existe el usuario"
+      return redirect_to "/"
+    end
     authorize @user, :comment?
     @user.comments.create(body: params[:comment][:body], commenter: current_user, mood: params[:comment][:mood].to_i)
     redirect_to user_details_url(@user.nickname)
@@ -57,7 +67,7 @@ class UsersController < ApplicationController
     elsif params[:mark_as_student]
       role = :student
     end
-    User.where("id IN (?)", params[:students][:ids].map(&:to_i)).update_all(role: role)
+    Course.current.memberships.where("user_id IN (?)", params[:students][:ids].map(&:to_i)).update_all(role: role)
     redirect_to students_url
   end
 
