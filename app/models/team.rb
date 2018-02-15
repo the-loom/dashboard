@@ -2,8 +2,8 @@ class Team < ApplicationRecord
   include CourseLock
 
   validates_presence_of :name, :nickname, :image
-  validates :name, uniqueness: { scope: :course }
-  validates :nickname, uniqueness: { scope: :course }
+  validates :name, uniqueness: { scope: :course_id }
+  validates :nickname, uniqueness: { scope: :course_id }
 
   has_many :members, class_name: "User"
   belongs_to :course

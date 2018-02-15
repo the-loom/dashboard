@@ -27,10 +27,14 @@ class EventsController < ApplicationController
   def create
     authorize Event, :create?
     @event = Event.new(event_params)
-    if @event.save
+
+    if @event.valid?
+      @event.save
+      redirect_to events_list_url
       flash[:notice] = "Se creo correctamente el evento"
+    else
+      render action: :new
     end
-    redirect_to events_list_url
   end
 
   private
