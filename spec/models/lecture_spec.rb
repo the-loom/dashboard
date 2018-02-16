@@ -18,7 +18,7 @@ RSpec.describe Lecture, type: :model do
   it "is assigned correctly" do
     user = User.create!(name: "John")
     user.memberships << Membership.new(course: Course.current, role: :student)
-    lecture = Lecture.create!(date: Date.new(2017, 4, 22), summary: 'TDD', course: Course.current)
+    lecture = Lecture.create!(date: Date.new(2017, 4, 22), summary: "TDD", course: Course.current)
 
     user.register_attendance(lecture, :present)
 
@@ -27,7 +27,7 @@ RSpec.describe Lecture, type: :model do
   it "earns points when present" do
     user = User.create!(name: "John")
     user.memberships << Membership.new(course: Course.current, role: :student)
-    lecture = Lecture.create!(date: Date.new(2017, 4, 22), summary: 'TDD', course: Course.current)
+    lecture = Lecture.create!(date: Date.new(2017, 4, 22), summary: "TDD", course: Course.current)
 
     user.register_attendance(lecture, :present)
 
@@ -36,7 +36,7 @@ RSpec.describe Lecture, type: :model do
   it "doesn't earn points when absent" do
     user = User.create!(name: "John")
     user.memberships << Membership.new(course: Course.current, role: :student)
-    lecture = Lecture.create!(date: Date.new(2017, 4, 22), summary: 'TDD', course: Course.current)
+    lecture = Lecture.create!(date: Date.new(2017, 4, 22), summary: "TDD", course: Course.current)
 
     user.register_attendance(lecture, :absent)
 
@@ -45,7 +45,7 @@ RSpec.describe Lecture, type: :model do
   it "can un-register assistance" do
     user = User.create!(name: "John")
     user.memberships << Membership.new(course: Course.current, role: :student)
-    lecture = Lecture.create!(date: Date.new(2017, 4, 22), summary: 'TDD', course: Course.current)
+    lecture = Lecture.create!(date: Date.new(2017, 4, 22), summary: "TDD", course: Course.current)
     user.register_attendance(lecture, :present)
     expect(user.points).to eq(10)
     expect(user.lectures).to include(lecture)
