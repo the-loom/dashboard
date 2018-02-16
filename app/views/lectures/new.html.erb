@@ -1,6 +1,6 @@
 <legend>Nueva clase</legend>
 
-<%= form_for @lecture, url: create_lecture_url do |f| %>
+<%= form_for @lecture do |f| %>
 
   <%= render :partial => 'shared/errors', locals: { f: f } %>
 

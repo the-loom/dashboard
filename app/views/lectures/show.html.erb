@@ -1,6 +1,6 @@
 <legend>Registrar asistencia "<%= @lecture.summary %>"</legend>
 
-<%= form_tag(register_lecture_url(@lecture.id)) do %>
+<%= form_tag(register_lecture_path(@lecture.id)) do %>
 
   <%= hidden_field_tag 'lecture_id', @lecture.id %>
 

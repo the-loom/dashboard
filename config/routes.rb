@@ -29,26 +29,14 @@ Rails.application.routes.draw do
   get "/badges/:badge_id/show" => "badges#show", as: :badge_details
   get "/badges/:badge_id/register/:nickname" => "badges#register", as: :register_badge, constraints: { nickname: /[0-z\.]+/ }
 
-  get "/readings/" => "readings#index", as: :readings_list
-  get "/readings/new" => "readings#new", as: :new_reading
-  post "/readings/new" => "readings#create", as: :create_reading
-  get "/readings/:slug/show" => "readings#show", as: :reading_details
-  get "/readings/register" => "readings#prepare", as: :pre_register_reading
-  post "/readings/register" => "readings#register", as: :register_reading
-
-  get "/checkpoints/" => "checkpoints#index", as: :checkpoints_list
-  get "/checkpoints/new" => "checkpoints#new", as: :new_checkpoint
-  post "/checkpoints/new" => "checkpoints#create", as: :create_checkpoint
-  get "/checkpoints/:checkpoint_id/show" => "checkpoints#show", as: :checkpoint_details
-  post "/checkpoints/:checkpoint_id/register" => "checkpoints#register", as: :register_checkpoint
-
-  get "/lectures/" => "lectures#index", as: :lectures_list
-  get "/lectures/new" => "lectures#new", as: :new_lecture
-  post "/lectures/new" => "lectures#create", as: :create_lecture
-  get "/lectures/:lecture_id/show" => "lectures#show", as: :lecture_details
-  post "/lectures/:lecture_id/register" => "lectures#register", as: :register_lecture
-
-  get "/lectures/summary" => "lectures#summary", as: :attendance
+  resources :lectures, only: [:index, :new, :create, :show] do
+    member do
+      post :register
+    end
+    collection do
+      get :summary
+    end
+  end
 
   resources :exercises do
     get :start

@@ -33,30 +33,30 @@
         <% if current_user and Course.current %>
           <% if policy(User).manage? %>
             <li>
-              <%= link_to "Estudiantes", students_url %>
+              <%= link_to "Estudiantes", students_path %>
             </li>
           <% end %>
           <% if policy(Team).manage? %>
             <li>
-              <%= link_to "Equipos", teams_url %>
+              <%= link_to "Equipos", teams_path %>
             </li>
           <% end %>
           <% if policy(Event).manage? %>
             <li>
-              <%= link_to "Eventos", events_list_url %>
+              <%= link_to "Eventos", events_list_path %>
             </li>
           <% end %>
           <% if policy(Badge).manage? %>
             <li>
-              <%= link_to "Emblemas", badges_list_url %>
+              <%= link_to "Emblemas", badges_list_path %>
             </li>
           <% end %>
           <% if policy(Lecture).manage? %>
             <li>
-              <%= link_to "Clases", lectures_list_url %>
+              <%= link_to "Clases", lectures_path %>
             </li>
             <li>
-              <%= link_to "Asistencia", attendance_url %>
+              <%= link_to "Asistencia", summary_lectures_path %>
             </li>
           <% end %>
           <% if policy(Exercise).index? %>
@@ -85,12 +85,12 @@
             <a href="#" class="dropdown-toggle tour-exit" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
               <%= current_user.nickname %> <span class="caret"></span> </a>
             <ul class="dropdown-menu">
-              <li><%= link_to 'Perfil', profile_url %></li>
+              <li><%= link_to 'Perfil', profile_path %></li>
               <% unless current_user.locked? %>
-                <li><%= link_to 'Editar perfil', edit_profile_url %></li>
+                <li><%= link_to 'Editar perfil', edit_profile_path %></li>
               <% end %>
               <li role="separator" class="divider"></li>
-              <li><%= link_to 'Salir', logout_url %></li>
+              <li><%= link_to 'Salir', logout_path %></li>
             </ul>
           </li>
         <% end %>
