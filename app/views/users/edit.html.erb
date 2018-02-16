@@ -5,8 +5,11 @@
   <div class="col-xs-12 col-md-4">
 
     <%= form_for @user, url: update_user_url do |f| %>
+
+      <%= render :partial => 'shared/errors', locals: { f: f } %>
+
       <div class="form-group">
-        <%= f.label :name, 'Nombre completo' %>
+        <%= f.label :name, 'Nombre completo', class: 'control-label' %>
         <%= f.text_field :name, class: 'form-control' %>
       </div>
 
