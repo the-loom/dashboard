@@ -1,18 +1,21 @@
 <legend>Nuevo ejercicio</legend>
 
 <%= form_for @exercise, url: exercises_url do |f| %>
+
+  <%= render :partial => 'shared/errors', locals: { f: f } %>
+
   <div class="form-group">
-    <%= f.label :name, 'Nombre' %>
+    <%= f.label :name, 'Nombre', class: 'control-label' %>
     <%= f.text_field :name, class: 'form-control' %>
   </div>
 
   <div class="form-group">
-    <%= f.label :url, 'URL' %>
+    <%= f.label :url, 'URL', class: 'control-label' %>
     <%= f.text_field :url, class: 'form-control' %>
   </div>
 
   <div class="form-group">
-    <%= f.label :notes, 'Notas' %>
+    <%= f.label :notes, 'Notas', class: 'control-label' %>
     <%= f.text_area :notes, class: 'form-control' %>
   </div>
 

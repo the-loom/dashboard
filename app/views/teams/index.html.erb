@@ -2,40 +2,49 @@
   <small><%= @teams.size %> equipos</small>
 
   <%= link_to 'Nuevo equipo', new_team_path, class: 'btn btn-primary pull-right' %>
-
 </legend>
-<div class="table-responsive">
-  <table class="members table table-hover">
-    <thead>
-    <tr>
-      <th>Foto</th>
-      <th>Nombre</th>
-      <th>XP</th>
-      <th>Integrantes</th>
-      <th>Enlaces</th>
-    </tr>
-    </thead>
-    <tbody>
-    <% @teams.sort_by(&:points).reverse.each do |team| %>
-      <tr>
-        <td>
-          <%= link_to team_profile_url(team.nickname) do %>
-            <img class="avatar" src="<%= team.image %>">
-          <% end %>
-        </td>
-        <td><%= team.name %></td>
-        <td><%= team.points %></td>
-        <td><%= team.members.size %></td>
-        <td>
-          <%= link_to "https://www.github.com/#{team.nickname}", target: '_blank' do %>
-            https://www.github.com/<%= team.nickname %> <i class="fa fa-external-link"></i>
-          <% end %>
-          <br/>
-          <%= link_to team.nickname, team_profile_url(team.nickname) %>
-        </td>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
-</div>
 
+<% if @teams.empty? %>
+
+  <div class="alert alert-info">
+    <p>Aún no hay ningún equipo</p>
+  </div>
+
+<% else %>
+
+  <div class="table-responsive">
+    <table class="members table table-hover">
+      <thead>
+      <tr>
+        <th>Foto</th>
+        <th>Nombre</th>
+        <th>XP</th>
+        <th>Integrantes</th>
+        <th>Enlaces</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @teams.sort_by(&:points).reverse.each do |team| %>
+        <tr>
+          <td>
+            <%= link_to team_profile_url(team.nickname) do %>
+              <img class="avatar" src="<%= team.image %>">
+            <% end %>
+          </td>
+          <td><%= team.name %></td>
+          <td><%= team.points %></td>
+          <td><%= team.members.size %></td>
+          <td>
+            <%= link_to "https://www.github.com/#{team.nickname}", target: '_blank' do %>
+              https://www.github.com/<%= team.nickname %> <i class="fa fa-external-link"></i>
+            <% end %>
+            <br/>
+            <%= link_to team.nickname, team_profile_url(team.nickname) %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+
+<% end %>
