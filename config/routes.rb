@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-
   root "pages#welcome"
 
   match "/auth/:provider/callback", to: "sessions#create", via: [:get, :post]
@@ -60,6 +58,8 @@ Rails.application.routes.draw do
     patch :add_member
   end
   get "/teams/:nickname" => "teams#show", as: :team_profile, constraints: { nickname: /[0-z\.]+/ }
+  # resources :articles, param: :slug
+  # https://stackoverflow.com/a/31060067/2661448
 
   resources :courses, only: [:index] do
     member do
