@@ -25,6 +25,8 @@ class User < ApplicationRecord
   delegate :points, to: :current_membership
   delegate :level, to: :current_membership
 
+  delegate :admin?, to: :current_membership
+
   def update_with(identity)
     self.nickname = identity.nickname
     self.name = identity.name
@@ -39,7 +41,7 @@ class User < ApplicationRecord
   end
 
   def teacher?
-    current_membership.teacher?
+    current_membership.teacher? || current_membership.admin?
   end
 
   def student?
