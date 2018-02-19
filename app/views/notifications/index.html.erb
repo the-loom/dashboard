@@ -1,0 +1,31 @@
+<legend>
+  Listado de notificaciones
+  <% if policy(Notification).create? %>
+<%= link_to 'Nueva notificacion', new_notification_path, class: 'btn btn-primary pull-right' %>
+    <% end %>
+</legend>
+
+<% if @notifications.empty? %>
+
+  <div class="alert alert-info">
+    <p>Aún no hay ninguna notificación</p>
+  </div>
+
+<% else %>
+
+  <section class="notifications">
+    <% @notifications.each do |notification| %>
+      <article class="notification">
+        <blockquote>
+          <strong><%= notification.subject %></strong>
+          <br/>
+          <%= notification.text %>
+          <hr/>
+          <%= notification.created_at %>
+          <%= notification.author %>
+        </blockquote>
+      </article>
+    <% end %>
+  </section>
+
+<% end %>

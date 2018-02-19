@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180214133327) do
+ActiveRecord::Schema.define(version: 20180219143000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,9 +91,20 @@ ActiveRecord::Schema.define(version: 20180214133327) do
     t.integer  "course_id"
     t.integer  "user_id"
     t.integer  "role"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.integer  "points",     default: 0
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.integer  "points",               default: 0
+    t.integer  "unread_notifications", default: 0
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.string   "subject"
+    t.text     "text"
+    t.string   "author"
+    t.integer  "course_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_notifications_on_course_id", using: :btree
   end
 
   create_table "occurrences", force: :cascade do |t|
