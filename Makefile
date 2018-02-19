@@ -4,6 +4,7 @@ up:
 
 down:
 	docker-compose down
+	rm -f tmp/pids/server.pid
 
 capture_production_db:
 	heroku pg:backups capture --app the-loom

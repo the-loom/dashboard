@@ -1,23 +1,26 @@
 <legend>Nuevo evento</legend>
 
 <%= form_for @event, url: create_event_url do |f| %>
+
+  <%= render :partial => 'shared/errors', locals: { f: f } %>
+
   <div class="form-group">
-    <%= f.label :name, 'Nombre' %>
+    <%= f.label :name, 'Nombre', class: 'control-label' %>
     <%= f.text_field :name, class: 'form-control' %>
   </div>
 
   <div class="form-group">
-    <%= f.label :description, 'Descripción' %>
+    <%= f.label :description, 'Descripción', class: 'control-label' %>
     <%= f.text_field :description, class: 'form-control' %>
   </div>
 
   <div class="form-group">
-    <%= f.label :batch_size, 'Tamaño del lote para puntuar' %>
+    <%= f.label :batch_size, 'Tamaño del lote para puntuar', class: 'control-label' %>
     <%= f.number_field :batch_size, class: 'form-control' %>
   </div>
 
   <div class="form-group">
-    <%= f.label :points_per_batch, 'Puntos por lote' %>
+    <%= f.label :points_per_batch, 'Puntos por lote', class: 'control-label' %>
     <%= f.number_field :points_per_batch, class: 'form-control' %>
   </div>
 

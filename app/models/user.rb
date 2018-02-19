@@ -1,11 +1,10 @@
 class User < ApplicationRecord
+  validates_presence_of :name
+
   has_many :memberships
   has_many :courses, through: :memberships
 
   has_many :identities
-
-  has_many :user_tags
-  has_many :tags, through: :user_tags
 
   has_many :occurrences, -> { order(created_at: :desc) }
   has_many :events, through: :occurrences
@@ -34,32 +33,6 @@ class User < ApplicationRecord
     self.save
     self
   end
-
-  def self.tagged_with(name)
-    Tag.find_by_name!(name).users
-  end
-
-  def all_tags=(names)
-    self.tags = names.split(",").map do |name|
-      Tag.where(name: name.strip).first_or_create!
-    end
-  end
-
-  def all_tags
-    self.tags.map(&:name).join(", ")
-  end
-
-# TODO(delucas): remove. Dead feature?
-=begin
-  def image
-    current_user = User.find(session[:user_id])
-    if current_user.teacher?
-      secondary_image || read_attribute(:image)
-    else
-      read_attribute(:image)
-    end
-  end
-=end
 
   def current_membership
     self.memberships.find_by(course: Course.current)

@@ -48,8 +48,11 @@ class UsersController < ApplicationController
 
   def update
     authorize @user, :update?
-    @user.update(user_params)
-    redirect_to profile_url
+    if @user.update(user_params)
+      redirect_to profile_url
+    else
+      render :edit
+    end
   end
 
   def change_identity

@@ -3,31 +3,41 @@
   <%= link_to 'Nuevo evento', new_event_url, class: 'btn btn-primary pull-right' %>
 </legend>
 
-<table class="members table table-hover">
-  <thead>
-  <tr>
-    <th>Evento</th>
-    <th>Descripción</th>
-    <th>Otorgamientos</th>
-    <th>Puntos</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @events.each do |event| %>
+<% if @events.empty? %>
+
+  <div class="alert alert-info">
+    <p>Aún no hay ningún evento</p>
+  </div>
+
+<% else %>
+
+  <table class="members table table-hover">
+    <thead>
     <tr>
-      <td>
-        <%= link_to event.name, event_details_url(event.id) %>
-      </td>
-      <td>
-        <%= event.description %>
-      </td>
-      <td>
-        <%= event.occurrences.size %> veces
-      </td>
-      <td>
-        <%= event.points_per_batch %> pts. c/<%= event.batch_size %>
-      </td>
+      <th>Evento</th>
+      <th>Descripción</th>
+      <th>Otorgamientos</th>
+      <th>Puntos</th>
     </tr>
-  <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+    <% @events.each do |event| %>
+      <tr>
+        <td>
+          <%= link_to event.name, event_details_url(event.id) %>
+        </td>
+        <td>
+          <%= event.description %>
+        </td>
+        <td>
+          <%= event.occurrences.size %> veces
+        </td>
+        <td>
+          <%= event.points_per_batch %> pts. c/<%= event.batch_size %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+<% end %>

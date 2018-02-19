@@ -36,11 +36,6 @@
           <td>
             <span class="badge"><%= student.level %></span>
             <%= student.name %>
-            <p>
-              <% student.tags.each do |tag| %>
-                <span class="label label-default"><%= tag.name %></span>
-              <% end %>
-            </p>
           </td>
           <td><%= student.points %></td>
           <td>

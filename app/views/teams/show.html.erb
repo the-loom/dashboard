@@ -61,37 +61,7 @@
     </div>
   <% end %>
 </div>
-<div class="col-md-6">
-  <legend>Entregas</legend>
 
-  <% if @team.checks.size == 0 %>
-
-    <div class="alert alert-info">
-      <p>Aún no se registran entregas...</p>
-    </div>
-
-  <% else %>
-    <% @team.checks.each do |check| %>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <span class="label <%= check.css_label %>"><%= check.condition %></span>
-          <%= check.checkpoint.name %>
-          (<%= l check.checkpoint.due_date.in_time_zone('Buenos Aires') %>)
-        </div>
-        <div class="panel-body">
-          <blockquote>
-            <%= simple_format check.comments %>
-          </blockquote>
-          <p>
-            <%= link_to check.checkpoint.link do %>
-              (consigna <i class="fa fa-external-link"></i>)
-            <% end %>
-          </p>
-        </div>
-      </div>
-    <% end %>
-  <% end %>
-</div>
 <div class="col-md-6">
   <legend>Emblemas del grupo
     <small>(<%= @team.badges.uniq.size %> / <%= Badge.count %>)</small>
@@ -138,38 +108,6 @@
     <% end %>
   <% end %>
 </div>
-
-<% if policy(Team).manage? %>
-
-  <legend>Métricas</legend>
-  <div id="chart"></div>
-
-  <script>
-      c3.generate({
-          bindto: '#chart',
-          data: {
-              x: 'x',
-              columns: [
-                  <%= @presenter.c3_dates_row.html_safe %>,
-                  <%= @presenter.c3_data_rows.html_safe %>
-              ]
-          },
-          axis: {
-              x: {
-                  type: 'timeseries',
-                  tick: {
-                      format: '%Y-%m-%d'
-                  }
-              }
-          },
-          type: 'spline',
-          line: {
-              connectNull: true
-          }
-      });
-  </script>
-
-<% end %>
 
 <script>
     $(function () {

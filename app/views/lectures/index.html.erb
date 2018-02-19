@@ -1,25 +1,35 @@
 <legend>
   Listado de clases
-  <%= link_to 'Nueva clase', new_lecture_url, class: 'btn btn-primary pull-right' %>
+  <%= link_to 'Nueva clase', new_lecture_path, class: 'btn btn-primary pull-right' %>
 </legend>
 
-<table class="table table-hover">
-  <thead>
-  <tr>
-    <th>Resumen</th>
-    <th>Fecha</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @lectures.each do |lecture| %>
+<% if @lectures.empty? %>
+
+  <div class="alert alert-info">
+    <p>Aún no hay ninguna clase</p>
+  </div>
+
+<% else %>
+
+  <table class="table table-hover">
+    <thead>
     <tr>
-      <td>
-        <%= link_to lecture.summary, lecture_details_url(lecture.id) %>
-      </td>
-      <td>
-        <%= l lecture.date.in_time_zone('Buenos Aires') %>
-      </td>
+      <th>Resumen</th>
+      <th>Fecha</th>
     </tr>
-  <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+    <% @lectures.each do |lecture| %>
+      <tr>
+        <td>
+          <%= link_to lecture.summary, lecture_path(lecture.id) %>
+        </td>
+        <td>
+          <%= l lecture.date.in_time_zone('Buenos Aires') %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+<% end %>

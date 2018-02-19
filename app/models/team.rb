@@ -1,13 +1,12 @@
 class Team < ApplicationRecord
   include CourseLock
 
+  validates_presence_of :name, :nickname, :image
+  validates :name, uniqueness: { scope: :course_id }
+  validates :nickname, uniqueness: { scope: :course_id }
+
   has_many :members, class_name: "User"
-
-  has_many :measurements
-  has_many :readings, through: :measurements, source: :reading
-
-  has_many :checks, -> { order(created_at: :desc) }
-  has_many :checkpoints, through: :checks
+  belongs_to :course
 
   def self.sorted
     self.order(:name)
