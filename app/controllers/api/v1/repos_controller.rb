@@ -24,14 +24,14 @@ module Api
           return
         end
 
-        #TODO: considerar que puede no haber una corrección pendiente (falla el grader?)
-        #TODO: utilizar ese SHA para algo
-        #TODO: metemos un rescue para los casos no contemplados? Se vuelve atras todo?
+        # TODO: considerar que puede no haber una corrección pendiente (falla el grader?)
+        # TODO: utilizar ese SHA para algo
+        # TODO: metemos un rescue para los casos no contemplados? Se vuelve atras todo?
 
         AutomaticCorrection::Repo.transaction do
           fork = AutomaticCorrection::Repo.find(params[:id])
 
-          #TODO: si ya se corrigió este SHA, abortar!
+          # TODO: si ya se corrigió este SHA, abortar!
 
           test_run = AutomaticCorrection::TestRun.create(
             score: params[:test_run][:score],
@@ -40,7 +40,7 @@ module Api
           )
           fork.test_runs << test_run
 
-          #TODO(delucas): ojo, puede haber DETALLES si es que hay errores, o cosas similares
+          # TODO(delucas): ojo, puede haber DETALLES si es que hay errores, o cosas similares
           # el caso que contemplo en el que puede no haber resultados, es si no pudo corregir x error de compilacion
           if params[:test_run][:results]
             params[:test_run][:results].each do |result|

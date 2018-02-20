@@ -17,7 +17,6 @@ Identity.create(
   name: "Lucas Videla",
   nickname: "delucas",
   email: "lucas@wecode.io",
-  role: :admin,
   image: "https://avatars1.githubusercontent.com/u/684051?v=4"
 )
 
@@ -28,6 +27,12 @@ Identity.create(
     name: "Programación #{rand(10).roman}"
   )
   Course.current = course
+
+  Membership.create(
+    course: course,
+    role: :admin,
+    user: delucas
+  )
 
   35.times do
     name = "#{FFaker::NameMX.first_name} #{FFaker::NameMX.last_name}"
@@ -59,12 +64,12 @@ Identity.create(
 end
 
 AutomaticCorrection::Repo.create(
-    user: "the-loom",
-    name: "hola-mundo",
-    git_url: "git@github.com:the-loom/hola-mundo.git",
-    avatar_url: "https://avatars.githubusercontent.com/u/5033965?v=3",
-    description: "Proyecto para verificar la configuración inicial y la mecánica de la plataforma",
-    dificulty: 1
+  user: "the-loom",
+  name: "hola-mundo",
+  git_url: "git@github.com:the-loom/hola-mundo.git",
+  avatar_url: "https://avatars.githubusercontent.com/u/5033965?v=3",
+  description: "Proyecto para verificar la configuración inicial y la mecánica de la plataforma",
+  dificulty: 1
 )
 
 pptlS = AutomaticCorrection::Repo.create(
@@ -78,12 +83,12 @@ pptlS = AutomaticCorrection::Repo.create(
 
 author = User.first
 pptlS.forks << AutomaticCorrection::Repo.create(
-    author: author,
-    user: author.nickname,
-    name: "piedra-papel-tijera-lagarto-Spock",
-    git_url: "git@github.com:#{author.nickname}/piedra-papel-tijera-lagarto-Spock.git",
-    avatar_url: author.image,
-    pending: true
+  author: author,
+  user: author.nickname,
+  name: "piedra-papel-tijera-lagarto-Spock",
+  git_url: "git@github.com:#{author.nickname}/piedra-papel-tijera-lagarto-Spock.git",
+  avatar_url: author.image,
+  pending: true
 )
 
 author = User.last
@@ -96,46 +101,46 @@ pptlS.forks << AutomaticCorrection::Repo.create(
   pending: false,
   test_runs: [
       AutomaticCorrection::TestRun.create(
-          score: 4.83,
-          git_commit_id: "25def259c9cbe610b1f85867d76b05539585ebe4",
-          results: [
-              AutomaticCorrection::Result.create(
-                  score: 3.33,
-                  test_type: "junit"
-              ),
-              AutomaticCorrection::Result.create(
-                  score: 1.5,
-                  test_type: "checkstyle"
-              )
-          ]
+        score: 4.83,
+        git_commit_id: "25def259c9cbe610b1f85867d76b05539585ebe4",
+        results: [
+            AutomaticCorrection::Result.create(
+              score: 3.33,
+              test_type: "junit"
+            ),
+            AutomaticCorrection::Result.create(
+              score: 1.5,
+              test_type: "checkstyle"
+            )
+        ]
       ),
       AutomaticCorrection::TestRun.create(
-          score: 7.23,
-          git_commit_id: "25def259c9cbe610b1f85867d76b05539585ebe4",
-          results: [
-              AutomaticCorrection::Result.create(
-                  score: 5.23,
-                  test_type: "junit"
-              ),
-              AutomaticCorrection::Result.create(
-                  score: 2,
-                  test_type: "checkstyle"
-              )
-          ]
+        score: 7.23,
+        git_commit_id: "25def259c9cbe610b1f85867d76b05539585ebe4",
+        results: [
+            AutomaticCorrection::Result.create(
+              score: 5.23,
+              test_type: "junit"
+            ),
+            AutomaticCorrection::Result.create(
+              score: 2,
+              test_type: "checkstyle"
+            )
+        ]
       ),
       AutomaticCorrection::TestRun.create(
-          score: 8.33,
-          git_commit_id: "25def259c9cbe610b1f85867d76b05539585ebe4",
-          results: [
-              AutomaticCorrection::Result.create(
-                  score: 6.33,
-                  test_type: "junit"
-              ),
-              AutomaticCorrection::Result.create(
-                  score: 2,
-                  test_type: "checkstyle"
-              )
-          ]
+        score: 8.33,
+        git_commit_id: "25def259c9cbe610b1f85867d76b05539585ebe4",
+        results: [
+            AutomaticCorrection::Result.create(
+              score: 6.33,
+              test_type: "junit"
+            ),
+            AutomaticCorrection::Result.create(
+              score: 2,
+              test_type: "checkstyle"
+            )
+        ]
       )
   ]
 )
@@ -160,11 +165,11 @@ junit_result.issues << AutomaticCorrection::Issue.create(
   message: "java.lang.AssertionError: opa, un failure! atento!",
   issue_type: "java.lang.AssertionError",
   details: 'java.lang.AssertionError: opa, un failure! atento!
-	at org.junit.Assert.fail(Assert.java:88)
-	at org.junit.Assert.assertTrue(Assert.java:41)
-	at edu.tallerweb.conjuntos.ConjuntoTests.unoQueDaFailure(ConjuntoTests.java:15)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)',
+  at org.junit.Assert.fail(Assert.java:88)
+  at org.junit.Assert.assertTrue(Assert.java:41)
+  at edu.tallerweb.conjuntos.ConjuntoTests.unoQueDaFailure(ConjuntoTests.java:15)
+  at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)',
   payload: {
       test_class: "edu.tallerweb.conjuntos.ConjuntoTests",
       test_name: "unoQueDaFailure",

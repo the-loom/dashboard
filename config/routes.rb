@@ -84,6 +84,4 @@ Rails.application.routes.draw do
 
   resources :notifications, only: [:index, :new, :create]
 
-  get "/teams/:nickname" => "teams#show", as: :team_profile, constraints: { nickname: /[0-z\.-]+/ }
-
 end
