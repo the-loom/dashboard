@@ -5,7 +5,8 @@ class Membership < ApplicationRecord
   enum role: {
     guest: 0,
     student: 1,
-    teacher: 2
+    teacher: 2,
+    admin: 3
   }
 
   def level

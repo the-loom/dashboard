@@ -47,7 +47,9 @@
           </td>
           <td><%= mail_to student.email %></td>
           <td>
-            <%= link_to 'Personificar', impersonate_user_url(student.nickname), class: 'btn btn-default' %>
+            <% if policy(student).impersonate? %>
+              <%= link_to 'Personificar', impersonate_user_url(student.nickname), class: 'btn btn-default' %>
+            <% end %>
           </td>
         </tr>
       <% end %>
