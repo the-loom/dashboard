@@ -17,4 +17,9 @@ class Membership < ApplicationRecord
     self.points += value
     self.save!
   end
+
+  def read_notifications
+    self.unread_notifications = 0
+    self.save!
+  end
 end
