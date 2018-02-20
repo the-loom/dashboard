@@ -8,6 +8,24 @@ class ReposController < ApplicationController
     @forks = current_user.teacher? ? @repo.forks : @repo.forks.where(author: current_user)
   end
 
+  def new
+    authorize AutomaticCorrection::Repo, :manage?
+    @repo = AutomaticCorrection::Repo.new
+  end
+
+  def create
+    authorize AutomaticCorrection::Repo, :manage?
+    @repo = AutomaticCorrection::Repo.new(repo_params)
+
+    if @repo.valid?
+      @repo.save
+      redirect_to repos_list_url
+      flash[:notice] = "Se creo correctamente el desafío"
+    else
+      render action: :new
+    end
+  end
+
   def grade
     repo = AutomaticCorrection::Repo.find_by(user: params[:user], name: params[:name])
     if repo.parent == nil
@@ -17,4 +35,10 @@ class ReposController < ApplicationController
 
     redirect_to repo_path(user: repo.user, name: repo.name)
   end
+
+  private
+
+    def repo_params
+      params[:automatic_correction_repo].permit(:user, :name, :git_url, :avatar_url, :description, :difficulty)
+    end
 end

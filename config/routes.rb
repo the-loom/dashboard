@@ -54,7 +54,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :repos, only: [:index]
+  resources :repos, only: [:index, :new, :create]
   get "repos/:user/:name" => "repos#show", as: :repo, constraints: { user: /[0-z\.-]+/ }
   get "repos/:user/:name/grade" => "repos#grade", as: :grade, constraints: { user: /[0-z\.-]+/ }
 

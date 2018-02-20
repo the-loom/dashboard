@@ -1,10 +1,17 @@
 class AutomaticCorrection::Repo < ApplicationRecord
+  include CourseLock
+
   has_many :forks, foreign_key: "parent_id", class_name: "AutomaticCorrection::Repo"
 
   belongs_to :parent, class_name: "AutomaticCorrection::Repo", optional: true
   belongs_to :author, class_name: "User", optional: true
 
   has_many :test_runs, foreign_key: :automatic_correction_repo_id, class_name: "AutomaticCorrection::TestRun"
+
+  validates_presence_of :user, :name, :git_url, :description, :difficulty
+  validates_numericality_of :difficulty
+  validates :name, uniqueness: { scope: :course_id }
+  validates :git_url, uniqueness: { scope: :course_id }
 
   def full_name
     "#{user}/#{name}"

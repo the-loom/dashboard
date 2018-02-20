@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180219143000) do
+ActiveRecord::Schema.define(version: 20180220140626) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -27,6 +28,7 @@ ActiveRecord::Schema.define(version: 20180219143000) do
     t.string  "details"
     t.string  "payload"
     t.integer "automatic_correction_result_id"
+    t.integer "course_id"
     t.index ["automatic_correction_result_id"], name: "ac_issues_index", using: :btree
   end
 
@@ -41,13 +43,15 @@ ActiveRecord::Schema.define(version: 20180219143000) do
     t.boolean  "pending",     default: true
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
-    t.integer  "dificulty"
+    t.integer  "difficulty"
+    t.integer  "course_id"
   end
 
   create_table "automatic_correction_results", force: :cascade do |t|
     t.string  "test_type"
     t.decimal "score",                            precision: 4, scale: 2
     t.integer "automatic_correction_test_run_id"
+    t.integer "course_id"
     t.index ["automatic_correction_test_run_id"], name: "ac_results_index", using: :btree
   end
 
@@ -58,6 +62,7 @@ ActiveRecord::Schema.define(version: 20180219143000) do
     t.datetime "created_at",                                           null: false
     t.datetime "updated_at",                                           null: false
     t.text     "details"
+    t.integer  "course_id"
     t.index ["automatic_correction_repo_id"], name: "ac_test_runs_index", using: :btree
   end
 
