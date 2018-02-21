@@ -19,7 +19,7 @@ class ReposController < ApplicationController
 
     if @repo.valid?
       @repo.save
-      redirect_to repos_list_url
+      redirect_to repos_path
       flash[:notice] = "Se creo correctamente el desafío"
     else
       render action: :new
