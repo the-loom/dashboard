@@ -138,409 +138,414 @@
 
 </section>
 
-<script>
+<% content_for :javascript do %>
 
-    Vue.filter('timeFormat', function (seconds) {
-        seconds = seconds === undefined ? 0 : seconds;
+  <script>
 
-        var sec = "" + ( seconds % 60 );
-        var min = "" + Math.floor(seconds / 60);
-        if (sec.length === 1) {
-            sec = "0" + sec;
-        }
-        if (min.length === 1) {
-            min = "0" + min;
-        }
-        return min + ":" + sec;
-    });
+      Vue.filter('timeFormat', function (seconds) {
+          seconds = seconds === undefined ? 0 : seconds;
 
-    $(function () {
-        "use strict";
+          var sec = "" + ( seconds % 60 );
+          var min = "" + Math.floor(seconds / 60);
+          if (sec.length === 1) {
+              sec = "0" + sec;
+          }
+          if (min.length === 1) {
+              min = "0" + min;
+          }
+          return min + ":" + sec;
+      });
 
-        $('.do-cancel').on('click', function() {
-            if (confirm("Estás por borrar la planilla de métricas. ¿Estás seguro?")) {
-                $('.do-cancel-execute').trigger('click');
-            }
-        });
+      $(function () {
+          "use strict";
 
-        $('.do-help').on('click', function() {
-            tour.start(true);
-        })
+          $('.do-cancel').on('click', function() {
+              if (confirm("Estás por borrar la planilla de métricas. ¿Estás seguro?")) {
+                  $('.do-cancel-execute').trigger('click');
+              }
+          });
 
-        // Config Messenger
-        Messenger.options = {
-            extraClasses: 'messenger-fixed messenger-on-bottom messenger-on-right',
-            theme: 'air'
-        };
+          $('.do-help').on('click', function() {
+              tour.start(true);
+          })
 
-        // Init
-        var done = function (json) {
-            json.stages.sort(function (a, b) {
-                return a.id - b.id;
-            });
-            init(json);
-        };
-        var fail = function () {
-            Messenger().hideAll(); // ????
-            Messenger().post({
-                message: "HUBO UN ERROR AL INICIAR, ACTUALICE LA PAGINA E INTENTE NUEVAMENTE",
-                hideAfter: 9e9,
-                type: "error",
-                actions: {
-                    cancel: {
-                        label: 'Actualizar',
-                        action: function () {
-                            location.reload();
-                        }
-                    }
-                }
-            });
-        };
-        get("", "/solutions/" + <%= @solution.id %> +"/start", done, fail);
+          // Config Messenger
+          Messenger.options = {
+              extraClasses: 'messenger-fixed messenger-on-bottom messenger-on-right',
+              theme: 'air'
+          };
 
-    });
+          // Init
+          var done = function (json) {
+              json.stages.sort(function (a, b) {
+                  return a.id - b.id;
+              });
+              init(json);
+          };
+          var fail = function () {
+              Messenger().hideAll(); // ????
+              Messenger().post({
+                  message: "HUBO UN ERROR AL INICIAR, ACTUALICE LA PAGINA E INTENTE NUEVAMENTE",
+                  hideAfter: 9e9,
+                  type: "error",
+                  actions: {
+                      cancel: {
+                          label: 'Actualizar',
+                          action: function () {
+                              location.reload();
+                          }
+                      }
+                  }
+              });
+          };
+          get("", "/solutions/" + <%= @solution.id %> +"/start", done, fail);
 
-    function init(ini) {
-        "use strict";
+      });
 
-        var running_timer = null;
+      function init(ini) {
+          "use strict";
 
-        ini.stages.forEach(function (stage, i) {
-            stage.timers.forEach(function (timer, i) {
-                timer.estimated = timer.estimated_time_in_seconds ? true : false;
-                timer.current_time = timer.total_time_in_seconds;
-                if (timer.running) {
-                    running_timer = timer;
-                    timer.current_time += ini.now - running_timer.started_at;
-                }
-                delete timer.running;
-            });
-        });
+          var running_timer = null;
 
-
-        window.app = new Vue({
-            el: '#timers',
-            data: {
-                moment_init: running_timer ? moment().format("X") - ( ini.now - running_timer.started_at ) : 0,
-                moment_server: running_timer ? running_timer.started_at : 0,
-                running: !!running_timer,
-                finished: false,
-                processing: false,
-
-                solution_notes: "",
-                total_estimated_time: 0,
-                total_time: 0,
-
-                solution_id: ini.solution_id,
-                stages: ini.stages,
-                running_timer: running_timer
-            },
-            created: function () {
-                setInterval(this.intervalUpdateRunningTime, 1000);
-                setInterval(this.intervalUpdateTotal, 1000);
-            },
-            methods: {
-                intervalUpdateRunningTime: function () {
-                    if (!this.running_timer) {
-                        return;
-                    }
-                    var actual = +moment().format("X");
-                    this.running_timer.current_time = this.running_timer.total_time_in_seconds + actual - this.running_timer.started_at;
-                },
-                intervalUpdateTotal: function () {
-                    var totalEstimatedTime = 0;
-                    var totalTime = 0;
-
-                    var that = this;
-
-                    this.stages.forEach(function (stage, i) {
-                        var partialEstimatedTime = 0;
-                        var partialTime = 0;
-                        stage.timers.forEach(function (timer, i) {
-                            partialEstimatedTime += timer.estimated_time_in_seconds;
-                            partialTime += timer.total_time_in_seconds + ( that.running_timer == timer ? +moment().format("X") - that.moment_init : 0 );
-                        });
-
-                        stage.estimated_time_in_seconds = partialEstimatedTime;
-                        stage.time_in_seconds = partialTime;
-
-                        totalEstimatedTime += partialEstimatedTime;
-                        totalTime += partialTime;
-                    });
-
-                    this.total_estimated_time = totalEstimatedTime;
-                    this.total_time = totalTime;
-                },
-                addTimer: function (stage) {
-                    stage.timers.push({
-                        id: 0,
-                        current_time: 0,
-                        total_time_in_seconds: 0,
-                        estimated_time_in_seconds: null,
-                        estimated: false,
-                        description: null,
-                        stage: stage.id
-                    });
-                },
-                removeTimer: function (stage, timer) {
-                    stage.timers = stage.timers.filter(function (t) {
-                        return t.id != timer.id;
-                    })
-                },
-                toggle: function (timer) {
-                    if (this.running_timer) {
-                        if (this.running_timer.id !== timer.id) {
-                            this.pause(function () {
-                                this.initTimer(timer);
-                            });
-                        } else {
-                            this.pause();
-                        }
-                    } else {
-                        this.initTimer(timer);
-                    }
-                },
-                startProcessing: function () {
-                    this.processing = true;
-                    // $( ".bplay,.bclose" ).attr( "disabled", "disabled" ).addClass( "disabled" ); // XXX TODO
-                },
-                endProcessing: function () {
-                    this.processing = false;
-                    // $( ".bplay,.bclose" ).removeAttr( "disabled" ).removeClass( "disabled" ); // XXX TODO
-                },
+          ini.stages.forEach(function (stage, i) {
+              stage.timers.forEach(function (timer, i) {
+                  timer.estimated = timer.estimated_time_in_seconds ? true : false;
+                  timer.current_time = timer.total_time_in_seconds;
+                  if (timer.running) {
+                      running_timer = timer;
+                      timer.current_time += ini.now - running_timer.started_at;
+                  }
+                  delete timer.running;
+              });
+          });
 
 
-                initTimer: function (timer, parentId, done, fail) {
-                    if (this.finished || this.processing || this.running) {
-                        return;
-                    }
-                    this.startProcessing();
+          window.app = new Vue({
+              el: '#timers',
+              data: {
+                  moment_init: running_timer ? moment().format("X") - ( ini.now - running_timer.started_at ) : 0,
+                  moment_server: running_timer ? running_timer.started_at : 0,
+                  running: !!running_timer,
+                  finished: false,
+                  processing: false,
 
-                    if (!timer.estimated && !timer.description) {
-                        Messenger().post({
-                            message: "Debe ingresar un nombre para la etapa antes de poder iniciar",
-                            hideAfter: 3,
-                            type: "error"
-                        });
-                        // TODO: https://vuejs.org/v2/api/#ref
-                        // timer.estimated_time_in_seconds.focus()
-                        this.endProcessing();
-                        return;
-                    }
+                  solution_notes: "",
+                  total_estimated_time: 0,
+                  total_time: 0,
 
-                    if (!timer.estimated && !timer.estimated_time_in_seconds_input) {
-                        Messenger().post({
-                            message: "Debe ingresar una estimacion antes de poder iniciar",
-                            hideAfter: 3,
-                            type: "error"
-                        });
-                        // TODO: https://vuejs.org/v2/api/#ref
-                        // timer.estimated_time_in_seconds.focus()
-                        this.endProcessing();
-                        return;
-                    }
+                  solution_id: ini.solution_id,
+                  stages: ini.stages,
+                  running_timer: running_timer
+              },
+              created: function () {
+                  setInterval(this.intervalUpdateRunningTime, 1000);
+                  setInterval(this.intervalUpdateTotal, 1000);
+              },
+              methods: {
+                  intervalUpdateRunningTime: function () {
+                      if (!this.running_timer) {
+                          return;
+                      }
+                      var actual = +moment().format("X");
+                      var delta = this.moment_server - this.moment_init;
+                      this.running_timer.current_time = this.running_timer.total_time_in_seconds + actual - this.running_timer.started_at + delta;
+                  },
+                  intervalUpdateTotal: function () {
+                      var totalEstimatedTime = 0;
+                      var totalTime = 0;
 
-                    var data = [];
-                    if (!timer.estimated) {
-                        data.push({
-                            name: "estimated_time_in_seconds",
-                            value: timer.estimated_time_in_seconds_input * 60
-                        });
+                      var that = this;
 
-                        data.push({
-                            name: "description",
-                            value: timer.description
-                        });
+                      this.stages.forEach(function (stage, i) {
+                          var partialEstimatedTime = 0;
+                          var partialTime = 0;
+                          stage.timers.forEach(function (timer, i) {
+                              partialEstimatedTime += timer.estimated_time_in_seconds;
+                              partialTime += timer.total_time_in_seconds + ( that.running_timer == timer ? +moment().format("X") - that.moment_init : 0 );
+                          });
 
-                        data.push({
-                            name: "stage",
-                            value: timer.stage
-                        })
-                    }
+                          stage.estimated_time_in_seconds = partialEstimatedTime;
+                          stage.time_in_seconds = partialTime;
 
-                    var that = this;
+                          totalEstimatedTime += partialEstimatedTime;
+                          totalTime += partialTime;
+                      });
 
-                    var cb = function (json) {
-                        timer.id = json.id;
-                        timer.estimated_time_in_seconds = json.estimated_time_in_seconds;
-                        timer.estimated = true;
-                        timer.started_at = json.started_at;
-                        that.running_timer = timer;
-                        that.running = true;
-                        that.moment_init = +moment().format("X");
-                        that.moment_server = json.started_at;
-
-                        that.endProcessing();
-
-                        if (done && done.call) {
-                            done.call(that, json);
-                        }
-                    };
-
-                    var cf = function () {
-                        that.endProcessing();
-
-                        if (fail && fail.call) {
-                            fail.call(that);
-                        }
-                    };
-
-                    post(data, "/solutions/" + this.solution_id + "/timers/" + timer.id + "/play", cb, cf);
-                },
-                pause: function (done, fail) {
-                    if (this.finished || this.processing || !this.running) {
-                        return;
-                    }
-                    this.startProcessing();
-
-                    var that = this;
-
-                    var cb = function (json) {
-                        that.running_timer.total_time_in_seconds = json.total_time_in_seconds;
-                        that.running_timer.current_time = json.total_time_in_seconds;
-                        that.running_timer = null;
-                        that.running = false;
-                        that.moment_init = 0;
-                        that.moment_server = 0;
-
-                        that.endProcessing();
-
-                        if (done && done.call) {
-                            done.call(that, json);
-                        }
-                    };
-
-                    var cf = function () {
-                        that.endProcessing();
-
-                        if (fail && fail.call) {
-                            fail(that);
-                        }
-                    };
-
-                    post(null, "/solutions/" + this.solution_id + "/timers/" + this.running_timer.id + "/pause", cb, cf);
-                },
-                finish: function () {
-                    if (this._finished || this._processing) {
-                        return;
-                    }
-                    this.startProcessing();
-
-                    var msg = "";
-                    var some = false;
-                    if (this.running) {
-                        msg = "Hay un timer corriendo. Detenga el mismo para finalizar.";
-                    } else {
-                        this.timers.forEach(function (timer, i) {
-                            if (timer.estimated && timer.total_time_in_seconds) {
-                                some = true;
-                                return;
-                            }
-                        });
-                        if (!some) {
-                            msg = "¡No se ha realizado ninguna etapa!";
-                        }
-                    }
-
-                    if (msg) {
-                        Messenger().post({
-                            message: msg,
-                            hideAfter: 5,
-                            type: "error"
-                        });
-                        this.endProcessing();
-                    } else {
-                        var that = this;
-                        var cb = function () {
-                            // TODO
-                            // Clean everything, and leave totals
-                            // Eventually make graphs
-                            that.finished = true;
-
-                            that.endProcessing();
-                        };
-                        var cf = function () {
-                            that.endProcessing();
-                        };
-                        //post( "", "/solutions/" + this.solution_id + "/finish/", cb, cf );
-                    }
-
-                },
-                cancel: function () {
-                    console.log("TODO");
-                    // TODO
-                }
-            }
-        });
-    }
+                      this.total_estimated_time = totalEstimatedTime;
+                      this.total_time = totalTime;
+                  },
+                  addTimer: function (stage) {
+                      stage.timers.push({
+                          id: 0,
+                          current_time: 0,
+                          total_time_in_seconds: 0,
+                          estimated_time_in_seconds: null,
+                          estimated: false,
+                          description: null,
+                          stage: stage.id
+                      });
+                  },
+                  removeTimer: function (stage, timer) {
+                      stage.timers = stage.timers.filter(function (t) {
+                          return t.id != timer.id;
+                      })
+                  },
+                  toggle: function (timer) {
+                      if (this.running_timer) {
+                          if (this.running_timer.id !== timer.id) {
+                              this.pause(function () {
+                                  this.initTimer(timer);
+                              });
+                          } else {
+                              this.pause();
+                          }
+                      } else {
+                          this.initTimer(timer);
+                      }
+                  },
+                  startProcessing: function () {
+                      this.processing = true;
+                      // $( ".bplay,.bclose" ).attr( "disabled", "disabled" ).addClass( "disabled" ); // XXX TODO
+                  },
+                  endProcessing: function () {
+                      this.processing = false;
+                      // $( ".bplay,.bclose" ).removeAttr( "disabled" ).removeClass( "disabled" ); // XXX TODO
+                  },
 
 
-    function request(type, data, url, done, fail) {
-        if (!$.isFunction(done)) {
-            done = $.noop;
-        }
-        if (!$.isFunction(fail)) {
-            fail = $.noop;
-        }
-        Messenger().run({
-            // successMessage: 'Sincronizado',
-            errorMessage: 'Error sincronizando',
-            // progressMessage: 'Sincronizando...'
-        }, {
-            url: url,
-            type: type,
-            data: data,
-            dataType: "json",
-            timeout: 3000,
-            success: done,
-            error: fail
-        });
-    }
+                  initTimer: function (timer, parentId, done, fail) {
+                      if (this.finished || this.processing || this.running) {
+                          return;
+                      }
+                      this.startProcessing();
 
-    function post(data, url, done, fail) {
-        request("POST", data, url, done, fail);
-    }
+                      if (!timer.estimated && !timer.description) {
+                          Messenger().post({
+                              message: "Debe ingresar un nombre para la etapa antes de poder iniciar",
+                              hideAfter: 3,
+                              type: "error"
+                          });
+                          // TODO: https://vuejs.org/v2/api/#ref
+                          // timer.estimated_time_in_seconds.focus()
+                          this.endProcessing();
+                          return;
+                      }
 
-    function get(data, url, done, fail) {
-        request("GET", data, url, done, fail);
-    }
+                      if (!timer.estimated && !timer.estimated_time_in_seconds_input) {
+                          Messenger().post({
+                              message: "Debe ingresar una estimacion antes de poder iniciar",
+                              hideAfter: 3,
+                              type: "error"
+                          });
+                          // TODO: https://vuejs.org/v2/api/#ref
+                          // timer.estimated_time_in_seconds.focus()
+                          this.endProcessing();
+                          return;
+                      }
 
-</script>
+                      var data = [];
+                      if (!timer.estimated) {
+                          data.push({
+                              name: "estimated_time_in_seconds",
+                              value: timer.estimated_time_in_seconds_input * 60
+                          });
 
-<script>
-    var tour = new Tour({
-        steps: [
-            {
-                element: "#partner",
-                title: "¿Y mis compañeros?",
-                content: "Podés agregar otros integrantes desde el formulario, a la izquierda. Por ahora, no se pueden eliminar... así que ¡ojo!"
-            },
-            {
-                element: ".tour-trash",
-                title: "Me equivoqué...",
-                content: "Si creaste una planilla de métricas por equivocación, podés eliminarla desde este botón"
-            },
-            {
-                element: ".tour-exit",
-                title: "Me tengo que ir...",
-                content: "Podrás seguir más tarde. Pero considerá que si salís sin detener los temporizadores, éstos seguirán corriendo"
-            },
-            {
-                element: ".tour-add:first",
-                title: "Agregar un incremento",
-                content: "Desde este botón se crea un nuevo incremento. Deberás nombrarlo y estimarlo ANTES de poder utilizarlo"
-            },
-            {
-                element: ".tour-notes",
-                title: "Mis notas",
-                content: "Aqui podrás hacer todo tipo de anotaciones que te sirvan a vos, o a nosotros. Dificultades, metodologías, o cualquier cosa que te parezca relevante."
-            },
-            {
-                element: ".tour-finish",
-                title: "Ya terminé",
-                content: "Lo último que deberás hacer es presionar este botón. Eso cierra las métricas. Pero cuidado, porque ¡esto no puede deshahcerse!"
-            }
-        ]});
+                          data.push({
+                              name: "description",
+                              value: timer.description
+                          });
 
-    tour.init();
-</script>
+                          data.push({
+                              name: "stage",
+                              value: timer.stage
+                          })
+                      }
+
+                      var that = this;
+
+                      var cb = function (json) {
+                          timer.id = json.id;
+                          timer.estimated_time_in_seconds = json.estimated_time_in_seconds;
+                          timer.estimated = true;
+                          timer.started_at = json.started_at;
+                          that.running_timer = timer;
+                          that.running = true;
+                          that.moment_init = +moment().format("X");
+                          that.moment_server = json.started_at;
+
+                          that.endProcessing();
+
+                          if (done && done.call) {
+                              done.call(that, json);
+                          }
+                      };
+
+                      var cf = function () {
+                          that.endProcessing();
+
+                          if (fail && fail.call) {
+                              fail.call(that);
+                          }
+                      };
+
+                      post(data, "/solutions/" + this.solution_id + "/timers/" + timer.id + "/play", cb, cf);
+                  },
+                  pause: function (done, fail) {
+                      if (this.finished || this.processing || !this.running) {
+                          return;
+                      }
+                      this.startProcessing();
+
+                      var that = this;
+
+                      var cb = function (json) {
+                          that.running_timer.total_time_in_seconds = json.total_time_in_seconds;
+                          that.running_timer.current_time = json.total_time_in_seconds;
+                          that.running_timer = null;
+                          that.running = false;
+                          that.moment_init = 0;
+                          that.moment_server = 0;
+
+                          that.endProcessing();
+
+                          if (done && done.call) {
+                              done.call(that, json);
+                          }
+                      };
+
+                      var cf = function () {
+                          that.endProcessing();
+
+                          if (fail && fail.call) {
+                              fail(that);
+                          }
+                      };
+
+                      post(null, "/solutions/" + this.solution_id + "/timers/" + this.running_timer.id + "/pause", cb, cf);
+                  },
+                  finish: function () {
+                      if (this._finished || this._processing) {
+                          return;
+                      }
+                      this.startProcessing();
+
+                      var msg = "";
+                      var some = false;
+                      if (this.running) {
+                          msg = "Hay un timer corriendo. Detenga el mismo para finalizar.";
+                      } else {
+                          this.timers.forEach(function (timer, i) {
+                              if (timer.estimated && timer.total_time_in_seconds) {
+                                  some = true;
+                                  return;
+                              }
+                          });
+                          if (!some) {
+                              msg = "¡No se ha realizado ninguna etapa!";
+                          }
+                      }
+
+                      if (msg) {
+                          Messenger().post({
+                              message: msg,
+                              hideAfter: 5,
+                              type: "error"
+                          });
+                          this.endProcessing();
+                      } else {
+                          var that = this;
+                          var cb = function () {
+                              // TODO
+                              // Clean everything, and leave totals
+                              // Eventually make graphs
+                              that.finished = true;
+
+                              that.endProcessing();
+                          };
+                          var cf = function () {
+                              that.endProcessing();
+                          };
+                          //post( "", "/solutions/" + this.solution_id + "/finish/", cb, cf );
+                      }
+
+                  },
+                  cancel: function () {
+                      console.log("TODO");
+                      // TODO
+                  }
+              }
+          });
+      }
+
+
+      function request(type, data, url, done, fail) {
+          if (!$.isFunction(done)) {
+              done = $.noop;
+          }
+          if (!$.isFunction(fail)) {
+              fail = $.noop;
+          }
+          Messenger().run({
+              // successMessage: 'Sincronizado',
+              errorMessage: 'Error sincronizando',
+              // progressMessage: 'Sincronizando...'
+          }, {
+              url: url,
+              type: type,
+              data: data,
+              dataType: "json",
+              timeout: 3000,
+              success: done,
+              error: fail
+          });
+      }
+
+      function post(data, url, done, fail) {
+          request("POST", data, url, done, fail);
+      }
+
+      function get(data, url, done, fail) {
+          request("GET", data, url, done, fail);
+      }
+
+  </script>
+
+  <script>
+      var tour = new Tour({
+          steps: [
+              {
+                  element: "#partner",
+                  title: "¿Y mis compañeros?",
+                  content: "Podés agregar otros integrantes desde el formulario, a la izquierda. Por ahora, no se pueden eliminar... así que ¡ojo!"
+              },
+              {
+                  element: ".tour-trash",
+                  title: "Me equivoqué...",
+                  content: "Si creaste una planilla de métricas por equivocación, podés eliminarla desde este botón"
+              },
+              {
+                  element: ".tour-exit",
+                  title: "Me tengo que ir...",
+                  content: "Podrás seguir más tarde. Pero considerá que si salís sin detener los temporizadores, éstos seguirán corriendo"
+              },
+              {
+                  element: ".tour-add:first",
+                  title: "Agregar un incremento",
+                  content: "Desde este botón se crea un nuevo incremento. Deberás nombrarlo y estimarlo ANTES de poder utilizarlo"
+              },
+              {
+                  element: ".tour-notes",
+                  title: "Mis notas",
+                  content: "Aqui podrás hacer todo tipo de anotaciones que te sirvan a vos, o a nosotros. Dificultades, metodologías, o cualquier cosa que te parezca relevante."
+              },
+              {
+                  element: ".tour-finish",
+                  title: "Ya terminé",
+                  content: "Lo último que deberás hacer es presionar este botón. Eso cierra las métricas. Pero cuidado, porque ¡esto no puede deshahcerse!"
+              }
+          ]});
+
+      tour.init();
+  </script>
+
+<% end %>
