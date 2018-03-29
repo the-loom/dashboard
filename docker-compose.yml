@@ -17,6 +17,8 @@ services:
     build: .
     user: loom
     env_file: .env
+    stdin_open: true
+    tty: true
     volumes:
       - .:/usr/src/app
     ports:

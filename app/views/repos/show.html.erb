@@ -1,0 +1,161 @@
+<%= render partial: 'header', locals: {repo: @repo} %>
+
+<% if @repo.parent %>
+
+  <section class="results">
+    <h2>
+      Resultados de la última entrega: <span class="badge score pull-right"><%= @repo.latest_test_run.score %></span>
+    </h2>
+
+    <% if @repo.latest_test_run.details %>
+      <pre>
+        <%= @repo.latest_test_run.details %>
+      </pre>
+    <% end %>
+
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+      <% @repo.latest_test_run.results.each do |result| %>
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="heading<%= result.test_type.capitalize %>">
+            <h4 class="panel-title">
+              <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= result.test_type.capitalize %>" aria-expanded="true" aria-controls="collapseOne">
+                <div class="progress tiny pull-right">
+                  <div class="progress-bar progress-bar" role="progressbar" aria-valuenow="<%= result.score %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= result.score * 10 %>%">
+                  </div>
+                </div>
+                Resultados para <%= result.test_type.capitalize %>
+                <span class="small">(<%= result.issues.count %> incidencias)</span>
+              </a>
+            </h4>
+          </div>
+          <div id="collapse<%= result.test_type.capitalize %>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading<%= result.test_type.capitalize %>">
+            <div class="panel-body">
+
+              <% unless result.issues.empty? %>
+
+                <table class="table table-hover">
+                <thead>
+                <tr>
+                  <th>Mensaje</th>
+                  <th>Detalles</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% result.issues.each do |issue| %>
+                  <tr>
+                    <td>
+                      <span class="label label-warning"><%= issue.issue_type %></span>
+                      <%= issue.message %>
+                    </td>
+                    <td>
+                      <pre><%= issue.details %></pre>
+
+                      <% if issue.payload %>
+                        <div class="bs-callout bs-callout-info">
+                          <h4>Información adicional</h4>
+                          <dl class="dl-horizontal">
+                            <% issue.payload.each do |key, value| %>
+                              <dt><%= t key %>:</dt>
+                              <dd><%= value %></dd>
+                            <% end %>
+                          </dl>
+                        </div>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+                </tbody>
+              </table>
+
+              <% else %>
+
+                <div class="alert alert-info">
+                  <p>No hay incidencias registradas.</p>
+                </div>
+
+              <% end %>
+
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+  </section>
+
+<% else %>
+
+  <div class="alert alert-info">
+    <% if current_user.has_github_identity? %>
+      <p>Podés resolver este desafío, y LoomBot&trade; lo corregirá. Para ello, debés segiur estos pasos:</p>
+      <ol>
+        <li>Ingresar al repositorio, y revisar la consigna.</li>
+        <li>Una vez que decidas resolverla, empezá haciendo un fork del repositorio del desafío.</li>
+        <li>Los desafíos están armados para que completes con tu código en ciertos lugares.</li>
+        <li><strong>Importante: podés agregar tus propias clases, pero debés respetar la estructura del proyecto, y no debés eliminar ni modificar las firmas de los métodos existentes</strong></li>
+        <li>Una vez que hayas completado el ejercicio, y hayas hecho un push en tu propio repositorio, solicitá la corrección.</li>
+      </ol>
+    <% else %>
+      <p>Podés resolver este desafío, y LoomBot&trade; lo corregirá. Para ello, primero vinculá tu cuenta de Github con Loom, saliendo y volviendo a ingresar con esa autenticación.</p>
+      <p><strong>Nota:</strong> si tu dirección de correo electrónico es diferente a la de tu cuenta actual, deberás avisarle a tus instructores para que mezclen manualmente tus identidades.</p>
+    <% end %>
+  </div>
+
+  <% unless @forks.empty? %>
+    <section class="forks">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Autores</th>
+        <th>Enlace</th>
+        <th>Resultado</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @forks.each do |fork| %>
+        <tr class="fork">
+          <td>
+            <img class="avatar small" src="<%= fork.author.image %>" title="<%= fork.author.nickname %>" alt="<%= fork.author.nickname %>">
+            <%= fork.author.name %>
+          </td>
+          <td>
+            <% unless fork.pending? %>
+              <%= link_to fork.full_name, repo_path(user: fork.user, name: fork.name) %>
+            <% else %>
+              <%= fork.full_name %>
+            <% end %>
+          </td>
+          <td>
+            <% if fork.pending? %>
+              Pendiente...
+            <% else %>
+              <div class="progress">
+                <div class="progress-bar progress-bar-<%= fork.latest_test_run.score < 4 ? 'danger' : (fork.latest_test_run.score > 7 ? 'success' : 'warning') %>"
+                     role="progressbar" aria-valuenow="<%= fork.latest_test_run.score * 10 %>"
+                     aria-valuemin="0" aria-valuemax="100" style="width: <%= fork.latest_test_run.score * 10 %>%">
+                  <%= fork.latest_test_run.score %>/10
+                </div>
+              </div>
+              <span class="time-ago" data-time="<%= fork.latest_test_run.created_at.to_i * 1000 %>">TIME AGO</span></td>
+            <% end %>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </section>
+  <% end %>
+
+<% end %>
+
+
+<% content_for :javascript do %>
+  <script type="text/javascript" charset="utf-8">
+      $(function () {
+          $(".time-ago").each(function () {
+              $(this).text(moment($(this).data('time')).fromNow());
+              $(this).attr('title', moment($(this).data('time')).format('LLLL'));
+          });
+      })
+  </script>
+<% end %>
+

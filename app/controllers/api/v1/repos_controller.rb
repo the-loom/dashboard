@@ -1,0 +1,82 @@
+module Api
+  module V1
+    class ReposController < ApplicationController
+      protect_from_forgery with: :null_session
+      respond_to :json
+
+      def pending
+        if request.headers["x-api-key"] != ENV["GRADER_TOKEN"]
+          render nothing: true, status: :forbidden
+          return
+        end
+
+        forks = AutomaticCorrection::Repo.unscoped.where(pending: true).where.not(parent: nil).order(updated_at: :asc)
+        Course.current = forks.first.course unless forks.empty?
+
+        respond_with forks.to_json(only: [:id, :user, :name, :git_url ],
+                                  include: {
+                                      parent: { only: [:user, :name, :git_url ] }
+                                  })
+        Course.current = nil
+      end
+
+      def grade
+        if request.headers["x-api-key"] != ENV["GRADER_TOKEN"]
+          render nothing: true, status: :forbidden
+          return
+        end
+
+        # TODO: considerar que puede no haber una corrección pendiente (falla el grader?)
+        # TODO: utilizar ese SHA para algo
+        # TODO: metemos un rescue para los casos no contemplados? Se vuelve atras todo?
+
+        AutomaticCorrection::Repo.transaction do
+          fork = AutomaticCorrection::Repo.unscoped.find(params[:id])
+          Course.current = fork.course
+
+          # TODO: si ya se corrigió este SHA, abortar!
+
+          test_run = AutomaticCorrection::TestRun.create(
+            score: params[:test_run][:score],
+            git_commit_id: params[:test_run][:sha],
+            details: params[:test_run][:details]
+          )
+          fork.test_runs << test_run
+
+          # TODO(delucas): ojo, puede haber DETALLES si es que hay errores, o cosas similares
+          # el caso que contemplo en el que puede no haber resultados, es si no pudo corregir x error de compilacion
+          if params[:test_run][:results]
+            params[:test_run][:results].each do |result|
+
+              res = AutomaticCorrection::Result.create(
+                test_type: result[:type],
+                score: result[:score]
+              )
+              test_run.results << res
+
+              result[:issues].each do |issue|
+                iss = AutomaticCorrection::Issue.create(issue_params(issue))
+                res.issues << iss
+              end
+
+            end
+          end
+
+          fork.update_attributes(pending: false)
+          # TODO(delucas): habilitar las notificaciones cuando haya destinatarios
+          # Notification.create(subject: "[#{fork.full_name}] ¡Tenés una nueva corrección!", text: "Recordá revisar los detalles de tu calificación dentro del menú de Desafíos", author: "LoomBot")
+
+          Course.current = nil
+        end
+
+        # TODO: handle errors here
+        head :no_content
+      end
+
+      private
+        def issue_params(issue)
+          issue.permit!
+        end
+    end
+  end
+end

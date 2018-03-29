@@ -3,11 +3,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   helper_method :current_user
-  before_filter :authenticate_user!, unless: :pages_controller?
-
+  before_action :authenticate_user!, unless: proc { pages_controller? || :repos_api? }
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
-  before_filter :_set_current_session
+  before_action :_set_current_session
 
   protected
     def _set_current_session
@@ -37,6 +36,10 @@ class ApplicationController < ActionController::Base
 
     def pages_controller?
       controller_path.starts_with?("pages") || controller_path.starts_with?("sessions")
+    end
+
+    def repos_api?
+      controller_path.starts_with?("repos")
     end
 
     def current_user
