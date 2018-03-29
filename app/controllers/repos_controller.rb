@@ -28,8 +28,10 @@ class ReposController < ApplicationController
 
   def grade
     repo = AutomaticCorrection::Repo.find_by(user: params[:user], name: params[:name])
+
+
     if repo.parent == nil
-      fork = AutomaticCorrection::Repo.find_or_create_by(parent: repo, author: current_user, user: current_user.github_username, name: repo.name)
+      fork = AutomaticCorrection::Repo.find_or_create_by(parent: repo, author: current_user, user: current_user.github_username, name: repo.name, difficulty: repo.difficulty, description: repo.description)
       fork.update_attributes(pending: true, git_url: "git@github.com:#{current_user.github_username}/#{repo.name}.git")
     end
 

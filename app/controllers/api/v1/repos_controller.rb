@@ -10,12 +10,14 @@ module Api
           return
         end
 
-        forks = AutomaticCorrection::Repo.where(pending: true).where.not(parent: nil).order(updated_at: :asc)
+        forks = AutomaticCorrection::Repo.unscoped.where(pending: true).where.not(parent: nil).order(updated_at: :asc)
+        Course.current = forks.first.course unless forks.empty?
 
         respond_with forks.to_json(only: [:id, :user, :name, :git_url ],
                                   include: {
                                       parent: { only: [:user, :name, :git_url ] }
                                   })
+        Course.current = nil
       end
 
       def grade
@@ -29,7 +31,8 @@ module Api
         # TODO: metemos un rescue para los casos no contemplados? Se vuelve atras todo?
 
         AutomaticCorrection::Repo.transaction do
-          fork = AutomaticCorrection::Repo.find(params[:id])
+          fork = AutomaticCorrection::Repo.unscoped.find(params[:id])
+          Course.current = fork.course
 
           # TODO: si ya se corrigió este SHA, abortar!
 
@@ -60,6 +63,10 @@ module Api
           end
 
           fork.update_attributes(pending: false)
+          # TODO(delucas): habilitar las notificaciones cuando haya destinatarios
+          # Notification.create(subject: "[#{fork.full_name}] ¡Tenés una nueva corrección!", text: "Recordá revisar los detalles de tu calificación dentro del menú de Desafíos", author: "LoomBot")
+
+          Course.current = nil
         end
 
         # TODO: handle errors here

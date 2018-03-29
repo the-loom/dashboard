@@ -10,7 +10,6 @@ class AutomaticCorrection::Repo < ApplicationRecord
 
   validates_presence_of :user, :name, :git_url, :description, :difficulty
   validates_numericality_of :difficulty
-  validates :name, uniqueness: { scope: :course_id }
   validates :git_url, uniqueness: { scope: :course_id }
 
   def full_name
