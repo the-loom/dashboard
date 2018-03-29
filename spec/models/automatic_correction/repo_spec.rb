@@ -26,8 +26,6 @@ RSpec.describe AutomaticCorrection::Repo, type: :model do
     module CourseLock
       def verify_current_course; end
     end
-    should validate_uniqueness_of(:name)
-               .scoped_to(:course_id)
     should validate_uniqueness_of(:git_url)
                .scoped_to(:course_id)
   }
