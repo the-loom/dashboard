@@ -8,6 +8,7 @@ class Identity < ApplicationRecord
     identity = find_by(provider: auth["provider"], uid: auth["uid"]) || create_with_omniauth(auth)
     identity.user = find_corresponding_user(identity) if identity.user == nil
     identity.update_attribute(:image, auth["info"]["image"])
+    identity.update_attribute(:name, auth["info"]["name"])
     identity
   end
 
