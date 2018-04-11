@@ -6,6 +6,7 @@ class Identity < ApplicationRecord
   # https://console.developers.google.com/apis/credentials?project=loom-development
   def self.by_omniauth(auth)
     identity = find_by(provider: auth["provider"], uid: auth["uid"]) || create_with_omniauth(auth)
+    identity.user = find_corresponding_user(identity) if identity.user == nil
     identity.update_attribute(:image, auth["info"]["image"])
     identity
   end
