@@ -15,6 +15,12 @@ class ApplicationController < ActionController::Base
       Course.current = Course.find(session[:course_id]) if session[:course_id].present?
     end
 
+    def verify_name
+      if !current_user.name.present? || current_user.name.strip.empty?
+        flash[:alert] = "Por favor, utilizá tu nombre completo en el perfil. Podés hacerlo desde la barra de menú"
+      end
+    end
+
     def verify_pending_solutions
       if session[:course_id] && current_user.solutions.detect { |s| s.finished_at == nil }
         flash[:info] = "Tenés un ejercicio en curso. Si lo olvidaste, podés accederlo y finalizarlo. O eliminarlo"
