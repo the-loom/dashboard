@@ -32,6 +32,6 @@ class Identity < ApplicationRecord
     def self.find_corresponding_user(identity)
       u = User.find_or_create_by(email: identity.email)
       u.update_with(identity)
-      u.update_attributes(uuid: (user.id + 272).to_s(16).upcase)
+      u.update_attributes(uuid: (u.id + 272).to_s(16).upcase)
     end
 end
