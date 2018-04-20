@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180220140626) do
+ActiveRecord::Schema.define(version: 20180420133605) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -203,6 +203,7 @@ ActiveRecord::Schema.define(version: 20180220140626) do
     t.integer  "team_id"
     t.boolean  "locked",     default: false
     t.boolean  "enabled",    default: true
+    t.string   "uuid"
   end
 
   add_foreign_key "automatic_correction_repos", "automatic_correction_repos", column: "parent_id"

@@ -8,6 +8,9 @@ class LecturePolicy < ApplicationPolicy
   def register?
     user.teacher?
   end
+  def quick_register?
+    user.admin?
+  end
   def create?
     user.teacher?
   end

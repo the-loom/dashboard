@@ -24,6 +24,28 @@ class LecturesController < ApplicationController
     redirect_to lectures_path
   end
 
+  #TODO(delucas): be very careful here... needs to be by course
+  def quick_register
+    authorize Lecture
+    lecture = Lecture.find(params[:id])
+    student_ids = params[:student_ids].gsub(/\s+/, "").upcase.split(",")
+
+    students = User.where(uuid: student_ids)
+    students.each do |student|
+      student.unregister_attendance(lecture)
+      student.register_attendance(lecture, :present)
+    end
+
+    absent_students = Course.current.memberships.student.collect(&:user) - students
+    absent_students.each do |student|
+      student.unregister_attendance(lecture)
+      student.register_attendance(lecture, :absent)
+    end
+
+    flash[:notice] = "Se registró la asistencia correctamente"
+    redirect_to lectures_path
+  end
+
   def register
     authorize Lecture
     lecture = Lecture.find(params[:id])

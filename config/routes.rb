@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   resources :lectures, only: [:index, :new, :create, :show] do
     member do
       post :register
+      post :quick_register
     end
     collection do
       get :summary

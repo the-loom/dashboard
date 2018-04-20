@@ -1,5 +1,19 @@
 <legend>Registrar asistencia "<%= @lecture.summary %>"</legend>
 
+<%= form_tag(quick_register_lecture_path(@lecture.id)) do %>
+  <%= hidden_field_tag 'lecture_id', @lecture.id %>
+
+  <div class="form-group">
+    <%= label_tag :student_ids, 'UUIDs (separados por comas)' %>
+    <%= text_area_tag :student_ids, nil, {class: 'form-control'} %>
+  </div>
+
+  <div class="form-group">
+    <%= submit_tag "Guardar", class: "btn btn-primary" %>
+  </div>
+
+<% end %>
+
 <%= form_tag(register_lecture_path(@lecture.id)) do %>
 
   <%= hidden_field_tag 'lecture_id', @lecture.id %>
