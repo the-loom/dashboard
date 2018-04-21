@@ -33,5 +33,6 @@ class Identity < ApplicationRecord
       u = User.find_or_create_by(email: identity.email)
       u.update_with(identity)
       u.update_attributes(uuid: (u.id + 272).to_s(16).upcase)
+      u
     end
 end
