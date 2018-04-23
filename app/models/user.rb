@@ -44,7 +44,7 @@ class User < ApplicationRecord
 
   def update_with(identity)
     self.nickname = identity.nickname
-    self.name = identity.name
+    self.name = identity.name unless self.name.present?
     self.email = identity.email
     self.image = identity.image
     self.save

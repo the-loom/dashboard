@@ -7,7 +7,8 @@ delucas = User.create(
   email: "lucas@wecode.io",
   image: "https://avatars1.githubusercontent.com/u/684051?v=4",
   enabled: true,
-  locked: true
+  locked: true,
+  uuid: "0"
 )
 
 Identity.create(
@@ -21,7 +22,7 @@ Identity.create(
 )
 
 # TODO(delucas): organizar esto en grupos
-3.times do
+3.times do |c|
 
   course = Course.create(
     name: "Programación #{rand(10).roman}"
@@ -34,7 +35,7 @@ Identity.create(
     user: delucas
   )
 
-  35.times do
+  35.times do |i|
     name = "#{FFaker::NameMX.first_name} #{FFaker::NameMX.last_name}"
     nickname = ActiveSupport::Inflector.transliterate(name.downcase.gsub(/\s/, "."))
 
@@ -44,7 +45,8 @@ Identity.create(
       email: "#{nickname}@yopmail.com",
       image: FFaker::Avatar.image,
       enabled: true,
-      locked: true
+      locked: true,
+      uuid: ((c + 1) * 100 + (i + 1)).to_s(16).upcase
     )
     Membership.create(
       course: course,
