@@ -72,7 +72,7 @@ Rails.application.routes.draw do
     patch :add_member
   end
 
-  get "/teams/:nickname" => "teams#show", as: :team_profile, constraints: { nickname: /[0-z\.]+/ }
+  get "/teams/:nickname" => "teams#show", as: :team_profile, constraints: { nickname: /[0-z\.-]+/ }
   # resources :articles, param: :slug
   # https://stackoverflow.com/a/31060067/2661448
 
