@@ -50,13 +50,15 @@
           </button>
         <% end %>
       </div>
-      <script>
-          $(function(){
-              $.get("/partners", function(data){
-                  $("#partner").typeahead({ source:data });
-              },'json');
-          });
-      </script>
+      <% content_for :javascript do %>
+        <script>
+            $(function(){
+                $.get("/partners", function(data){
+                    $("#partner").typeahead({ source:data });
+                },'json');
+            });
+        </script>
+      <% end %>
       <br/><br/><br/><hr/>
     </div>
   <% end %>
