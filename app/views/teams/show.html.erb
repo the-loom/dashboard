@@ -111,8 +111,10 @@
   <% end %>
 </div>
 
-<script>
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    });
-</script>
+<% content_for :javascript do %>
+  <script>
+      $(function () {
+          $('[data-toggle="tooltip"]').tooltip()
+      });
+  </script>
+<% end %>

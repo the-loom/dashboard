@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   helper_method :current_user
-  before_action :authenticate_user!, unless: proc { pages_controller? || :repos_api? }
+  before_action :authenticate_user!, unless: proc { pages_controller? || repos_api? }
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   before_action :_set_current_session
