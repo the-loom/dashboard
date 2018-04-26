@@ -8,6 +8,9 @@ class LecturesController < ApplicationController
     authorize Lecture
     @lecture = Lecture.find(params[:id])
     @students = Course.current.memberships.student.collect(&:user)
+    @present_student_uuids = @students.select do |student|
+      student.present_at(@lecture)
+    end.map(&:uuid)
   end
 
   def new

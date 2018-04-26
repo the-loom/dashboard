@@ -1,52 +1,70 @@
 <legend>Registrar asistencia "<%= @lecture.summary %>"</legend>
 
-<%= form_tag(quick_register_lecture_path(@lecture.id)) do %>
-  <%= hidden_field_tag 'lecture_id', @lecture.id %>
 
-  <div class="form-group">
-    <%= label_tag :student_ids, 'UUIDs (separados por comas)' %>
-    <%= text_area_tag :student_ids, nil, {class: 'form-control'} %>
-  </div>
+<div>
 
-  <div class="form-group">
-    <%= submit_tag "Guardar", class: "btn btn-primary" %>
-  </div>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#normal" aria-controls="normal" role="tab" data-toggle="tab">Registro normal</a></li>
+    <li role="presentation"><a href="#quick" aria-controls="quick" role="tab" data-toggle="tab">Registro rápido</a></li>
+  </ul>
 
-<% end %>
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="normal">
+      <%= form_tag(register_lecture_path(@lecture.id)) do %>
 
-<%= form_tag(register_lecture_path(@lecture.id)) do %>
+        <%= hidden_field_tag 'lecture_id', @lecture.id %>
 
-  <%= hidden_field_tag 'lecture_id', @lecture.id %>
+        <div class="row members attendance">
 
-  <div class="row members attendance">
+          <% @students.each do |student| %>
+            <div class="student col-md-2 col-xs-6 box">
+              <img class="avatar<%= ' disabled' unless student.enabled? %>" src="<%= student.image %>">
+              <br/>
+              <div class="data">
+                <%= check_box :student_ids, student.id, {checked: student.present_at(@lecture)} %>
+                <strong><%= student.name %></strong>
+                <br/>
+                (<%= student.nickname %>)
+              </div>
+            </div>
+          <% end %>
 
-    <% @students.each do |student| %>
-      <div class="student col-md-2 col-xs-6 box">
-        <img class="avatar<%= ' disabled' unless student.enabled? %>" src="<%= student.image %>">
-        <br/>
-        <div class="data">
-          <%= check_box :student_ids, student.id, {checked: student.present_at(@lecture)} %>
-          <strong><%= student.name %></strong>
-          <br/>
-          (<%= student.nickname %>)
         </div>
-      </div>
-    <% end %>
 
+        <div class="form-group">
+          <%= submit_tag "Guardar asistencia", class: "btn btn-primary" %>
+        </div>
+
+      <% end %>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="quick">
+      <%= form_tag(quick_register_lecture_path(@lecture.id)) do %>
+        <%= hidden_field_tag 'lecture_id', @lecture.id %>
+
+        <div class="form-group">
+          <%= label_tag :student_ids, 'UUIDs (separados por comas)' %>
+          <%= text_area_tag :student_ids, @present_student_uuids.join(', '), {class: 'form-control'} %>
+        </div>
+
+        <div class="form-group">
+          <%= submit_tag "Guardar", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
   </div>
 
-  <div class="form-group">
-    <%= submit_tag "Guardar asistencia", class: "btn btn-primary" %>
-  </div>
+</div>
 
+<% content_for :javascript do %>
+  <script>
+      $(function () {
+          $('.members .box').click(function (event) {
+              if (event.target.type !== 'checkbox') {
+                  $(':checkbox', this).trigger('click');
+              }
+          });
+      });
+  </script>
 <% end %>
-
-<script>
-    $(function () {
-        $('.members .box').click(function (event) {
-            if (event.target.type !== 'checkbox') {
-                $(':checkbox', this).trigger('click');
-            }
-        });
-    });
-</script>
