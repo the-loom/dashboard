@@ -45,7 +45,7 @@ class ApplicationController < ActionController::Base
     end
 
     def repos_api?
-      controller_path.starts_with?("repos")
+      controller_path.starts_with?("api")
     end
 
     def current_user
