@@ -90,7 +90,9 @@ pptlS.forks << AutomaticCorrection::Repo.create(
   name: "piedra-papel-tijera-lagarto-Spock",
   git_url: "git@github.com:#{author.nickname}/piedra-papel-tijera-lagarto-Spock.git",
   avatar_url: author.image,
-  pending: true
+  pending: true,
+  difficulty: 2,
+  description: "Repo description pending"
 )
 
 author = User.last
@@ -101,6 +103,8 @@ pptlS.forks << AutomaticCorrection::Repo.create(
   git_url: "git@github.com:#{author.nickname}/piedra-papel-tijera-lagarto-Spock.git",
   avatar_url: author.image,
   pending: false,
+  difficulty: 2,
+  description: "Repo description pending",
   test_runs: [
       AutomaticCorrection::TestRun.create(
         score: 4.83,

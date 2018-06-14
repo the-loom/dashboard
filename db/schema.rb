@@ -33,13 +33,13 @@ ActiveRecord::Schema.define(version: 20180420133605) do
   end
 
   create_table "automatic_correction_repos", force: :cascade do |t|
+    t.integer  "author_id"
     t.string   "user"
     t.string   "name"
     t.string   "git_url"
     t.string   "avatar_url"
     t.string   "description"
     t.integer  "parent_id"
-    t.integer  "author_id"
     t.boolean  "pending",     default: true
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false

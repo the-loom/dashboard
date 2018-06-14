@@ -18,9 +18,10 @@ download_production_db:
 	curl -o tmp/latest.dump `heroku pg:backups public-url --app the-loom`
 
 restore_production_db:
-	foreman run bundle exec rake db:drop db:create
-	! pg_restore --verbose --clean --no-acl --no-owner -h localhost -d loom-dashboard -U loom tmp/latest.dump
-	foreman run bundle exec rake db:migrate
+	docker-compose run app bundle exec rake db:drop db:create
+	docker cp tmp/latest.dump loomdashboard_db_1:/latest.dump
+	! docker exec loomdashboard_db_1 pg_restore --verbose --clean --no-acl --no-owner -h localhost -d loom_development -U loom /latest.dump
+	docker-compose run app bundle exec rake db:migrate
 
 capture_and_clone_production_db_to_development:
 	$(MAKE) capture_production_db
@@ -43,3 +44,13 @@ staging_deploy:
 	heroku ps:scale web=1 --app the-loom-staging
 	heroku restart --app the-loom-staging
 	heroku maintenance:off --app the-loom-staging
+
+production_deploy:
+	heroku maintenance:on --app the-loom
+	git push -ff production master
+	heroku pg:killall --app the-loom
+	heroku pg:reset --app the-loom --confirm the-loom
+	heroku run rake db:migrate --app the-loom
+	heroku ps:scale web=1 --app the-loom
+	heroku restart --app the-loom
+	heroku maintenance:off --app the-loom
