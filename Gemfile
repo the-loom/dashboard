@@ -19,7 +19,7 @@ group :development, :test do
   gem "sqlite3"
 end
 
-gem "dotenv-rails", "2.2.1", groups: [:development, :test]
+gem "dotenv-rails", "2.5.0", groups: [:development, :test]
 gem "omniauth-github", "1.3.0"
 gem "omniauth-google-oauth2", "0.5.2"
 
