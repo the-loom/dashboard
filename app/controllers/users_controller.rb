@@ -43,6 +43,14 @@ class UsersController < ApplicationController
     redirect_to profile_url
   end
 
+  def disable
+    @user = User.where(nickname: params[:nickname]).first
+    authorize @user, :manage?
+    @user.enabled = !@user.enabled
+    @user.save
+    redirect_to students_path
+  end
+
   def edit
     authorize @user, :update?
   end
