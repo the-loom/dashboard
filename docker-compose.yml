@@ -9,7 +9,7 @@ services:
     image: postgres:9.5.12-alpine
     env_file: .env
     volumes:
-      - db-data:/var/lib/postgresql/db-data
+      - $PWD/db-data:/var/lib/postgresql/data
     ports:
       - "15432:5432"
 
