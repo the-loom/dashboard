@@ -28,7 +28,7 @@ gem "ffaker", "2.9.0"
 group :development do
   gem "rack-mini-profiler"
   gem "web-console", ">= 3.3.0"
-  gem "listen", "~> 3.0.5"
+  gem "listen", "~> 3.1.5"
   gem "better_errors"
   gem "binding_of_caller"
   gem "spring"
