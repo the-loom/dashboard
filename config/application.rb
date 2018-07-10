@@ -19,6 +19,7 @@ module LoomDashboard
     I18n.config.default_locale = :es
 
     Rails.application.config.autoload_paths += %W(#{config.root}/lib)
+    Rails.application.config.active_record.sqlite3.represent_boolean_as_integer = true
 
     config.assets.paths << Rails.root.join("vendor", "assets", "components")
     config.after_initialize do |app|
