@@ -8,6 +8,9 @@ Bundler.require(*Rails.groups)
 
 module LoomDashboard
   class Application < Rails::Application
+    # Initialize configuration defaults for originally generated Rails version.
+    config.load_defaults 5.0
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -16,6 +19,7 @@ module LoomDashboard
     I18n.config.default_locale = :es
 
     Rails.application.config.autoload_paths += %W(#{config.root}/lib)
+    Rails.application.config.active_record.sqlite3.represent_boolean_as_integer = true
 
     config.assets.paths << Rails.root.join("vendor", "assets", "components")
     config.after_initialize do |app|

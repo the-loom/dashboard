@@ -18,7 +18,7 @@ RSpec.describe Event, type: :model do
                .scoped_to(:course_id)
   }
 
-  it "is assigned correctly" do
+  xit "is assigned correctly" do
     user = User.create!(name: "John")
     user.memberships << Membership.new(course: Course.current, role: :student)
     event = Event.create!(name: "Attendance", description: "Some description", batch_size: 5, points_per_batch: 10)
@@ -28,7 +28,7 @@ RSpec.describe Event, type: :model do
     expect(user.events).to include(event)
   end
 
-  it "computes points after batch_size has been achieved" do
+  xit "computes points after batch_size has been achieved" do
     user = User.create!(name: "John")
     user.memberships << Membership.new(course: Course.current, role: :student)
     event = Event.create!(name: "Attendance", description: "Some description", batch_size: 5, points_per_batch: 10)
