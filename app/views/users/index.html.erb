@@ -50,6 +50,9 @@
             <% if policy(student).impersonate? %>
               <%= link_to 'Personificar', impersonate_user_url(student.nickname), class: 'btn btn-default' %>
             <% end %>
+            <% if policy(student).manage? %>
+              <%= link_to student.enabled? ? 'Deshabilitar' : 'Habilitar', disable_user_url(student.nickname), class: 'btn btn-default' %>
+            <% end %>
           </td>
         </tr>
       <% end %>

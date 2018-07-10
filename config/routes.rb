@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   patch "/profile/edit" => "users#update", as: :update_user
   get "/profile/change_identity/:identity_id" => "users#change_identity", as: :change_identity
   get "/u/:nickname/impersonate" => "users#impersonate", as: :impersonate_user, constraints: { nickname: /[0-z\.-]+/ }
+  get "/u/:nickname/disable" => "users#disable", as: :disable_user, constraints: { nickname: /[0-z\.-]+/ }
   get "/students" => "users#index", as: :students
   get "/guests" => "users#guests", as: :guests
   post "/u/bulk_edit" => "users#bulk_edit", as: :bulk_edit_users
