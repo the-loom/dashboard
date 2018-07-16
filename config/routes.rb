@@ -59,6 +59,7 @@ Rails.application.routes.draw do
   resources :repos, only: [:index, :new, :create]
   get "repos/:user/:name" => "repos#show", as: :repo, constraints: { user: /[0-z\.-]+/ }
   get "repos/:user/:name/grade" => "repos#grade", as: :grade, constraints: { user: /[0-z\.-]+/ }
+  resources :test_runs, only: [:show]
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do

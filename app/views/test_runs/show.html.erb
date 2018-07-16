@@ -1,0 +1,96 @@
+<%= render partial: 'repos/header', locals: {repo: @repo} %>
+
+<%= link_to "Volver", repo_path(user: @repo.user, name: @repo.name) %>
+
+<section class="results">
+  <h2>
+    Resultados de la entrega: <span class="badge score pull-right"><%= @test_run.score %></span>
+  </h2>
+
+  <% if @test_run.details %>
+    <pre>
+      <%= @test_run.details %>
+    </pre>
+  <% end %>
+
+  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <% @test_run.results.each do |result| %>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="heading<%= result.test_type.capitalize %>">
+          <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= result.test_type.capitalize %>" aria-expanded="true" aria-controls="collapseOne">
+              <div class="progress tiny pull-right">
+                <div class="progress-bar progress-bar" role="progressbar" aria-valuenow="<%= result.score %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= result.score * 10 %>%">
+                </div>
+              </div>
+              Resultados para <%= result.test_type.capitalize %>
+              <span class="small">(<%= result.issues.count %> incidencias)</span>
+            </a>
+          </h4>
+        </div>
+        <div id="collapse<%= result.test_type.capitalize %>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading<%= result.test_type.capitalize %>">
+          <div class="panel-body">
+
+            <% unless result.issues.empty? %>
+
+              <table class="table table-hover">
+              <thead>
+              <tr>
+                <th>Mensaje</th>
+                <th>Detalles</th>
+              </tr>
+              </thead>
+              <tbody>
+              <% result.issues.each do |issue| %>
+                <tr>
+                  <td>
+                    <span class="label label-warning"><%= issue.issue_type %></span>
+                    <%= issue.message %>
+                  </td>
+                  <td>
+                    <pre><%= issue.details %></pre>
+
+                    <% if issue.payload %>
+                      <div class="bs-callout bs-callout-info">
+                        <h4>Información adicional</h4>
+                        <dl class="dl-horizontal">
+                          <% issue.payload.each do |key, value| %>
+                            <dt><%= t key %>:</dt>
+                            <dd><%= value %></dd>
+                          <% end %>
+                        </dl>
+                      </div>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+
+            <% else %>
+
+              <div class="alert alert-info">
+                <p>No hay incidencias registradas.</p>
+              </div>
+
+            <% end %>
+
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+</section>
+
+<% content_for :javascript do %>
+  <script type="text/javascript" charset="utf-8">
+      $(function () {
+          $(".time-ago").each(function () {
+              $(this).text(moment($(this).data('time')).fromNow());
+              $(this).attr('title', moment($(this).data('time')).format('LLLL'));
+          });
+      })
+  </script>
+<% end %>
+
