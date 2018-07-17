@@ -1,5 +1,9 @@
 <%= render partial: 'header', locals: {repo: @repo} %>
 
+<%= content_for :head do %>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.5/c3.min.css" rel="stylesheet">
+<% end %>
+
 <% if @repo.parent %>
 
   <section class="results">
@@ -11,6 +15,8 @@
     <h3>
       Entregas anteriores
     </h3>
+
+    <div id="graph"></div>
 
     <table class="table table-stripped">
       <thead>
@@ -99,14 +105,39 @@
 
 <% end %>
 
-
 <% content_for :javascript do %>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.5/c3.min.js"></script>
+
   <script type="text/javascript" charset="utf-8">
       $(function () {
           $(".time-ago").each(function () {
               $(this).text(moment($(this).data('time')).fromNow());
               $(this).attr('title', moment($(this).data('time')).format('LLLL'));
           });
+
+          <% if @repo.parent && @presenter.can_graph? %>
+            var chart = c3.generate({
+                bindto: '#graph',
+                data: {
+                    columns: [
+                        <% @presenter.summary.each do |series, values| %>
+                          ['<%= series %>', <%= values.join(", ") %>],
+                        <% end %>
+                    ],
+                    types: {
+                        <% @presenter.summary.keys.each do |series| %>
+                          <%= series %>: 'area',
+                        <% end %>
+                    },
+                    groups: [<%= raw @presenter.summary.keys.flatten %>],
+                    order: function (t1, t2) {
+                      return t1 < t2;
+                    }
+                }
+            });
+          <% end %>
       })
   </script>
 <% end %>
