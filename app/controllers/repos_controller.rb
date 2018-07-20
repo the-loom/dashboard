@@ -5,8 +5,9 @@ class ReposController < ApplicationController
 
   def show
     @repo = AutomaticCorrection::Repo.find_by(user: params[:user], name: params[:name])
-    @presenter = RepoHistoryPresenter.new(@repo)
     @forks = current_user.teacher? ? @repo.forks : @repo.forks.where(author: current_user)
+
+    @graph = @repo.parent ? RepoHistoryPresenter.new(@repo) : RepoHistoriesPresenter.new(@repo)
   end
 
   def new

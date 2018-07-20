@@ -59,6 +59,10 @@
     <% end %>
   </div>
 
+  <% if policy(AutomaticCorrection::Repo).manage? %>
+    <div id="graph"></div>
+  <% end %>
+
   <% unless @forks.empty? %>
     <section class="forks">
     <table class="table table-striped">
@@ -117,26 +121,39 @@
               $(this).attr('title', moment($(this).data('time')).format('LLLL'));
           });
 
-          <% if @repo.parent && @presenter.can_graph? %>
+          <% if @repo.parent && !@graph.empty? %>
             var chart = c3.generate({
                 bindto: '#graph',
                 data: {
                     columns: [
-                        <% @presenter.summary.each do |series, values| %>
+                        <% @graph.summary.each do |series, values| %>
                           ['<%= series %>', <%= values.join(", ") %>],
                         <% end %>
                     ],
                     types: {
-                        <% @presenter.summary.keys.each do |series| %>
+                        <% @graph.summary.keys.each do |series| %>
                           <%= series %>: 'area',
                         <% end %>
                     },
-                    groups: [<%= raw @presenter.summary.keys.flatten %>],
+                    groups: [<%= raw @graph.summary.keys.flatten %>],
                     order: function (t1, t2) {
                       return t1 < t2;
                     }
                 }
             });
+          <% end %>
+
+          <% if policy(AutomaticCorrection::Repo).manage? && !@repo.parent && !@graph.empty? %>
+                var chart = c3.generate({
+                    bindto: '#graph',
+                    data: {
+                        columns: [
+                            <% @graph.summaries.each do |series, values| %>
+                            ['<%= series %>', <%= values.join(", ") %>],
+                            <% end %>
+                        ]
+                    }
+                });
           <% end %>
       })
   </script>

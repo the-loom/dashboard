@@ -3,8 +3,6 @@ class RepoHistoryPresenter
   attr_reader :summary
 
   def initialize(repo)
-    @repo = repo
-
     @test_runs = repo.test_runs.order(updated_at: :asc)
     return if @test_runs.empty?
 
@@ -18,7 +16,7 @@ class RepoHistoryPresenter
     end
   end
 
-  def can_graph?
-    !@test_runs.empty?
+  def empty?
+    @test_runs.empty?
   end
 end
