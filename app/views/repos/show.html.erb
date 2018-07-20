@@ -139,6 +139,17 @@
                     order: function (t1, t2) {
                       return t1 < t2;
                     }
+                },
+                axis: {
+                    x: {
+                        label: 'Entrega',
+                        tick: {
+                            format: x => x + 1
+                        }
+                    },
+                    y: {
+                        label: 'Puntaje'
+                    }
                 }
             });
           <% end %>
@@ -152,6 +163,17 @@
                             ['<%= series %>', <%= values.join(", ") %>],
                             <% end %>
                         ]
+                    },
+                    axis: {
+                        x: {
+                            label: 'Entrega',
+                            tick: {
+                                format: x => x + 1
+                            }
+                        },
+                        y: {
+                            label: 'Puntaje'
+                        }
                     }
                 });
           <% end %>
