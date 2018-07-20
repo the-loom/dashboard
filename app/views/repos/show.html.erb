@@ -1,87 +1,45 @@
 <%= render partial: 'header', locals: {repo: @repo} %>
 
+<%= content_for :head do %>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.5/c3.min.css" rel="stylesheet">
+<% end %>
+
 <% if @repo.parent %>
 
   <section class="results">
-    <h2>
+    <h3>
       Resultados de la última entrega: <span class="badge score pull-right"><%= @repo.latest_test_run.score %></span>
-    </h2>
+    </h3>
 
-    <% if @repo.latest_test_run.details %>
-      <pre>
-        <%= @repo.latest_test_run.details %>
-      </pre>
-    <% end %>
 
-    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-      <% @repo.latest_test_run.results.each do |result| %>
-        <div class="panel panel-default">
-          <div class="panel-heading" role="tab" id="heading<%= result.test_type.capitalize %>">
-            <h4 class="panel-title">
-              <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= result.test_type.capitalize %>" aria-expanded="true" aria-controls="collapseOne">
-                <div class="progress tiny pull-right">
-                  <div class="progress-bar progress-bar" role="progressbar" aria-valuenow="<%= result.score %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= result.score * 10 %>%">
-                  </div>
-                </div>
-                Resultados para <%= result.test_type.capitalize %>
-                <span class="small">(<%= result.issues.count %> incidencias)</span>
-              </a>
-            </h4>
-          </div>
-          <div id="collapse<%= result.test_type.capitalize %>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading<%= result.test_type.capitalize %>">
-            <div class="panel-body">
+    <h3>
+      Entregas anteriores
+    </h3>
 
-              <% unless result.issues.empty? %>
+    <div id="graph"></div>
 
-                <table class="table table-hover">
-                <thead>
-                <tr>
-                  <th>Mensaje</th>
-                  <th>Detalles</th>
-                </tr>
-                </thead>
-                <tbody>
-                <% result.issues.each do |issue| %>
-                  <tr>
-                    <td>
-                      <span class="label label-warning"><%= issue.issue_type %></span>
-                      <%= issue.message %>
-                    </td>
-                    <td>
-                      <pre><%= issue.details %></pre>
-
-                      <% if issue.payload %>
-                        <div class="bs-callout bs-callout-info">
-                          <h4>Información adicional</h4>
-                          <dl class="dl-horizontal">
-                            <% issue.payload.each do |key, value| %>
-                              <dt><%= t key %>:</dt>
-                              <dd><%= value %></dd>
-                            <% end %>
-                          </dl>
-                        </div>
-                      <% end %>
-                    </td>
-                  </tr>
-                <% end %>
-                </tbody>
-              </table>
-
-              <% else %>
-
-                <div class="alert alert-info">
-                  <p>No hay incidencias registradas.</p>
-                </div>
-
+    <table class="table table-stripped">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Resultado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @repo.test_runs.order(updated_at: :desc).each do |test_run| %>
+          <tr>
+            <td>
+              <%= link_to test_run_path(test_run.id) do %>
+                <%= test_run.created_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M") %>
               <% end %>
-
-            </div>
-          </div>
-        </div>
-      <% end %>
-    </div>
-
-  </section>
+            </td>
+            <td>
+              <%= test_run.score %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
 
 <% else %>
 
@@ -100,6 +58,10 @@
       <p><strong>Nota:</strong> si tu dirección de correo electrónico es diferente a la de tu cuenta actual, deberás avisarle a tus instructores para que mezclen manualmente tus identidades.</p>
     <% end %>
   </div>
+
+  <% if policy(AutomaticCorrection::Repo).manage? %>
+    <div id="graph"></div>
+  <% end %>
 
   <% unless @forks.empty? %>
     <section class="forks">
@@ -147,15 +109,74 @@
 
 <% end %>
 
-
 <% content_for :javascript do %>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.5/c3.min.js"></script>
+
   <script type="text/javascript" charset="utf-8">
       $(function () {
           $(".time-ago").each(function () {
               $(this).text(moment($(this).data('time')).fromNow());
               $(this).attr('title', moment($(this).data('time')).format('LLLL'));
           });
+
+          <% if @repo.parent && !@graph.empty? %>
+            var chart = c3.generate({
+                bindto: '#graph',
+                data: {
+                    columns: [
+                        <% @graph.summary.each do |series, values| %>
+                          ['<%= series %>', <%= values.join(", ") %>],
+                        <% end %>
+                    ],
+                    types: {
+                        <% @graph.summary.keys.each do |series| %>
+                          <%= series %>: 'area',
+                        <% end %>
+                    },
+                    groups: [<%= raw @graph.summary.keys.flatten %>],
+                    order: function (t1, t2) {
+                      return t1 < t2;
+                    }
+                },
+                axis: {
+                    x: {
+                        label: 'Entrega',
+                        tick: {
+                            format: x => x + 1
+                        }
+                    },
+                    y: {
+                        label: 'Puntaje'
+                    }
+                }
+            });
+          <% end %>
+
+          <% if policy(AutomaticCorrection::Repo).manage? && !@repo.parent && !@graph.empty? %>
+                var chart = c3.generate({
+                    bindto: '#graph',
+                    data: {
+                        columns: [
+                            <% @graph.summaries.each do |series, values| %>
+                            ['<%= series %>', <%= values.join(", ") %>],
+                            <% end %>
+                        ]
+                    },
+                    axis: {
+                        x: {
+                            label: 'Entrega',
+                            tick: {
+                                format: x => x + 1
+                            }
+                        },
+                        y: {
+                            label: 'Puntaje'
+                        }
+                    }
+                });
+          <% end %>
       })
   </script>
 <% end %>
-
