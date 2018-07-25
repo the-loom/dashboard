@@ -1,0 +1,18 @@
+<h1>Desafío de revisión por pares: <%= @challenge.title %></h1>
+
+<blockquote>
+  <%= @challenge.instructions %>
+</blockquote>
+
+<%= form_for @solution, url: peer_review_challenge_solution_path(peer_review_id: @challenge.id, id: @solution.id) do |f| %>
+
+  <div class="form-group">
+    <%= f.label :wording, 'Desarrollo', class: 'control-label' %>
+    <%= f.text_area :wording, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit "Guardar borrador", class: "btn btn-primary" %>
+  </div>
+
+<% end %>

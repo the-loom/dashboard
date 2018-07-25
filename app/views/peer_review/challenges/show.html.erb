@@ -1,0 +1,7 @@
+<h1><%= @challenge.title %></h1>
+
+<blockquote>
+  <%= @challenge.instructions %>
+</blockquote>
+
+<%= link_to "Resolver", new_peer_review_challenge_solution_path(@challenge.id) %>
