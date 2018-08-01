@@ -47,7 +47,6 @@ module Api
           # el caso que contemplo en el que puede no haber resultados, es si no pudo corregir x error de compilacion
           if params[:test_run][:results]
             params[:test_run][:results].each do |result|
-
               res = AutomaticCorrection::Result.create(
                 test_type: result[:type],
                 score: result[:score]
@@ -58,7 +57,6 @@ module Api
                 iss = AutomaticCorrection::Issue.create(issue_params(issue))
                 res.issues << iss
               end
-
             end
           end
 

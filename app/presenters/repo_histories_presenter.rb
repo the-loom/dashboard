@@ -1,5 +1,4 @@
 class RepoHistoriesPresenter
-
   attr_reader :summaries
 
   def initialize(repo)

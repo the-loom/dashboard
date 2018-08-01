@@ -8,7 +8,6 @@ RSpec.describe Team, type: :model do
   }
 
   it {
-
     module CourseLock
       def verify_current_course; end
     end
@@ -19,5 +18,4 @@ RSpec.describe Team, type: :model do
     should validate_uniqueness_of(:nickname)
                .scoped_to(:course_id)
   }
-
 end

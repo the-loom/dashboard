@@ -12,7 +12,7 @@ class CreatePeerReviews < ActiveRecord::Migration[5.2]
 
     create_table :peer_review_solutions do |t|
       t.string :wording
-      t.integer :status
+      t.integer :status, default: 0
 
       t.integer :peer_review_challenge_id
       t.integer :author_id
@@ -21,7 +21,7 @@ class CreatePeerReviews < ActiveRecord::Migration[5.2]
 
     create_table :peer_review_reviews do |t|
       t.string :wording
-      t.integer :status
+      t.integer :status, default: 0
 
       t.integer :peer_review_solution_id
       t.integer :reviewer_id

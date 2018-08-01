@@ -1,6 +1,5 @@
 module PeerReview
   class ChallengesController < ApplicationController
-
     def index
       authorize PeerReview::Challenge, :index?
       @challenges = PeerReview::Challenge.all
@@ -17,8 +16,8 @@ module PeerReview
 
       if @challenge.valid?
         @challenge.save
-        redirect_to peer_reviews_path
-        flash[:notice] = "Se creó correctamente el desafío"
+        redirect_to peer_review_challenges_path
+        flash[:info] = "Se creó correctamente el desafío"
       else
         render action: :new
       end
@@ -31,9 +30,8 @@ module PeerReview
 
     private
 
-    def challenge_params
-      params[:peer_review_challenge].permit(:title, :instructions, :reviewer_instructions, :difficulty)
-    end
-
+      def challenge_params
+        params[:peer_review_challenge].permit(:title, :instructions, :reviewer_instructions, :difficulty)
+      end
   end
 end

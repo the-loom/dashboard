@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe Event, type: :model do
-
   it {
     should validate_presence_of(:name)
     should validate_presence_of(:description)
@@ -10,7 +9,6 @@ RSpec.describe Event, type: :model do
   }
 
   it {
-
     module CourseLock
       def verify_current_course; end
     end

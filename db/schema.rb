@@ -172,7 +172,7 @@ ActiveRecord::Schema.define(version: 2018_07_23_171239) do
 
   create_table "peer_review_reviews", force: :cascade do |t|
     t.string "wording"
-    t.integer "status"
+    t.integer "status", default: 0
     t.integer "peer_review_solution_id"
     t.integer "reviewer_id"
     t.datetime "created_at", null: false
@@ -181,7 +181,7 @@ ActiveRecord::Schema.define(version: 2018_07_23_171239) do
 
   create_table "peer_review_solutions", force: :cascade do |t|
     t.string "wording"
-    t.integer "status"
+    t.integer "status", default: 0
     t.integer "peer_review_challenge_id"
     t.integer "author_id"
     t.datetime "created_at", null: false

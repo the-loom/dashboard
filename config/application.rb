@@ -24,6 +24,7 @@ module LoomDashboard
     config.assets.paths << Rails.root.join("vendor", "assets", "components")
     config.after_initialize do |app|
       app.config.paths.add "app/presenters", eager_load: true
+      app.config.paths.add "app/services", eager_load: true
     end
   end
 end

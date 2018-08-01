@@ -5,6 +5,9 @@ class PeerReview::ChallengePolicy < ApplicationPolicy
   def solve?
     user.teacher? || user.student?
   end
+  def review?
+    user.teacher? || user.student?
+  end
   def manage?
     user.teacher?
   end

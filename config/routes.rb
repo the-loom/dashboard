@@ -90,7 +90,7 @@ Rails.application.routes.draw do
   namespace :peer_review do
     resources :challenges, only: [:index, :new, :create, :show] do
       resources :solutions, only: [:new, :update]
+      resources :reviews, only: [:new, :update]
     end
   end
-
 end

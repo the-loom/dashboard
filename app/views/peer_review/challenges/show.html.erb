@@ -1,7 +1,55 @@
 <h1><%= @challenge.title %></h1>
 
+<h2>Consigna</h2>
+
 <blockquote>
   <%= @challenge.instructions %>
 </blockquote>
 
-<%= link_to "Resolver", new_peer_review_challenge_solution_path(@challenge.id) %>
+<% if @challenge.already_solved_by? current_user %>
+
+  <h2>Tu solución (<%= @challenge.solution_by(current_user).status %>)</h2>
+
+  <blockquote>
+    <%= @challenge.solution_by(current_user).wording %>
+  </blockquote>
+
+  <h3>Revisiones recibidas</h3>
+
+  <% @challenge.solution_by(current_user).reviews.each_with_index do |review, index| %>
+
+    <h4>Revisión <%= index + 1 %> (<%= review.status %>)</h4>
+
+    <blockquote>
+      <%= review.wording %>
+    </blockquote>
+
+  <% end %>
+
+  <hr/>
+
+  <h2>Tus revisiones</h2>
+
+  <% @challenge.reviews.where(reviewer: current_user).each_with_index do |review, index| %>
+
+    <h3>Revisión <%= index + 1 %> (<%= review.status %>)</h3>
+
+    <h3>Solución revisada</h3>
+    <blockquote>
+      <%= review.solution.wording %>
+    </blockquote>
+
+    <h3>Tu revisión</h3>
+    <blockquote>
+      <%= review.wording %>
+    </blockquote>
+
+  <% end %>
+
+<% end %>
+
+<% if @challenge.solution_by(current_user) && @challenge.solution_by(current_user).final? %>
+  <%= link_to "Revisar alguna solución", new_peer_review_challenge_review_path(@challenge.id) %>
+<% else %>
+  <%= link_to "Resolver", new_peer_review_challenge_solution_path(@challenge.id) %>
+<% end %>

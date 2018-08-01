@@ -14,7 +14,7 @@ class ExercisesController < ApplicationController
     authorize Exercise, :create?
     @exercise = Exercise.new(exercise_params)
     if @exercise.save
-      flash[:notice] = "Se creo correctamente el ejercicio"
+      flash[:info] = "Se creo correctamente el ejercicio"
     end
     redirect_to exercises_path
   end

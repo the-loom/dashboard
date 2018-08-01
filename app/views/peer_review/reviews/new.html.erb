@@ -4,7 +4,13 @@
   <%= @challenge.instructions %>
 </blockquote>
 
-<%= form_for @solution, url: peer_review_challenge_solution_path(peer_review_id: @challenge.id, id: @solution.id) do |f| %>
+Solucion a revisar
+
+<blockquote>
+  <%= @review.solution.wording %>
+</blockquote>
+
+<%= form_for @review, url: peer_review_challenge_review_path(peer_review_id: @challenge.id, id: @review.id) do |f| %>
 
   <div class="form-group">
     <%= f.label :wording, 'Desarrollo', class: 'control-label' %>
@@ -12,7 +18,7 @@
   </div>
 
   <div class="form-group">
-    <% if @solution.draft? %>
+    <% if @review.draft? %>
       <%= f.button 'Guardar borrador', name: :status, value: :draft, class: "btn btn-primary" %>
       <%= f.button 'Publicar', name: :status, value: :final, class: "btn btn-success" %>
     <% end %>

@@ -11,5 +11,4 @@ RSpec.configure do |config|
   config.before(:example) {
     Course.current = Course.new(name: "STEM I")
   }
-
 end
