@@ -23,7 +23,7 @@ gem "dotenv-rails", "2.5.0", groups: [:development, :test]
 gem "omniauth-github", "1.3.0"
 gem "omniauth-google-oauth2", "0.5.3"
 
-gem "ffaker", "2.9.0"
+gem "ffaker", "2.10.0"
 
 group :development do
   gem "rack-mini-profiler"
