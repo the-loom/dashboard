@@ -26,6 +26,7 @@ module PeerReview
     def show
       authorize PeerReview::Challenge, :index?
       @challenge = PeerReview::Challenge.find(params[:id])
+      @solution = @challenge.solution_by(current_user) if @challenge.already_solved_by? current_user
     end
 
     private

@@ -1,3 +1,13 @@
+<% unless @challenge.reviews.where(reviewer: current_user, status: :draft).empty? %>
+
+<div class="alert alert-danger">
+  <p>
+    <strong>¡Cuidado!</strong> Tenés una revisión no publicada. Tomate tu tiempo, pero publicala para que otro participantes puedan verla.
+  </p>
+</div>
+
+<% end %>
+
 <h1><%= @challenge.title %></h1>
 
 <h2>Consigna</h2>
@@ -6,50 +16,104 @@
   <%= @challenge.instructions %>
 </blockquote>
 
-<% if @challenge.already_solved_by? current_user %>
+<p>
+  <%= link_to 'Resolver', new_peer_review_challenge_solution_path(@challenge.id), class: 'btn btn-large btn-primary', disabled: @solution && @solution.final? %>
+  <%= link_to 'Revisar alguna solución', new_peer_review_challenge_review_path(@challenge.id), class: 'btn btn-large btn-primary', disabled: !(@solution && @solution.final?) %>
+</p>
 
-  <h2>Tu solución (<%= @challenge.solution_by(current_user).status %>)</h2>
+<% unless @solution.present? %>
+
+  <div class="alert alert-info">
+    <p>Aún no resolviste este desafío.</p>
+  </div>
+
+<% else %>
+
+  <h2>Mi solución (<%= @solution.status %>)</h2>
 
   <blockquote>
-    <%= @challenge.solution_by(current_user).wording %>
+    <%= @solution.wording %>
   </blockquote>
 
-  <h3>Revisiones recibidas</h3>
+  <% if @solution.draft? %>
 
-  <% @challenge.solution_by(current_user).reviews.each_with_index do |review, index| %>
+    <div class="alert alert-info">
+      <p>
+        Cuando consideres que tu solución está presentable... ¡publicala! Así podrás recibir revisiones, y revisar las soluciones de otros participantes.
+      </p>
+    </div>
 
-    <h4>Revisión <%= index + 1 %> (<%= review.status %>)</h4>
+  <% else %>
 
-    <blockquote>
-      <%= review.wording %>
-    </blockquote>
+    <h2>Revisiones Recibidas</h2>
+
+    <% if @solution.reviews.empty? %>
+
+      <div class="alert alert-info">
+        <p>Tu solución aún no ha recibido revisiones.</p>
+      </div>
+
+    <% else %>
+
+      <ul class="nav nav-tabs" id="myTabs" role="tablist">
+        <% @solution.reviews.where(status: :final).each_with_index do |review, index| %>
+          <li role="presentation" class="<%= 'active' if index == 0 %>">
+            <a href="#<%= "review_#{index}" %>" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
+              <%= "Revisión ##{index + 1}" %>
+            </a>
+          </li>
+        <% end %>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <% @solution.reviews.where(status: :final).each_with_index do |review, index| %>
+          <div class="tab-pane fade <%= 'active in' if index == 0 %>" role="tabpanel" id="<%= "review_#{index}" %>" aria-labelledby="home-tab">
+            <blockquote>
+              <%= review.wording %>
+            </blockquote>
+          </div>
+        <% end %>
+      </div>
+
+    <% end %>
+
+    <h2>Revisiones Realizadas</h2>
+
+
+    <% if @challenge.reviews.where(reviewer: current_user).empty? %>
+
+      <div class="alert alert-info">
+        <p>No realizaste revisiones aún.</p>
+      </div>
+
+    <% else %>
+
+      <ul class="nav nav-tabs" id="myTabs2" role="tablist">
+        <% @challenge.reviews.where(reviewer: current_user).each_with_index do |review, index| %>
+          <li role="presentation" class="<%= 'active' if index == 0 %>">
+            <a href="#<%= "rreview_#{index}" %>" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
+              <%= "Revisión ##{index + 1}" %>
+            </a>
+          </li>
+        <% end %>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <% @challenge.reviews.where(reviewer: current_user).each_with_index do |review, index| %>
+          <div class="tab-pane fade <%= 'active in' if index == 0 %>" role="tabpanel" id="<%= "rreview_#{index}" %>" aria-labelledby="home-tab">
+            <h4>Solución revisada</h4>
+            <blockquote>
+              <%= review.solution.wording %>
+            </blockquote>
+
+            <h4>Mi revisión</h4>
+            <blockquote>
+              <%= review.wording %>
+            </blockquote>
+          </div>
+        <% end %>
+      </div>
+
+    <% end %>
 
   <% end %>
 
-  <hr/>
-
-  <h2>Tus revisiones</h2>
-
-  <% @challenge.reviews.where(reviewer: current_user).each_with_index do |review, index| %>
-
-    <h3>Revisión <%= index + 1 %> (<%= review.status %>)</h3>
-
-    <h3>Solución revisada</h3>
-    <blockquote>
-      <%= review.solution.wording %>
-    </blockquote>
-
-    <h3>Tu revisión</h3>
-    <blockquote>
-      <%= review.wording %>
-    </blockquote>
-
-  <% end %>
-
-<% end %>
-
-<% if @challenge.solution_by(current_user) && @challenge.solution_by(current_user).final? %>
-  <%= link_to "Revisar alguna solución", new_peer_review_challenge_review_path(@challenge.id) %>
-<% else %>
-  <%= link_to "Resolver", new_peer_review_challenge_solution_path(@challenge.id) %>
 <% end %>

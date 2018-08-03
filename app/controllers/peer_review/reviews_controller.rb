@@ -8,7 +8,7 @@ module PeerReview
 
       if @review.nil?
         redirect_to peer_review_challenge_path(@challenge)
-        flash[:info] = "No se puede revisar ninguna tarea"
+        flash[:info] = "No se puede revisar ninguna solución"
       end
     end
 
