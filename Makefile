@@ -12,6 +12,9 @@ down:
 just_db:
 	docker-compose up -d db
 
+rubocop:
+	docker-compose run app rubocop -a
+
 logs:
 	docker-compose logs -tf
 

@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe AutomaticCorrection::Repo, type: :model do
-
   def enable_log
     ActiveRecord::Base.logger = Logger.new(STDOUT) if defined?(ActiveRecord::Base)
   end
@@ -22,7 +21,6 @@ RSpec.describe AutomaticCorrection::Repo, type: :model do
   }
 
   it {
-
     module CourseLock
       def verify_current_course; end
     end
@@ -31,14 +29,12 @@ RSpec.describe AutomaticCorrection::Repo, type: :model do
   }
 
   it ".full_name" do
-
     repo = AutomaticCorrection::Repo.new(user: "loom", name: "loom", git_url: "url", description: "Description", difficulty: 5, course: Course.current)
 
     expect(repo.full_name).to eq("loom/loom")
   end
 
   it ".latest_test_run" do
-
     repo = AutomaticCorrection::Repo.create(user: "loom", name: "loom", git_url: "url", description: "Description", difficulty: 5, course: Course.current)
     now = Time.new
     first_test_run = AutomaticCorrection::TestRun.create(created_at: now, score: 5, course: Course.current)
@@ -55,5 +51,4 @@ RSpec.describe AutomaticCorrection::Repo, type: :model do
 
     expect(repo.url).to eq("https://www.github.com/loom/repo")
   end
-
 end

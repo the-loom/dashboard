@@ -22,12 +22,12 @@ class LecturesController < ApplicationController
     authorize Lecture, :create?
     @lecture = Lecture.new(lecture_params)
     if @lecture.save
-      flash[:notice] = "Se creo correctamente la clase"
+      flash[:info] = "Se creo correctamente la clase"
     end
     redirect_to lectures_path
   end
 
-  #TODO(delucas): be very careful here... needs to be by course
+  # TODO(delucas): be very careful here... needs to be by course
   def quick_register
     authorize Lecture
     lecture = Lecture.find(params[:id])
@@ -45,7 +45,7 @@ class LecturesController < ApplicationController
       student.register_attendance(lecture, :absent)
     end
 
-    flash[:notice] = "Se registró la asistencia correctamente"
+    flash[:info] = "Se registró la asistencia correctamente"
     redirect_to lectures_path
   end
 
@@ -59,7 +59,7 @@ class LecturesController < ApplicationController
       student.register_attendance(lecture, condition.to_i == 1 ? :present : :absent)
     end
 
-    flash[:notice] = "Se registró la asistencia correctamente"
+    flash[:info] = "Se registró la asistencia correctamente"
     redirect_to lectures_path
   end
 

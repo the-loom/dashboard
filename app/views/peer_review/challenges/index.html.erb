@@ -1,0 +1,44 @@
+<legend>
+  Listado de desafíos
+  <% if policy(PeerReview::Challenge).manage? %>
+    <%= link_to 'Nuevo desafio', new_peer_review_challenge_path, class: 'btn btn-primary pull-right' %>
+  <% end %>
+</legend>
+
+<section class="forks">
+
+  <% if @challenges.empty? %>
+
+    <div class="alert alert-info">
+      <p>Aún no hay ningún desafío</p>
+    </div>
+
+  <% else %>
+
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Título</th>
+        <th>Dificultad</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @challenges.each do |challenge| %>
+        <tr class="fork">
+          <td>
+            <%= link_to challenge.title, peer_review_challenge_path(challenge) %>
+          </td>
+          <td>
+            <% challenge.difficulty.times do %>
+              <i class="fa fa-star" aria-hidden="true"></i>
+            <% end %>
+            <% (5 - challenge.difficulty).times do %>
+              <i class="fa fa-star-o" aria-hidden="true"></i>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</section>

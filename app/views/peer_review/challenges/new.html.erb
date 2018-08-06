@@ -1,0 +1,42 @@
+<legend>Nuevo desafío</legend>
+
+<%= form_for @challenge, url: peer_review_challenges_path do |f| %>
+
+  <%= render :partial => 'shared/errors', locals: { f: f } %>
+
+  <div class="form-group">
+    <%= f.label :title, 'Título', class: 'control-label' %>
+    <%= f.text_field :title, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :difficulty, 'Dificultad', class: 'control-label' %>
+    <%= f.number_field :difficulty, class: 'form-control', min: 1, max: 5 %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :instructions, 'Instrucciones', class: 'control-label' %>
+    <%= f.text_field :instructions, hidden: true %>
+    <trix-editor input="peer_review_challenge_instructions"></trix-editor>
+
+  </div>
+
+  <div class="form-group">
+    <%= f.label :reviewer_instructions, 'Instrucciones para el revisor', class: 'control-label' %>
+    <%= f.text_area :reviewer_instructions, hidden: true %>
+    <trix-editor input="peer_review_challenge_reviewer_instructions"></trix-editor>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit "Crear desafío", class: "btn btn-primary" %>
+  </div>
+
+<% end %>
+
+<% content_for :head do %>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.0/trix.css" rel="stylesheet">
+<% end %>
+
+<% content_for :javascript do %>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.0/trix.js" type="application/javascript"></script>
+<% end %>

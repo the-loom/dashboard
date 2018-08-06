@@ -31,7 +31,7 @@ class EventsController < ApplicationController
     if @event.valid?
       @event.save
       redirect_to events_list_url
-      flash[:notice] = "Se creo correctamente el evento"
+      flash[:info] = "Se creo correctamente el evento"
     else
       render action: :new
     end

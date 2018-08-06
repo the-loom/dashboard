@@ -7,7 +7,6 @@ RSpec.describe Lecture, type: :model do
   }
 
   it {
-
     module CourseLock
       def verify_current_course; end
     end

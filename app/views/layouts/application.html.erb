@@ -61,7 +61,12 @@
             <li>
               <%= link_to "Desafíos", repos_path %>
             </li>
-            <% end %>
+          <% end %>
+          <% if policy(PeerReview::Challenge).index? %>
+            <li>
+              <%= link_to "Desafíos de Revisión", peer_review_challenges_path %>
+            </li>
+          <% end %>
           <% if policy(Exercise).index? %>
             <li>
               <%= link_to "Ejercicios", exercises_path %>

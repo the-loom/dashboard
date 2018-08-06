@@ -31,7 +31,7 @@ class BadgesController < ApplicationController
     if @badge.valid?
       @badge.save
       redirect_to badges_list_url
-      flash[:notice] = "Se creo correctamente el emblema"
+      flash[:info] = "Se creo correctamente el emblema"
     else
       render action: :new
     end

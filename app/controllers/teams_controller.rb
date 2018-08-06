@@ -21,7 +21,7 @@ class TeamsController < ApplicationController
     if @team.valid?
       @team.save
       redirect_to team_profile_path(@team.nickname)
-      flash[:notice] = "Se creo correctamente el equipo"
+      flash[:info] = "Se creo correctamente el equipo"
     else
       render action: :new
     end
