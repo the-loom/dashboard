@@ -1,8 +1,8 @@
 module PeerReview
   class ReviewsController < ApplicationController
     def new
-      authorize PeerReview::Challenge, :review?
       @challenge = PeerReview::Challenge.find(params[:challenge_id])
+      authorize @challenge, :review?
 
       @review = ::ReviewableSolutionFinder.new(@challenge, current_user).find_review
 
@@ -13,8 +13,8 @@ module PeerReview
     end
 
     def update
-      authorize PeerReview::Challenge, :review? # TODO: probar que es la tarea que estaba revisando
       @challenge = PeerReview::Challenge.find(params[:challenge_id])
+      authorize @challenge, :review?
       @review = PeerReview::Review.find(params[:id])
       @review.publish! if publishing?
       @review.update_attributes(solution_params)

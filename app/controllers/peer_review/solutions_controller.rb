@@ -1,15 +1,15 @@
 module PeerReview
   class SolutionsController < ApplicationController
     def new
-      authorize PeerReview::Challenge, :solve?
       @challenge = PeerReview::Challenge.find(params[:challenge_id])
       @solution = PeerReview::Solution.find_or_create_by(challenge: @challenge, author: current_user)
+      authorize @solution, :solve?
     end
 
     def update
-      authorize PeerReview::Challenge, :solve?
       @challenge = PeerReview::Challenge.find(params[:challenge_id])
       @solution = PeerReview::Solution.find_by(challenge: @challenge, author: current_user)
+      authorize @solution, :solve?
       @solution.publish! if publishing?
       @solution.update_attributes(solution_params)
 

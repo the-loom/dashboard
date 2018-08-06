@@ -1,14 +1,17 @@
 <h1>Desafío de revisión por pares: <%= @challenge.title %></h1>
 
-<blockquote>
-  <%= @challenge.instructions %>
-</blockquote>
+<div class="trix-content">
+  <%= raw @challenge.instructions %>
+</div>
+
+<hr/>
 
 <%= form_for @solution, url: peer_review_challenge_solution_path(peer_review_id: @challenge.id, id: @solution.id) do |f| %>
 
   <div class="form-group">
     <%= f.label :wording, 'Desarrollo', class: 'control-label' %>
-    <%= f.text_area :wording, class: 'form-control' %>
+    <%= f.text_area :wording, hidden: true %>
+    <trix-editor input="peer_review_solution_wording"></trix-editor>
   </div>
 
   <div class="form-group">
@@ -18,4 +21,12 @@
     <% end %>
   </div>
 
+<% end %>
+
+<% content_for :head do %>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.0/trix.css" rel="stylesheet">
+<% end %>
+
+<% content_for :javascript do %>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.0/trix.js" type="application/javascript"></script>
 <% end %>

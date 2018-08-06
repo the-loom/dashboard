@@ -2,11 +2,9 @@ class PeerReview::ChallengePolicy < ApplicationPolicy
   def index?
     user.teacher? || user.student?
   end
-  def solve?
-    user.teacher? || user.student?
-  end
   def review?
-    user.teacher? || user.student?
+    solution = record.solution_by user
+    (user.teacher? || user.student?) && solution.present? && solution.final?
   end
   def manage?
     user.teacher?
