@@ -2,37 +2,37 @@ require "ffaker"
 require "roman"
 
 delucas = User.create(
-  name: "Lucas Videla",
-  nickname: "delucas",
-  email: "lucas@wecode.io",
-  image: "https://avatars1.githubusercontent.com/u/684051?v=4",
-  enabled: true,
-  locked: true,
-  uuid: "0"
+    name: "Lucas Videla",
+    nickname: "delucas",
+    email: "lucas@wecode.io",
+    image: "https://avatars1.githubusercontent.com/u/684051?v=4",
+    enabled: true,
+    locked: true,
+    uuid: "0"
 )
 
 Identity.create(
-  user: delucas,
-  provider: "github",
-  uid: "684051",
-  name: "Lucas Videla",
-  nickname: "delucas",
-  email: "lucas@wecode.io",
-  image: "https://avatars1.githubusercontent.com/u/684051?v=4"
+    user: delucas,
+    provider: "github",
+    uid: "684051",
+    name: "Lucas Videla",
+    nickname: "delucas",
+    email: "lucas@wecode.io",
+    image: "https://avatars1.githubusercontent.com/u/684051?v=4"
 )
 
 # TODO(delucas): organizar esto en grupos
 3.times do |c|
 
   course = Course.create(
-    name: "Programación #{rand(10).roman}"
+      name: "Programación #{c.roman}"
   )
   Course.current = course
 
   Membership.create(
-    course: course,
-    role: :admin,
-    user: delucas
+      course: course,
+      role: :admin,
+      user: delucas
   )
 
   35.times do |i|
@@ -40,115 +40,185 @@ Identity.create(
     nickname = ActiveSupport::Inflector.transliterate(name.downcase.gsub(/\s/, "."))
 
     user = User.create(
-      name: name,
-      nickname: nickname,
-      email: "#{nickname}@yopmail.com",
-      image: FFaker::Avatar.image,
-      enabled: true,
-      locked: true,
-      uuid: ((c + 1) * 100 + (i + 1)).to_s(16).upcase
+        name: name,
+        nickname: nickname,
+        email: "#{nickname}@yopmail.com",
+        image: FFaker::Avatar.image,
+        enabled: true,
+        locked: true,
+        uuid: ((c + 1) * 100 + (i + 1)).to_s(16).upcase
     )
     Membership.create(
-      course: course,
-      role: :student,
-      user: user
+        course: course,
+        role: :student,
+        user: user
     )
     Identity.create(
-      user: user,
-      provider: "github",
-      uid: rand(10**8),
-      name: user.name,
-      nickname: user.nickname,
-      email: user.email,
-      image: user.image
+        user: user,
+        provider: "github",
+        uid: rand(10**8),
+        name: user.name,
+        nickname: user.nickname,
+        email: user.email,
+        image: user.image
     )
   end
 end
 
+course = Course.last
+Course.current = course
+
+challenge = PeerReview::Challenge.create(
+    title: "Comprobar el orden de un arreglo",
+    difficulty: 1,
+    instructions: "<div>Implementá un método que decida si un arreglo dado está o no ordenado:</div>
+<pre>
+public boolean ordenado(int[] arreglo) {
+  // tu código aquí
+}
+</pre>",
+    reviewer_instructions: "<div>Deberás estar atento a:</div>
+<ul>
+<li>Que no se utilicen variables innecesarias</li>
+<li>Que se recorra el arreglo una única vez</li>
+<li>Que no haya más de un punto de retorno</li>
+</ul>
+<div>Recordá dar un feedback completo y abarcativo, incluyendo tu propia opinión</div>"
+)
+
+first_solver = Course.current.users.first
+second_solver = Course.current.users.second
+
+solution1 = PeerReview::Solution.create(
+    author: first_solver,
+    wording: "
+<pre>
+public boolean ordenado(int[] arreglo) {
+  return true;
+}
+</pre>
+",
+    status: :final,
+    challenge: challenge
+)
+
+solution2 = PeerReview::Solution.create(
+    author: second_solver,
+    wording: "
+<pre>
+public boolean ordenado(int[] arreglo) {
+  return false;
+}
+</pre>
+",
+    status: :final,
+    challenge: challenge
+)
+
+PeerReview::Review.create(
+    reviewer: second_solver,
+    solution: solution1,
+    wording: "
+<div>Creo que no está bien retornar una constante... ¡este método no resiste la menor prueba!</div>
+<ul>
+<li>No utiliza variables innecesarias, porque no utiliza ninguna...</li>
+<li>No resuelve el problema</li>
+</ul>
+",
+    status: :final
+)
+
+PeerReview::Review.create(
+    reviewer: first_solver,
+    solution: solution2,
+    wording: "<div>Jeje es mi misma solución, pero yo retorno <pre>true</pre> :P</div>",
+    status: :final
+)
+
 AutomaticCorrection::Repo.create(
-  user: "the-loom",
-  name: "hola-mundo",
-  git_url: "git@github.com:the-loom/hola-mundo.git",
-  avatar_url: "https://avatars.githubusercontent.com/u/5033965?v=3",
-  description: "Proyecto para verificar la configuración inicial y la mecánica de la plataforma",
-  difficulty: 1
+    user: "the-loom",
+    name: "hola-mundo",
+    git_url: "git@github.com:the-loom/hola-mundo.git",
+    avatar_url: "https://avatars.githubusercontent.com/u/5033965?v=3",
+    description: "Proyecto para verificar la configuración inicial y la mecánica de la plataforma",
+    difficulty: 1
 )
 
 pptlS = AutomaticCorrection::Repo.create(
-  user: "the-loom",
-  name: "piedra-papel-tijera-lagarto-Spock",
-  git_url: "git@github.com:tallerweb/piedra-papel-tijera-lagarto-Spock.git",
-  avatar_url: "https://avatars.githubusercontent.com/u/5033965?v=3",
-  description: "Repo description pending",
-  difficulty: 2
+    user: "the-loom",
+    name: "piedra-papel-tijera-lagarto-Spock",
+    git_url: "git@github.com:tallerweb/piedra-papel-tijera-lagarto-Spock.git",
+    avatar_url: "https://avatars.githubusercontent.com/u/5033965?v=3",
+    description: "Repo description pending",
+    difficulty: 2
 )
 
 author = User.first
 pptlS.forks << AutomaticCorrection::Repo.create(
-  author: author,
-  user: author.nickname,
-  name: "piedra-papel-tijera-lagarto-Spock",
-  git_url: "git@github.com:#{author.nickname}/piedra-papel-tijera-lagarto-Spock.git",
-  avatar_url: author.image,
-  pending: true,
-  difficulty: 2,
-  description: "Repo description pending"
+    author: author,
+    user: author.nickname,
+    name: "piedra-papel-tijera-lagarto-Spock",
+    git_url: "git@github.com:#{author.nickname}/piedra-papel-tijera-lagarto-Spock.git",
+    avatar_url: author.image,
+    pending: true,
+    difficulty: 2,
+    description: "Repo description pending"
 )
 
 author = User.last
 pptlS.forks << AutomaticCorrection::Repo.create(
-  author: author,
-  user: author.nickname,
-  name: "piedra-papel-tijera-lagarto-Spock",
-  git_url: "git@github.com:#{author.nickname}/piedra-papel-tijera-lagarto-Spock.git",
-  avatar_url: author.image,
-  pending: false,
-  difficulty: 2,
-  description: "Repo description pending",
-  test_runs: [
-      AutomaticCorrection::TestRun.create(
-        score: 4.83,
-        git_commit_id: "25def259c9cbe610b1f85867d76b05539585ebe4",
-        results: [
-            AutomaticCorrection::Result.create(
-              score: 3.33,
-              test_type: "junit"
-            ),
-            AutomaticCorrection::Result.create(
-              score: 1.5,
-              test_type: "checkstyle"
-            )
-        ]
-      ),
-      AutomaticCorrection::TestRun.create(
-        score: 7.23,
-        git_commit_id: "25def259c9cbe610b1f85867d76b05539585ebe4",
-        results: [
-            AutomaticCorrection::Result.create(
-              score: 5.23,
-              test_type: "junit"
-            ),
-            AutomaticCorrection::Result.create(
-              score: 2,
-              test_type: "checkstyle"
-            )
-        ]
-      ),
-      AutomaticCorrection::TestRun.create(
-        score: 8.33,
-        git_commit_id: "25def259c9cbe610b1f85867d76b05539585ebe4",
-        results: [
-            AutomaticCorrection::Result.create(
-              score: 6.33,
-              test_type: "junit"
-            ),
-            AutomaticCorrection::Result.create(
-              score: 2,
-              test_type: "checkstyle"
-            )
-        ]
-      )
-  ]
+    author: author,
+    user: author.nickname,
+    name: "piedra-papel-tijera-lagarto-Spock",
+    git_url: "git@github.com:#{author.nickname}/piedra-papel-tijera-lagarto-Spock.git",
+    avatar_url: author.image,
+    pending: false,
+    difficulty: 2,
+    description: "Repo description pending",
+    test_runs: [
+        AutomaticCorrection::TestRun.create(
+            score: 4.83,
+            git_commit_id: "25def259c9cbe610b1f85867d76b05539585ebe4",
+            results: [
+                AutomaticCorrection::Result.create(
+                    score: 3.33,
+                    test_type: "junit"
+                ),
+                AutomaticCorrection::Result.create(
+                    score: 1.5,
+                    test_type: "checkstyle"
+                )
+            ]
+        ),
+        AutomaticCorrection::TestRun.create(
+            score: 7.23,
+            git_commit_id: "25def259c9cbe610b1f85867d76b05539585ebe4",
+            results: [
+                AutomaticCorrection::Result.create(
+                    score: 5.23,
+                    test_type: "junit"
+                ),
+                AutomaticCorrection::Result.create(
+                    score: 2,
+                    test_type: "checkstyle"
+                )
+            ]
+        ),
+        AutomaticCorrection::TestRun.create(
+            score: 8.33,
+            git_commit_id: "25def259c9cbe610b1f85867d76b05539585ebe4",
+            results: [
+                AutomaticCorrection::Result.create(
+                    score: 6.33,
+                    test_type: "junit"
+                ),
+                AutomaticCorrection::Result.create(
+                    score: 2,
+                    test_type: "checkstyle"
+                )
+            ]
+        )
+    ]
 )
 
 
