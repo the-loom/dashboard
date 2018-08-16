@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   validates_uniqueness_of :uuid
 
-  has_many :memberships
+  has_many :memberships, -> { enabled }
   has_many :courses, through: :memberships
 
   has_many :identities
@@ -28,6 +28,10 @@ class User < ApplicationRecord
   delegate :level, to: :current_membership
 
   delegate :admin?, to: :current_membership
+
+  def enabled_memberships
+    memberships.joins(:course).where(courses: { enabled: true })
+  end
 
   def has_github_identity?
     identities.exists?(provider: "github")
