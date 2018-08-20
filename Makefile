@@ -12,6 +12,9 @@ down:
 just_db:
 	docker-compose up -d db
 
+rebuild:
+	docker-compose build
+
 rubocop:
 	docker-compose run app rubocop -a
 

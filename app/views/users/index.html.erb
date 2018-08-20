@@ -29,13 +29,12 @@
             <%= check_box_tag "students[ids][]", student.id %>
           </td>
           <td>
-            <%= link_to user_details_url(student.nickname) do %>
-              <img class="avatar<%= ' disabled' unless student.enabled? %>" src="<%= student.image %>">
-            <% end %>
+            <img class="avatar<%= ' disabled' unless student.enabled? %>" src="<%= student.image %>" data-id="<%= student.id %>">
           </td>
           <td>
             <span class="badge"><%= student.level %></span>
-            <%= student.name %> <small>(<%= student.uuid %>)</small>
+            <%= student.name %>
+            <small>(<%= student.uuid %>)</small>
           </td>
           <td><%= student.points %></td>
           <td>
@@ -61,10 +60,27 @@
   </div>
 <% end %>
 
-<script>
-    $(function () {
-        $('input').on('click', function () {
-            $('.controls').toggle($('input:checked').length > 0);
-        });
-    });
-</script>
+<%= content_for :head do %>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+<% end %>
+
+<%= content_for :javascript do %>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="application/javascript"></script>
+
+  <script type="application/javascript">
+      $(function () {
+          $('.avatar').on('click', function () {
+              var userId = $(this).data('id');
+              var checkbox = $('input[value=' + userId + ']');
+              checkbox.prop('checked', !checkbox.prop('checked'));
+          });
+
+          $('.members').DataTable({
+              paging: false,
+              language: {
+                  url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+              }
+          });
+      });
+  </script>
+<% end %>
