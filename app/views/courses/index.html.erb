@@ -2,25 +2,35 @@
   Listado de cursos
 </legend>
 
-<table class="table table-hover">
-  <tbody>
-  <% @courses.each do |course| %>
-    <tr>
-      <td>
-        <%= course.name %>
-      </td>
-      <td>
-        <% if current_user.courses.include?(course) %>
-          <%= link_to switch_course_path(course), class: 'btn btn-primary' do %>
-            Ir al aula virtual
+<% if @courses.empty? %>
+
+  <div class="alert alert-info">
+    <p>Aún no hay cursos abiertos para la inscripción</p>
+  </div>
+
+<% else %>
+
+  <table class="table table-hover">
+    <tbody>
+    <% @courses.each do |course| %>
+      <tr>
+        <td>
+          <%= course.name %>
+        </td>
+        <td>
+          <% if current_user.courses.include?(course) %>
+            <%= link_to switch_course_path(course), class: 'btn btn-primary' do %>
+              Ir al aula virtual
+            <% end %>
+          <% else %>
+            <%= link_to enroll_course_path(course), class: 'btn btn-primary' do %>
+              Inscribirse
+            <% end %>
           <% end %>
-        <% else %>
-          <%= link_to enroll_course_path(course), class: 'btn btn-primary' do %>
-            Inscribirse
-          <% end %>
-        <% end %>
-      </td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+<% end %>

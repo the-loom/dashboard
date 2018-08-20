@@ -18,5 +18,9 @@
       <%= link_to 'Ingresar con GitHub', '/auth/github', class: 'btn btn-lg btn-success' %>
       <%= link_to 'Ingresar con Google', '/auth/google_oauth2', class: 'btn btn-lg btn-success' %>
     </p>
+  <% else %>
+    <p>
+      <%= link_to 'Inscribirse a un curso', courses_path, class: 'btn btn-lg btn-default' %>
+    </p>
   <% end %>
 </div>
