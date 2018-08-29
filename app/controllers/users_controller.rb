@@ -44,10 +44,11 @@ class UsersController < ApplicationController
   end
 
   def disable
-    @user = User.where(nickname: params[:nickname]).first
-    authorize @user, :manage?
-    @user.enabled = !@user.enabled
-    @user.save
+    user = User.where(nickname: params[:nickname]).first
+    authorize user, :manage?
+    current_membership = user.current_membership
+    current_membership.enabled = !current_membership.enabled?
+    current_membership.save
     redirect_to students_path
   end
 

@@ -111,4 +111,9 @@ class User < ApplicationRecord
   def present_at(lecture)
     attendances.where(lecture: lecture, condition: :present).size > 0
   end
+
+  def enabled?
+    current_membership.enabled?
+  end
+
 end
