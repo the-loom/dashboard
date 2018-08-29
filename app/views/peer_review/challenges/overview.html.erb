@@ -1,0 +1,44 @@
+<h1><%= @challenge.title %></h1>
+
+<h2>Consigna</h2>
+
+<div class="trix-content">
+  <%= raw @challenge.instructions %>
+</div>
+
+<hr/>
+
+<table class="table table-hover table-striped">
+  <thead>
+  <tr>
+    <th>Soluciones</th>
+    <th colspan="99">Revisiones</th>
+  </tr>
+  <tr>
+    <th>&nbsp;</th>
+    <% @challenge.reviewers.each do |reviewer| %>
+      <th><%= reviewer.name %></th>
+    <% end %>
+  </tr>
+  </thead>
+  <tbody>
+  <% @challenge.solvers.each do |solver| %>
+    <tr>
+      <td>
+        <%= solver.name %> <br/>
+        <%= link_to "Ver solución", peer_review_challenge_solution_path(@challenge, @challenge.solution_by(solver)) %>
+      </td>
+      <% @challenge.reviewers.each do |reviewer| %>
+        <% review = @challenge.solution_by(solver).review_by(reviewer) %>
+        <td>
+          <% unless review.nil? %>
+            <%= link_to "Ver revisión", peer_review_challenge_review_path(@challenge, @challenge.solution_by(solver).review_by(reviewer)) %>
+          <% else %>
+            &nbsp;
+          <% end %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

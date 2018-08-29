@@ -1,5 +1,12 @@
 module PeerReview
   class ReviewsController < ApplicationController
+    def show
+      @challenge = PeerReview::Challenge.find(params[:challenge_id])
+      @review = PeerReview::Review.find(params[:id])
+      @solution = @review.solution
+      authorize @review, :manage?
+    end
+
     def new
       @challenge = PeerReview::Challenge.find(params[:challenge_id])
       authorize @challenge, :review?

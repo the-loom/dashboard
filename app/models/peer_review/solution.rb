@@ -12,4 +12,9 @@ class PeerReview::Solution < ApplicationRecord
   def publish!
     self.status = :final
   end
+
+  def review_by(reviewer)
+    reviews.where(reviewer: reviewer).first
+  end
+
 end

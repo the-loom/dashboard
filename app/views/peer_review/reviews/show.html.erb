@@ -1,0 +1,27 @@
+<h1><%= @challenge.title %></h1>
+
+<h2>Consigna</h2>
+
+<div class="trix-content">
+  <%= raw @challenge.instructions %>
+</div>
+
+<hr/>
+
+<h2>Solución de <%= @solution.author.name %> (<%= @solution.status %>)</h2>
+
+<div class="well">
+  <div class="trix-content">
+    <%= raw @solution.wording %>
+  </div>
+</div>
+
+<hr/>
+
+<h2>Revisión de <%= @review.reviewer.name %> (<%= @review.status %>)</h2>
+
+<div class="well">
+  <div class="trix-content">
+    <%= raw @review.wording %>
+  </div>
+</div>

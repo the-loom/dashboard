@@ -89,8 +89,11 @@ Rails.application.routes.draw do
 
   namespace :peer_review do
     resources :challenges, only: [:index, :new, :create, :show] do
-      resources :solutions, only: [:new, :update]
-      resources :reviews, only: [:new, :update]
+      member do
+        get :overview
+      end
+      resources :solutions, only: [:new, :update, :show]
+      resources :reviews, only: [:new, :update, :show]
     end
   end
 end

@@ -14,4 +14,13 @@ class PeerReview::Challenge < ApplicationRecord
   def already_solved_by?(user)
     solution_by(user).present?
   end
+
+  def solvers
+    solutions.map(&:author).uniq.sort_by(&:name)
+  end
+
+  def reviewers
+    reviews.map(&:reviewer).uniq.sort_by(&:name)
+  end
+
 end

@@ -1,5 +1,11 @@
 module PeerReview
   class SolutionsController < ApplicationController
+    def show
+      @challenge = PeerReview::Challenge.find(params[:challenge_id])
+      @solution = PeerReview::Solution.find(params[:id])
+      authorize @solution, :manage?
+    end
+
     def new
       @challenge = PeerReview::Challenge.find(params[:challenge_id])
       @solution = PeerReview::Solution.find_or_create_by(challenge: @challenge, author: current_user)

@@ -5,6 +5,11 @@ module PeerReview
       @challenges = PeerReview::Challenge.all
     end
 
+    def overview
+      authorize PeerReview::Challenge, :manage?
+      @challenge = PeerReview::Challenge.find(params[:id])
+    end
+
     def new
       authorize PeerReview::Challenge, :manage?
       @challenge = PeerReview::Challenge.new
