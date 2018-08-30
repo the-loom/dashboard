@@ -10,7 +10,7 @@ class ReviewableSolutionFinder
     return started_reviews.first unless started_reviews.empty?
 
     reviewed_solutions = @challenge.reviews.where(reviewer: @user).map(&:solution)
-    reviewable_solutions = @challenge.solutions.where.not(id: reviewed_solutions.map(&:id), author: @user)
+    reviewable_solutions = @challenge.solutions.where(status: :final).where.not(id: reviewed_solutions.map(&:id), author: @user)
 
     unless reviewable_solutions.empty?
       solution = reviewable_solutions.sample
