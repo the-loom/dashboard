@@ -18,7 +18,8 @@ development:
 
 test:
   <<: *default
-  database: loom_test
+  adapter: sqlite3
+  database: db/loom_test.sqlite3
 
 production:
   <<: *default
