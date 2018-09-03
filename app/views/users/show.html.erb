@@ -13,9 +13,10 @@
         <label title="Experiencia">XP</label>
       </div>
       <div class="col-md-5">
-        <% if @user.team %>
-          <%= link_to team_profile_url(@user.team.nickname) do %>
-            <img class="team avatar" title="<%= @user.team.name %>" src="<%= @user.team.image %>">
+        <% team = @user.current_membership.team %>
+        <% if team.present? %>
+          <%= link_to team_profile_url(team.nickname) do %>
+            <img class="team avatar" title="<%= team.name %>" src="<%= team.image %>">
           <% end %>
         <% end %>
       </div>
