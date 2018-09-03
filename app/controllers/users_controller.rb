@@ -6,6 +6,8 @@ class UsersController < ApplicationController
   def index
     authorize User
     @students = Course.current.memberships.student.collect { |x| x.user }
+
+    @badges = Badge.all
   end
 
   def guests
@@ -73,6 +75,30 @@ class UsersController < ApplicationController
   end
 
   def bulk_edit
+
+    if !params[:students].present? || !params[:students][:ids].present?
+      flash[:info] = "Debes seleccionar al menos a un estudiante para asignar una acción masiva"
+      redirect_to students_url
+      return
+    end
+
+    student_ids = params[:students][:ids].map(&:to_i)
+
+    if params[:bulk_edit][:action].present?
+      #TODO(delucas): decide upon params[:bulk_edit][:action] value
+      students = User.where(id: student_ids)
+      badge = Badge.find(params[:bulk_edit][:auxiliary_id].to_i)
+
+      authorize Badge, :register?
+      if MassiveBadgeAssigner.new(students, badge).execute
+        flash[:info] = "Se asignaron correctamente #{students.size} emblemas del tipo #{badge.name}"
+      end
+      redirect_to students_url
+      return
+    end
+
+    5/0
+
     if params[:mark_as_guest]
       role = :guest
     elsif params[:mark_as_teacher]
@@ -80,7 +106,7 @@ class UsersController < ApplicationController
     elsif params[:mark_as_student]
       role = :student
     end
-    Course.current.memberships.where("user_id IN (?)", params[:students][:ids].map(&:to_i)).update_all(role: role)
+    Course.current.memberships.where("user_id IN (?)", student_ids).update_all(role: role)
     redirect_to students_url
   end
 

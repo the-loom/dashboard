@@ -3,7 +3,7 @@
 </legend>
 <%= form_tag bulk_edit_users_path do %>
 
-  <div class="form-group controls" style="display: none;">
+  <div class="form-group controls">
     <%= submit_tag 'Marcar como invitados', name: 'mark_as_guest', class: 'btn btn-primary' %>
     <%= submit_tag 'Marcar como profesores', name: 'mark_as_teacher', class: 'btn btn-primary' %>
     <%= submit_tag 'Marcar como estudiantes', name: 'mark_as_student', class: 'btn btn-primary' %>
@@ -13,7 +13,7 @@
     <table class="members table table-hover">
       <thead>
       <tr>
-        <th>&nbsp;</th>
+        <th><a class="do-select-all">Todos</a></th>
         <th>Foto</th>
         <th>Nombre</th>
         <th>Enlaces</th>
@@ -50,8 +50,8 @@
 
 <script>
     $(function () {
-        $('input').on('click', function () {
-            $('.controls').toggle($('input:checked').length > 0);
+        $('.do-select-all').on('click', function() {
+            $("input").prop('checked', true);
         });
     });
 </script>

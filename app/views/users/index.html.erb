@@ -1,25 +1,21 @@
-<legend>Miembros de <em>loom</em> -
-  <small><%= @students.size %> miembros</small>
-</legend>
-<%= form_tag bulk_edit_users_path do %>
+<legend>Miembros de <em>loom</em></legend>
 
-  <div class="form-group controls" style="display: none;">
-    <%= submit_tag 'Marcar como invitados', name: 'mark_as_guest', class: 'btn btn-primary' %>
-    <%= submit_tag 'Marcar como profesores', name: 'mark_as_teacher', class: 'btn btn-primary' %>
-    <%= submit_tag 'Marcar como estudiantes', name: 'mark_as_student', class: 'btn btn-primary' %>
-  </div>
+<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#actions">Acciones masivas</button>
+
+<%= form_tag bulk_edit_users_path do %>
 
   <div class="table-responsive">
     <table class="members table table-hover">
       <thead>
       <tr>
-        <th>&nbsp;</th>
-        <th>Foto</th>
+        <th class="no-sort"><a class="clickable do-select-all">Todos</a></th>
+        <th class="no-sort">Foto</th>
         <th>Nombre</th>
+        <th>Nivel</th>
         <th>XP</th>
-        <th>Enlaces</th>
+        <th class="no-sort">Enlaces</th>
         <th>Correo electrónico</th>
-        <th>Acciones</th>
+        <th class="no-sort">Acciones</th>
       </tr>
       </thead>
       <tbody>
@@ -32,9 +28,11 @@
             <img class="avatar<%= ' disabled' unless student.enabled? %>" src="<%= student.image %>" data-id="<%= student.id %>">
           </td>
           <td>
-            <span class="badge"><%= student.level %></span>
             <%= student.name %>
             <small>(<%= student.uuid %>)</small>
+          </td>
+          <td>
+            <span class="badge"><%= student.level %></span>
           </td>
           <td><%= student.points %></td>
           <td>
@@ -58,6 +56,31 @@
       </tbody>
     </table>
   </div>
+
+  <%= hidden_field(:bulk_edit, :action) %>
+  <%= hidden_field(:bulk_edit, :auxiliary_id) %>
+
+  <div class="modal fade" tabindex="-1" role="dialog" id="actions">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Acciones masivas</h4>
+        </div>
+        <div class="modal-body">
+          <% @badges.each do |badge| %>
+            <%= button_tag type: 'button',class: 'btn btn-default do-bulk-edit', data: { action: 'assign_badge', id: badge.id} do %>
+              <%= "Asignar emblema: #{badge.name}" %>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 <% end %>
 
 <%= content_for :head do %>
@@ -69,6 +92,16 @@
 
   <script type="application/javascript">
       $(function () {
+          $('.do-bulk-edit').on('click', function() {
+              var action = $(this).data('action');
+              var auxId = $(this).data('id');
+
+              $('#bulk_edit_action').val(action);
+              $('#bulk_edit_auxiliary_id').val(auxId);
+
+              $('form').submit();
+          });
+
           $('.avatar').on('click', function () {
               var userId = $(this).data('id');
               var checkbox = $('input[value=' + userId + ']');
@@ -76,11 +109,19 @@
           });
 
           $('.members').DataTable({
-              "order": [[ 2, "asc" ]],
+              order: [[ 2, "asc" ]],
               paging: false,
               language: {
                   url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
-              }
+              },
+              columnDefs: [ {
+                  targets: 'no-sort',
+                  orderable: false,
+              } ]
+          });
+
+          $('.do-select-all').on('click', function() {
+              $("input").prop('checked', true);
           });
       });
   </script>
