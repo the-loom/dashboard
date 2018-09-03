@@ -2,6 +2,8 @@ class Membership < ApplicationRecord
   belongs_to :course
   belongs_to :user
 
+  belongs_to :team, optional: true
+
   scope :enabled, -> { joins(:course).where(courses: { enabled: true }) }
 
   enum role: {

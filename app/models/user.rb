@@ -22,8 +22,6 @@ class User < ApplicationRecord
 
   has_many :repos, foreign_key: :author_id, class_name: "AutomaticCorrection::Repo"
 
-  belongs_to :team, optional: true
-
   delegate :points, to: :current_membership
   delegate :level, to: :current_membership
 

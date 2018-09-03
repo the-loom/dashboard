@@ -8,12 +8,11 @@
     <table class="members table table-hover">
       <thead>
       <tr>
-        <th class="no-sort"><a class="clickable do-select-all">Todos</a></th>
+        <th class="no-sort"><a class="clickable do-select-all">All</a></th>
         <th class="no-sort">Foto</th>
+        <th>Equipo</th>
         <th>Nombre</th>
-        <th>Nivel</th>
         <th>XP</th>
-        <th class="no-sort">Enlaces</th>
         <th>Correo electrónico</th>
         <th class="no-sort">Acciones</th>
       </tr>
@@ -28,27 +27,21 @@
             <img class="avatar<%= ' disabled' unless student.enabled? %>" src="<%= student.image %>" data-id="<%= student.id %>">
           </td>
           <td>
-            <%= student.name %>
-            <small>(<%= student.uuid %>)</small>
+            <%= link_to student.current_membership.team.try(:name), team_profile_url(student.current_membership.team.nickname) if student.current_membership.team.present? %>
           </td>
           <td>
-            <span class="badge"><%= student.level %></span>
+            <%= link_to student.name, user_details_url(student.nickname) %>
+            <small>(<%= student.uuid %>)</small><br/>
+            <small><%= student.nickname %></small>
           </td>
           <td><%= student.points %></td>
-          <td>
-            <%= link_to "https://www.github.com/#{student.nickname}", target: '_blank' do %>
-              https://www.github.com/<%= student.nickname %> <i class="fa fa-external-link"></i>
-            <% end %>
-            <br/>
-            <%= link_to student.nickname, user_details_url(student.nickname) %>
-          </td>
           <td><%= mail_to student.email %></td>
           <td>
             <% if policy(student).impersonate? %>
-              <%= link_to 'Personificar', impersonate_user_url(student.nickname), class: 'btn btn-default' %>
+              <%= link_to 'Personificar', impersonate_user_url(student.nickname), class: 'btn btn-default btn-sm' %>
             <% end %>
             <% if policy(student).manage? %>
-              <%= link_to student.enabled? ? 'Deshabilitar' : 'Habilitar', disable_user_url(student.nickname), class: 'btn btn-default' %>
+              <%= link_to student.enabled? ? 'Deshabilitar' : 'Habilitar', disable_user_url(student.nickname), class: 'btn btn-default btn-sm' %>
             <% end %>
           </td>
         </tr>
@@ -109,7 +102,7 @@
           });
 
           $('.members').DataTable({
-              order: [[ 2, "asc" ]],
+              order: [[ 3, "asc" ]],
               paging: false,
               language: {
                   url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"

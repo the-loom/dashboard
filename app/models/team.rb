@@ -5,7 +5,8 @@ class Team < ApplicationRecord
   validates :name, uniqueness: { scope: :course_id }
   validates :nickname, uniqueness: { scope: :course_id }
 
-  has_many :members, class_name: "User"
+  has_many :memberships
+  has_many :members, through: :memberships, source: :user, class_name: "User"
   belongs_to :course
 
   def self.sorted
@@ -13,12 +14,12 @@ class Team < ApplicationRecord
   end
 
   def badges
-    members.select { |m| m.enabled }.collect { |member| member.badges }.flatten
+    members.select { |m| m.enabled? }.collect { |member| member.badges }.flatten
   end
 
   def points
     return 0 if members.empty?
-    enabled_members = members.select { |m| m.enabled }
+    enabled_members = members.select { |m| m.enabled? }
     enabled_members.sum(&:points) / enabled_members.size
   end
 end

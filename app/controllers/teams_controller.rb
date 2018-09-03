@@ -30,8 +30,8 @@ class TeamsController < ApplicationController
   def add_member
     @team = Team.find(params[:team_id])
     authorize @team
-    member = User.where(nickname: params[:nickname])
-    @team.members << member
+    membership = Membership.where(user: User.where(nickname: params[:nickname]))
+    @team.memberships << membership
 
     redirect_to team_profile_url(@team.nickname)
   end
