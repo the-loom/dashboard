@@ -3,7 +3,8 @@ class UserPolicy < ApplicationPolicy
     user.teacher?
   end
   def show?
-    user.teacher? || (record.team && record.team.members.include?(user)) || record == user
+    team = record.current_membership.team
+    user.teacher? || (team && team.members.include?(user)) || record == user
   end
   def index?
     user.teacher?
