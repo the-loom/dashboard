@@ -2,7 +2,13 @@ module PeerReview
   class ChallengesController < ApplicationController
     def index
       authorize PeerReview::Challenge, :index?
-      @challenges = PeerReview::Challenge.all
+
+      #TODO(delucas): pundit?
+      if current_user.teacher?
+        @challenges = PeerReview::Challenge.all
+      else
+        @challenges = PeerReview::Challenge.enabled
+      end
     end
 
     def overview
@@ -29,9 +35,16 @@ module PeerReview
     end
 
     def show
-      authorize PeerReview::Challenge, :index?
       @challenge = PeerReview::Challenge.find(params[:id])
+      authorize @challenge, :show?
       @solution = @challenge.solution_by(current_user) if @challenge.already_solved_by? current_user
+    end
+
+    def toggle
+      authorize PeerReview::Challenge, :manage?
+      challenge = PeerReview::Challenge.find(params[:id])
+      challenge.update_attributes(enabled: !challenge.enabled?)
+      redirect_to peer_review_challenges_path
     end
 
     private

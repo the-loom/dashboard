@@ -91,6 +91,7 @@ Rails.application.routes.draw do
     resources :challenges, only: [:index, :new, :create, :show] do
       member do
         get :overview
+        get :toggle
       end
       resources :solutions, only: [:new, :update, :show]
       resources :reviews, only: [:new, :update, :show]
