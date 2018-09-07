@@ -6,38 +6,28 @@
   <%= raw @challenge.instructions %>
 </div>
 
-<hr/>
-
 <table class="table table-hover table-striped">
   <thead>
   <tr>
-    <th>Soluciones</th>
-    <th colspan="99">Revisiones</th>
-  </tr>
-  <tr>
-    <th>&nbsp;</th>
-    <% @challenge.reviewers.each do |reviewer| %>
-      <th><%= reviewer.name %></th>
-    <% end %>
+    <th>Participantes</th>
+    <th>Fecha de Resolución</th>
+    <th>Revisiones recibidas</th>
+    <th>Revisiones realizadas</th>
   </tr>
   </thead>
   <tbody>
   <% @challenge.solvers.each do |solver| %>
+    <% stats = PeerReviewChallengeSolverStats.new(@challenge, solver) %>
     <tr>
       <td>
-        <%= solver.name %> <br/>
-        <%= link_to "Ver solución", peer_review_challenge_solution_path(@challenge, @challenge.solution_by(solver)) %>
+        <%= stats.solver.name %> <br/>
+        <%= link_to "Ver solución", peer_review_challenge_solution_path(@challenge, stats.solution) %>
       </td>
-      <% @challenge.reviewers.each do |reviewer| %>
-        <% review = @challenge.solution_by(solver).review_by(reviewer) %>
-        <td>
-          <% unless review.nil? %>
-            <%= link_to "Ver revisión", peer_review_challenge_review_path(@challenge, @challenge.solution_by(solver).review_by(reviewer)) %>
-          <% else %>
-            &nbsp;
-          <% end %>
-        </td>
-      <% end %>
+      <td>
+        <%= stats.solution.updated_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M") %>
+      </td>
+      <td><%= stats.reviews_received %></td>
+      <td><%= stats.reviews_made %></td>
     </tr>
   <% end %>
   </tbody>

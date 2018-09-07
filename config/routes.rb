@@ -94,7 +94,7 @@ Rails.application.routes.draw do
         get :toggle
       end
       resources :solutions, only: [:new, :update, :show]
-      resources :reviews, only: [:new, :update, :show]
+      resources :reviews, only: [:new, :update]
     end
   end
 end
