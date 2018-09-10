@@ -11,11 +11,11 @@ class PeerReviewChallengeSolverStats
   end
 
   def reviews_made
-    @challenge.reviews.where(reviewer: solver).count
+    @challenge.reviews.where(reviewer: solver, status: :final).count
   end
 
   def reviews_received
-    solution.reviews.count
+    solution.reviews.where(status: :final).count
   end
 
 end
