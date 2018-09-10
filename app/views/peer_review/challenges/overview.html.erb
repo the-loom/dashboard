@@ -6,11 +6,12 @@
   <%= raw @challenge.instructions %>
 </div>
 
-<table class="table table-hover table-striped">
+<table class="table table-hover table-striped reviews">
   <thead>
   <tr>
     <th>Participantes</th>
-    <th>Fecha de Resolución</th>
+    <th>Estado</th>
+    <th class="no-sort">Fecha de Resolución</th>
     <th>Revisiones recibidas</th>
     <th>Revisiones realizadas</th>
   </tr>
@@ -24,6 +25,9 @@
         <%= link_to "Ver solución", peer_review_challenge_solution_path(@challenge, stats.solution) %>
       </td>
       <td>
+        <%= stats.solution.final? ? 'Final' : 'Borrador' %>
+      </td>
+      <td>
         <%= stats.solution.updated_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M") %>
       </td>
       <td><%= stats.reviews_received %></td>
@@ -32,3 +36,29 @@
   <% end %>
   </tbody>
 </table>
+
+<%= content_for :head do %>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+<% end %>
+
+<%= content_for :javascript do %>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="application/javascript"></script>
+
+  <script type="application/javascript">
+
+      $(function () {
+          $('.reviews').DataTable({
+              order: [[1, "asc"]],
+              paging: false,
+              language: {
+                  url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+              },
+              columnDefs: [{
+                  targets: 'no-sort',
+                  orderable: false,
+              }]
+          });
+      });
+  </script>
+
+<% end %>
