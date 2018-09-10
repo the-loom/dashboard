@@ -13,7 +13,7 @@ class ReviewableSolutionFinder
     reviewable_solutions = @challenge.solutions.where(status: :final).where.not(id: reviewed_solutions.map(&:id), author: @user)
 
     unless reviewable_solutions.empty?
-      solution = reviewable_solutions.sample
+      solution = reviewable_solutions.sort { |sol| sol.reviews.count }.first
       PeerReview::Review.create(solution: solution, reviewer: @user, status: :draft)
     else
       nil
