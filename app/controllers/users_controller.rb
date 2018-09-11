@@ -87,12 +87,24 @@ class UsersController < ApplicationController
     if params[:bulk_edit][:action].present?
       #TODO(delucas): decide upon params[:bulk_edit][:action] value
       students = User.where(id: student_ids)
-      badge = Badge.find(params[:bulk_edit][:auxiliary_id].to_i)
 
-      authorize Badge, :register?
-      if MassiveBadgeAssigner.new(students, badge).execute
-        flash[:info] = "Se asignaron correctamente #{students.size} emblemas del tipo #{badge.name}"
+
+      if params[:bulk_edit][:action] == 'assign_badge'
+        badge = Badge.find(params[:bulk_edit][:auxiliary_id].to_i)
+
+        authorize Badge, :register?
+        if MassiveBadgeAssigner.new(students, badge).execute
+          flash[:info] = "Se asignaron correctamente #{students.size} emblemas del tipo #{badge.name}"
+        end
       end
+
+      if params[:bulk_edit][:action] == 'join_profiles'
+        authorize User, :manage?
+        if ProfileJoiner.new(students).execute
+          flash[:info] = "Se unieron correctamente #{students.size} perfiles"
+        end
+      end
+
       redirect_to students_url
       return
     end

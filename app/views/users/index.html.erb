@@ -62,10 +62,17 @@
         </div>
         <div class="modal-body">
           <% @badges.each do |badge| %>
-            <%= button_tag type: 'button',class: 'btn btn-default do-bulk-edit', data: { action: 'assign_badge', id: badge.id} do %>
+            <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit', data: { action: 'assign_badge', id: badge.id} do %>
               <%= "Asignar emblema: #{badge.name}" %>
             <% end %>
           <% end %>
+
+          <% if current_user.current_membership.admin? %>
+            <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit', data: { action: 'join_profiles', id: nil} do %>
+              Unir perfiles
+            <% end %>
+          <% end %>
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   validates_uniqueness_of :uuid
 
-  has_many :memberships, -> { enabled }
+  has_many :memberships, -> { enabled }, dependent: :delete_all
   has_many :courses, through: :memberships
 
   has_many :identities
