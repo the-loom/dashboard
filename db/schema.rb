@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_05_143837) do
+ActiveRecord::Schema.define(version: 2018_09_11_002120) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -116,13 +116,14 @@ ActiveRecord::Schema.define(version: 2018_09_05_143837) do
   create_table "identities", id: :serial, force: :cascade do |t|
     t.string "provider"
     t.string "uid"
-    t.string "name"
+    t.string "first_name"
     t.string "nickname"
     t.string "email"
     t.string "image"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "last_name"
     t.index ["user_id"], name: "index_identities_on_user_id"
   end
 
@@ -226,14 +227,14 @@ ActiveRecord::Schema.define(version: 2018_09_05_143837) do
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
-    t.string "name"
+    t.string "first_name"
     t.string "nickname"
     t.string "email"
     t.string "image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "locked", default: false
     t.string "uuid"
+    t.string "last_name"
   end
 
   add_foreign_key "automatic_correction_repos", "automatic_correction_repos", column: "parent_id"

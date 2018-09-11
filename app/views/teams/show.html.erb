@@ -28,7 +28,7 @@
             <img class="avatar<%= ' disabled' unless student.enabled? %>" src="<%= student.image %>">
             <p class="data">
               <%= student.nickname %><br/>
-              <small><%= student.name %></small><br/>
+              <small><%= student.full_name %></small><br/>
             </p>
           <% end %>
           <p>Nivel <span class="badge"><%= student.level %></span> /

@@ -2,7 +2,8 @@ require "ffaker"
 require "roman"
 
 delucas = User.create(
-    name: "Lucas Videla",
+    first_name: "Lucas",
+    last_name: "Videla",
     nickname: "delucas",
     email: "lucas@wecode.io",
     image: "https://avatars1.githubusercontent.com/u/684051?v=4",
@@ -15,7 +16,8 @@ Identity.create(
     user: delucas,
     provider: "github",
     uid: "684051",
-    name: "Lucas Videla",
+    first_name: "Lucas",
+    last_name: "Videla",
     nickname: "delucas",
     email: "lucas@wecode.io",
     image: "https://avatars1.githubusercontent.com/u/684051?v=4"
@@ -36,11 +38,14 @@ Identity.create(
   )
 
   35.times do |i|
-    name = "#{FFaker::NameMX.first_name} #{FFaker::NameMX.last_name}"
+    first_name = FFaker::NameMX.first_name
+    last_name = FFaker::NameMX.last_name
+    name = "#{first_name} #{last_name}"
     nickname = ActiveSupport::Inflector.transliterate(name.downcase.gsub(/\s/, "."))
 
     user = User.create(
-        name: name,
+        first_name: first_name,
+        last_name: last_name,
         nickname: nickname,
         email: "#{nickname}@yopmail.com",
         image: FFaker::Avatar.image,
@@ -57,7 +62,8 @@ Identity.create(
         user: user,
         provider: "github",
         uid: rand(10**8),
-        name: user.name,
+        first_name: user.first_name,
+        last_name: user.last_name,
         nickname: user.nickname,
         email: user.email,
         image: user.image

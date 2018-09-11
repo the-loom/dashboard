@@ -27,6 +27,10 @@ class User < ApplicationRecord
 
   delegate :admin?, to: :current_membership
 
+  def full_name
+    "#{last_name} #{first_name}"
+  end
+
   def enabled_memberships
     memberships.joins(:course).where(courses: { enabled: true })
   end
@@ -45,7 +49,8 @@ class User < ApplicationRecord
 
   def update_with(identity)
     self.nickname = identity.nickname
-    self.name = identity.name unless self.name.present?
+    self.first_name = identity.first_name unless self.first_name.present?
+    self.last_name = identity.last_name unless self.last_name.present?
     self.email = identity.email
     self.image = identity.image
     self.save

@@ -13,7 +13,7 @@ class NotificationsController < ApplicationController
   def create
     authorize Notification
     @notification = Notification.new(notification_params)
-    @notification.author = current_user.name
+    @notification.author = current_user.full_name
 
     if @notification.valid?
       @notification.save

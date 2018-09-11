@@ -21,7 +21,7 @@
     <% stats = PeerReviewChallengeSolverStats.new(@challenge, solver) %>
     <tr>
       <td>
-        <%= stats.solver.name %> <br/>
+        <%= stats.solver.full_name %> <br/>
         <%= link_to "Ver solución", peer_review_challenge_solution_path(@challenge, stats.solution) %>
       </td>
       <td>

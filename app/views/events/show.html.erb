@@ -12,7 +12,7 @@
             <%= link_to register_event_url(nickname: student.nickname, event_id: @event.id) do %>
               <img class="avatar<%= ' disabled' unless student.enabled? %>" src="<%= student.image %>">
               <p class="data"><%= student.nickname %><br/>
-                <small><%= student.name %></small>
+                <small><%= student.full_name %></small>
               </p>
             <% end %>
           <% end %>

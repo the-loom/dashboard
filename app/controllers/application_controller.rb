@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
     end
 
     def verify_name
-      if !current_user.name.present? || current_user.name.strip.empty?
+      if !current_user.first_name.present? || current_user.first_name.strip.empty?
         flash[:alert] = "Por favor, utilizá tu nombre completo en el perfil. Podés hacerlo desde la barra de menú"
       end
     end

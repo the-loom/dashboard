@@ -15,7 +15,7 @@ class BadgesController < ApplicationController
     badge = Badge.find(params[:badge_id])
     student = User.where(nickname: params[:nickname]).first if params[:nickname]
     student.earn(badge)
-    flash[:info] = "Se asignó correctamente el emblema #{badge.name} a #{student.name}"
+    flash[:info] = "Se asignó correctamente el emblema #{badge.name} a #{student.full_name}"
     redirect_to badge_details_url(badge.id)
   end
 

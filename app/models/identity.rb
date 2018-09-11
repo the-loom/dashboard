@@ -8,8 +8,12 @@ class Identity < ApplicationRecord
     identity = find_by(provider: auth["provider"], uid: auth["uid"]) || create_with_omniauth(auth)
     identity.user = find_corresponding_user(identity) if identity.user == nil
     identity.update_attribute(:image, auth["info"]["image"])
-    identity.update_attribute(:name, auth["info"]["name"])
+    identity.update_attribute(:first_name, auth["info"]["name"])
     identity
+  end
+
+  def full_name
+    "#{last_name} #{first_name}"
   end
 
   private
@@ -17,7 +21,7 @@ class Identity < ApplicationRecord
       create! do |identity|
         identity.provider = auth["provider"]
         identity.uid = auth["uid"]
-        identity.name = auth["info"]["name"]
+        identity.first_name = auth["info"]["name"]
         identity.nickname = extract_nickname(auth["info"])
         identity.email = auth["info"]["email"]
         identity.image = auth["info"]["image"]

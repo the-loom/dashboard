@@ -73,7 +73,7 @@
                 <%= l solution.created_at.in_time_zone('Buenos Aires') %>
                 <ul>
                   <% solution.users.each do |partner| %>
-                    <li><%= partner.name %> (<%= partner.nickname %>)</li>
+                    <li><%= partner.full_name %> (<%= partner.nickname %>)</li>
                   <% end %>
                 </ul>
               <% end %>

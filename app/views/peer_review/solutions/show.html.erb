@@ -8,7 +8,7 @@
 
 <hr/>
 
-<h2>Solución de <%= @solution.author.name %> (<%= @solution.status %>)</h2>
+<h2>Solución de <%= @solution.author.full_name %> (<%= @solution.status %>)</h2>
 
 <div class="well">
   <div class="trix-content">
@@ -38,7 +38,7 @@
   <div class="tab-content" id="myTabContent">
     <% @solution.reviews.where(status: :final).each_with_index do |review, index| %>
       <div class="tab-pane fade <%= 'active in' if index == 0 %>" role="tabpanel" id="<%= "review_#{index}" %>" aria-labelledby="home-tab">
-        <h3>Revisión de <%= review.reviewer.name %> (<%= review.status %>)</h3>
+        <h3>Revisión de <%= review.reviewer.full_name %> (<%= review.status %>)</h3>
 
         <div class="well">
           <div class="trix-content">

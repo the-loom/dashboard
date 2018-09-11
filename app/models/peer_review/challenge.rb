@@ -18,11 +18,11 @@ class PeerReview::Challenge < ApplicationRecord
   end
 
   def solvers
-    solutions.map(&:author).uniq.sort_by(&:name)
+    solutions.map(&:author).uniq
   end
 
   def reviewers
-    reviews.map(&:reviewer).uniq.sort_by(&:name)
+    reviews.map(&:reviewer).uniq
   end
 
 end

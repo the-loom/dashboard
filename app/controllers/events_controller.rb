@@ -15,7 +15,7 @@ class EventsController < ApplicationController
     event = Event.find(params[:event_id])
     student = User.where(nickname: params[:nickname]).first if params[:nickname]
     student.register(event)
-    flash[:info] = "Se asignó correctamente el evento #{event.name} a #{student.name}"
+    flash[:info] = "Se asignó correctamente el evento #{event.name} a #{student.full_name}"
     redirect_to event_details_url(event.id)
   end
 

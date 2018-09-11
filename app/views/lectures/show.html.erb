@@ -24,7 +24,7 @@
               <br/>
               <div class="data">
                 <%= check_box :student_ids, student.id, {checked: student.present_at(@lecture)} %>
-                <strong><%= student.name %></strong>
+                <strong><%= student.full_name %></strong>
                 <br/>
                 (<%= student.nickname %>)
               </div>

@@ -23,7 +23,7 @@
       <dd>
         <ul>
           <% @solution.users.each do |partner| %>
-            <li><%= partner.name %> (<%= partner.nickname %>)</li>
+            <li><%= partner.full_name %> (<%= partner.nickname %>)</li>
           <% end %>
         </ul>
 

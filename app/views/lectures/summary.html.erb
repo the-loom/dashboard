@@ -23,14 +23,12 @@
     <% @students.each do |student| %>
       <tr>
         <td>
-          <%= link_to student.name, user_details_url(student.nickname) %>
+          <%= link_to student.full_name, user_details_url(student.nickname) %>
         </td>
         <% @lectures.each do |lecture| %>
           <td>
             <% present = @attendances_per_student[student].find { |a| a.lecture == lecture }.condition == 'present' %>
-            <label class="label label-<%= present ? 'success' : 'danger' %>">
-              &nbsp;
-            </label>
+            <label class="label label-<%= present ? 'success' : 'danger' %>"></label>
           </td>
         <% end %>
       </tr>
