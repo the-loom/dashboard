@@ -18,7 +18,7 @@ RSpec.describe Badge, type: :model do
   }
 
   it "is assigned correctly" do
-    user = User.create!(name: "John")
+    user = User.create!(first_name: "John")
     user.memberships << Membership.new(course: Course.current, role: :student)
     badge = Badge.create!(name: "Neat", description: "Some description", slug: "slug", course: Course.current)
 

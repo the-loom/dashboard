@@ -17,7 +17,7 @@ RSpec.describe Event, type: :model do
   }
 
   xit "is assigned correctly" do
-    user = User.create!(name: "John")
+    user = User.create!(first_name: "John")
     user.memberships << Membership.new(course: Course.current, role: :student)
     event = Event.create!(name: "Attendance", description: "Some description", batch_size: 5, points_per_batch: 10)
 
@@ -27,7 +27,7 @@ RSpec.describe Event, type: :model do
   end
 
   xit "computes points after batch_size has been achieved" do
-    user = User.create!(name: "John")
+    user = User.create!(first_name: "John")
     user.memberships << Membership.new(course: Course.current, role: :student)
     event = Event.create!(name: "Attendance", description: "Some description", batch_size: 5, points_per_batch: 10)
 
