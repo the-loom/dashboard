@@ -27,8 +27,9 @@
         </td>
         <% @lectures.each do |lecture| %>
           <td>
-            <% present = @attendances_per_student[student].find { |a| a.lecture == lecture }.condition == 'present' %>
-            <label class="label label-<%= present ? 'success' : 'danger' %>"></label>
+            <% attendance = @attendances_per_student[student].find { |a| a.lecture == lecture }
+               present = attendance && attendance.condition == 'present' %>
+            <label class="label label-<%= present ? 'success' : 'danger' %>">&nbsp;</label>
           </td>
         <% end %>
       </tr>
