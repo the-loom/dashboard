@@ -81,6 +81,8 @@ class User < ApplicationRecord
   end
 
   def register_attendance(lecture, condition)
+    return unless current_membership #TODO: preventive fix, needs re-do
+    return if present_at(lecture)
     if condition == :present
       current_membership.add_points(10)
     end

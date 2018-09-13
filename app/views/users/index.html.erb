@@ -2,6 +2,18 @@
 
 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#actions">Acciones masivas</button>
 
+<div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="teamSelector" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Seleccionar equipo
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <% @teams.each do |team| %>
+      <li><a href="#" class="do-select-team" data-team-id="<%= team.id %>"><%= team.name %></a></li>
+    <% end %>
+  </ul>
+</div>
+
 <%= form_tag bulk_edit_users_path do %>
 
   <div class="table-responsive">
@@ -21,7 +33,7 @@
       <% @students.each do |student| %>
         <tr>
           <td>
-            <%= check_box_tag "students[ids][]", student.id %>
+            <%= check_box_tag "students[ids][]", student.id, false, data: { "team-id": student.current_membership.team.try(:id) } %>
           </td>
           <td>
             <img class="avatar<%= ' disabled' unless student.enabled? %>" src="<%= student.image %>" data-id="<%= student.id %>">
@@ -61,17 +73,49 @@
           <h4 class="modal-title">Acciones masivas</h4>
         </div>
         <div class="modal-body">
-          <% @badges.each do |badge| %>
-            <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit', data: { action: 'assign_badge', id: badge.id} do %>
-              <%= "Asignar emblema: #{badge.name}" %>
-            <% end %>
-          <% end %>
 
-          <% if current_user.current_membership.admin? %>
-            <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit', data: { action: 'join_profiles', id: nil} do %>
-              Unir perfiles
-            <% end %>
-          <% end %>
+
+          <ul class="nav nav-tabs" id="myTabs" role="tablist">
+            <li role="presentation" class="active">
+              <a href="#badges-tab" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
+                Asignar emblema
+              </a>
+            </li>
+            <li role="presentation">
+              <a href="#misc-tab" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
+                Acciones varias
+              </a>
+            </li>
+            <li role="presentation">
+              <a href="#attendance-tab" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
+                Dar presente
+              </a>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade active in" role="tabpanel" id="badges-tab" aria-labelledby="home-tab">
+              <% @badges.each do |badge| %>
+                <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit', data: { action: 'assign_badge', id: badge.id} do %>
+                  <%= "Asignar emblema: #{badge.name}" %>
+                <% end %>
+              <% end %>
+            </div>
+            <div class="tab-pane fade" role="tabpanel" id="misc-tab" aria-labelledby="home-tab">
+              <% if current_user.current_membership.admin? %>
+                <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit', data: { action: 'join_profiles', id: nil} do %>
+                  Unir perfiles
+                <% end %>
+              <% end %>
+            </div>
+            <div class="tab-pane fade" role="tabpanel" id="attendance-tab" aria-labelledby="home-tab">
+              <% @lectures.each do |lecture| %>
+                <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit', data: { action: 'attendance', id: lecture.id} do %>
+                  Presente en clase "<%= lecture.summary %>"
+                <% end %>
+                <br/>
+              <% end %>
+            </div>
+          </div>
 
         </div>
         <div class="modal-footer">
@@ -123,6 +167,17 @@
           $('.do-select-all').on('click', function() {
               $("input").prop('checked', true);
           });
+
+          $('.do-select-team').on('click', function() {
+
+              console.log("LALALA")
+
+              var team = $(this).data('teamId');
+
+              console.log(team)
+              $('input').filter('[data-team-id="' + team + '"]').prop('checked', true);
+
+          })
       });
   </script>
 <% end %>

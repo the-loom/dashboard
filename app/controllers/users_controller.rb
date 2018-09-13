@@ -7,6 +7,8 @@ class UsersController < ApplicationController
     authorize User
     @students = Course.current.memberships.student.collect { |x| x.user }
 
+    @lectures = Lecture.all
+    @teams = Team.all
     @badges = Badge.all
   end
 
@@ -102,6 +104,15 @@ class UsersController < ApplicationController
         authorize User, :manage?
         if ProfileJoiner.new(students).execute
           flash[:info] = "Se unieron correctamente #{students.size} perfiles"
+        end
+      end
+
+      if params[:bulk_edit][:action] == 'attendance'
+        lecture = Lecture.find(params[:bulk_edit][:auxiliary_id].to_i)
+
+        authorize Lecture, :register?
+        if MassiveAttendanceRegister.new(students, lecture).execute
+          flash[:info] = "Se dio el presente a #{students.size} estudiantes en la clase #{lecture.summary}"
         end
       end
 
