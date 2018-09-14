@@ -120,8 +120,6 @@ class UsersController < ApplicationController
       return
     end
 
-    5/0
-
     if params[:mark_as_guest]
       role = :guest
     elsif params[:mark_as_teacher]

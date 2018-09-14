@@ -12,6 +12,8 @@ class TeamsController < ApplicationController
   def new
     authorize Team, :create?
     @team = Team.new
+    @labels = OpenStruct.new(title: 'Nuevo equipo', button: 'Guardar equipo')
+    render :form
   end
 
   def create
@@ -24,6 +26,25 @@ class TeamsController < ApplicationController
       flash[:info] = "Se creo correctamente el equipo"
     else
       render action: :new
+    end
+  end
+
+  def edit
+    authorize Team, :manage?
+    @team = Team.find(params[:id])
+    @labels = OpenStruct.new(title: 'Editar equipo', button: 'Actualizar equipo')
+    render :form
+  end
+
+  def update
+    authorize Team, :manage?
+    @team = Team.find(params[:id])
+
+    if @team.update_attributes(team_params)
+      redirect_to team_profile_path(@team.nickname)
+      flash[:info] = "Se actualizó correctamente el equipo"
+    else
+      render action: :edit
     end
   end
 
