@@ -82,6 +82,11 @@
               </a>
             </li>
             <li role="presentation">
+              <a href="#events-tab" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
+                Registrar evento
+              </a>
+            </li>
+            <li role="presentation">
               <a href="#misc-tab" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
                 Acciones varias
               </a>
@@ -97,6 +102,13 @@
               <% @badges.each do |badge| %>
                 <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit', data: { action: 'assign_badge', id: badge.id} do %>
                   <%= "Asignar emblema: #{badge.name}" %>
+                <% end %>
+              <% end %>
+            </div>
+            <div class="tab-pane fade" role="tabpanel" id="events-tab" aria-labelledby="home-tab">
+              <% @events.each do |event| %>
+                <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit', data: { action: 'register_event', id: event.id} do %>
+                  <%= "Registrar evento: #{event.name}" %>
                 <% end %>
               <% end %>
             </div>

@@ -10,6 +10,7 @@ class UsersController < ApplicationController
     @lectures = Lecture.all
     @teams = Team.all
     @badges = Badge.all
+    @events = Event.all
   end
 
   def guests
@@ -97,6 +98,15 @@ class UsersController < ApplicationController
         authorize Badge, :register?
         if MassiveBadgeAssigner.new(students, badge).execute
           flash[:info] = "Se asignaron correctamente #{students.size} emblemas del tipo #{badge.name}"
+        end
+      end
+
+      if params[:bulk_edit][:action] == 'register_event'
+        event = Event.find(params[:bulk_edit][:auxiliary_id].to_i)
+
+        authorize Event, :register?
+        if MassiveEventRegister.new(students, event).execute
+          flash[:info] = "Se registraron correctamente #{students.size} eventos del tipo #{event.name}"
         end
       end
 
