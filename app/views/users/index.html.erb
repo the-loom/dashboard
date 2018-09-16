@@ -55,6 +55,9 @@
             <% if policy(student).manage? %>
               <%= link_to student.enabled? ? 'Deshabilitar' : 'Habilitar', disable_user_url(student.nickname), class: 'btn btn-default btn-sm' %>
             <% end %>
+            <% if policy(student).manage? %>
+              <%= link_to 'Borrar perfil', delete_user_url(student.nickname), class: 'btn btn-danger btn-sm' %>
+            <% end %>
           </td>
         </tr>
       <% end %>

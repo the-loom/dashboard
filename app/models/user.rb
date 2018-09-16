@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+
   validates_uniqueness_of :uuid
 
   has_many :memberships, -> { enabled }, dependent: :delete_all

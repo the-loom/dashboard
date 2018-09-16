@@ -57,6 +57,14 @@ class UsersController < ApplicationController
     redirect_to students_path
   end
 
+  def destroy
+    user = User.where(nickname: params[:nickname]).first
+    authorize user, :manage?
+    user.current_membership.discard
+
+    redirect_to students_path
+  end
+
   def edit
     authorize @user, :update?
   end

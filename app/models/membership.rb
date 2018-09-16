@@ -1,9 +1,12 @@
 class Membership < ApplicationRecord
+  include Discard::Model
+
   belongs_to :course
   belongs_to :user
 
   belongs_to :team, optional: true
 
+  default_scope -> { kept }
   scope :enabled, -> { joins(:course).where(courses: { enabled: true }) }
 
   enum role: {

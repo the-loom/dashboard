@@ -60,6 +60,8 @@ GEM
     crass (1.0.4)
     debug_inspector (0.0.3)
     diff-lcs (1.3)
+    discard (1.0.0)
+      activerecord (>= 4.2, < 6)
     dotenv (2.5.0)
     dotenv-rails (2.5.0)
       dotenv (= 2.5.0)
@@ -254,6 +256,7 @@ DEPENDENCIES
   binding_of_caller
   bootsnap
   byebug
+  discard (~> 1.0)
   dotenv-rails (= 2.5.0)
   ffaker (= 2.10.0)
   listen (~> 3.1.5)
