@@ -15,6 +15,7 @@ RSpec.describe Badge, type: :model do
                .scoped_to(:course_id)
 
     should validate_uniqueness_of(:slug)
+               .scoped_to(:course_id)
   }
 
   it "is assigned correctly" do
