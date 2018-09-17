@@ -19,6 +19,7 @@
       <thead>
       <tr>
         <th>Título</th>
+        <th>Estado</th>
         <th>Dificultad</th>
         <th>&nbsp;</th>
       </tr>
@@ -28,6 +29,9 @@
         <tr class="fork">
           <td>
             <%= link_to challenge.title, peer_review_challenge_path(challenge) %>
+          </td>
+          <td>
+            <%= challenge.enabled? ? "Vigente" : "Finalizado" %>
           </td>
           <td>
             <% challenge.difficulty.times do %>

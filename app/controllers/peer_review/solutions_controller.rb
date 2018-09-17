@@ -8,6 +8,7 @@ module PeerReview
 
     def new
       @challenge = PeerReview::Challenge.find(params[:challenge_id])
+      authorize @challenge, :solve?
       @solution = PeerReview::Solution.find_or_create_by(challenge: @challenge, author: current_user)
       authorize @solution, :solve?
     end

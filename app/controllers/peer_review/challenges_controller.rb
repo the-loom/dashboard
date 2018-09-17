@@ -2,13 +2,7 @@ module PeerReview
   class ChallengesController < ApplicationController
     def index
       authorize PeerReview::Challenge, :index?
-
-      #TODO(delucas): pundit?
-      if current_user.teacher?
-        @challenges = PeerReview::Challenge.all
-      else
-        @challenges = PeerReview::Challenge.enabled
-      end
+      @challenges = PeerReview::Challenge.all
     end
 
     def overview

@@ -19,10 +19,14 @@
 
 <hr/>
 
-<p>
-  <%= link_to 'Resolver', new_peer_review_challenge_solution_path(@challenge.id), class: 'btn btn-large btn-primary', disabled: @solution && @solution.final? %>
-  <%= link_to 'Revisar alguna solución', new_peer_review_challenge_review_path(@challenge.id), class: 'btn btn-large btn-primary', disabled: !(@solution && @solution.final?) %>
-</p>
+<% if @challenge.enabled? %>
+
+  <p>
+    <%= link_to 'Resolver', new_peer_review_challenge_solution_path(@challenge.id), class: 'btn btn-large btn-primary', disabled: @solution && @solution.final? %>
+    <%= link_to 'Revisar alguna solución', new_peer_review_challenge_review_path(@challenge.id), class: 'btn btn-large btn-primary', disabled: !(@solution && @solution.final?) %>
+  </p>
+
+<% end %>
 
 <% unless @solution.present? %>
 
