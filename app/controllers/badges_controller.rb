@@ -6,22 +6,15 @@ class BadgesController < ApplicationController
 
   def show
     authorize Badge
-    @badge = Badge.find(params[:badge_id])
-    @students = Course.current.memberships.student.collect(&:user)
-  end
-
-  def register
-    authorize Badge
-    badge = Badge.find(params[:badge_id])
-    student = User.where(nickname: params[:nickname]).first if params[:nickname]
-    student.earn(badge)
-    flash[:info] = "Se asignó correctamente el emblema #{badge.name} a #{student.full_name}"
-    redirect_to badge_details_url(badge.id)
+    @badge = Badge.find(params[:id])
+    @students = @badge.users
   end
 
   def new
     authorize Badge, :create?
     @badge = Badge.new
+    @labels = OpenStruct.new(title: 'Nuevo emblema', button: 'Guardar emblema')
+    render :form
   end
 
   def create
@@ -30,15 +23,34 @@ class BadgesController < ApplicationController
 
     if @badge.valid?
       @badge.save
-      redirect_to badges_list_url
+      redirect_to badges_path
       flash[:info] = "Se creo correctamente el emblema"
     else
       render action: :new
     end
   end
 
+  def edit
+    authorize Badge, :manage?
+    @badge = Badge.find(params[:id])
+    @labels = OpenStruct.new(title: 'Editar emblema', button: 'Actualizar emblema')
+    render :form
+  end
+
+  def update
+    authorize Badge, :manage?
+    @badge = Badge.find(params[:id])
+
+    if @badge.update_attributes(badge_params)
+      redirect_to badges_path
+      flash[:info] = "Se actualizó correctamente el emblema"
+    else
+      render action: :edit
+    end
+  end
+
   private
     def badge_params
-      params[:badge].permit(:name, :description, :slug)
+      params[:badge].permit(:name, :description, :slug, :featured)
     end
 end

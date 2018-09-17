@@ -1,26 +1,35 @@
-<legend>Registrar emblema "<%= @badge.name %>"</legend>
+<legend>Estudiantes que adquirieron el emblema "<%= @badge.name %>"</legend>
 
-<div class="students mosaic">
-  <% @students.in_groups_of(6) do |group| %>
+<% if @students.empty? %>
+  <div class="alert alert-info">
+    <p>
+      No hay estudiantes que hayan obtenido este emblema aún.
+    </p>
+  </div>
 
-    <div class="row">
+<% else %>
 
-      <% group.each do |student| %>
+  <div class="students mosaic">
+    <% @students.in_groups_of(6) do |group| %>
 
-        <div class="col-md-2 col-xs-6 student-box">
-          <% if student %>
-            <%= link_to register_badge_url(nickname: student.nickname, badge_id: @badge.id) do %>
+      <div class="row">
+
+        <% group.each do |student| %>
+
+          <div class="col-md-2 col-xs-6 student-box">
+            <% if student %>
               <img class="avatar" src="<%= student.image %>">
               <p class="data"><%= student.nickname %><br/>
                 <small><%= student.full_name %></small>
               </p>
             <% end %>
-          <% end %>
-        </div>
+          </div>
 
-      <% end %>
+        <% end %>
 
-    </div>
+      </div>
 
-  <% end %>
-</div>
+    <% end %>
+  </div>
+
+<% end %>

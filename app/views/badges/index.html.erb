@@ -1,6 +1,6 @@
 <legend>
   Listado de emblemas
-  <%= link_to 'Nuevo emblema', new_badge_url, class: 'btn btn-primary pull-right' %>
+  <%= link_to 'Nuevo emblema', new_badge_path, class: 'btn btn-primary pull-right' %>
 </legend>
 
 <% if @badges.empty? %>
@@ -16,8 +16,10 @@
     <tr>
       <th>Imagen</th>
       <th>Emblema</th>
+      <th>Destacado</th>
       <th>Descripción</th>
       <th>Otorgamientos</th>
+      <th>&nbsp;</th>
     </tr>
     </thead>
     <tbody>
@@ -27,13 +29,19 @@
           <img class="loom-badge" src="http://www.delucas.com.ar/loom/badges/<%= badge.slug %>.png"></td>
         </td>
         <td>
-          <%= link_to badge.name, badge_details_url(badge.id) %>
+          <%= link_to badge.name, badge_path(badge.id) %>
+        </td>
+        <td>
+          <%= badge.featured? ? "Si" : "No" %>
         </td>
         <td>
           <%= badge.description %>
         </td>
         <td>
           <%= badge.earnings.size %> veces
+        </td>
+        <td>
+          <%= link_to "Editar", edit_badge_path(badge), class: 'btn btn-default' %>
         </td>
       </tr>
     <% end %>

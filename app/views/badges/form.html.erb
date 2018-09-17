@@ -1,6 +1,6 @@
-<legend>Nuevo emblema</legend>
+<legend><%= @labels.title %></legend>
 
-<%= form_for @badge, url: create_badge_url do |f| %>
+<%= form_for @badge do |f| %>
 
   <%= render :partial => 'shared/errors', locals: { f: f } %>
 
@@ -20,7 +20,12 @@
   </div>
 
   <div class="form-group">
-    <%= f.submit "Crear emblema", class: "btn btn-primary" %>
+    <%= f.label :featured, 'Especial', class: 'control-label' %>
+    <%= f.check_box :featured %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit @labels.button, class: "btn btn-primary" %>
   </div>
 
 <% end %>
