@@ -25,39 +25,41 @@
 
   </div>
 
-  <div class="col-md-12">
+  <div class="col-xs-12">
 
     <legend>Perfiles registrados</legend>
 
-    <% @user.identities.each do |identity| %>
+    <div class="row">
 
-      <div class="col-md-6">
+      <% @user.identities.each do |identity| %>
 
-        <h3><%= identity.provider %></h3>
+        <div class="col-md-6">
 
-        <img src="<%= identity.image %>" width="150" height="150"/>
+          <h3><%= identity.provider %></h3>
 
-        <dl>
-          <dt>Nombre</dt>
-          <dd><%= identity.full_name %></dd>
+          <img src="<%= identity.image %>" width="150" height="150"/>
 
-          <dt>Apodo</dt>
-          <dd><%= identity.nickname %></dd>
+          <dl>
+            <dt>Nombre</dt>
+            <dd><%= identity.full_name %></dd>
 
-          <dt>Correo Electrónico</dt>
-          <dd><%= identity.email %></dd>
+            <dt>Apodo</dt>
+            <dd><%= identity.nickname %></dd>
 
-        </dl>
+            <dt>Correo Electrónico</dt>
+            <dd><%= identity.email %></dd>
 
-        <%= link_to change_identity_path(identity.id), class: 'btn btn-default' do %>
-          Utilizar esta identidad
-        <% end %>
+          </dl>
 
-      </div>
+          <%= link_to change_identity_path(identity.id), class: 'btn btn-default' do %>
+            Utilizar esta identidad
+          <% end %>
 
-    <% end %>
+        </div>
 
+      <% end %>
 
+    </div>
 
   </div>
 
