@@ -25,6 +25,7 @@
         <th>Equipo</th>
         <th>Nombre</th>
         <th>XP</th>
+        <th>Medallero</th>
         <th>Correo electrónico</th>
         <th class="no-sort">Acciones</th>
       </tr>
@@ -46,17 +47,23 @@
             <small>(<%= student.uuid %>)</small><br/>
             <small><%= student.nickname %></small>
           </td>
-          <td><%= student.points %></td>
+          <td>
+            <%= student.points %>
+          </td>
+          <td>
+            <span class="badge golden-badge" title="Medallas de oro">&times;<%= student.badges.where(featured: true).count %></span>
+            <span class="badge" title="Medallas de plata">&times;<%= student.badges.where(featured: false).count %></span>
+          </td>
           <td><%= mail_to student.email %></td>
           <td>
             <% if policy(student).impersonate? %>
-              <%= link_to 'Personificar', impersonate_user_url(student.nickname), class: 'btn btn-default btn-sm' %>
+              <%= link_to 'Personificar', impersonate_user_url(student.nickname), class: 'btn btn-default btn-sm' %><br/>
             <% end %>
             <% if policy(student).manage? %>
-              <%= link_to student.enabled? ? 'Deshabilitar' : 'Habilitar', disable_user_url(student.nickname), class: 'btn btn-default btn-sm' %>
+              <%= link_to student.enabled? ? 'Deshabilitar' : 'Habilitar', disable_user_url(student.nickname), class: 'btn btn-default btn-sm' %><br/>
             <% end %>
             <% if policy(student).manage? %>
-              <%= link_to 'Borrar perfil', delete_user_url(student.nickname), class: 'btn btn-danger btn-sm' %>
+              <%= link_to 'Borrar perfil', delete_user_url(student.nickname), class: 'btn btn-danger btn-sm' %><br/>
             <% end %>
           </td>
         </tr>
