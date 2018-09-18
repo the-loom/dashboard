@@ -5,8 +5,9 @@ class UsersController < ApplicationController
 
   def index
     authorize User
-    @students = Course.current.memberships.student.collect { |x| x.user }
+    @students = User.includes(:memberships).where(memberships: { course: Course.current, role: :student })
 
+    # Just for massive actions
     @lectures = Lecture.all
     @teams = Team.all
     @badges = Badge.all
