@@ -85,7 +85,7 @@ Rails.application.routes.draw do
   resources :notifications, only: [:index, :new, :create]
 
   namespace :peer_review do
-    resources :challenges, only: [:index, :new, :create, :show] do
+    resources :challenges do
       member do
         get :overview
         get :toggle

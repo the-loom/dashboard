@@ -1,6 +1,6 @@
-<legend>Nuevo desafío</legend>
+<legend><%= @labels.title %></legend>
 
-<%= form_for @challenge, url: peer_review_challenges_path do |f| %>
+<%= form_for @challenge do |f| %>
 
   <%= render :partial => 'shared/errors', locals: { f: f } %>
 
@@ -28,7 +28,7 @@
   </div>
 
   <div class="form-group">
-    <%= f.submit "Crear desafío", class: "btn btn-primary" %>
+    <%= f.submit @labels.button, class: "btn btn-primary" %>
   </div>
 
 <% end %>

@@ -13,6 +13,8 @@ module PeerReview
     def new
       authorize PeerReview::Challenge, :manage?
       @challenge = PeerReview::Challenge.new
+      @labels = OpenStruct.new(title: 'Nuevo desafio', button: 'Guardar desafío')
+      render :form
     end
 
     def create
@@ -25,6 +27,25 @@ module PeerReview
         flash[:info] = "Se creó correctamente el desafío"
       else
         render action: :new
+      end
+    end
+
+    def edit
+      authorize PeerReview::Challenge, :manage?
+      @challenge = PeerReview::Challenge.find(params[:id])
+      @labels = OpenStruct.new(title: 'Editar emblema', button: 'Actualizar emblema')
+      render :form
+    end
+
+    def update
+      authorize PeerReview::Challenge, :manage?
+      @challenge = PeerReview::Challenge.find(params[:id])
+
+      if @challenge.update_attributes(challenge_params)
+        redirect_to peer_review_challenges_path
+        flash[:info] = "Se editó correctamente el desafío"
+      else
+        render action: :edit
       end
     end
 
