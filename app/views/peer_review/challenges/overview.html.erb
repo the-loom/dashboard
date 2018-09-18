@@ -1,10 +1,15 @@
-<h1><%= @challenge.title %></h1>
+<% nav_add 'Desafíos', peer_review_challenges_path %>
+<% nav_add @challenge.title, peer_review_challenge_path(@challenge) %>
+<% nav_add 'Panorama', '#' %>
+<%= nav_render %>
 
 <h2>Consigna</h2>
 
 <div class="trix-content">
   <%= raw @challenge.instructions %>
 </div>
+
+<h2>Panorama</h2>
 
 <table class="table table-hover table-striped reviews">
   <thead>

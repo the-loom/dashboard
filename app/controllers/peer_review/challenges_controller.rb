@@ -33,7 +33,7 @@ module PeerReview
     def edit
       authorize PeerReview::Challenge, :manage?
       @challenge = PeerReview::Challenge.find(params[:id])
-      @labels = OpenStruct.new(title: 'Editar emblema', button: 'Actualizar emblema')
+      @labels = OpenStruct.new(title: 'Editar desafío', button: 'Actualizar desafío')
       render :form
     end
 

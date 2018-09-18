@@ -1,9 +1,9 @@
-<legend>
-  Listado de desafíos
-  <% if policy(PeerReview::Challenge).manage? %>
-    <%= link_to 'Nuevo desafio', new_peer_review_challenge_path, class: 'btn btn-primary pull-right' %>
-  <% end %>
-</legend>
+<% nav_add 'Desafíos', '#' %>
+<%= nav_render %>
+
+<% if policy(PeerReview::Challenge).manage? %>
+  <%= link_to 'Nuevo desafio', new_peer_review_challenge_path, class: 'btn btn-primary pull-right' %>
+<% end %>
 
 <section class="forks">
 
