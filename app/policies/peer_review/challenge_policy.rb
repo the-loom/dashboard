@@ -15,4 +15,7 @@ class PeerReview::ChallengePolicy < ApplicationPolicy
   def manage?
     user.teacher?
   end
+  def purge?
+    user.admin?
+  end
 end

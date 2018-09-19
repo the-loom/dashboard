@@ -63,7 +63,7 @@ module PeerReview
     end
 
     def purge
-      authorize PeerReview::Challenge, :manage?
+      authorize PeerReview::Challenge, :purge?
       challenge = PeerReview::Challenge.find(params[:id])
 
       challenge.solutions.where(status: :draft).delete_all
