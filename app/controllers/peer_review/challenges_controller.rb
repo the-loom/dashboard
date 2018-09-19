@@ -62,6 +62,17 @@ module PeerReview
       redirect_to peer_review_challenges_path
     end
 
+    def purge
+      authorize PeerReview::Challenge, :manage?
+      challenge = PeerReview::Challenge.find(params[:id])
+
+      challenge.solutions.where(status: :draft).delete_all
+      challenge.reviews.where(status: :draft).delete_all
+
+      flash[:info] = "Se purgó correctamente el desafío"
+      redirect_to peer_review_challenges_path
+    end
+
     private
 
       def challenge_params

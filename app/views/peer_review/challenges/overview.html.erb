@@ -30,7 +30,8 @@
         <%= link_to "Ver solución", peer_review_challenge_solution_path(@challenge, stats.solution) %>
       </td>
       <td>
-        <%= stats.solution.final? ? 'Final' : 'Borrador' %>
+        <%= stats.solution.final? ? 'Final' : 'Borrador' %><br/>
+        <%= stats.solution.size %>
       </td>
       <td>
         <%= stats.solution.updated_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M") %>

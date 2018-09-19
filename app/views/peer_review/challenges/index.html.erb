@@ -46,6 +46,7 @@
               <%= link_to "Panorama", overview_peer_review_challenge_path(challenge), class: 'btn btn-default btn-sm' %>
               <%= link_to challenge.enabled? ? "Deshabilitar" : "Habilitar", toggle_peer_review_challenge_path(challenge), class: 'btn btn-default btn-sm' %>
               <%= link_to "Editar", edit_peer_review_challenge_path(challenge), class: 'btn btn-default btn-sm' %>
+              <%= link_to "Purgar", purge_peer_review_challenge_path(challenge), class: 'btn btn-danger btn-sm' %>
             <% end %>
           </td>
         </tr>

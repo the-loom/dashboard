@@ -91,6 +91,7 @@ Rails.application.routes.draw do
       member do
         get :overview
         get :toggle
+        get :purge
       end
       resources :solutions, only: [:new, :update, :show]
       resources :reviews, only: [:new, :update]
