@@ -16,4 +16,9 @@ class SessionsController < ApplicationController
     session[:user_id] = session[:course_id] = nil
     redirect_to root_url, notice: "Signed out!"
   end
+
+  def failure
+    flash[:error] = "No pudimos verificar tu identidad. Intentalo nuevamente..."
+    redirect_to root_url
+  end
 end

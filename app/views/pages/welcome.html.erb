@@ -13,6 +13,14 @@
   <p><strong>Loom</strong> es una plataforma evolutiva que te acompañará
     durante la cursada. ¡Estate atento a los cambios semanales!</p>
 
+  <% if flash[:error] %>
+    <div class="alert alert-danger">
+      <p>
+        <%= flash[:error] %>
+      </p>
+    </div>
+  <% end %>
+
   <% unless current_user %>
     <p>
       <%= link_to 'Ingresar con GitHub', '/auth/github', class: 'btn btn-lg btn-success' %>

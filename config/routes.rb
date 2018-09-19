@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   root "pages#welcome"
 
   match "/auth/:provider/callback", to: "sessions#create", via: [:get, :post]
+  match "/auth/failure", to: "sessions#failure", via: :get
+
   get "/logout" => "sessions#destroy", as: :logout
 
   get "/profile" => "users#show", as: :profile
