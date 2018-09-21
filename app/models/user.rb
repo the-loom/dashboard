@@ -87,7 +87,8 @@ class User < ApplicationRecord
     if condition == :present
       current_membership.add_points(10)
     end
-    attendances.create(lecture: lecture, condition: condition)
+    attendance = Attendances.find_or_create_by(user: self, lecture: lecture)
+    attendance.update_attributes(condition: condition)
   end
 
   def register(event)

@@ -191,12 +191,7 @@
           });
 
           $('.do-select-team').on('click', function() {
-
-              console.log("LALALA")
-
               var team = $(this).data('teamId');
-
-              console.log(team)
               $('input').filter('[data-team-id="' + team + '"]').prop('checked', true);
 
           })

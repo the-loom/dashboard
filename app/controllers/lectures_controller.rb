@@ -68,7 +68,7 @@ class LecturesController < ApplicationController
     @lectures = Lecture.all
     @attendances = Attendance.all
     @attendances_per_student = @attendances.group_by { |a| a.user }
-    @students = @attendances_per_student.keys
+    @students = Course.current.memberships.student.collect(&:user)
   end
 
   private
