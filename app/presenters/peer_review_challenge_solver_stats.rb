@@ -7,7 +7,7 @@ class PeerReviewChallengeSolverStats
   end
 
   def solution
-    @challenge.solution_by(solver)
+    @sol ||= @challenge.solution_by(solver)
   end
 
   def reviews_made

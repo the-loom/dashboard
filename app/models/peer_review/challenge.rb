@@ -18,11 +18,11 @@ class PeerReview::Challenge < ApplicationRecord
   end
 
   def solvers
-    solutions.map(&:author).uniq.compact
+    solutions.includes(:author).map(&:author).uniq.compact
   end
 
   def reviewers
-    reviews.map(&:reviewer).uniq.compact
+    reviews.includes(:reviewer).map(&:reviewer).uniq.compact
   end
 
 end

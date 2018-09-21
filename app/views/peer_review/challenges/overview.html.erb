@@ -9,6 +9,35 @@
   <%= raw @challenge.instructions %>
 </div>
 
+<h2>Indicadores</h2>
+
+<div class="row">
+
+  <% registers = [
+      OpenStruct.new(name: 'Soluciones', value: @challenge.solutions.size),
+      OpenStruct.new(name: 'Revisiones', value: @challenge.reviews.size),
+      OpenStruct.new(name: 'Revisiones por ejercicio', value: @challenge.reviews.size / @challenge.solutions.size),
+      OpenStruct.new(name: 'Revisiones potenciales', value: @challenge.solutions.size * (@challenge.solutions.size - 1))
+  ] %>
+
+  <% registers.each do |register| %>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-12">
+      <div class="inforide">
+        <div class="row">
+          <div class="col-lg-3 col-md-4 col-sm-4 col-4 rideone">
+            &nbsp;
+          </div>
+          <div class="col-lg-9 col-md-8 col-sm-8 col-8 fontsty">
+            <h4><%= register.name %></h4>
+            <h2><%= register.value %></h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+</div>
+
 <h2>Panorama</h2>
 
 <table class="table table-hover table-striped reviews">
@@ -45,6 +74,46 @@
 
 <%= content_for :head do %>
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+
+  <style>
+
+    .inforide {
+      box-shadow: 1px 2px 8px 0px gray;
+      background-color: white;
+      border-radius: 8px;
+      height: 10em;
+    }
+
+    .rideone {
+      background-color: #6CC785;
+      padding-top: 25px;
+      border-radius: 8px 0px 0px 8px;
+      text-align: center;
+      height: 10em;
+      margin-left: 15px;
+    }
+
+    .fontsty {
+      margin-right: -15px;
+    }
+
+    .fontsty h2{
+      color: #6E6E6E;
+      font-size: 35px;
+      margin-top: 15px;
+      text-align: right;
+      margin-right: 30px;
+    }
+
+    .fontsty h4{
+      color: #6E6E6E;
+      font-size: 25px;
+      margin-top: 20px;
+      text-align: right;
+      margin-right: 30px;
+    }
+  </style>
+
 <% end %>
 
 <%= content_for :javascript do %>
