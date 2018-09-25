@@ -39,14 +39,6 @@
       </dd>
     </dl>
 
-    <script>
-        $(function(){
-            $.get("/partners", function(data){
-                $("#partner").typeahead({ source:data });
-            },'json');
-        });
-    </script>
-
   </div>
 
 </div>
@@ -548,4 +540,14 @@
       tour.init();
   </script>
 
+<% end %>
+
+<%= content_for :javascript do %>
+  <script>
+      $(function(){
+          $.get("/partners", function(data){
+              $("#partner").typeahead({ source:data });
+          },'json');
+      });
+  </script>
 <% end %>
