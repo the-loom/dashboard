@@ -87,7 +87,6 @@ class UsersController < ApplicationController
   end
 
   def bulk_edit
-
     if !params[:students].present? || !params[:students][:ids].present?
       flash[:info] = "Debes seleccionar al menos a un estudiante para asignar una acción masiva"
       redirect_to students_url
@@ -97,11 +96,11 @@ class UsersController < ApplicationController
     student_ids = params[:students][:ids].map(&:to_i)
 
     if params[:bulk_edit][:action].present?
-      #TODO(delucas): decide upon params[:bulk_edit][:action] value
+      # TODO(delucas): decide upon params[:bulk_edit][:action] value
       students = User.where(id: student_ids)
 
 
-      if params[:bulk_edit][:action] == 'assign_badge'
+      if params[:bulk_edit][:action] == "assign_badge"
         badge = Badge.find(params[:bulk_edit][:auxiliary_id].to_i)
 
         authorize Badge, :register?
@@ -110,7 +109,7 @@ class UsersController < ApplicationController
         end
       end
 
-      if params[:bulk_edit][:action] == 'register_event'
+      if params[:bulk_edit][:action] == "register_event"
         event = Event.find(params[:bulk_edit][:auxiliary_id].to_i)
 
         authorize Event, :register?
@@ -119,14 +118,14 @@ class UsersController < ApplicationController
         end
       end
 
-      if params[:bulk_edit][:action] == 'join_profiles'
+      if params[:bulk_edit][:action] == "join_profiles"
         authorize User, :manage?
         if ProfileJoiner.new(students).execute
           flash[:info] = "Se unieron correctamente #{students.size} perfiles"
         end
       end
 
-      if params[:bulk_edit][:action] == 'attendance'
+      if params[:bulk_edit][:action] == "attendance"
         lecture = Lecture.find(params[:bulk_edit][:auxiliary_id].to_i)
 
         authorize Lecture, :register?

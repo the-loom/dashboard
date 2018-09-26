@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-
   validates_uniqueness_of :uuid
 
   has_many :memberships, -> { enabled }, dependent: :delete_all
@@ -82,7 +81,7 @@ class User < ApplicationRecord
   end
 
   def register_attendance(lecture, condition)
-    return unless current_membership #TODO: preventive fix, needs re-do
+    return unless current_membership # TODO: preventive fix, needs re-do
     return if present_at(lecture)
     if condition == :present
       current_membership.add_points(10)
@@ -122,5 +121,4 @@ class User < ApplicationRecord
   def enabled?
     current_membership.enabled?
   end
-
 end

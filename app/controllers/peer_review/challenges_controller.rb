@@ -17,7 +17,7 @@ module PeerReview
     def new
       authorize PeerReview::Challenge, :manage?
       @challenge = PeerReview::Challenge.new
-      @labels = OpenStruct.new(title: 'Nuevo desafio', button: 'Guardar desafío')
+      @labels = OpenStruct.new(title: "Nuevo desafio", button: "Guardar desaf\u00EDo")
       render :form
     end
 
@@ -37,7 +37,7 @@ module PeerReview
     def edit
       authorize PeerReview::Challenge, :manage?
       @challenge = PeerReview::Challenge.find(params[:id])
-      @labels = OpenStruct.new(title: 'Editar desafío', button: 'Actualizar desafío')
+      @labels = OpenStruct.new(title: "Editar desaf\u00EDo", button: "Actualizar desaf\u00EDo")
       render :form
     end
 
@@ -70,7 +70,7 @@ module PeerReview
       authorize PeerReview::Challenge, :manage?
       challenge = PeerReview::Challenge.find(params[:id])
 
-      if params[:mode] == 'publish'
+      if params[:mode] == "publish"
         challenge.publish!
       else
         challenge.unpublish!

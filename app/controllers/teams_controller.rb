@@ -12,7 +12,7 @@ class TeamsController < ApplicationController
   def new
     authorize Team, :create?
     @team = Team.new
-    @labels = OpenStruct.new(title: 'Nuevo equipo', button: 'Guardar equipo')
+    @labels = OpenStruct.new(title: "Nuevo equipo", button: "Guardar equipo")
     render :form
   end
 
@@ -32,7 +32,7 @@ class TeamsController < ApplicationController
   def edit
     authorize Team, :manage?
     @team = Team.find(params[:id])
-    @labels = OpenStruct.new(title: 'Editar equipo', button: 'Actualizar equipo')
+    @labels = OpenStruct.new(title: "Editar equipo", button: "Actualizar equipo")
     render :form
   end
 

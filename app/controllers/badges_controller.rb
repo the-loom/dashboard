@@ -14,7 +14,7 @@ class BadgesController < ApplicationController
   def new
     authorize Badge, :create?
     @badge = Badge.new
-    @labels = OpenStruct.new(title: 'Nuevo emblema', button: 'Guardar emblema')
+    @labels = OpenStruct.new(title: "Nuevo emblema", button: "Guardar emblema")
     render :form
   end
 
@@ -34,7 +34,7 @@ class BadgesController < ApplicationController
   def edit
     authorize Badge, :manage?
     @badge = Badge.find(params[:id])
-    @labels = OpenStruct.new(title: 'Editar emblema', button: 'Actualizar emblema')
+    @labels = OpenStruct.new(title: "Editar emblema", button: "Actualizar emblema")
     render :form
   end
 

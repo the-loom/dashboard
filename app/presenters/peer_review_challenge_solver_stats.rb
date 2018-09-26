@@ -17,5 +17,4 @@ class PeerReviewChallengeSolverStats
   def reviews_received
     solution.reviews.where(status: :final).count
   end
-
 end

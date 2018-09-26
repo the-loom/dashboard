@@ -25,5 +25,4 @@ class PeerReview::Challenge < ApplicationRecord
   def reviewers
     reviews.includes(:reviewer).map(&:reviewer).uniq.compact
   end
-
 end

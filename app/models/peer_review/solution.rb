@@ -19,7 +19,6 @@ class PeerReview::Solution < ApplicationRecord
 
   def size
     length = wording && wording.size || 0
-    '%.2f Kb' % (length / 1024.0)
+    "%.2f Kb" % (length / 1024.0)
   end
-
 end
