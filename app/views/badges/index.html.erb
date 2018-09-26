@@ -11,15 +11,15 @@
 
 <% else %>
 
-  <table class="table table-hover">
+  <table class="badges table table-hover">
     <thead>
     <tr>
-      <th>Imagen</th>
+      <th class="no-sort">Imagen</th>
       <th>Emblema</th>
       <th>Destacado</th>
       <th>Descripción</th>
       <th>Otorgamientos</th>
-      <th>&nbsp;</th>
+      <th class="no-sort">&nbsp;</th>
     </tr>
     </thead>
     <tbody>
@@ -48,4 +48,28 @@
     </tbody>
   </table>
 
+<% end %>
+
+<%= content_for :head do %>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+<% end %>
+
+<%= content_for :javascript do %>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="application/javascript"></script>
+
+  <script type="application/javascript">
+      $(function () {
+          $('.badges').DataTable({
+              order: [[1, "asc"]],
+              paging: false,
+              language: {
+                  url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+              },
+              columnDefs: [{
+                  targets: 'no-sort',
+                  orderable: false
+              }]
+          });
+      });
+  </script>
 <% end %>

@@ -9,27 +9,71 @@
 
 <% else %>
 
-  <div class="students mosaic">
-    <% @students.in_groups_of(6) do |group| %>
-
-      <div class="row">
-
-        <% group.each do |student| %>
-
-          <div class="col-md-2 col-xs-6 student-box">
-            <% if student %>
-              <img class="avatar" src="<%= student.image %>">
-              <p class="data"><%= student.nickname %><br/>
-                <small><%= student.full_name %></small>
-              </p>
+  <div class="table-responsive">
+    <table class="members table table-hover">
+      <thead>
+      <tr>
+        <th class="no-sort">Foto</th>
+        <th>Equipo</th>
+        <th>Nombre</th>
+        <th>Fecha</th>
+        <th class="no-sort">Acciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @earnings.each do |earning|
+        student = earning.user
+      %>
+        <tr>
+          <td>
+            <img class="avatar<%= ' disabled' unless student.enabled? %>" src="<%= student.image %>" data-id="<%= student.id %>">
+          </td>
+          <td>
+            <%= link_to student.current_membership.team.try(:name), team_profile_url(student.current_membership.team.nickname) if student.current_membership.team.present? %>
+          </td>
+          <td>
+            <%= link_to student.full_name, user_details_url(student.nickname) %>
+            <small>(<%= student.uuid %>)</small><br/>
+            <small><%= student.nickname %></small>
+          </td>
+          <td>
+            <%= l earning.created_at.in_time_zone('Buenos Aires') %>
+          </td>
+          <td>
+            <% if policy(Badge).register? %>
+              <%= button_to earning_path(earning), method: :delete, class: 'btn btn-danger btn-sm' do %>
+                Borrar
+              <% end %>
             <% end %>
-          </div>
-
-        <% end %>
-
-      </div>
-
-    <% end %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
   </div>
 
+<% end %>
+
+<%= content_for :head do %>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+<% end %>
+
+<%= content_for :javascript do %>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="application/javascript"></script>
+
+  <script type="application/javascript">
+      $(function () {
+          $('.members').DataTable({
+              order: [[1, "asc"]],
+              paging: false,
+              language: {
+                  url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+              },
+              columnDefs: [{
+                  targets: 'no-sort',
+                  orderable: false
+              }]
+          });
+      });
+  </script>
 <% end %>

@@ -8,6 +8,7 @@ class BadgesController < ApplicationController
     authorize Badge
     @badge = Badge.find(params[:id])
     @students = @badge.users
+    @earnings = @badge.earnings
   end
 
   def new
@@ -47,6 +48,12 @@ class BadgesController < ApplicationController
     else
       render action: :edit
     end
+  end
+
+  def unregister
+    authorize Badge, :register?
+    Earning.where(user_id: params[:user_id], badge_id: params[:id]).delete_all
+    redirect_to badge_path(Badge.find(params[:id]))
   end
 
   private
