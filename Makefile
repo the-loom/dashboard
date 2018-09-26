@@ -1,11 +1,11 @@
-up:
+start:
 	rm -f tmp/pids/server.pid
 	docker-compose up -d
 
 from_scratch:
 	docker-compose run app rake db:setup db:seed
 
-down:
+stop:
 	docker-compose down
 	rm -f tmp/pids/server.pid
 

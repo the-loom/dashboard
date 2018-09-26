@@ -1,6 +1,6 @@
 class ReposController < ApplicationController
   def index
-    @repos = AutomaticCorrection::Repo.where(parent: nil)
+    @repos = AutomaticCorrection::Repo.published.where(parent: nil)
   end
 
   def show

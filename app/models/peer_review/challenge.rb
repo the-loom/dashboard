@@ -1,5 +1,6 @@
 class PeerReview::Challenge < ApplicationRecord
   include CourseLock
+  include Publishable
 
   validates_presence_of :title, :difficulty, :instructions,
                         :reviewer_instructions
@@ -7,7 +8,7 @@ class PeerReview::Challenge < ApplicationRecord
   has_many :solutions, foreign_key: :peer_review_challenge_id
   has_many :reviews, through: :solutions
 
-  scope :enabled, -> { where(enabled: true) }
+  scope :published, -> { where(published: true) }
 
   def solution_by(user)
     solutions.where(author: user).first

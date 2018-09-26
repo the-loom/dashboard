@@ -28,6 +28,9 @@
       <% @challenges.each do |challenge| %>
         <tr class="fork">
           <td>
+            <% if current_user.teacher? %>
+              <i class="fa <%= challenge.published? ? 'fa-eye' : 'fa-eye-slash' %>"></i>
+            <% end %>
             <%= link_to challenge.title, peer_review_challenge_path(challenge) %>
           </td>
           <td>
@@ -43,9 +46,18 @@
           </td>
           <td>
             <% if policy(PeerReview::Challenge).manage? %>
-              <%= link_to "Panorama", overview_peer_review_challenge_path(challenge), class: 'btn btn-default btn-sm' %>
-              <%= link_to challenge.enabled? ? "Deshabilitar" : "Habilitar", toggle_peer_review_challenge_path(challenge), class: 'btn btn-default btn-sm' %>
+              <% if challenge.published? %>
+                <%= button_to publish_peer_review_challenge_path(challenge, mode: 'unpublish'), method: :post, class: 'btn btn-default btn-sm' do %>
+                  Despublicar
+                <% end %>
+              <% else %>
+                <%= button_to publish_peer_review_challenge_path(challenge, mode: 'publish'), method: :post, class: 'btn btn-default btn-sm' do %>
+                  Publicar
+                <% end %>
+              <% end %>
+              <%= link_to challenge.enabled? ? "Cerrar" : "Abrir", toggle_peer_review_challenge_path(challenge), class: 'btn btn-default btn-sm' %>
               <%= link_to "Editar", edit_peer_review_challenge_path(challenge), class: 'btn btn-default btn-sm' %>
+              <%= link_to "Panorama", overview_peer_review_challenge_path(challenge), class: 'btn btn-default btn-sm' %>
             <% end %>
             <% if policy(PeerReview::Challenge).purge? %>
               <%= link_to "Purgar", purge_peer_review_challenge_path(challenge), class: 'btn btn-danger btn-sm' %>
@@ -60,6 +72,14 @@
 
 <%= content_for :head do %>
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+
+  <style>
+    form.button_to {
+      display: inline-block;
+      margin: 0 0.1em;
+    }
+  </style>
+
 <% end %>
 
 <%= content_for :javascript do %>

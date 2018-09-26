@@ -2,7 +2,11 @@ module PeerReview
   class ChallengesController < ApplicationController
     def index
       authorize PeerReview::Challenge, :index?
-      @challenges = PeerReview::Challenge.all
+      if current_user.teacher?
+        @challenges = PeerReview::Challenge.all
+      else
+        @challenges = PeerReview::Challenge.published
+      end
     end
 
     def overview
@@ -59,6 +63,19 @@ module PeerReview
       authorize PeerReview::Challenge, :manage?
       challenge = PeerReview::Challenge.find(params[:id])
       challenge.update_attributes(enabled: !challenge.enabled?)
+      redirect_to peer_review_challenges_path
+    end
+
+    def publish
+      authorize PeerReview::Challenge, :manage?
+      challenge = PeerReview::Challenge.find(params[:id])
+
+      if params[:mode] == 'publish'
+        challenge.publish!
+      else
+        challenge.unpublish!
+      end
+
       redirect_to peer_review_challenges_path
     end
 

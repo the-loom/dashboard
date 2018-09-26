@@ -1,5 +1,6 @@
 class AutomaticCorrection::Repo < ApplicationRecord
   include CourseLock
+  include Publishable
 
   has_many :forks, foreign_key: "parent_id", class_name: "AutomaticCorrection::Repo"
 
@@ -11,6 +12,8 @@ class AutomaticCorrection::Repo < ApplicationRecord
   validates_presence_of :user, :name, :git_url, :description, :difficulty
   validates_numericality_of :difficulty
   validates :git_url, uniqueness: { scope: :course_id }
+
+  scope :published, -> { where(published: true) }
 
   def full_name
     "#{user}/#{name}"
