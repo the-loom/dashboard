@@ -85,6 +85,15 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :admin do
+    resources :courses do
+      member do
+        get :toggle
+        post :restore
+      end
+    end
+  end
+
   resources :notifications, only: [:index, :new, :create]
 
   namespace :peer_review do

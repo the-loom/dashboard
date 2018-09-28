@@ -18,6 +18,9 @@ rebuild:
 rubocop:
 	docker-compose run app rubocop -a
 
+routes:
+	docker-compose run app rake routes
+
 logs:
 	docker-compose logs -tf
 

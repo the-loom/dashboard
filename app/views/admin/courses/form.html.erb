@@ -1,0 +1,19 @@
+<% nav_add 'Cursos', admin_courses_path %>
+<% nav_add @course.name, admin_course_path(@course) unless @course.new_record? %>
+<% nav_add @labels.title, '#' %>
+<%= nav_render %>
+
+<%= form_for [:admin, @course] do |f| %>
+
+  <%= render :partial => 'shared/errors', locals: { f: f } %>
+
+  <div class="form-group">
+    <%= f.label :name, 'Nombre', class: 'control-label' %>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit @labels.button, class: "btn btn-primary" %>
+  </div>
+
+<% end %>
