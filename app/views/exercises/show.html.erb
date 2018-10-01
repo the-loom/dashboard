@@ -81,9 +81,11 @@
             <% Timer.stages.each do |stage| %>
               <% timers = solution.timers.find_all { |t| t.stage == stage[0] } %>
               <td>
-                <% if timers && timers.sum(&:total_time_in_seconds) %>
-                  <%= Time.at(timers.sum(&:total_time_in_seconds)).utc.strftime("%H:%M:%S") %>
-                  (<%= Time.at(timers.sum(&:estimated_time_in_seconds)).utc.strftime("%H:%M:%S") %>)
+                <%
+                  valid_timers = timers.select { |t| t.total_time_in_seconds.present? }
+                  if valid_timers && valid_timers.sum(&:total_time_in_seconds) %>
+                  <%= Time.at(valid_timers.sum(&:total_time_in_seconds)).utc.strftime("%H:%M:%S") %>
+                  (<%= Time.at(valid_timers.sum(&:estimated_time_in_seconds)).utc.strftime("%H:%M:%S") %>)
                 <% else %>
                   <%= Time.at(0).utc.strftime("%H:%M:%S") %> (<%= Time.at(0).utc.strftime("%H:%M:%S") %>)
                 <% end %>
