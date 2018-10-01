@@ -16,7 +16,7 @@
   <% registers = [
       OpenStruct.new(name: 'Soluciones', value: @challenge.solutions.size),
       OpenStruct.new(name: 'Revisiones', value: @challenge.reviews.size),
-      OpenStruct.new(name: 'Revisiones por ejercicio', value: @challenge.reviews.size / @challenge.solutions.size),
+      OpenStruct.new(name: 'Revisiones por ejercicio', value: (@challenge.reviews.size.to_f / @challenge.solutions.size).round(2)),
       OpenStruct.new(name: 'Revisiones potenciales', value: @challenge.solutions.size * (@challenge.solutions.size - 1))
   ] %>
 
