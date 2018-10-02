@@ -109,11 +109,20 @@
           </ul>
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade active in" role="tabpanel" id="badges-tab" aria-labelledby="home-tab">
-              <% @badges.each do |badge| %>
-                <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit', data: { action: 'assign_badge', id: badge.id} do %>
-                  <%= "Asignar emblema: #{badge.name}" %>
+              <div class="row">
+                <% @badges.each do |badge| %>
+                  <div class="col-xs-4">
+                    <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit', data: {action: 'assign_badge', id: badge.id} do %>
+                      <img class="loom-badge" src="http://www.delucas.com.ar/loom/badges/<%= badge.slug %>.png" data-toggle="tooltip"
+                           data-placement="bottom" title="<%= badge.description %>"/>
+                    <% end %>
+                    <br>
+                    <p>
+                      <%= badge.name %>
+                    </p>
+                  </div>
                 <% end %>
-              <% end %>
+              </div>
             </div>
             <div class="tab-pane fade" role="tabpanel" id="events-tab" aria-labelledby="home-tab">
               <% @events.each do |event| %>
@@ -132,7 +141,7 @@
             <div class="tab-pane fade" role="tabpanel" id="attendance-tab" aria-labelledby="home-tab">
               <% @lectures.each do |lecture| %>
                 <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit', data: { action: 'attendance', id: lecture.id} do %>
-                  Presente en clase "<%= lecture.summary %>"
+                  <%= l lecture.date %>: <%= lecture.summary %>
                 <% end %>
                 <br/>
               <% end %>
