@@ -61,6 +61,10 @@ class User < ApplicationRecord
     self.memberships.find_by(course: Course.current)
   end
 
+  def admin?
+    current_membership.admin?
+  end
+
   def teacher?
     current_membership.teacher? || current_membership.admin?
   end
