@@ -29,6 +29,13 @@ class ApplicationController < ActionController::Base
 
   private
 
+    def check_feature(feature)
+      unless Course.current.on?(feature)
+        flash[:alert] = "Esa característica no está habilitada para este curso"
+        redirect_to(request.referrer || profile_path)
+      end
+    end
+
     def user_not_authorized
       flash[:alert] = "No estás autorizado a realizar esa acción"
       redirect_to(request.referrer || profile_path)

@@ -69,7 +69,7 @@ module Admin
     private
 
       def course_params
-        params[:course].permit(:name)
+        params[:course].permit(:name, :features)
       end
   end
 end

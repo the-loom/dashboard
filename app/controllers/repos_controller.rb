@@ -1,4 +1,8 @@
 class ReposController < ApplicationController
+  before_action do
+    check_feature(:automatic_correction_challenges)
+  end
+
   def index
     @repos = AutomaticCorrection::Repo.published.where(parent: nil)
   end

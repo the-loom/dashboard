@@ -1,5 +1,9 @@
 module PeerReview
   class ChallengesController < ApplicationController
+    before_action do
+      check_feature(:peer_review_challenges)
+    end
+
     def index
       authorize PeerReview::Challenge, :index?
       if current_user.teacher?

@@ -1,5 +1,8 @@
 class ExercisesController < ApplicationController
   before_action :verify_pending_solutions, only: [:show, :index]
+  before_action do
+    check_feature(:exercises)
+  end
 
   def index
     @exercises = Exercise.published
