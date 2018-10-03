@@ -3,10 +3,20 @@
 </legend>
 <%= form_tag bulk_edit_users_path do %>
 
+  <%= hidden_field(:bulk_edit, :action) %>
+  <%= hidden_field(:bulk_edit, :auxiliary_id) %>
+
   <div class="form-group controls">
-    <%= submit_tag 'Marcar como invitados', name: 'mark_as_guest', class: 'btn btn-primary' %>
-    <%= submit_tag 'Marcar como profesores', name: 'mark_as_teacher', class: 'btn btn-primary' %>
-    <%= submit_tag 'Marcar como estudiantes', name: 'mark_as_student', class: 'btn btn-primary' %>
+
+    <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit', data: {action: 'mark_as', id: :guest} do %>
+      Marcar como invitados
+    <% end %>
+    <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit', data: {action: 'mark_as', id: :teacher} do %>
+      Marcar como profesores
+    <% end %>
+    <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit', data: {action: 'mark_as', id: :student} do %>
+      Marcar como estudiantes
+    <% end %>
   </div>
 
   <div class="table-responsive">
@@ -48,10 +58,23 @@
   </div>
 <% end %>
 
-<script>
-    $(function () {
-        $('.do-select-all').on('click', function() {
-            $("input").prop('checked', true);
-        });
-    });
-</script>
+<%= content_for :javascript do %>
+  <script type="application/javascript">
+      $(function () {
+          $('.do-select-all').on('click', function () {
+              $("input").prop('checked', true);
+          });
+
+          $('.do-bulk-edit').on('click', function () {
+              var action = $(this).data('action');
+              var auxId = $(this).data('id');
+
+              $('#bulk_edit_action').val(action);
+              $('#bulk_edit_auxiliary_id').val(auxId);
+
+              $('form').submit();
+          });
+
+      });
+  </script>
+<% end %>
