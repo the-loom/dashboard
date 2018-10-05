@@ -22,10 +22,14 @@
       <tr>
         <th class="no-sort"><a class="clickable do-select-all">All</a></th>
         <th class="no-sort">Foto</th>
-        <th>Equipo</th>
+        <% if Course.current.on?(:teams) %>
+          <th>Equipo</th>
+        <% end %>
         <th>Nombre</th>
         <th>XP</th>
-        <th>Medallero</th>
+        <% if Course.current.on?(:badges) %>
+          <th>Medallero</th>
+        <% end %>
         <th>Correo electrónico</th>
         <th class="no-sort">Acciones</th>
       </tr>
@@ -39,9 +43,11 @@
           <td>
             <img class="avatar<%= ' disabled' unless student.enabled? %>" src="<%= student.image %>" data-id="<%= student.id %>">
           </td>
-          <td>
-            <%= link_to student.current_membership.team.try(:name), team_profile_url(student.current_membership.team.nickname) if student.current_membership.team.present? %>
-          </td>
+          <% if Course.current.on?(:teams) %>
+            <td>
+              <%= link_to student.current_membership.team.try(:name), team_profile_url(student.current_membership.team.nickname) if student.current_membership.team.present? %>
+            </td>
+          <% end %>
           <td>
             <%= link_to student.full_name, user_details_url(student.nickname) %>
             <small>(<%= student.uuid %>)</small><br/>
@@ -50,10 +56,12 @@
           <td>
             <%= student.points %>
           </td>
-          <td>
-            <span class="badge golden-badge" title="Medallas de oro">&times;<%= student.badges.where(featured: true).count %></span>
-            <span class="badge" title="Medallas de plata">&times;<%= student.badges.where(featured: false).count %></span>
-          </td>
+          <% if Course.current.on?(:badges) %>
+            <td>
+              <span class="badge golden-badge" title="Medallas de oro">&times;<%= student.badges.where(featured: true).count %></span>
+              <span class="badge" title="Medallas de plata">&times;<%= student.badges.where(featured: false).count %></span>
+            </td>
+          <% end %>
           <td><%= mail_to student.email %></td>
           <td>
             <% if policy(student).impersonate? %>
@@ -83,7 +91,6 @@
           <h4 class="modal-title">Acciones masivas</h4>
         </div>
         <div class="modal-body">
-
 
           <ul class="nav nav-tabs" id="myTabs" role="tablist">
             <li role="presentation" class="active">

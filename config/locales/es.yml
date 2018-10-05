@@ -17,6 +17,15 @@ es:
       coding: 'Desarrollo'
       text_execution: 'Ejecución de la prueba'
 
+  course:
+    features:
+      badges: 'Emblemas'
+      events: 'Eventos'
+      teams: 'Equipos'
+      lectures: 'Clases'
+      automatic_correction_challenges: 'Desafíos de Corrección Automática'
+      peer_review_challenges: 'Desafíos de Revisión por Pares'
+      exercises: 'Ejercicios'
 
   activerecord:
     errors:

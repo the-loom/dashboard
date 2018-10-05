@@ -141,7 +141,6 @@ class UsersController < ApplicationController
       redirect_to students_url
       return
     end
-
   end
 
   private

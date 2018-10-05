@@ -12,10 +12,31 @@
     <%= f.text_field :name, class: 'form-control' %>
   </div>
 
-  <div class="form-group">
-    <%= f.label :features, 'Funcionalidades', class: 'control-label' %>
-    <%= f.number_field :features, class: 'form-control', min: 0, max: 127 %>
-  </div>
+  <%
+
+    all_features = {
+        badges: 1,
+        events: 2,
+        teams: 4,
+        lectures: 8,
+        automatic_correction_challenges: 16,
+        peer_review_challenges: 32,
+        exercises: 64
+    }
+
+  %>
+
+  <% all_features.each do |feature, value| %>
+
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="course[features][]"
+               value="<%= value %>" <%= 'checked="checked"' if @course.on?(feature.to_sym) %> />
+        <%= t "course.features.#{feature}" %>
+      </label>
+    </div>
+
+  <% end %>
 
   <div class="form-group">
     <%= f.submit @labels.button, class: "btn btn-primary" %>

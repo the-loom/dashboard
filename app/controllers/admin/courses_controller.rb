@@ -69,7 +69,12 @@ module Admin
     private
 
       def course_params
-        params[:course].permit(:name, :features)
+        features = params[:course][:features].present? ? params[:course][:features].map(&:to_i).inject(0, :|) : 0
+
+        {
+            name: params[:course][:name],
+            features: features
+        }
       end
   end
 end

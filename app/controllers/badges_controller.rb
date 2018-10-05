@@ -1,4 +1,8 @@
 class BadgesController < ApplicationController
+  before_action do
+    check_feature(:badges)
+  end
+
   def index
     authorize Badge
     @badges = Badge.all

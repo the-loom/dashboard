@@ -1,4 +1,8 @@
 class LecturesController < ApplicationController
+  before_action do
+    check_feature(:lectures)
+  end
+
   def index
     authorize Lecture
     @lectures = Lecture.all

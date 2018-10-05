@@ -1,4 +1,8 @@
 class EventsController < ApplicationController
+  before_action do
+    check_feature(:events)
+  end
+
   def index
     authorize Event
     @events = Event.all

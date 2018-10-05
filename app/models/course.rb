@@ -29,5 +29,4 @@ class Course < ApplicationRecord
 
     features & all_features[requested_feature] == all_features[requested_feature]
   end
-
 end

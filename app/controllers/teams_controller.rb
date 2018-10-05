@@ -1,4 +1,8 @@
 class TeamsController < ApplicationController
+  before_action do
+    check_feature(:teams)
+  end
+
   def index
     authorize Team
     @teams = Team.sorted
