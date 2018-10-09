@@ -1,4 +1,7 @@
-<h1>Desafío de revisión por pares: <%= @challenge.title %></h1>
+<% nav_add 'Desafíos', peer_review_challenges_path %>
+<% nav_add @challenge.title, peer_review_challenge_path(@challenge) %>
+<% nav_add 'Revisar', '#' %>
+<%= nav_render %>
 
 <div class="trix-content">
   <%= raw @challenge.instructions %>
