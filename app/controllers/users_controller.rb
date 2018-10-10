@@ -42,13 +42,6 @@ class UsersController < ApplicationController
     redirect_to user_details_url(@user.nickname)
   end
 
-  def impersonate
-    @user = User.where(nickname: params[:nickname]).first
-    authorize @user, :impersonate?
-    session[:user_id] = @user.id
-    redirect_to profile_url
-  end
-
   def disable
     user = User.where(nickname: params[:nickname]).first
     authorize user, :manage?

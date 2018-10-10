@@ -123,6 +123,6 @@ class User < ApplicationRecord
   end
 
   def enabled?
-    current_membership.enabled?
+    current_membership && current_membership.enabled?
   end
 end

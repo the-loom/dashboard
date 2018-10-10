@@ -11,7 +11,6 @@ Rails.application.routes.draw do
   get "/profile/edit" => "users#edit", as: :edit_profile
   patch "/profile/edit" => "users#update", as: :update_user
   get "/profile/change_identity/:identity_id" => "users#change_identity", as: :change_identity
-  get "/u/:nickname/impersonate" => "users#impersonate", as: :impersonate_user, constraints: { nickname: /[0-z\.-]+/ }
   get "/u/:nickname/disable" => "users#disable", as: :disable_user, constraints: { nickname: /[0-z\.-]+/ }
   get "/u/:nickname/delete" => "users#destroy", as: :delete_user, constraints: { nickname: /[0-z\.-]+/ }
   get "/students" => "users#index", as: :students
@@ -89,6 +88,12 @@ Rails.application.routes.draw do
     resources :courses do
       member do
         get :toggle
+        post :restore
+      end
+    end
+    resources :users, only: [:index, :destroy, :edit, :update] do
+      member do
+        get :impersonate
         post :restore
       end
     end
