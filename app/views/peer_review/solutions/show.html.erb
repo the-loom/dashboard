@@ -1,4 +1,9 @@
-<h1><%= @challenge.title %></h1>
+<% title = "Solución de #{@solution.author.full_name}" %>
+
+<% nav_add 'Desafíos', peer_review_challenges_path %>
+<% nav_add @challenge.title, peer_review_challenge_path(@challenge) %>
+<% nav_add title, '#' %>
+<%= nav_render %>
 
 <h2>Consigna</h2>
 
@@ -8,7 +13,7 @@
 
 <hr/>
 
-<h2>Solución de <%= @solution.author.full_name %> (<%= @solution.status %>)</h2>
+<h2><%= title %> (<%= @solution.status %>)</h2>
 
 <div class="well">
   <div class="trix-content">
