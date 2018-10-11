@@ -28,7 +28,6 @@
         <th>Nombre</th>
         <th>Enlaces</th>
         <th>Correo electrónico</th>
-        <th>Acciones</th>
       </tr>
       </thead>
       <tbody>
@@ -48,9 +47,6 @@
             <%= link_to student.nickname, user_details_url(student.nickname) %>
           </td>
           <td><%= mail_to student.email %></td>
-          <td>
-            <%= link_to 'Personificar', impersonate_user_url(student.nickname), class: 'btn btn-default' %>
-          </td>
         </tr>
       <% end %>
       </tbody>
