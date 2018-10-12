@@ -12,6 +12,7 @@
 //
 //= require jquery/dist/jquery
 //= require bootstrap/dist/js/bootstrap
+//= require rails-ujs
 //= require d3/d3
 //= require c3/c3
 //= require moment/moment

@@ -65,10 +65,9 @@
           <td><%= mail_to student.email %></td>
           <td>
             <% if policy(student).manage? %>
-              <%= link_to student.enabled? ? 'Deshabilitar' : 'Habilitar', disable_user_url(student.nickname), class: 'btn btn-default btn-sm' %><br/>
-            <% end %>
-            <% if policy(student).manage? %>
-              <%= link_to 'Borrar perfil', delete_user_url(student.nickname), class: 'btn btn-danger btn-sm' %><br/>
+              <%= link_to student.enabled? ? 'Deshabilitar' : 'Habilitar', toggle_user_path(student),
+                          method: :post, class: 'btn btn-default btn-sm' %>
+              <%= link_to 'Borrar perfil', user_path(student), method: :delete, class: 'btn btn-danger btn-sm' %>
             <% end %>
           </td>
         </tr>

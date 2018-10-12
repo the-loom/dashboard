@@ -42,8 +42,8 @@ class UsersController < ApplicationController
     redirect_to user_details_url(@user.nickname)
   end
 
-  def disable
-    user = User.where(nickname: params[:nickname]).first
+  def toggle
+    user = User.find(params[:id])
     authorize user, :manage?
     current_membership = user.current_membership
     current_membership.enabled = !current_membership.enabled?
@@ -52,7 +52,8 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    user = User.where(nickname: params[:nickname]).first
+    #TODO: migrate to membership#destroy ? students#destroy ?
+    user = User.find(params[:id])
     authorize user, :manage?
     user.current_membership.discard
 

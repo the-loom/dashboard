@@ -28,6 +28,7 @@
         <th>Nombre</th>
         <th>Enlaces</th>
         <th>Correo electrónico</th>
+        <th>Acciones</th>
       </tr>
       </thead>
       <tbody>
@@ -47,6 +48,11 @@
             <%= link_to student.nickname, user_details_url(student.nickname) %>
           </td>
           <td><%= mail_to student.email %></td>
+          <td>
+            <% if policy(student).manage? %>
+              <%= link_to 'Rechazar', user_path(student), method: :delete, class: 'btn btn-danger btn-sm' %>
+            <% end %>
+          </td>
         </tr>
       <% end %>
       </tbody>

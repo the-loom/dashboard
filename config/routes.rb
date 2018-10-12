@@ -11,8 +11,6 @@ Rails.application.routes.draw do
   get "/profile/edit" => "users#edit", as: :edit_profile
   patch "/profile/edit" => "users#update", as: :update_user
   get "/profile/change_identity/:identity_id" => "users#change_identity", as: :change_identity
-  get "/u/:nickname/disable" => "users#disable", as: :disable_user, constraints: { nickname: /[0-z\.-]+/ }
-  get "/u/:nickname/delete" => "users#destroy", as: :delete_user, constraints: { nickname: /[0-z\.-]+/ }
   get "/students" => "users#index", as: :students
   get "/guests" => "users#guests", as: :guests
   post "/u/bulk_edit" => "users#bulk_edit", as: :bulk_edit_users
@@ -23,6 +21,12 @@ Rails.application.routes.draw do
   post "/events/new" => "events#create", as: :create_event
   get "/events/:event_id/show" => "events#show", as: :event_details
   get "/events/:event_id/register/:nickname" => "events#register", as: :register_event, constraints: { nickname: /[0-z\.-]+/ }
+
+  resources :users, only: :destroy do
+    member do
+      post :toggle
+    end
+  end
 
   resources :badges
   resources :earnings, only: :destroy
