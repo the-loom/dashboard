@@ -1,0 +1,58 @@
+<% nav_add 'Aula', '#' %>
+<% nav_add 'Docentes', '#' %>
+<%= nav_render %>
+
+<div class="table-responsive">
+  <table class="members table table-hover">
+    <thead>
+    <tr>
+      <th class="no-sort">Foto</th>
+      <th>Nombre</th>
+      <th>Correo electrónico</th>
+      <th class="no-sort">Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @teachers.each do |teacher| %>
+      <tr>
+        <td>
+          <img class="avatar<%= ' disabled' unless teacher.enabled? %>" src="<%= teacher.image %>" data-id="<%= teacher.id %>">
+        </td>
+        <td>
+          <%= link_to teacher.full_name, user_details_url(teacher.nickname) %>
+        </td>
+        <td><%= mail_to teacher.email %></td>
+        <td>
+          <% if policy(:teacher).destroy? %>
+            <%= link_to 'Borrar perfil', teacher_path(teacher), method: :delete, class: 'btn btn-danger btn-sm' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%= content_for :head do %>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+<% end %>
+
+<%= content_for :javascript do %>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="application/javascript"></script>
+
+  <script type="application/javascript">
+      $(function () {
+          $('.members').DataTable({
+              order: [[3, "asc"]],
+              paging: false,
+              language: {
+                  url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+              },
+              columnDefs: [{
+                  targets: 'no-sort',
+                  orderable: false
+              }]
+          });
+      });
+  </script>
+<% end %>

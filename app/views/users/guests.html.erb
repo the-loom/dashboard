@@ -1,6 +1,7 @@
-<legend>Miembros de <em>loom</em> -
-  <small><%= @guests.size %> miembros</small>
-</legend>
+<% nav_add 'Aula', '#' %>
+<% nav_add 'Aspirantes', '#' %>
+<%= nav_render %>
+
 <%= form_tag bulk_edit_users_path do %>
 
   <%= hidden_field(:bulk_edit, :action) %>

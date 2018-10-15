@@ -28,6 +28,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :teachers, only: [:index, :destroy]
+
   resources :badges
   resources :earnings, only: :destroy
 
