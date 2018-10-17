@@ -37,12 +37,7 @@
             <%= challenge.enabled? ? "Vigente" : "Finalizado" %>
           </td>
           <td>
-            <% challenge.difficulty.times do %>
-              <i class="fa fa-star" aria-hidden="true"></i>
-            <% end %>
-            <% (5 - challenge.difficulty).times do %>
-              <i class="fa fa-star-o" aria-hidden="true"></i>
-            <% end %>
+            <%= difficulty challenge.difficulty %>
           </td>
           <td>
             <% if policy(PeerReview::Challenge).manage? %>
