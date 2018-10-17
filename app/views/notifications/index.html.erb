@@ -1,9 +1,9 @@
-<legend>
-  Listado de notificaciones
-  <% if policy(Notification).create? %>
-    <%= link_to 'Nueva notificacion', new_notification_path, class: 'btn btn-primary pull-right' %>
-  <% end %>
-</legend>
+<% nav_add 'Notificaciones', '#' %>
+<%= nav_render %>
+
+<% if policy(Notification).create? %>
+  <%= link_to 'Nueva notificacion', new_notification_path, class: 'btn btn-primary pull-right' %>
+<% end %>
 
 <% if @notifications.empty? %>
 
@@ -19,9 +19,14 @@
         <blockquote>
           <strong><%= notification.subject %></strong>
           <br/>
-          <%= notification.text %>
+
+          <div class="trix-content">
+            <%= raw notification.text %>
+          </div>
+
           <hr/>
-          <%= notification.created_at %>
+          <%= notification.created_at.strftime("%d/%m/%Y") %>
+          &mdash;
           <%= notification.author %>
         </blockquote>
       </article>

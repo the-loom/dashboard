@@ -1,4 +1,6 @@
-<legend>Nueva notificacion</legend>
+<% nav_add 'Notificaciones', notifications_path %>
+<% nav_add 'Nueva notificación', '#' %>
+<%= nav_render %>
 
 <%= form_for @notification do |f| %>
 
@@ -11,11 +13,20 @@
 
   <div class="form-group">
     <%= f.label :text, 'Texto', class: 'control-label' %>
-    <%= f.text_area :text, class: 'form-control' %>
+    <%= f.text_area :text, hidden: true %>
+    <trix-editor input="notification_text"></trix-editor>
   </div>
 
   <div class="form-group">
     <%= f.submit "Crear notificación", class: "btn btn-primary" %>
   </div>
 
+<% end %>
+
+<% content_for :head do %>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.0/trix.css" rel="stylesheet">
+<% end %>
+
+<% content_for :javascript do %>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.0/trix.js" type="application/javascript"></script>
 <% end %>
