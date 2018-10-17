@@ -53,7 +53,7 @@
             a.lecture.date
           end.each do |attendance| %>
             <tr>
-              <td><%= l attendance.lecture.date %></td>
+              <td><%= attendance.lecture.date.strftime("%d/%m/%Y") %></td>
               <td><%= attendance.lecture.summary %></td>
               <td><%= attendance.condition == 'absent' ? 'Ausente' : 'Presente' %></td>
             </tr>
@@ -80,7 +80,7 @@
           <tbody>
           <% @user.occurrences.each do |occurrence| %>
             <tr>
-              <td><%= l occurrence.created_at.in_time_zone('Buenos Aires') %></td>
+              <td><%= occurrence.created_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y") %></td>
               <td><%= occurrence.event.name %></td>
             </tr>
           <% end %>
@@ -117,7 +117,7 @@
                      data-placement="bottom" title="<%= earning.badge.description %>"/>
               </div>
               <div class="panel-footer">
-                <%= l earning.created_at.in_time_zone('Buenos Aires') %>
+                <%= earning.created_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y") %>
               </div>
             </div>
           </div>
