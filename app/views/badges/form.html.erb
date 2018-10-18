@@ -1,4 +1,8 @@
-<legend><%= @labels.title %></legend>
+<% nav_add 'Gamificación', '#' %>
+<% nav_add 'Emblemas', badges_path %>
+<% nav_add @badge.name, '#' %>
+<% nav_add 'Editar', '#' %>
+<%= nav_render %>
 
 <%= form_for @badge do |f| %>
 
@@ -20,8 +24,8 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :featured, 'Especial', class: 'control-label' %>
     <%= f.check_box :featured %>
+    <%= f.label :featured, 'Especial', class: 'control-label' %>
   </div>
 
   <div class="form-group">

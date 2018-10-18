@@ -3,20 +3,19 @@ ActiveRecord::Base.transaction do
 
   challenges = PeerReview::Challenge.where(id: [1, 2])
   challenges.each do |challenge|
-
     # 1. crear los premios
     participation = Event.create(
-        name: "Participacion en Desafio '#{challenge.title}'",
-        description: "Resolvio el desafio",
-        batch_size: 1,
-        points_per_batch: 5
+      name: "Participacion en Desafio '#{challenge.title}'",
+      description: "Resolvio el desafio",
+      batch_size: 1,
+      points_per_batch: 5
     )
 
     revision = Event.create(
-        name: "Revision del Desafio '#{challenge.title}'",
-        description: "Reviso soluciones del desafio",
-        batch_size: 1,
-        points_per_batch: 2
+      name: "Revision del Desafio '#{challenge.title}'",
+      description: "Reviso soluciones del desafio",
+      batch_size: 1,
+      points_per_batch: 2
     )
 
     # 2. asignar premio a la resolución

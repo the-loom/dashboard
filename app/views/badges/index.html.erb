@@ -1,7 +1,10 @@
-<legend>
-  Listado de emblemas
+<% nav_add 'Gamificación', '#' %>
+<% nav_add 'Emblemas', '#' %>
+<%= nav_render %>
+
+<div class="row">
   <%= link_to 'Nuevo emblema', new_badge_path, class: 'btn btn-primary pull-right' %>
-</legend>
+</div>
 
 <% if @badges.empty? %>
 

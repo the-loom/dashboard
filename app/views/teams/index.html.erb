@@ -1,8 +1,10 @@
-<legend>Equipos en <em>loom</em> -
-  <small><%= @teams.size %> equipos</small>
+<% nav_add 'Aula', '#' %>
+<% nav_add 'Equipos', '#' %>
+<%= nav_render %>
 
+<div class="row">
   <%= link_to 'Nuevo equipo', new_team_path, class: 'btn btn-primary pull-right' %>
-</legend>
+</div>
 
 <% if @teams.empty? %>
 

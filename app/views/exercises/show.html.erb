@@ -1,4 +1,6 @@
-<legend><%= @exercise.name %></legend>
+<% nav_add 'Ejercicios', exercises_path %>
+<% nav_add @exercise.name, '#' %>
+<%= nav_render %>
 
 <div class="row">
   <div class="col-md-6">

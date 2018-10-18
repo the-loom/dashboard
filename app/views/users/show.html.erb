@@ -1,3 +1,8 @@
+<% nav_add 'Aula', '#' %>
+<% nav_add 'Perfil', '#' %>
+<% nav_add @user.full_name, '#' %>
+<%= nav_render %>
+
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 <div class="fb-profile">
   <%= image_tag "profile-background.jpg", { align: 'left', class: 'fb-image-lg'} %>

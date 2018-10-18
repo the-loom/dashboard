@@ -1,3 +1,8 @@
+<% nav_add 'Aula', '#' %>
+<% nav_add 'Equipos', teams_path %>
+<% nav_add @team.name, '#' %>
+<%= nav_render %>
+
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 <div class="fb-profile">
   <%= image_tag "team-background.jpg", { align: 'left', class: 'fb-image-lg'} %>

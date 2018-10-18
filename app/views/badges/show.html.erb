@@ -1,4 +1,7 @@
-<legend>Estudiantes que adquirieron el emblema "<%= @badge.name %>"</legend>
+<% nav_add 'Gamificación', '#' %>
+<% nav_add 'Emblemas', badges_path %>
+<% nav_add @badge.name, '#' %>
+<%= nav_render %>
 
 <% if @students.empty? %>
   <div class="alert alert-info">

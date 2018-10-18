@@ -1,7 +1,10 @@
-<legend>
-  Listado de clases
+<% nav_add 'Aula', '#' %>
+<% nav_add 'Clases', '#' %>
+<%= nav_render %>
+
+<div class="row">
   <%= link_to 'Nueva clase', new_lecture_path, class: 'btn btn-primary pull-right' %>
-</legend>
+</div>
 
 <% if @lectures.empty? %>
 
@@ -22,7 +25,7 @@
     <% @lectures.each do |lecture| %>
       <tr>
         <td>
-          <%= link_to lecture.summary, lecture_path(lecture.id) %>
+          <%= lecture.summary %>
         </td>
         <td>
           <%= l lecture.date.in_time_zone('Buenos Aires') %>

@@ -33,11 +33,7 @@ Rails.application.routes.draw do
   resources :badges
   resources :earnings, only: :destroy
 
-  resources :lectures, only: [:index, :new, :create, :show] do
-    member do
-      post :register
-      post :quick_register
-    end
+  resources :lectures, only: [:index, :new, :create] do
     collection do
       get :summary
     end

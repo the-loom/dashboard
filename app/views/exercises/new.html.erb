@@ -1,4 +1,6 @@
-<legend>Nuevo ejercicio</legend>
+<% nav_add 'Ejercicios', exercises_path %>
+<% nav_add 'Nuevo', '#' %>
+<%= nav_render %>
 
 <%= form_for @exercise, url: exercises_url do |f| %>
 

@@ -52,7 +52,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    #TODO: migrate to membership#destroy ? students#destroy ?
+    # TODO: migrate to membership#destroy ? students#destroy ?
     user = User.find(params[:id])
     authorize user, :manage?
     user.current_membership.discard

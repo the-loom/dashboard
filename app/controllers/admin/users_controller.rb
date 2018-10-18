@@ -5,7 +5,7 @@ module Admin
     end
 
     def edit
-      5/0
+      5 / 0
 =begin
       authorize Course, :admin?
       @course = Course.find(params[:id])
@@ -15,7 +15,7 @@ module Admin
     end
 
     def update
-      5/0
+      5 / 0
 =begin
       authorize Course, :admin?
       @course = Course.find(params[:id])

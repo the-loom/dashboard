@@ -1,4 +1,7 @@
-<legend>Nueva clase</legend>
+<% nav_add 'Aula', '#' %>
+<% nav_add 'Clases', lectures_path %>
+<% nav_add 'Nueva', '#' %>
+<%= nav_render %>
 
 <%= form_for @lecture do |f| %>
 

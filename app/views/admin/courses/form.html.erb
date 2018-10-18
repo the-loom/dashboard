@@ -1,3 +1,4 @@
+<% nav_add 'Administración', '#' %>
 <% nav_add 'Cursos', admin_courses_path %>
 <% nav_add @course.name, admin_course_path(@course) unless @course.new_record? %>
 <% nav_add @labels.title, '#' %>
