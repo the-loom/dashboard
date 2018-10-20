@@ -40,7 +40,9 @@
       <% @students.each do |student| %>
         <tr>
           <td>
-            <%= check_box_tag "students[ids][]", student.id, false, data: { "team-id": student.current_membership.team.try(:id) } %>
+            <%= check_box_tag "students[ids][]", student.id, false,
+                              data: { "team-id": student.current_membership.team.try(:id) },
+                              disabled: !student.enabled? %>
           </td>
           <td>
             <img class="avatar<%= ' disabled' unless student.enabled? %>" src="<%= student.image %>" data-id="<%= student.id %>">
@@ -189,7 +191,7 @@
           });
 
           $('.members').DataTable({
-              order: [[ 3, "asc" ]],
+              order: [[ 2, "asc" ], [ 3, "asc" ]],
               paging: false,
               language: {
                   url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
@@ -201,7 +203,7 @@
           });
 
           $('.do-select-all').on('click', function() {
-              $("input").prop('checked', true);
+              $("input").not(":disabled").prop('checked', true);
           });
 
           $('.do-select-team').on('click', function() {

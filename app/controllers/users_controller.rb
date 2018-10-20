@@ -91,7 +91,7 @@ class UsersController < ApplicationController
 
     if params[:bulk_edit][:action].present?
       # TODO(delucas): decide upon params[:bulk_edit][:action] value
-      students = User.where(id: student_ids)
+      students = User.where(id: student_ids).where(enabled: true)
 
       if params[:bulk_edit][:action] == "assign_badge"
         badge = Badge.find(params[:bulk_edit][:auxiliary_id].to_i)
