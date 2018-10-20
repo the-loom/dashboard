@@ -186,7 +186,7 @@
 
           $('.avatar').on('click', function () {
               var userId = $(this).data('id');
-              var checkbox = $('input[value=' + userId + ']');
+              var checkbox = $('input[value=' + userId + ']').not(":disabled");
               checkbox.prop('checked', !checkbox.prop('checked'));
           });
 
