@@ -10,22 +10,16 @@ class EventsController < ApplicationController
 
   def show
     authorize Event
-    @event = Event.find(params[:event_id])
-    @students = Course.current.memberships.student.collect(&:user)
-  end
-
-  def register
-    authorize Event
-    event = Event.find(params[:event_id])
-    student = User.where(nickname: params[:nickname]).first if params[:nickname]
-    student.register(event)
-    flash[:info] = "Se asignó correctamente el evento #{event.name} a #{student.full_name}"
-    redirect_to event_details_url(event.id)
+    @event = Event.find(params[:id])
+    @students = @event.users
+    @occurrences = @event.occurrences
   end
 
   def new
     authorize Event, :create?
     @event = Event.new
+    @labels = OpenStruct.new(title: "Nuevo evento", button: "Guardar evento")
+    render :form
   end
 
   def create
@@ -34,10 +28,29 @@ class EventsController < ApplicationController
 
     if @event.valid?
       @event.save
-      redirect_to events_list_url
+      redirect_to events_path
       flash[:info] = "Se creo correctamente el evento"
     else
       render action: :new
+    end
+  end
+
+  def edit
+    authorize Event, :manage?
+    @event = Event.find(params[:id])
+    @labels = OpenStruct.new(title: "Editar evento", button: "Actualizar evento")
+    render :form
+  end
+
+  def update
+    authorize Event, :manage?
+    @event = Event.find(params[:id])
+
+    if @event.update_attributes(event_params)
+      redirect_to events_path
+      flash[:info] = "Se actualizó correctamente el evento"
+    else
+      render action: :edit
     end
   end
 

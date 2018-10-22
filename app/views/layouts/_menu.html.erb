@@ -62,7 +62,7 @@
           <ul class="dropdown-menu">
             <% if Course.current.on?(:events) %>
               <li>
-                <%= link_to "Eventos", events_list_path %>
+                <%= link_to "Eventos", events_path %>
               </li>
             <% end %>
             <% if Course.current.on?(:badges) %>

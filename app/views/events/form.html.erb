@@ -1,6 +1,10 @@
-<legend>Nuevo evento</legend>
+<% nav_add 'Gamificación', '#' %>
+<% nav_add 'Eventos', events_path %>
+<% nav_add @event.name, event_path(@event) unless @event.new_record? %>
+<% nav_add @labels.title, '#' %>
+<%= nav_render %>
 
-<%= form_for @event, url: create_event_url do |f| %>
+<%= form_for @event do |f| %>
 
   <%= render :partial => 'shared/errors', locals: { f: f } %>
 
@@ -25,7 +29,7 @@
   </div>
 
   <div class="form-group">
-    <%= f.submit "Crear evento", class: "btn btn-primary" %>
+    <%= f.submit @labels.button, class: "btn btn-primary" %>
   </div>
 
 <% end %>

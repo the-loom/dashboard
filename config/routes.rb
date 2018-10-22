@@ -16,12 +16,6 @@ Rails.application.routes.draw do
   post "/u/bulk_edit" => "users#bulk_edit", as: :bulk_edit_users
   post "/u/:nickname/comment" => "users#comment", as: :comment_user, constraints: { nickname: /[0-z\.-]+/ }
 
-  get "/events/" => "events#index", as: :events_list
-  get "/events/new" => "events#new", as: :new_event
-  post "/events/new" => "events#create", as: :create_event
-  get "/events/:event_id/show" => "events#show", as: :event_details
-  get "/events/:event_id/register/:nickname" => "events#register", as: :register_event, constraints: { nickname: /[0-z\.-]+/ }
-
   resources :users, only: :destroy do
     member do
       post :toggle
@@ -30,7 +24,9 @@ Rails.application.routes.draw do
 
   resources :teachers, only: [:index, :destroy]
 
-  resources :badges
+  resources :badges, only: [:index, :show, :new, :create, :edit, :update]
+  resources :occurrences, only: :destroy
+  resources :events, only: [:index, :show, :new, :create, :edit, :update]
   resources :earnings, only: :destroy
 
   resources :lectures, only: [:index, :new, :create] do
