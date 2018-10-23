@@ -14,11 +14,6 @@ class UsersController < ApplicationController
     @events = Event.all
   end
 
-  def guests
-    authorize User
-    @guests = Course.current.memberships.guest.collect { |x| x.user }
-  end
-
   def show
     if params[:nickname]
       unless @user = Course.current.memberships.includes(:user).where(users: { nickname: params[:nickname] }).first.try(:user)
