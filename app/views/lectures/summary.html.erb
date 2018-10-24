@@ -17,13 +17,20 @@
       <% @lectures.each do |lecture| %>
         <th title="<%= lecture.summary %>"><%= lecture.date.strftime('%d/%m') %></th>
       <% end %>
+      <th>Asistencia</th>
     </tr>
     </thead>
     <tbody>
     <% @students.each do |student| %>
       <tr>
         <td>
-          <%= link_to student.full_name, user_details_url(student.nickname) %>
+          <% if student.current_membership.enabled? %>
+            <%= link_to student.full_name, user_details_url(student.nickname) %>
+          <% else %>
+            <s>
+              <%= link_to student.full_name, user_details_url(student.nickname) %>
+            </s>
+          <% end %>
         </td>
         <% @lectures.each do |lecture| %>
           <td>
@@ -34,6 +41,9 @@
             </label>
           </td>
         <% end %>
+        <td>
+          <%= (@attendances_per_student[student].size.to_d * 100 / @lectures.size).round(2) %>%
+        </td>
       </tr>
     <% end %>
     </tbody>
