@@ -3,6 +3,7 @@ module PeerReview
     def show
       @challenge = PeerReview::Challenge.find(params[:challenge_id])
       @solution = PeerReview::Solution.find(params[:id])
+      @reviews = @challenge.reviews.where(reviewer: @solution.author)
       authorize @solution, :manage?
     end
 

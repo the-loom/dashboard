@@ -55,3 +55,45 @@
   </div>
 
 <% end %>
+
+
+<h2>Revisiones Realizadas</h2>
+
+<% if @reviews.empty? %>
+
+  <div class="alert alert-info">
+    <p>No ha realizado revisiones aún.</p>
+  </div>
+
+<% else %>
+
+  <ul class="nav nav-tabs" id="myTabs2" role="tablist">
+    <% @reviews.each_with_index do |_, index| %>
+      <li role="presentation" class="<%= 'active' if index == 0 %>">
+        <a href="#<%= "rreview_#{index}" %>" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
+          <%= "Revisión ##{index + 1}" %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <% @reviews.each_with_index do |review, index| %>
+      <div class="tab-pane fade <%= 'active in' if index == 0 %>" role="tabpanel" id="<%= "rreview_#{index}" %>" aria-labelledby="home-tab">
+        <h4>Solución de <%= review.solution.author.full_name %></h4>
+        <div class="well">
+          <div class="trix-content">
+            <%= raw review.solution.wording %>
+          </div>
+        </div>
+
+        <h4>Revisión de <%= review.reviewer.full_name %></h4>
+        <div class="well">
+          <div class="trix-content">
+            <%= raw review.wording %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+<% end %>

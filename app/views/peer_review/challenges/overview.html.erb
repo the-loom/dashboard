@@ -65,8 +65,8 @@
       <td>
         <%= stats.solution.updated_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M") %>
       </td>
-      <td><%= stats.reviews_received %></td>
-      <td><%= stats.reviews_made %></td>
+      <td><%= stats.reviews_received %> (<%= stats.reviews_received(:draft) %>)</td>
+      <td><%= stats.reviews_made %> (<%= stats.reviews_made(:draft) %>)</td>
     </tr>
   <% end %>
   </tbody>
