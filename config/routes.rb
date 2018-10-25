@@ -21,7 +21,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :guests, only: [:index, :destroy]
+  resources :guests, only: [:index, :destroy] do
+    collection do
+      post :bulk_edit
+    end
+  end
   resources :teachers, only: [:index, :destroy]
 
   resources :badges, only: [:index, :show, :new, :create, :edit, :update]

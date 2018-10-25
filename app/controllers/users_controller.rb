@@ -86,7 +86,7 @@ class UsersController < ApplicationController
 
     if params[:bulk_edit][:action].present?
       # TODO(delucas): decide upon params[:bulk_edit][:action] value
-      students = User.where(id: student_ids).where(enabled: true)
+      students = User.where(id: student_ids)
 
       if params[:bulk_edit][:action] == "assign_badge"
         badge = Badge.find(params[:bulk_edit][:auxiliary_id].to_i)
@@ -120,11 +120,6 @@ class UsersController < ApplicationController
         if MassiveAttendanceRegister.new(students, lecture).execute
           flash[:info] = "Se dio el presente a #{students.size} estudiantes en la clase #{lecture.summary}"
         end
-      end
-
-      if params[:bulk_edit][:action] == "mark_as"
-        Course.current.memberships.where("user_id IN (?)", student_ids).update_all(role: params[:bulk_edit][:auxiliary_id].to_sym)
-        flash[:info] = "Se cambió el rol a #{students.size} estudiantes"
       end
 
       redirect_to students_url
