@@ -4,8 +4,9 @@ RSpec.describe Event, type: :model do
   it {
     should validate_presence_of(:name)
     should validate_presence_of(:description)
-    should validate_presence_of(:batch_size)
-    should validate_presence_of(:points_per_batch)
+    should validate_presence_of(:points)
+    should validate_presence_of(:min_points)
+    should validate_presence_of(:max_points)
   }
 
   it {
@@ -13,6 +14,7 @@ RSpec.describe Event, type: :model do
       def verify_current_course; end
     end
     should validate_uniqueness_of(:name)
+               .ignoring_case_sensitivity
                .scoped_to(:course_id)
   }
 
