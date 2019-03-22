@@ -6,7 +6,8 @@
   .panel {
     position: relative;
   }
-  .panel > .panel-heading:after, .panel > .panel-heading:before {
+  .panel > .panel-heading:after,
+  .panel > .panel-heading:before {
     position: absolute;
     top: 11px;
     left: -16px;
@@ -119,3 +120,8 @@
   }
 }
 
+.panel .panel-heading {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

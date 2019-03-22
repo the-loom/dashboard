@@ -16,10 +16,6 @@ class Membership < ApplicationRecord
     admin: 3
   }
 
-  def level
-    Level.new(points, user.badges.size).value
-  end
-
   def add_points(value)
     self.points += value
     self.save!
