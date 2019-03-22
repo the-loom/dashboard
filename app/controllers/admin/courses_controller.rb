@@ -73,6 +73,7 @@ module Admin
 
         {
             name: params[:course][:name],
+            password: params[:course][:password],
             features: features
         }
       end

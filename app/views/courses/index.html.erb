@@ -23,8 +23,15 @@
               Ir al aula virtual
             <% end %>
           <% else %>
-            <%= link_to enroll_course_path(course), class: 'btn btn-primary' do %>
-              Inscribirse
+
+            <%= form_for :enrollment, url: enroll_course_path(course), html: { class: 'form-inline' } do |f| %>
+
+              <div class="form-group">
+                <%= f.text_field :password, class: 'form-control', placeholder: 'Contraseña' %>
+              </div>
+
+              <%= f.submit "Inscribirse", class: 'btn btn-primary' %>
+
             <% end %>
           <% end %>
         </td>

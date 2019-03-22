@@ -5,6 +5,7 @@ class Course < ApplicationRecord
   has_many :users, through: :memberships
 
   validates :name, presence: true, uniqueness: true
+  validates :password, presence: true
 
   scope :enabled, -> { where(enabled: true) }
 

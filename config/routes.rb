@@ -81,7 +81,7 @@ Rails.application.routes.draw do
 
   resources :courses, only: [:index] do
     member do
-      get :enroll
+      post :enroll
       get :switch
     end
   end

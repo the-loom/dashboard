@@ -5,9 +5,15 @@ class CoursesController < ApplicationController
 
   def enroll
     course = Course.find(params[:id])
-    current_user.memberships << Membership.create(role: :guest, course: course, points: 0)
-    session[:course_id] = course.id
-    redirect_to profile_path
+
+    if course.password == params[:enrollment][:password]
+      current_user.memberships << Membership.create(role: :student, course: course, points: 0)
+      session[:course_id] = course.id
+      redirect_to profile_path
+    else
+      flash[:alert] = "La contraseña no es correcta. Pedísela a tus docentes por favor"
+      redirect_to courses_path
+    end
   end
 
   def switch
