@@ -1,15 +1,15 @@
 class User < ApplicationRecord
   validates_uniqueness_of :uuid
 
-  has_many :memberships, -> { enabled }, dependent: :delete_all
+  has_many :memberships, -> {enabled}, dependent: :delete_all
   has_many :courses, through: :memberships
 
   has_many :identities
 
-  has_many :occurrences, -> { order(created_at: :desc) }
+  has_many :occurrences, -> {order(created_at: :desc)}
   has_many :events, through: :occurrences
 
-  has_many :earnings, -> { order(created_at: :desc) }
+  has_many :earnings, -> {order(created_at: :desc)}
   has_many :badges, through: :earnings
 
   has_many :attendances
@@ -27,12 +27,27 @@ class User < ApplicationRecord
 
   delegate :admin?, to: :current_membership
 
+  def score
+    min = Event.all.sum(:min_points)
+    max = Event.all.sum(:max_points)
+    spread = max - min
+    pts = points #events.sum(:points)
+    normalized = pts - min
+    if pts < min
+      2.0
+    elsif pts > max
+      10.0
+    else
+      (normalized.to_f / spread) * 6 + 4
+    end
+  end
+
   def full_name
     "#{last_name}, #{first_name}"
   end
 
   def enabled_memberships
-    memberships.joins(:course).where(courses: { enabled: true })
+    memberships.joins(:course).where(courses: {enabled: true})
   end
 
   def has_github_identity?
@@ -78,7 +93,7 @@ class User < ApplicationRecord
   end
 
   def unregister_attendance(lecture)
-    if attendances.detect { |a| a.present? && a.lecture == lecture }
+    if attendances.detect {|a| a.present? && a.lecture == lecture}
       current_membership.add_points(-10)
     end
     Attendance.find_by(user: self, lecture: lecture).try(:delete)
@@ -95,14 +110,8 @@ class User < ApplicationRecord
   end
 
   def register(event)
-    events_count = events.count { |x| x.name == event.name } + 1
-    if events_count % event.batch_size == 0
-      points_per_event = event.points_per_batch
-    else
-      points_per_event = 0
-    end
-    occurrences.create(event: event, points: points_per_event)
-    current_membership.add_points(points_per_event)
+    occurrences.create(event: event, points: event.points)
+    current_membership.add_points(event.points)
     self.save!
   end
 

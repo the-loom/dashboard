@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_02_004340) do
+ActiveRecord::Schema.define(version: 2019_03_20_171827) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,9 +106,10 @@ ActiveRecord::Schema.define(version: 2018_10_02_004340) do
   create_table "events", id: :serial, force: :cascade do |t|
     t.string "name"
     t.string "description"
-    t.integer "batch_size"
-    t.integer "points_per_batch"
+    t.integer "points"
     t.integer "course_id"
+    t.integer "min_points"
+    t.integer "max_points"
   end
 
   create_table "exercises", id: :serial, force: :cascade do |t|

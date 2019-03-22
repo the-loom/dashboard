@@ -19,13 +19,18 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :batch_size, 'Tamaño del lote para puntuar', class: 'control-label' %>
-    <%= f.number_field :batch_size, class: 'form-control' %>
+    <%= f.label :points, 'Puntos por lote', class: 'control-label' %>
+    <%= f.number_field :points, class: 'form-control' %>
   </div>
 
   <div class="form-group">
-    <%= f.label :points_per_batch, 'Puntos por lote', class: 'control-label' %>
-    <%= f.number_field :points_per_batch, class: 'form-control' %>
+    <%= f.label :min_points, 'Puntos mínimos para la actividad', class: 'control-label' %>
+    <%= f.number_field :min_points, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :max_points, 'Puntos máximos para la actividad', class: 'control-label' %>
+    <%= f.number_field :max_points, class: 'form-control' %>
   </div>
 
   <div class="form-group">

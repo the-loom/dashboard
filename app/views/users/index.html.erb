@@ -29,6 +29,7 @@
         <% end %>
         <th>Nombre</th>
         <th>XP</th>
+        <th>Puntaje</th>
         <% if Course.current.on?(:badges) %>
           <th>Medallero</th>
         <% end %>
@@ -59,6 +60,9 @@
           </td>
           <td>
             <%= student.points %>
+          </td>
+          <td>
+            <%= student.score %>
           </td>
           <% if Course.current.on?(:badges) %>
             <td>
