@@ -15,13 +15,13 @@ loom es una aplicación web que acompaña a los estudiantes en su cursada
 ## Running the app
 
 ```shell
-  make up
+  make start
 ```
 
 ## Stopping the app
 
 ```shell
-  make down
+  make stop
 ```
 
 ## Contribuciones
