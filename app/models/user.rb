@@ -27,8 +27,8 @@ class User < ApplicationRecord
   delegate :admin?, to: :current_membership
 
   def score
-    min = Event.all.sum(:min_points)
-    max = Event.all.sum(:max_points)
+    min = Event.min_points
+    max = Event.max_points
     spread = max - min
     pts = points #events.sum(:points)
     normalized = pts - min

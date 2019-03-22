@@ -6,4 +6,12 @@ class Event < ApplicationRecord
 
   has_many :occurrences
   has_many :users, through: :occurrences
+
+  def self.min_points
+    Event.all.sum(:min_points)
+  end
+
+  def self.max_points
+    Event.all.sum(:max_points)
+  end
 end

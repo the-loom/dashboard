@@ -22,4 +22,19 @@ class Team < ApplicationRecord
     enabled_members = members.select { |m| m.enabled? }
     enabled_members.sum(&:points) / enabled_members.size
   end
+
+  def score
+    min = Event.min_points
+    max = Event.max_points
+    spread = max - min
+    pts = self.points
+    normalized = pts - min
+    if pts < min
+      2.0
+    elsif pts > max
+      10.0
+    else
+      (normalized.to_f / spread) * 6 + 4
+    end
+  end
 end
