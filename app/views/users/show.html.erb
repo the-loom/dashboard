@@ -87,10 +87,15 @@
       <% else %>
         <table class="table table-striped table-bordered">
           <tbody>
-          <% @user.occurrences.each do |occurrence| %>
+          <% @user.occurrences.group_by(&:event).each do |event, occurrences| %>
             <tr>
-              <td><%= occurrence.created_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y") %></td>
-              <td><%= occurrence.event.name %></td>
+              <td><%= occurrences.last.created_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y") %></td>
+              <td>
+                <% if occurrences.size > 1 %>
+                  <label class="badge"><%= occurrences.size %>&times;</label>
+                <% end %>
+                <%= event.name %>
+              </td>
             </tr>
           <% end %>
           </tbody>
@@ -134,7 +139,7 @@
         <% @missing_badges.each do |badge| %>
           <div class="col-md-4 badge-box">
             <div class="panel panel-default">
-              <div class="panel-heading">
+              <div class="panel-heading" title="<%= badge.name %>">
                 <%= badge.name %>
               </div>
               <div class="panel-body">
