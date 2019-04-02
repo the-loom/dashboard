@@ -31,7 +31,8 @@ class EventsController < ApplicationController
       redirect_to events_path
       flash[:info] = "Se creo correctamente el evento"
     else
-      render action: :new
+      @labels = OpenStruct.new(title: "Nuevo evento", button: "Guardar evento")
+      render :form
     end
   end
 
@@ -50,12 +51,13 @@ class EventsController < ApplicationController
       redirect_to events_path
       flash[:info] = "Se actualizó correctamente el evento"
     else
-      render action: :edit
+      @labels = OpenStruct.new(title: "Editar evento", button: "Actualizar evento")
+      render :form
     end
   end
 
   private
     def event_params
-      params[:event].permit(:name, :description, :batch_size, :points_per_batch)
+      params[:event].permit(:name, :description, :batch_size, :points, :min_points, :max_points)
     end
 end

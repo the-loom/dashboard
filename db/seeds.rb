@@ -7,8 +7,6 @@ delucas = User.create(
     nickname: "delucas",
     email: "lucas@wecode.io",
     image: "https://avatars1.githubusercontent.com/u/684051?v=4",
-    enabled: true,
-    locked: true,
     uuid: "0"
 )
 
@@ -34,7 +32,8 @@ Identity.create(
   Membership.create(
       course: course,
       role: :admin,
-      user: delucas
+      user: delucas,
+      enabled: true
   )
 
   35.times do |i|
@@ -49,19 +48,18 @@ Identity.create(
         nickname: nickname,
         email: "#{nickname}@yopmail.com",
         image: FFaker::Avatar.image,
-        enabled: true,
-        locked: true,
         uuid: ((c + 1) * 100 + (i + 1)).to_s(16).upcase
     )
     Membership.create(
         course: course,
         role: :student,
-        user: user
+        user: user,
+        enabled: true
     )
     Identity.create(
         user: user,
         provider: "github",
-        uid: rand(10**8),
+        uid: rand(10 ** 8),
         first_name: user.first_name,
         last_name: user.last_name,
         nickname: user.nickname,

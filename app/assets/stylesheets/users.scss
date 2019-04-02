@@ -6,7 +6,8 @@
   .panel {
     position: relative;
   }
-  .panel > .panel-heading:after, .panel > .panel-heading:before {
+  .panel > .panel-heading:after,
+  .panel > .panel-heading:before {
     position: absolute;
     top: 11px;
     left: -16px;
@@ -71,7 +72,8 @@
   }
 }
 
-.fb-profile img.fb-image-lg {
+.fb-profile .fb-image-lg {
+  background: linear-gradient(to bottom, #fc354c 0%, #0abfbc 100%);
   z-index: 0;
   width: 100%;
   margin-bottom: 10px;
@@ -119,3 +121,11 @@
   }
 }
 
+.panel .panel-heading {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.c3-gauge-value {
+  font-weight: bold;
+}

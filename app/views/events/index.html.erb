@@ -21,6 +21,8 @@
       <th>Descripción</th>
       <th>Otorgamientos</th>
       <th>Puntos</th>
+      <th>Pts Mínimos</th>
+      <th>Pts Máximos</th>
       <th class="no-sort">&nbsp;</th>
     </tr>
     </thead>
@@ -37,7 +39,13 @@
           <%= event.occurrences.size %> veces
         </td>
         <td>
-          <%= event.points_per_batch %> pts. c/<%= event.batch_size %>
+          <%= event.points %> pts.
+        </td>
+        <td>
+          <%= event.min_points %> pts.
+        </td>
+        <td>
+          <%= event.max_points %> pts.
         </td>
         <td>
           <%= link_to "Editar", edit_event_path(event), class: 'btn btn-default' %>
