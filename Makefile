@@ -63,7 +63,6 @@ production_deploy:
 	heroku maintenance:on --app the-loom
 	git push -ff production master
 	heroku pg:killall --app the-loom
-	heroku pg:reset --app the-loom --confirm the-loom
 	heroku run rake db:migrate --app the-loom
 	heroku ps:scale web=1 --app the-loom
 	heroku restart --app the-loom
