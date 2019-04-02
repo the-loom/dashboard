@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby '2.4.5'
+ruby "2.4.5"
 
 gem "rails", "~> 5.2.0"
 gem "pg"
@@ -44,4 +44,4 @@ gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "responders"
 gem "bootsnap", require: false
 
-gem 'aws-sdk-s3'
+gem "aws-sdk-s3"

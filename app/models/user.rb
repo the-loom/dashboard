@@ -3,15 +3,15 @@ class User < ApplicationRecord
 
   has_one_attached :avatar
 
-  has_many :memberships, -> {enabled}, dependent: :delete_all
+  has_many :memberships, -> { enabled }, dependent: :delete_all
   has_many :courses, through: :memberships
 
   has_many :identities
 
-  has_many :occurrences, -> {order(created_at: :desc)}
+  has_many :occurrences, -> { order(created_at: :desc) }
   has_many :events, through: :occurrences
 
-  has_many :earnings, -> {order(created_at: :desc)}
+  has_many :earnings, -> { order(created_at: :desc) }
   has_many :badges, through: :earnings
 
   has_many :attendances
@@ -32,7 +32,7 @@ class User < ApplicationRecord
     min = Event.min_points
     max = Event.max_points
     spread = max - min
-    pts = points #events.sum(:points)
+    pts = points # events.sum(:points)
     normalized = pts - min
     if pts < min
       2.0
@@ -48,7 +48,7 @@ class User < ApplicationRecord
   end
 
   def enabled_memberships
-    memberships.joins(:course).where(courses: {enabled: true})
+    memberships.joins(:course).where(courses: { enabled: true })
   end
 
   def has_github_identity?
@@ -89,7 +89,7 @@ class User < ApplicationRecord
   end
 
   def unregister_attendance(lecture)
-    if attendances.detect {|a| a.present? && a.lecture == lecture}
+    if attendances.detect { |a| a.present? && a.lecture == lecture }
       current_membership.add_points(-10)
     end
     Attendance.find_by(user: self, lecture: lecture).try(:delete)
