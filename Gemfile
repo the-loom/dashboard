@@ -43,3 +43,5 @@ end
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "responders"
 gem "bootsnap", require: false
+
+gem 'aws-sdk-s3'
