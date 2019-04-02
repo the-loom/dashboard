@@ -46,7 +46,7 @@
                               disabled: !student.enabled? %>
           </td>
           <td>
-            <img class="avatar<%= ' disabled' unless student.enabled? %>" src="<%= student.image %>" data-id="<%= student.id %>">
+            <%= image_tag user_avatar(student), { class: "avatar#{ ' disabled' unless student.enabled? }", alt: student.full_name, "data-id": student.id } %>
           </td>
           <% if Course.current.on?(:teams) %>
             <td>

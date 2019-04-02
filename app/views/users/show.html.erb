@@ -11,7 +11,7 @@
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 <div class="fb-profile">
   <div class="fb-image-lg"></div>
-  <img align="left" class="fb-image-profile thumbnail" src="<%= @user.image %>" alt="Profile image example"/>
+  <%= image_tag user_avatar(@user), { class: 'fb-image-profile thumbnail', alt: @user.full_name, align: 'left' } %>
   <div class="fb-profile-text">
     <h1>
       <%= @user.full_name %>
@@ -203,7 +203,7 @@
           <div class="comment-box">
             <div class="col-sm-2">
               <div class="thumbnail">
-                <img class="img-responsive user-photo" src="<%= comment.commenter.image %>">
+                <%= image_tag user_avatar(comment.commenter.avatar), { class: 'img-responsive user-photo', alt: comment.commenter.full_name } %>
               </div>
             </div>
 

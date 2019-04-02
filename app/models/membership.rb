@@ -10,7 +10,6 @@ class Membership < ApplicationRecord
   scope :enabled, -> { joins(:course).where(courses: { enabled: true }) }
 
   enum role: {
-    guest: 0,
     student: 1,
     teacher: 2,
     admin: 3

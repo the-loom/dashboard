@@ -77,7 +77,7 @@
       <% @forks.each do |fork| %>
         <tr class="fork">
           <td>
-            <img class="avatar small" src="<%= fork.author.image %>" title="<%= fork.author.nickname %>" alt="<%= fork.author.nickname %>">
+            <%= image_tag user_avatar(fork.author), { class: "avatar small", title: fork.author.full_name, alt: fork.author.full_name } %>
             <%= fork.author.full_name %>
           </td>
           <td>

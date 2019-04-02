@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   validates_uniqueness_of :uuid
 
+  has_one_attached :avatar
+
   has_many :memberships, -> {enabled}, dependent: :delete_all
   has_many :courses, through: :memberships
 
@@ -66,7 +68,6 @@ class User < ApplicationRecord
     self.first_name = identity.first_name unless self.first_name.present?
     self.last_name = identity.last_name unless self.last_name.present?
     self.email = identity.email
-    self.image = identity.image
     self.save
     self
   end
@@ -85,10 +86,6 @@ class User < ApplicationRecord
 
   def student?
     current_membership.student?
-  end
-
-  def guest?
-    current_membership.guest?
   end
 
   def unregister_attendance(lecture)

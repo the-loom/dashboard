@@ -29,7 +29,7 @@
       <% @team.members.each do |student| %>
         <div class="col-md-2 col-xs-6 student-box">
           <%= link_to user_details_url(student.nickname) do %>
-            <img class="avatar<%= ' disabled' unless student.enabled? %>" src="<%= student.image %>">
+            <%= image_tag user_avatar(student), { class: "avatar#{ ' disabled' unless student.enabled? }", alt: student.full_name } %>
             <p class="data">
               <%= student.nickname %><br/>
               <small><%= student.full_name %></small><br/>

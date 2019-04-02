@@ -16,7 +16,7 @@
     <% @teachers.each do |teacher| %>
       <tr>
         <td>
-          <img class="avatar<%= ' disabled' unless teacher.enabled? %>" src="<%= teacher.image %>" data-id="<%= teacher.id %>">
+          <%= image_tag user_avatar(teacher), { class: "avatar#{ ' disabled' unless teacher.enabled? }", alt: teacher.full_name, "data-id": teacher.id } %>
         </td>
         <td>
           <%= link_to teacher.full_name, user_details_url(teacher.nickname) %>
