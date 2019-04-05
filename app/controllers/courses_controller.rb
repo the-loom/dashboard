@@ -7,7 +7,9 @@ class CoursesController < ApplicationController
     course = Course.find(params[:id])
 
     if course.password == params[:enrollment][:password]
-      current_user.memberships << Membership.create(role: :student, course: course, points: 0)
+      unless Membership.exists?(role: :student, course: course, user: current_user)
+        current_user.memberships << Membership.create(role: :student, course: course, points: 0)
+      end
       session[:course_id] = course.id
       redirect_to profile_path
     else
