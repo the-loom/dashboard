@@ -68,6 +68,7 @@ class User < ApplicationRecord
     self.first_name = identity.first_name unless self.first_name.present?
     self.last_name = identity.last_name unless self.last_name.present?
     self.email = identity.email
+    self.image = identity.image
     self.save
     self
   end

@@ -2,6 +2,9 @@ start:
 	rm -f tmp/pids/server.pid
 	docker-compose up -d
 
+console:
+	docker-compose run app rails console
+
 from_scratch:
 	docker-compose run app rake db:setup db:seed
 
