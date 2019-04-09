@@ -27,6 +27,10 @@ routes:
 logs:
 	docker-compose logs -tf
 
+tests:
+	docker-compose run app rake db:test:prepare
+	docker-compose run app ./bin/rake
+
 capture_production_db:
 	heroku pg:backups capture --app the-loom
 	$(MAKE) download_production_db

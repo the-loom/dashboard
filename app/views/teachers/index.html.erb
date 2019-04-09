@@ -26,6 +26,9 @@
           <% if policy(:teacher).destroy? %>
             <%= link_to 'Borrar perfil', teacher_path(teacher), method: :delete, class: 'btn btn-danger btn-sm' %>
           <% end %>
+          <% if policy(teacher).promote? %>
+            <%= link_to 'Degradar', demote_user_path(teacher), method: :post, class: 'btn btn-warning btn-sm' %>
+          <% end %>
         </td>
       </tr>
     <% end %>

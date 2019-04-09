@@ -27,6 +27,22 @@ class UsersController < ApplicationController
     authorize @user
   end
 
+  def promote
+    user = User.find(params[:id])
+    authorize current_user, :promote?
+    user.current_membership.update(role: :teacher)
+    flash[:info] = "#{user.full_name} fue promovido a Docente"
+    redirect_to students_path
+  end
+
+  def demote
+    user = User.find(params[:id])
+    authorize current_user, :promote?
+    user.current_membership.update(role: :student)
+    flash[:info] = "#{user.full_name} fue degradado a Estudiante"
+    redirect_to students_path
+  end
+
   def comment
     unless @user = Course.current.memberships.includes(:user).where(users: { nickname: params[:nickname] }).first.try(:user)
       flash[:alert] = "No existe el usuario"

@@ -75,7 +75,11 @@
             <% if policy(student).manage? %>
               <%= link_to student.enabled? ? 'Deshabilitar' : 'Habilitar', toggle_user_path(student),
                           method: :post, class: 'btn btn-default btn-sm' %>
+              <br/>
               <%= link_to 'Borrar perfil', user_path(student), method: :delete, class: 'btn btn-danger btn-sm' %>
+            <% end %>
+            <% if policy(student).promote? %>
+              <%= link_to 'Nombrar docente', promote_user_path(student), method: :post, class: 'btn btn-warning btn-sm' %>
             <% end %>
           </td>
         </tr>

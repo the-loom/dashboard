@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   resources :users, only: :destroy do
     member do
       post :toggle
+      post :promote
+      post :demote
     end
   end
   resources :teachers, only: [:index, :destroy]

@@ -6,6 +6,9 @@ class UserPolicy < ApplicationPolicy
     team = record.current_membership.team
     user.teacher? || (team && team.members.include?(user)) || record == user
   end
+  def promote?
+    user.teacher?
+  end
   def index?
     user.teacher?
   end

@@ -19,7 +19,7 @@ group :development, :test do
   gem "rubocop-rails_config"
   gem "rspec-rails", "~> 3.5"
   gem "shoulda-matchers", "~> 3.1"
-  gem "sqlite3"
+  gem "sqlite3", "1.3.13"
 end
 
 gem "dotenv-rails", "2.5.0", groups: [:development, :test]
