@@ -18,8 +18,8 @@ class Team < ApplicationRecord
   end
 
   def points
-    return 0 if members.empty?
     enabled_members = members.select { |m| m.enabled? }
+    return 0 if enabled_members.empty?
     enabled_members.sum(&:points) / enabled_members.size
   end
 
