@@ -34,7 +34,7 @@
         </td>
         <% @lectures.each do |lecture| %>
           <td>
-            <% attendance = @attendances_per_student[student].find { |a| a.lecture == lecture }
+            <% attendance = (@attendances_per_student[student] || []).find { |a| a.lecture == lecture }
                present = attendance && attendance.condition == 'present' %>
             <label class="label label-<%= present ? 'success' : 'danger' %>">
               <%= present ? '✔' : '✘' %>
@@ -42,7 +42,7 @@
           </td>
         <% end %>
         <td>
-          <%= (@attendances_per_student[student].size.to_d * 100 / @lectures.size).round(2) %>%
+          <%= ((@attendances_per_student[student] || []).size.to_d * 100 / @lectures.size).round(2) %>%
         </td>
       </tr>
     <% end %>
