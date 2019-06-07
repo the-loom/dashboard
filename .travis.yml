@@ -1,6 +1,9 @@
 language: ruby
 rvm:
   - 2.6.1
+services:
+  - docker
+install:
+  - make build
 script:
-  - bin/rake db:test:prepare
-  - bin/rake
+  - make tests
