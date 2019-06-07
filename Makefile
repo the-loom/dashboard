@@ -16,8 +16,8 @@ just_db:
 	docker-compose up -d db
 
 build:
-	docker-compose run app bundle
 	docker-compose build
+	docker-compose run app bundle
 
 rubocop:
 	docker-compose run app rubocop -a
