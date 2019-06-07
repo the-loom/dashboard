@@ -2,5 +2,5 @@ language: ruby
 rvm:
   - 2.6.1
 script:
-  - bin/rake db:migrate RAILS_ENV=test
+  - bin/rake db:test:prepare
   - bin/rake
