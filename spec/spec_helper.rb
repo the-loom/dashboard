@@ -9,6 +9,6 @@ RSpec.configure do |config|
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
   config.before(:example) {
-    Course.current = Course.new(name: "STEM I")
+    Course.current = Course.new(name: "STEM I", password: '123456')
   }
 end

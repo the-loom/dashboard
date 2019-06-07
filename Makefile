@@ -15,7 +15,8 @@ stop:
 just_db:
 	docker-compose up -d db
 
-rebuild:
+build:
+	docker-compose run app bundle
 	docker-compose build
 
 rubocop:
