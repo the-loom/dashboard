@@ -19,9 +19,11 @@ class Identity < ApplicationRecord
   private
     def self.create_with_omniauth(auth)
       create! do |identity|
+        name_parts = auth["info"]["name"].rpartition(" ")
         identity.provider = auth["provider"]
         identity.uid = auth["uid"]
-        identity.first_name = auth["info"]["name"]
+        identity.first_name = name_parts.first
+        identity.last_name = name_parts.last
         identity.nickname = extract_nickname(auth["info"])
         identity.email = auth["info"]["email"]
         identity.image = auth["info"]["image"]
@@ -35,6 +37,7 @@ class Identity < ApplicationRecord
 
     def self.find_corresponding_user(identity)
       u = User.find_or_create_by(email: identity.email)
+      u.uuid = rand * 1000 #temp hotfix!
       u.update_with(identity)
       u.update_attributes(uuid: (u.id + 272).to_s(16).upcase)
       u
