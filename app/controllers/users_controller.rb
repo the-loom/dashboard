@@ -27,14 +27,6 @@ class UsersController < ApplicationController
     authorize @user
   end
 
-  def promote
-    user = User.find(params[:id])
-    authorize current_user, :promote?
-    user.current_membership.update(role: :teacher)
-    flash[:info] = "#{user.full_name} fue promovido a Docente"
-    redirect_to students_path
-  end
-
   def demote
     user = User.find(params[:id])
     authorize current_user, :promote?
@@ -135,6 +127,14 @@ class UsersController < ApplicationController
         authorize Lecture, :register?
         if MassiveAttendanceRegister.new(students, lecture).execute
           flash[:info] = "Se dio el presente a #{students.size} estudiantes en la clase #{lecture.summary}"
+        end
+      end
+
+      if params[:bulk_edit][:action] == "promote"
+
+        authorize current_user, :promote?
+        if MassiveTeacherPromoter.new(students).execute
+          flash[:info] = "Se promovieron #{students.size} Estudiantes al rol Docente"
         end
       end
 

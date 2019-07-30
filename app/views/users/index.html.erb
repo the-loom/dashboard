@@ -78,9 +78,6 @@
               <br/>
               <%= link_to 'Borrar perfil', user_path(student), method: :delete, class: 'btn btn-danger btn-sm' %>
             <% end %>
-            <% if policy(student).promote? %>
-              <%= link_to 'Nombrar docente', promote_user_path(student), method: :post, class: 'btn btn-warning btn-sm' %>
-            <% end %>
           </td>
         </tr>
       <% end %>
@@ -150,6 +147,9 @@
               <% if current_user.current_membership.admin? %>
                 <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit', data: { action: 'join_profiles', id: nil} do %>
                   Unir perfiles
+                <% end %>
+                <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit', data: { action: 'promote', id: nil} do %>
+                  Nombrar docentes
                 <% end %>
               <% end %>
             </div>
