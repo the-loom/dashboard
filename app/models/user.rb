@@ -44,7 +44,13 @@ class User < ApplicationRecord
   end
 
   def full_name
-    "#{last_name}, #{first_name}"
+    if last_name.present? && first_name.present?
+      "#{last_name.strip}, #{first_name.strip}"
+    elsif last_name.present?
+      last_name.strip
+    else
+      first_name.strip
+    end
   end
 
   def enabled_memberships
