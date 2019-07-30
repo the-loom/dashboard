@@ -17,8 +17,11 @@ class Team < ApplicationRecord
     members.select { |m| m.enabled? }.collect { |member| member.badges }.flatten
   end
 
+  def enabled_members
+    members.select { |m| m.enabled? }
+  end
+
   def points
-    enabled_members = members.select { |m| m.enabled? }
     return 0 if enabled_members.empty?
     enabled_members.sum(&:points) / enabled_members.size
   end
