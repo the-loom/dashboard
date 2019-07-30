@@ -27,7 +27,7 @@
             <%= form_for :enrollment, url: enroll_course_path(course), html: { class: 'form-inline' } do |f| %>
 
               <div class="form-group">
-                <%= f.text_field :password, class: 'form-control', placeholder: 'Contraseña' %>
+                <%= f.text_field :password, class: 'form-control', placeholder: 'Contraseña', autocomplete: "new-password" %>
               </div>
 
               <%= f.submit "Inscribirse", class: 'btn btn-primary' %>
