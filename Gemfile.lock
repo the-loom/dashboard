@@ -89,7 +89,7 @@ GEM
     execjs (2.7.0)
     faraday (0.12.2)
       multipart-post (>= 1.2, < 3)
-    ffaker (2.10.0)
+    ffaker (2.11.0)
     ffi (1.9.25)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
@@ -282,7 +282,7 @@ DEPENDENCIES
   byebug
   discard (~> 1.0)
   dotenv-rails (= 2.5.0)
-  ffaker (= 2.10.0)
+  ffaker (= 2.11.0)
   listen (~> 3.1.5)
   omniauth-github (= 1.3.0)
   omniauth-google-oauth2 (= 0.5.3)
