@@ -118,6 +118,11 @@
                 Dar presente
               </a>
             </li>
+            <li role="presentation">
+              <a href="#teams-tab" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
+                Asignar a equipo
+              </a>
+            </li>
           </ul>
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade active in" role="tabpanel" id="badges-tab" aria-labelledby="home-tab">
@@ -157,6 +162,14 @@
               <% @lectures.each do |lecture| %>
                 <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit', data: { action: 'attendance', id: lecture.id} do %>
                   <%= l lecture.date %>: <%= lecture.summary %>
+                <% end %>
+                <br/>
+              <% end %>
+            </div>
+            <div class="tab-pane fade" role="tabpanel" id="teams-tab" aria-labelledby="home-tab">
+              <% @teams.each do |team| %>
+                <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit', data: { action: 'team', id: team.id} do %>
+                  <%= team.name %>
                 <% end %>
                 <br/>
               <% end %>

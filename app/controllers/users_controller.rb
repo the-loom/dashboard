@@ -138,6 +138,15 @@ class UsersController < ApplicationController
         end
       end
 
+      if params[:bulk_edit][:action] == "team"
+        team = Team.find(params[:bulk_edit][:auxiliary_id].to_i)
+
+        authorize Team, :add_member?
+        if MassiveTeamRegister.new(students, team).execute
+          flash[:info] = "Se agregaron #{students.size} estudiantes en el equipo #{team.name}"
+        end
+      end
+
       redirect_to students_url
       return
     end
