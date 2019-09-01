@@ -7,6 +7,8 @@ class Event < ApplicationRecord
   has_many :occurrences
   has_many :users, through: :occurrences
 
+  belongs_to :competence_tag
+
   def self.min_points
     Event.all.sum(:min_points)
   end

@@ -29,6 +29,8 @@ Rails.application.routes.draw do
   resources :events, only: [:index, :show, :new, :create, :edit, :update]
   resources :earnings, only: :destroy
 
+  resources :competence_tags, except: :show
+
   resources :lectures, only: [:index, :new, :create] do
     collection do
       get :summary

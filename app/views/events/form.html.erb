@@ -34,6 +34,11 @@
   </div>
 
   <div class="form-group">
+    <%= f.label :competence_tag_id, 'Competencia aplicable', class: 'control-label' %>
+    <%= f.collection_select :competence_tag_id, CompetenceTag.all, :id, :name, { include_blank: true }, { class: 'form-control' } %>
+  </div>
+
+  <div class="form-group">
     <%= f.submit @labels.button, class: "btn btn-primary" %>
   </div>
 

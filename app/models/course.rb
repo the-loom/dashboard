@@ -25,7 +25,8 @@ class Course < ApplicationRecord
         lectures: 8,
         automatic_correction_challenges: 16,
         peer_review_challenges: 32,
-        exercises: 64
+        exercises: 64,
+        competences: 128
     }
 
     features & all_features[requested_feature] == all_features[requested_feature]

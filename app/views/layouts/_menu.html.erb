@@ -62,6 +62,11 @@
                 <%= link_to "Eventos", events_path %>
               </li>
             <% end %>
+            <% if Course.current.on?(:competences) %>
+              <li>
+                <%= link_to "Competencias", competence_tags_path %>
+              </li>
+            <% end %>
             <% if Course.current.on?(:badges) %>
               <li>
                 <%= link_to "Emblemas", badges_path %>

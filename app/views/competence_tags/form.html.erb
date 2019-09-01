@@ -1,0 +1,20 @@
+<% nav_add 'Gamificación', '#' %>
+<% nav_add 'Competencias', competence_tags_path %>
+<% nav_add @competence_tag.name, competence_tag_path(@competence_tag) unless @competence_tag.new_record? %>
+<% nav_add @labels.title, '#' %>
+<%= nav_render %>
+
+<%= form_for @competence_tag do |f| %>
+
+  <%= render :partial => 'shared/errors', locals: { f: f } %>
+
+  <div class="form-group">
+    <%= f.label :name, 'Nombre', class: 'control-label' %>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit @labels.button, class: "btn btn-primary" %>
+  </div>
+
+<% end %>

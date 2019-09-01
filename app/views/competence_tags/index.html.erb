@@ -1,58 +1,34 @@
 <% nav_add 'Gamificación', '#' %>
-<% nav_add 'Eventos', '#' %>
+<% nav_add 'Competencias', '#' %>
 <%= nav_render %>
 
 <div class="row">
-  <%= link_to 'Nuevo evento', new_event_url, class: 'btn btn-primary pull-right' %>
+  <%= link_to 'Nueva competencia', new_competence_tag_path, class: 'btn btn-primary pull-right' %>
 </div>
 
-<% if @events.empty? %>
+<% if @competence_tags.empty? %>
 
   <div class="alert alert-info">
-    <p>Aún no hay ningún evento</p>
+    <p>Aún no hay ninguna competencia</p>
   </div>
 
 <% else %>
 
-  <table class="events table table-hover">
+  <table class="competences table table-hover">
     <thead>
     <tr>
-      <th>Evento</th>
-      <th>Descripción</th>
-      <th>Otorgamientos</th>
-      <th>Puntos</th>
-      <th>Pts Mínimos</th>
-      <th>Pts Máximos</th>
       <th>Competencia</th>
       <th class="no-sort">&nbsp;</th>
     </tr>
     </thead>
     <tbody>
-    <% @events.each do |event| %>
+    <% @competence_tags.each do |competence| %>
       <tr>
         <td>
-          <%= link_to event.name, event_path(event.id) %>
+          <%= competence.name %>
         </td>
         <td>
-          <%= event.description %>
-        </td>
-        <td>
-          <%= event.occurrences.size %> veces
-        </td>
-        <td>
-          <%= event.points %> pts.
-        </td>
-        <td>
-          <%= event.min_points %> pts.
-        </td>
-        <td>
-          <%= event.max_points %> pts.
-        </td>
-        <td>
-          <%= event.competence_tag.try(:name) %>
-        </td>
-        <td>
-          <%= link_to "Editar", edit_event_path(event), class: 'btn btn-default' %>
+          <%= link_to "Editar", edit_competence_tag_path(competence), class: 'btn btn-default' %>
         </td>
       </tr>
     <% end %>
@@ -70,7 +46,7 @@
 
   <script type="application/javascript">
       $(function () {
-          $('.events').DataTable({
+          $('.competences').DataTable({
               order: [[0, "asc"]],
               paging: false,
               language: {
