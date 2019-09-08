@@ -26,6 +26,7 @@ es:
       automatic_correction_challenges: 'Desafíos de Corrección Automática'
       peer_review_challenges: 'Desafíos de Revisión por Pares'
       exercises: 'Ejercicios'
+      competences: 'Competencias'
 
   activerecord:
     errors:

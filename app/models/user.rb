@@ -29,6 +29,9 @@ class User < ApplicationRecord
 
   delegate :points, to: :current_membership
 
+  def stats
+    CompetenceTagsStats.for(self)
+  end
 
   def score
     min = Event.min_points
