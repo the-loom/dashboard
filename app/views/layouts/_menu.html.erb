@@ -109,8 +109,16 @@
         </a>
         <ul class="dropdown-menu">
 
-          <% current_user.courses.each do |course| %>
-            <li><%= link_to course.name, switch_course_path(course) %></li>
+          <% if current_user.teacher? %>
+            <% current_user.all_courses.order(enabled: :desc, name: :asc).each do |course| %>
+              <li>
+                <%= link_to course.name, switch_course_path(course), { style: !course.enabled? ? 'text-decoration: line-through' : '' } %>
+              </li>
+            <% end %>
+          <% else %>
+            <% current_user.courses.each do |course| %>
+              <li><%= link_to course.name, switch_course_path(course) %></li>
+            <% end %>
           <% end %>
 
           <li role="separator" class="divider"></li>

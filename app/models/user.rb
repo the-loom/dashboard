@@ -4,7 +4,10 @@ class User < ApplicationRecord
   has_one_attached :avatar
 
   has_many :memberships, -> { enabled }, dependent: :delete_all
+  has_many :all_memberships, class_name: 'Membership', foreign_key: :user_id
+
   has_many :courses, through: :memberships
+  has_many :all_courses, through: :all_memberships, source: :course
 
   has_many :identities
 
@@ -80,7 +83,7 @@ class User < ApplicationRecord
   end
 
   def current_membership
-    self.memberships.find_by(course: Course.current)
+    self.all_memberships.find_by(course: Course.current)
   end
 
   def admin?
