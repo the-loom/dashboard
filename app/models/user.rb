@@ -29,7 +29,6 @@ class User < ApplicationRecord
 
   delegate :points, to: :current_membership
 
-  delegate :admin?, to: :current_membership
 
   def score
     min = Event.min_points
@@ -84,10 +83,6 @@ class User < ApplicationRecord
 
   def current_membership
     self.all_memberships.find_by(course: Course.current)
-  end
-
-  def admin?
-    current_membership.admin?
   end
 
   def teacher?

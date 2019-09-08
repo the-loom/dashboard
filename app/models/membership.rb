@@ -9,10 +9,11 @@ class Membership < ApplicationRecord
   default_scope -> { kept }
   scope :enabled, -> { joins(:course).where(courses: { enabled: true }) }
 
+  delegate :admin?, to: :user
+
   enum role: {
     student: 1,
-    teacher: 2,
-    admin: 3
+    teacher: 2
   }
 
   def add_points(value)
