@@ -8,10 +8,10 @@ class UsersController < ApplicationController
     @students = User.includes(:memberships).where(memberships: { course: Course.current, role: :student })
 
     # Just for massive actions
-    @lectures = Lecture.all
-    @teams = Team.all
+    @lectures = Lecture.all.order(date: :asc)
+    @teams = Team.all.order(name: :asc)
     @badges = Badge.all
-    @events = Event.all
+    @events = Event.all.order(name: :asc)
   end
 
   def show
