@@ -53,8 +53,10 @@ class User < ApplicationRecord
       "#{last_name.strip}, #{first_name.strip}"
     elsif last_name.present?
       last_name.strip
-    else
+    elsif first_name.present?
       first_name.strip
+    else
+      'N/A'
     end
   end
 
