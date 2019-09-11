@@ -12,6 +12,9 @@ class CourseCompetenceTagsStats
         total_points + event.max_points
       end
     end
+
+    @values["Perseverancia"] = Lecture.count * 10
+
   end
 
 end

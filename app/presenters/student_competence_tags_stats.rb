@@ -12,6 +12,22 @@ class StudentCompetenceTagsStats
         total_points + event.points
       end
     end
+
+    @values["Perseverancia"] = Attendance.where(user: user, condition: :present).count * 10
+  end
+
+  def normalized
+    baseline = CourseCompetenceTagsStats.new.values
+    @values.map do |key, value|
+      divisor = baseline[key] == 0 ? ( value == 0 ? 1 : value ) : baseline[key]
+      { axis: key, value: value / divisor.to_f }
+    end
+  end
+
+  def present
+    @values.map do |key, value|
+      { axis: key, value: value }
+    end
   end
 
 end
