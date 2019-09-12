@@ -1,12 +1,15 @@
 class MassiveEventRegister
-  def initialize(students, event)
+  def initialize(students, event, multiplier)
     @students = students
     @event = event
+    @multiplier = multiplier
   end
 
   def execute
-    @students.each do |student|
-      student.register(@event)
+    @multiplier.times do
+      @students.each do |student|
+        student.register(@event)
+      end
     end
 
     true

@@ -84,6 +84,7 @@ class UsersController < ApplicationController
   end
 
   def bulk_edit
+
     if !params[:students].present? || !params[:students][:ids].present?
       flash[:info] = "Debes seleccionar al menos a un estudiante para asignar una acción masiva"
       redirect_to students_url
@@ -91,6 +92,8 @@ class UsersController < ApplicationController
     end
 
     student_ids = params[:students][:ids].map(&:to_i)
+    multiplier = params[:bulk_edit][:times].to_i
+    multiplier = multiplier == 0 ? 1 : multiplier
 
     if params[:bulk_edit][:action].present?
       # TODO(delucas): decide upon params[:bulk_edit][:action] value
@@ -109,7 +112,7 @@ class UsersController < ApplicationController
         event = Event.find(params[:bulk_edit][:auxiliary_id].to_i)
 
         authorize Event, :register?
-        if MassiveEventRegister.new(students, event).execute
+        if MassiveEventRegister.new(students, event, multiplier).execute
           flash[:info] = "Se registraron correctamente #{students.size} eventos del tipo #{event.name}"
         end
       end
