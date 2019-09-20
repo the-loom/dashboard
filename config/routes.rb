@@ -84,6 +84,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :dashboard, only: :index
+
   namespace :admin do
     resources :courses do
       member do

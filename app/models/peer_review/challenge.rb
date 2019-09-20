@@ -9,6 +9,7 @@ class PeerReview::Challenge < ApplicationRecord
   has_many :reviews, through: :solutions
 
   scope :published, -> { where(published: true) }
+  scope :enabled, -> { where(enabled: true) }
 
   def solution_by(user)
     solutions.where(author: user).first

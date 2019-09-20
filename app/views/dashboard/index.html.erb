@@ -1,0 +1,26 @@
+<legend>Desafíos de revisión pendientes</legend>
+
+<% if @peer_review_challenges.empty? %>
+
+  <div class="alert alert-info">
+    <p>No tenés desafíos de revisión pendientes. ¡Buen trabajo!</p>
+  </div>
+
+<% else %>
+
+  <div class="alert alert-warning">
+    <p>Tenés pendientes los siguientes desafíos de revisión:</p>
+    <ul>
+      <% @peer_review_challenges.each do |challenge| %>
+        <li><%= challenge.title %></li>
+      <% end %>
+    </ul>
+    <br>
+    <p>
+      <%= link_to "Resolver desafíos", peer_review_challenges_path, class: 'btn btn-warning' %>
+    </p>
+  </div>
+
+
+
+<% end %>
