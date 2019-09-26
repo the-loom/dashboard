@@ -50,6 +50,9 @@
             <%= raw review.wording %>
           </div>
         </div>
+
+        <%= render partial: 'teacher_assessment', locals: { challenge: @challenge, solution: @solution, review: review } %>
+
       </div>
     <% end %>
   </div>
@@ -92,6 +95,9 @@
             <%= raw review.wording %>
           </div>
         </div>
+
+        <%= render partial: 'teacher_assessment', locals: { challenge: @challenge, solution: @solution, review: review } %>
+
       </div>
     <% end %>
   </div>

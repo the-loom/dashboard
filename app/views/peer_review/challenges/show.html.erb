@@ -84,6 +84,9 @@
                 <%= raw review.wording %>
               </div>
             </div>
+
+            <%= render partial: 'assessment', locals: { review: review } %>
+
           </div>
         <% end %>
       </div>
@@ -126,6 +129,9 @@
                 <%= raw review.wording %>
               </div>
             </div>
+
+            <%= render partial: 'assessment', locals: { review: review } %>
+
           </div>
         <% end %>
       </div>

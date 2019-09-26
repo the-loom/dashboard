@@ -17,6 +17,12 @@ es:
       coding: 'Desarrollo'
       text_execution: 'Ejecución de la prueba'
 
+  reviews:
+    assessments:
+      pending: 'pendiente'
+      good: 'buena'
+      bad: 'mala'
+
   course:
     features:
       badges: 'Emblemas'

@@ -1,0 +1,18 @@
+<% if review.teacher_assessment.to_sym != :pending %>
+  <div class="alert alert-info">
+    <p>
+      Esta revisión fue evaluada por <%= review.assessor.full_name %> como <strong><%= t "reviews.assessments.#{review.teacher_assessment}" %></strong>
+    </p>
+  </div>
+<% end %>
+
+<% if policy(PeerReview::Review).assess? %>
+
+  <%= form_for :assessment, url: assess_peer_review_challenge_review_path(challenge, review) do |f| %>
+    <%= f.hidden_field :current_solution_id, value: solution.id %>
+
+    <%= f.button 'Buena revisión', value: :good, name: 'teacher_assessment', class: 'btn btn-sm btn-success', type: 'submit' %>
+    <%= f.button 'Mala revisión', value: :bad, name: 'teacher_assessment', class: 'btn btn-sm btn-danger', type: 'submit' %>
+  <% end %>
+
+<% end %>
