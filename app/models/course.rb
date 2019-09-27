@@ -4,6 +4,9 @@ class Course < ApplicationRecord
   has_many :memberships
   has_many :users, through: :memberships
 
+  has_many :events
+  has_many :teams
+
   validates :name, presence: true, uniqueness: true
   validates :password, presence: true
 

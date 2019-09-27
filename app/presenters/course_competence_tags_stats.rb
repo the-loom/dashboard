@@ -1,5 +1,4 @@
 class CourseCompetenceTagsStats
-
   attr_reader :values
 
   def initialize
@@ -13,5 +12,4 @@ class CourseCompetenceTagsStats
       end
     end
   end
-
 end

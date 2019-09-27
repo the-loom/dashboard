@@ -11,7 +11,7 @@ RSpec.describe Event, type: :model do
 
   it {
     module CourseLock
-      def verify_current_course;
+      def verify_current_course
       end
     end
     should validate_uniqueness_of(:name)

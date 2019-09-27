@@ -7,7 +7,6 @@ class Team < ApplicationRecord
 
   has_many :memberships
   has_many :members, through: :memberships, source: :user, class_name: "User"
-  belongs_to :course
 
   def self.sorted
     self.order(:name)

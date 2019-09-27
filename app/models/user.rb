@@ -4,7 +4,7 @@ class User < ApplicationRecord
   has_one_attached :avatar
 
   has_many :memberships, -> { enabled }, dependent: :delete_all
-  has_many :all_memberships, class_name: 'Membership', foreign_key: :user_id
+  has_many :all_memberships, class_name: "Membership", foreign_key: :user_id
 
   has_many :courses, through: :memberships
   has_many :all_courses, through: :all_memberships, source: :course
@@ -58,7 +58,7 @@ class User < ApplicationRecord
     elsif first_name.present?
       first_name.strip
     else
-      'N/A'
+      "N/A"
     end
   end
 

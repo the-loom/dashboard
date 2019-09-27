@@ -84,7 +84,6 @@ class UsersController < ApplicationController
   end
 
   def bulk_edit
-
     if !params[:students].present? || !params[:students][:ids].present?
       flash[:info] = "Debes seleccionar al menos a un estudiante para asignar una acción masiva"
       redirect_to students_url
@@ -109,11 +108,11 @@ class UsersController < ApplicationController
       end
 
       if params[:bulk_edit][:action] == "register_event"
-        event = Event.find(params[:bulk_edit][:auxiliary_id].to_i)
+        event = Course.current.events.find(params[:bulk_edit][:auxiliary_id].to_i)
 
         authorize Event, :register?
         if MassiveEventRegister.new(students, event, multiplier).execute
-          flash[:info] = "Se registraron correctamente #{students.size} eventos del tipo #{event.name}"
+          flash[:info] = "Se registraron correctamente #{multiplier} eventos del tipo #{event.name} para #{students.size} estudiantes"
         end
       end
 
@@ -142,7 +141,7 @@ class UsersController < ApplicationController
       end
 
       if params[:bulk_edit][:action] == "team"
-        team = Team.find(params[:bulk_edit][:auxiliary_id].to_i)
+        team = Course.current.teams.find(params[:bulk_edit][:auxiliary_id].to_i)
 
         authorize Team, :add_member?
         if MassiveTeamRegister.new(students, team).execute
