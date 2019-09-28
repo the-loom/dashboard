@@ -10,14 +10,14 @@ class SolutionsController < ApplicationController
   end
 
   def summary
-    @solution = Solution.find(params[:solution_id])
+    @solution = current_user.solutions.find(params[:solution_id])
     authorize @solution
 
     @presenter = SolutionSummaryPresenter.new(@solution)
   end
 
   def add_partner
-    @solution = Solution.find(params[:solution_id])
+    @solution = current_user.solutions.find(params[:solution_id])
     authorize @solution
     @partner = User.where(nickname: params[:nickname])
     @solution.users << @partner
