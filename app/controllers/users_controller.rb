@@ -111,7 +111,9 @@ class UsersController < ApplicationController
         event = Course.current.events.find(params[:bulk_edit][:auxiliary_id].to_i)
 
         authorize Event, :register?
-        if MassiveEventRegister.new(students, event, multiplier).execute
+
+        lecture = params[:bulk_edit][:lecture_id].present? ? Lecture.find(params[:bulk_edit][:lecture_id]) : nil
+        if MassiveEventRegister.new(students, event, multiplier, lecture).execute
           flash[:info] = "Se registraron correctamente #{multiplier} eventos del tipo #{event.name} para #{students.size} estudiantes"
         end
       end

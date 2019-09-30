@@ -150,13 +150,17 @@
                   <p>Aún no hay ningún evento</p>
                 </div>
               <% else %>
+                <p>Registrar esta cantidad de veces:</p>
+                <input class="times form-control" name="bulk_edit[times]" placeholder="Multiplicador" value="1" type="number" min="1"/>
+                <p>Sólo si estuvo presente en:</p>
+                <%= collection_select(:bulk_edit, :lecture_id, @lectures, :id, :summary, { prompt: 'No era necesario estar presente' }, { class: 'form-control' } ) %>
+                <p>El siguiente evento:</p>
                 <% @events.each do |event| %>
                   <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit', data: { action: 'register_event', id: event.id} do %>
                     <%= "Registrar evento: #{event.name}" %>
                   <% end %>
                 <% end %>
                 <hr/>
-                <input class="times form-control" name="bulk_edit[times]" placeholder="Multiplicador" value="1" type="number" min="1"/>
               <% end %>
             </div>
             <div class="tab-pane fade" role="tabpanel" id="misc-tab" aria-labelledby="home-tab">
