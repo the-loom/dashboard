@@ -13,7 +13,8 @@ module PeerReview
     end
 
     def assess
-      review = PeerReview::Review.find(params[:id])
+      challenge = PeerReview::Challenge.find(params[:challenge_id])
+      review = challenge.reviews.find(params[:id])
       authorize review, :assess?
 
       review.teacher_assessment = params[:teacher_assessment].to_sym
@@ -27,7 +28,7 @@ module PeerReview
     def update
       @challenge = PeerReview::Challenge.find(params[:challenge_id])
       authorize @challenge, :review?
-      @review = PeerReview::Review.find(params[:id])
+      @review = @challenge.reviews.find(params[:id])
       @review.publish! if publishing?
       @review.update_attributes(solution_params)
 
