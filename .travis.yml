@@ -4,6 +4,7 @@ rvm:
 services:
   - docker
 install:
+  - cp .env.example .env
   - make build
 script:
   - make tests
