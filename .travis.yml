@@ -8,5 +8,7 @@ install:
   - make build
   - ls -la
   - ls -la tmp
+  - sudo chown -R travis:travis .
+  - sudo chmod 777 -R .
 script:
   - make tests
