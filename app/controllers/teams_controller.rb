@@ -9,7 +9,7 @@ class TeamsController < ApplicationController
   end
 
   def show
-    @team = Course.current.teams.where(nickname: params[:nickname]).first if params[:nickname]
+    @team = Course.current.teams.find_by(nickname: params[:nickname]) if params[:nickname]
     authorize @team
   end
 

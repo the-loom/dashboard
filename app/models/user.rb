@@ -75,7 +75,7 @@ class User < ApplicationRecord
   end
 
   def github_username
-    identities.where(provider: "github").first.nickname
+    identities.find_by(provider: "github").nickname
   end
 
   def update_with(identity)

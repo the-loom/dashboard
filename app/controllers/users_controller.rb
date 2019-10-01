@@ -16,7 +16,7 @@ class UsersController < ApplicationController
 
   def show
     if params[:nickname]
-      unless @user = Course.current.memberships.includes(:user).where(users: { nickname: params[:nickname] }).first.try(:user)
+      unless @user = Course.current.memberships.includes(:user).find_by(users: { nickname: params[:nickname] }).try(:user)
         flash[:alert] = "No existe el usuario"
         return redirect_to "/"
       end
@@ -36,7 +36,7 @@ class UsersController < ApplicationController
   end
 
   def comment
-    unless @user = Course.current.memberships.includes(:user).where(users: { nickname: params[:nickname] }).first.try(:user)
+    unless @user = Course.current.memberships.includes(:user).find_by(users: { nickname: params[:nickname] }).try(:user)
       flash[:alert] = "No existe el usuario"
       return redirect_to "/"
     end
@@ -78,7 +78,7 @@ class UsersController < ApplicationController
 
   def change_identity
     authorize @user, :update?
-    identity = @user.identities.where(id: params[:identity_id]).first
+    identity = @user.identities.find_by(id: params[:identity_id])
     @user.update_with(identity)
     redirect_to profile_url
   end

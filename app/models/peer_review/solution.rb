@@ -14,7 +14,7 @@ class PeerReview::Solution < ApplicationRecord
   end
 
   def review_by(reviewer)
-    reviews.where(reviewer: reviewer).first
+    reviews.find_by(reviewer: reviewer)
   end
 
   def size
