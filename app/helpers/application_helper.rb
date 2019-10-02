@@ -8,6 +8,6 @@ module ApplicationHelper
   end
 
   def yes_no(bool_value)
-    bool_value ? 'Si' : 'No'
+    bool_value ? "Si" : "No"
   end
 end

@@ -9,5 +9,4 @@ class Lecture < ApplicationRecord
 
   default_scope { order(date: :asc) }
   scope :required, -> { where(required: true) }
-
 end
