@@ -31,7 +31,7 @@ Rails.application.routes.draw do
 
   resources :competence_tags, except: :show
 
-  resources :lectures, only: [:index, :new, :create] do
+  resources :lectures, except: :destroy do
     collection do
       get :summary
     end

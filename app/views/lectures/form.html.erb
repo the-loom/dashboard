@@ -1,6 +1,7 @@
 <% nav_add 'Aula', '#' %>
 <% nav_add 'Clases', lectures_path %>
-<% nav_add 'Nueva', '#' %>
+<% nav_add @lecture.summary, lectures_path(@lecture) unless @lecture.new_record? %>
+<% nav_add @labels.title, '#' %>
 <%= nav_render %>
 
 <%= form_for @lecture do |f| %>
@@ -18,7 +19,12 @@
   </div>
 
   <div class="form-group">
-    <%= f.submit "Crear clase", class: "btn btn-primary" %>
+    <%= f.check_box :required %>
+    <%= f.label :required, 'Asistencia requerida', class: 'control-label' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit @labels.button, class: "btn btn-primary" %>
   </div>
 
 <% end %>

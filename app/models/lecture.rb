@@ -8,4 +8,6 @@ class Lecture < ApplicationRecord
   has_many :users, through: :attendances
 
   default_scope { order(date: :asc) }
+  scope :required, -> { where(required: true) }
+
 end

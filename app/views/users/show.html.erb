@@ -44,7 +44,7 @@
 
       <legend>Asistencia
         <small>
-          (<%= @user.attendances.select {|a| a.condition == 'present'}.count %>/<%= Lecture.count %>)
+          (<%= @user.attendances.select {|a| a.condition == 'present'}.count %>/<%= Lecture.required.count %>)
         </small>
       </legend>
 
@@ -58,20 +58,17 @@
 
         <table class="table table-striped table-bordered">
           <tbody>
-          <% @user.attendances.sort_by do |a|
-            a.lecture.date
-          end.each do |attendance| %>
+          <% Lecture.all.each do |lecture| %>
             <tr>
-              <td><%= attendance.lecture.date.strftime("%d/%m/%Y") %></td>
-              <td><%= attendance.lecture.summary %></td>
-              <td><%= attendance.condition == 'absent' ? 'Ausente' : 'Presente' %></td>
+              <td><%= lecture.date.strftime("%d/%m/%Y") %></td>
+              <td><%= lecture.summary %></td>
+              <td><%= @user.present_at(lecture) ? 'Presente' : lecture.required? ? 'Ausente' : 'Feriado' %></td>
             </tr>
           <% end %>
           </tbody>
         </table>
 
       <% end %>
-
     <% end %>
 
     <% if Course.current.on?(:events) %>
