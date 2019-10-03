@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_02_141404) do
+ActiveRecord::Schema.define(version: 2019_10_03_155101) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -121,6 +121,7 @@ ActiveRecord::Schema.define(version: 2019_10_02_141404) do
     t.datetime "discarded_at"
     t.integer "features", default: 0
     t.string "password"
+    t.integer "attendance_event_id"
     t.index ["discarded_at"], name: "index_courses_on_discarded_at"
   end
 

@@ -31,6 +31,10 @@ class User < ApplicationRecord
 
   delegate :points, to: :current_membership
 
+  def calculated_points
+    events.inject(0) { | total, event | total + event.points }
+  end
+
   def stats
     CompetenceTagsStats.for(self)
   end
@@ -100,18 +104,12 @@ class User < ApplicationRecord
     current_membership.student?
   end
 
-  def unregister_attendance(lecture)
-    if attendances.detect { |a| a.present? && a.lecture == lecture }
-      current_membership.add_points(-10)
-    end
-    Attendance.find_by(user: self, lecture: lecture).try(:delete)
-  end
-
   def register_attendance(lecture, condition)
     return unless current_membership # TODO: preventive fix, needs re-do
+    return unless Course.current.attendance_event # TODO: preventive fix, needs to be handled in a better way
     return if present_at(lecture)
     if condition == :present
-      current_membership.add_points(10)
+      register(Course.current.attendance_event)
     end
     attendance = Attendance.find_or_create_by(user: self, lecture: lecture)
     attendance.update_attributes(condition: condition)
@@ -119,8 +117,6 @@ class User < ApplicationRecord
 
   def register(event)
     occurrences.create(event: event, points: event.points)
-    current_membership.add_points(event.points)
-    self.save!
   end
 
   def earn(badge)
