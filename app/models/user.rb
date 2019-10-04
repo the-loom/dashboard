@@ -116,6 +116,7 @@ class User < ApplicationRecord
   end
 
   def register(event)
+    return unless current_membership && current_membership.enabled? # TODO: preventive fix, needs re-do
     occurrences.create(event: event, points: event.points)
   end
 

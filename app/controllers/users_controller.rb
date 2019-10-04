@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     @lectures = Lecture.all.order(date: :asc)
     @teams = Team.all.order(name: :asc)
     @badges = Badge.all
-    @events = Event.all.order(name: :asc)
+    @events = Event.all.order(name: :asc) - [Course.current.attendance_event]
   end
 
   def show
