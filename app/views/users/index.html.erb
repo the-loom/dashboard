@@ -29,7 +29,6 @@
         <% end %>
         <th>Nombre</th>
         <th>XP</th>
-        <th>XP2</th>
         <th>Puntaje</th>
         <% if Course.current.on?(:badges) %>
           <th>Medallero</th>
@@ -61,9 +60,6 @@
           </td>
           <td>
             <%= student.points %>
-          </td>
-          <td>
-            <%= student.calculated_points %>
           </td>
           <td>
             <%= student.score.round(2) %>

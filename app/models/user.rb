@@ -29,9 +29,7 @@ class User < ApplicationRecord
 
   has_many :peer_review_solutions, foreign_key: :author_id, class_name: "PeerReview::Solution"
 
-  delegate :points, to: :current_membership
-
-  def calculated_points
+  def points
     events.inject(0) { | total, event | total + event.points }
   end
 
@@ -43,7 +41,7 @@ class User < ApplicationRecord
     min = Event.min_points
     max = Event.max_points
     spread = max - min
-    pts = points # events.sum(:points)
+    pts = points
     normalized = pts - min
     if pts < min
       2.0

@@ -178,7 +178,6 @@ ActiveRecord::Schema.define(version: 2019_10_03_155101) do
     t.integer "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "points", default: 0
     t.integer "unread_notifications", default: 0
     t.boolean "enabled", default: true
     t.integer "team_id"
