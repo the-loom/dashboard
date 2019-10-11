@@ -7,6 +7,8 @@ class Course < ApplicationRecord
   has_many :events
   has_many :teams
 
+  belongs_to :attendance_event, class_name: "Event", foreign_key: "attendance_event_id", optional: true
+
   validates :name, presence: true, uniqueness: true
   validates :password, presence: true
 

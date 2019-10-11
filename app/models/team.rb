@@ -25,6 +25,7 @@ class Team < ApplicationRecord
     enabled_members.sum(&:points) / enabled_members.size
   end
 
+  # TODO(delucas): migrate to service, dupped code!
   def score
     min = Event.min_points
     max = Event.max_points
