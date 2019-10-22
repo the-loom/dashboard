@@ -5,5 +5,4 @@ class CompetenceTag < ApplicationRecord
   validates :name, uniqueness: { scope: :course_id }
 
   has_many :events
-
 end

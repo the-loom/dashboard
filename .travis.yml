@@ -4,6 +4,8 @@ rvm:
 services:
   - docker
 install:
+  - cp .env.example .env
   - make build
+  - sudo chmod 777 -R /usr/src/app
 script:
   - make tests

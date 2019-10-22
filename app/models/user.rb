@@ -4,7 +4,7 @@ class User < ApplicationRecord
   has_one_attached :avatar
 
   has_many :memberships, -> { enabled }, dependent: :delete_all
-  has_many :all_memberships, class_name: 'Membership', foreign_key: :user_id
+  has_many :all_memberships, class_name: "Membership", foreign_key: :user_id
 
   has_many :courses, through: :memberships
   has_many :all_courses, through: :all_memberships, source: :course
@@ -27,7 +27,11 @@ class User < ApplicationRecord
 
   has_many :repos, foreign_key: :author_id, class_name: "AutomaticCorrection::Repo"
 
-  delegate :points, to: :current_membership
+  has_many :peer_review_solutions, foreign_key: :author_id, class_name: "PeerReview::Solution"
+
+  def points
+    events.inject(0) { | total, event | total + event.points }
+  end
 
   def stats
     ::StudentCompetenceTagsStats.new(self)
@@ -37,7 +41,7 @@ class User < ApplicationRecord
     min = Event.min_points
     max = Event.max_points
     spread = max - min
-    pts = points # events.sum(:points)
+    pts = points
     normalized = pts - min
     if pts < min
       2.0
@@ -56,7 +60,7 @@ class User < ApplicationRecord
     elsif first_name.present?
       first_name.strip
     else
-      'N/A'
+      "N/A"
     end
   end
 
@@ -73,7 +77,7 @@ class User < ApplicationRecord
   end
 
   def github_username
-    identities.where(provider: "github").first.nickname
+    identities.find_by(provider: "github").nickname
   end
 
   def update_with(identity)
@@ -98,27 +102,20 @@ class User < ApplicationRecord
     current_membership.student?
   end
 
-  def unregister_attendance(lecture)
-    if attendances.detect { |a| a.present? && a.lecture == lecture }
-      current_membership.add_points(-10)
-    end
-    Attendance.find_by(user: self, lecture: lecture).try(:delete)
-  end
-
   def register_attendance(lecture, condition)
     return unless current_membership # TODO: preventive fix, needs re-do
+    return unless Course.current.attendance_event # TODO: preventive fix, needs to be handled in a better way
     return if present_at(lecture)
     if condition == :present
-      current_membership.add_points(10)
+      register(Course.current.attendance_event)
     end
     attendance = Attendance.find_or_create_by(user: self, lecture: lecture)
     attendance.update_attributes(condition: condition)
   end
 
   def register(event)
+    return unless current_membership && current_membership.enabled? # TODO: preventive fix, needs re-do
     occurrences.create(event: event, points: event.points)
-    current_membership.add_points(event.points)
-    self.save!
   end
 
   def earn(badge)

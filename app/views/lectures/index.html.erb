@@ -19,16 +19,20 @@
     <tr>
       <th>Resumen</th>
       <th>Fecha</th>
+      <th>Asistencia requerida</th>
     </tr>
     </thead>
     <tbody>
     <% @lectures.each do |lecture| %>
       <tr>
         <td>
-          <%= lecture.summary %>
+          <%= link_to lecture.summary, edit_lecture_path(lecture) %>
         </td>
         <td>
           <%= l lecture.date.in_time_zone('Buenos Aires') %>
+        </td>
+        <td>
+          <%= yes_no(lecture.required) %>
         </td>
       </tr>
     <% end %>

@@ -76,6 +76,10 @@
         </li>
       <% end %>
 
+      <li>
+        <%= link_to "Tablero", dashboard_index_path %>
+      </li>
+
       <% if Course.current.on?(:automatic_correction_challenges) && policy(AutomaticCorrection::Repo).index? %>
         <li>
           <%= link_to "Desafíos de Corrección Automática", repos_path %>

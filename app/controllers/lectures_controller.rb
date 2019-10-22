@@ -11,15 +11,42 @@ class LecturesController < ApplicationController
   def new
     authorize Lecture, :create?
     @lecture = Lecture.new
+    @labels = OpenStruct.new(title: "Nueva clase", button: "Guardar clase")
+    render :form
   end
 
   def create
     authorize Lecture, :create?
     @lecture = Lecture.new(lecture_params)
-    if @lecture.save
+
+    if @lecture.valid?
+      @lecture.save
+      redirect_to lectures_path
       flash[:info] = "Se creo correctamente la clase"
+    else
+      @labels = OpenStruct.new(title: "Nueva clase", button: "Guardar clase")
+      render :form
     end
-    redirect_to lectures_path
+  end
+
+  def edit
+    authorize Lecture, :manage?
+    @lecture = Lecture.find(params[:id])
+    @labels = OpenStruct.new(title: "Editar clase", button: "Actualizar clase")
+    render :form
+  end
+
+  def update
+    authorize Lecture, :manage?
+    @lecture = Lecture.find(params[:id])
+
+    if @lecture.update_attributes(lecture_params)
+      redirect_to lectures_path
+      flash[:info] = "Se actualizó correctamente la clase"
+    else
+      @labels = OpenStruct.new(title: "Editar clase", button: "Actualizar clase")
+      render :form
+    end
   end
 
   def summary
@@ -32,6 +59,6 @@ class LecturesController < ApplicationController
 
   private
     def lecture_params
-      params[:lecture].permit(:summary, :date)
+      params[:lecture].permit(:summary, :date, :required)
     end
 end

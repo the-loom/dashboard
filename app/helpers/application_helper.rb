@@ -6,4 +6,8 @@ module ApplicationHelper
       user.image
     end
   end
+
+  def yes_no(bool_value)
+    bool_value ? "Si" : "No"
+  end
 end

@@ -16,11 +16,6 @@ class Membership < ApplicationRecord
     teacher: 2
   }
 
-  def add_points(value)
-    self.points += value
-    self.save!
-  end
-
   def read_notifications
     self.unread_notifications = 0
     self.save!

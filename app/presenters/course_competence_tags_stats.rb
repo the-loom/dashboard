@@ -1,5 +1,4 @@
 class CourseCompetenceTagsStats
-
   attr_reader :values
 
   def initialize
@@ -16,5 +15,4 @@ class CourseCompetenceTagsStats
     @values["Perseverancia"] = Lecture.count * 10
 
   end
-
 end

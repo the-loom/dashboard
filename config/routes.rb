@@ -31,7 +31,7 @@ Rails.application.routes.draw do
 
   resources :competence_tags, except: :show
 
-  resources :lectures, only: [:index, :new, :create] do
+  resources :lectures, except: :destroy do
     collection do
       get :summary
     end
@@ -84,6 +84,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :dashboard, only: :index
+
   namespace :admin do
     resources :courses do
       member do
@@ -111,7 +113,9 @@ Rails.application.routes.draw do
         get :purge
       end
       resources :solutions, only: [:new, :update, :show]
-      resources :reviews, only: [:new, :update]
+      resources :reviews, only: [:new, :update] do
+        post :assess, on: :member
+      end
     end
   end
 end

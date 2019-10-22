@@ -9,7 +9,7 @@ class TeamsController < ApplicationController
   end
 
   def show
-    @team = Team.where(nickname: params[:nickname]).first if params[:nickname]
+    @team = Course.current.teams.find_by(nickname: params[:nickname]) if params[:nickname]
     authorize @team
   end
 
@@ -35,14 +35,14 @@ class TeamsController < ApplicationController
 
   def edit
     authorize Team, :manage?
-    @team = Team.find(params[:id])
+    @team = Course.current.teams.find(params[:id])
     @labels = OpenStruct.new(title: "Editar equipo", button: "Actualizar equipo")
     render :form
   end
 
   def update
     authorize Team, :manage?
-    @team = Team.find(params[:id])
+    @team = Course.current.teams.find(params[:id])
 
     if @team.update_attributes(team_params)
       redirect_to team_profile_path(@team.nickname)
@@ -53,7 +53,7 @@ class TeamsController < ApplicationController
   end
 
   def add_member
-    @team = Team.find(params[:team_id])
+    @team = Course.current.teams.find(params[:team_id])
     authorize @team
     membership = Membership.where(user: User.where(nickname: params[:nickname]),
                                   course: current_user.current_membership.course)

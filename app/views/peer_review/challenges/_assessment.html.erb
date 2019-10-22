@@ -1,0 +1,7 @@
+<% if review.teacher_assessment.to_sym != :pending %>
+  <div class="alert alert-<%= review.teacher_assessment.to_sym == :good ? 'success' : 'danger' %>">
+    <p>
+      Esta revisión fue evaluada por <%= review.assessor.full_name %> como <strong><%= t "reviews.assessments.#{review.teacher_assessment}" %></strong>
+    </p>
+  </div>
+<% end %>

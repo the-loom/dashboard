@@ -12,10 +12,23 @@ module PeerReview
       end
     end
 
+    def assess
+      challenge = PeerReview::Challenge.find(params[:challenge_id])
+      review = challenge.reviews.find(params[:id])
+      authorize review, :assess?
+
+      review.teacher_assessment = params[:teacher_assessment].to_sym
+      review.assessor = current_user
+
+      review.save
+
+      redirect_to peer_review_challenge_solution_path(review.challenge, params[:assessment][:current_solution_id])
+    end
+
     def update
       @challenge = PeerReview::Challenge.find(params[:challenge_id])
       authorize @challenge, :review?
-      @review = PeerReview::Review.find(params[:id])
+      @review = @challenge.reviews.find(params[:id])
       @review.publish! if publishing?
       @review.update_attributes(solution_params)
 

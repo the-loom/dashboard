@@ -1,5 +1,4 @@
 class StudentCompetenceTagsStats
-
   attr_reader :values
 
   def initialize(user)
@@ -29,5 +28,4 @@ class StudentCompetenceTagsStats
       { axis: key, value: value }
     end
   end
-
 end

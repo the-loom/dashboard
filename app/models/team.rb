@@ -7,7 +7,6 @@ class Team < ApplicationRecord
 
   has_many :memberships
   has_many :members, through: :memberships, source: :user, class_name: "User"
-  belongs_to :course
 
   def self.sorted
     self.order(:name)
@@ -26,6 +25,7 @@ class Team < ApplicationRecord
     enabled_members.sum(&:points) / enabled_members.size
   end
 
+  # TODO(delucas): migrate to service, dupped code!
   def score
     min = Event.min_points
     max = Event.max_points

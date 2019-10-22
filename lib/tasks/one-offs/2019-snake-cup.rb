@@ -1,8 +1,5 @@
 Course.current = Course.find(2)
 
-# evento
-event = Event.find(xx)
-
 # awards
 data = [
     { uuids: "123, 118", position: 1 },

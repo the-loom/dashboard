@@ -16,6 +16,11 @@ RSpec.describe Lecture, type: :model do
 
   it "is assigned correctly" do
     user = User.create!(first_name: "John")
+
+    event = Event.create!(course: Course.current, name: "Attendance", description: "Some description", points: 10, min_points: 10, max_points: 10)
+    Course.current.attendance_event = event
+    Course.current.save
+
     user.memberships << Membership.new(course: Course.current, role: :student)
     lecture = Lecture.create!(date: Date.new(2017, 4, 22), summary: "TDD", course: Course.current)
 
@@ -23,8 +28,14 @@ RSpec.describe Lecture, type: :model do
 
     expect(user.lectures).to include(lecture)
   end
+
   it "earns points when present" do
     user = User.create!(first_name: "John")
+
+    event = Event.create!(course: Course.current, name: "Attendance", description: "Some description", points: 10, min_points: 10, max_points: 10)
+    Course.current.attendance_event = event
+    Course.current.save
+
     user.memberships << Membership.new(course: Course.current, role: :student)
     lecture = Lecture.create!(date: Date.new(2017, 4, 22), summary: "TDD", course: Course.current)
 
@@ -32,25 +43,19 @@ RSpec.describe Lecture, type: :model do
 
     expect(user.points).to eq(10)
   end
+
   it "doesn't earn points when absent" do
     user = User.create!(first_name: "John")
+
+    event = Event.create!(course: Course.current, name: "Attendance", description: "Some description", points: 10, min_points: 10, max_points: 10)
+    Course.current.attendance_event = event
+    Course.current.save
+
     user.memberships << Membership.new(course: Course.current, role: :student)
     lecture = Lecture.create!(date: Date.new(2017, 4, 22), summary: "TDD", course: Course.current)
 
     user.register_attendance(lecture, :absent)
 
     expect(user.points).to eq(0)
-  end
-  it "can un-register assistance" do
-    user = User.create!(first_name: "John")
-    user.memberships << Membership.new(course: Course.current, role: :student)
-    lecture = Lecture.create!(date: Date.new(2017, 4, 22), summary: "TDD", course: Course.current)
-    user.register_attendance(lecture, :present)
-    expect(user.points).to eq(10)
-    expect(user.lectures).to include(lecture)
-
-    user.unregister_attendance(lecture)
-    expect(user.points).to eq(0)
-    expect(user.lectures).to_not include(lecture)
   end
 end

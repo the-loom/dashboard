@@ -74,7 +74,8 @@ module Admin
         {
             name: params[:course][:name],
             password: params[:course][:password],
-            features: features
+            features: features,
+            attendance_event_id: params[:course][:attendance_event_id]
         }
       end
   end

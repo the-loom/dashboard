@@ -11,12 +11,12 @@ class UsersController < ApplicationController
     @lectures = Lecture.all.order(date: :asc)
     @teams = Team.all.order(name: :asc)
     @badges = Badge.all
-    @events = Event.all.order(name: :asc)
+    @events = Event.all.order(name: :asc) - [Course.current.attendance_event]
   end
 
   def show
     if params[:nickname]
-      unless @user = Course.current.memberships.includes(:user).where(users: { nickname: params[:nickname] }).first.try(:user)
+      unless @user = Course.current.memberships.includes(:user).find_by(users: { nickname: params[:nickname] }).try(:user)
         flash[:alert] = "No existe el usuario"
         return redirect_to "/"
       end
@@ -36,7 +36,7 @@ class UsersController < ApplicationController
   end
 
   def comment
-    unless @user = Course.current.memberships.includes(:user).where(users: { nickname: params[:nickname] }).first.try(:user)
+    unless @user = Course.current.memberships.includes(:user).find_by(users: { nickname: params[:nickname] }).try(:user)
       flash[:alert] = "No existe el usuario"
       return redirect_to "/"
     end
@@ -78,7 +78,7 @@ class UsersController < ApplicationController
 
   def change_identity
     authorize @user, :update?
-    identity = @user.identities.where(id: params[:identity_id]).first
+    identity = @user.identities.find_by(id: params[:identity_id])
     @user.update_with(identity)
     redirect_to profile_url
   end
@@ -109,11 +109,13 @@ class UsersController < ApplicationController
       end
 
       if params[:bulk_edit][:action] == "register_event"
-        event = Event.find(params[:bulk_edit][:auxiliary_id].to_i)
+        event = Course.current.events.find(params[:bulk_edit][:auxiliary_id].to_i)
 
         authorize Event, :register?
-        if MassiveEventRegister.new(students, event, multiplier).execute
-          flash[:info] = "Se registraron correctamente #{students.size} eventos del tipo #{event.name}"
+
+        lecture = params[:bulk_edit][:lecture_id].present? ? Lecture.find(params[:bulk_edit][:lecture_id]) : nil
+        if MassiveEventRegister.new(students, event, multiplier, lecture).execute
+          flash[:info] = "Se registraron correctamente #{multiplier} eventos del tipo #{event.name} para #{students.size} estudiantes"
         end
       end
 
@@ -142,7 +144,7 @@ class UsersController < ApplicationController
       end
 
       if params[:bulk_edit][:action] == "team"
-        team = Team.find(params[:bulk_edit][:auxiliary_id].to_i)
+        team = Course.current.teams.find(params[:bulk_edit][:auxiliary_id].to_i)
 
         authorize Team, :add_member?
         if MassiveTeamRegister.new(students, team).execute

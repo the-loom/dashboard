@@ -34,15 +34,21 @@
         </td>
         <% @lectures.each do |lecture| %>
           <td>
-            <% attendance = (@attendances_per_student[student] || []).find { |a| a.lecture == lecture }
-               present = attendance && attendance.condition == 'present' %>
-            <label class="label label-<%= present ? 'success' : 'danger' %>">
-              <%= present ? '✔' : '✘' %>
-            </label>
+            <% if lecture.required? %>
+              <% attendance = (@attendances_per_student[student] || []).find { |a| a.lecture == lecture }
+                 present = attendance && attendance.condition == 'present' %>
+              <label class="label label-<%= present ? 'success' : 'danger' %>">
+                <%= present ? '✔' : '✘' %>
+              </label>
+            <% else %>
+              <label class="label label-default">
+                ✘
+              </label>
+            <% end %>
           </td>
         <% end %>
         <td>
-          <%= ((@attendances_per_student[student] || []).size.to_d * 100 / @lectures.size).round(2) %>%
+          <%= (((@attendances_per_student[student] || []).size).to_d * 100 / @lectures.required.size).round(2) %>%
         </td>
       </tr>
     <% end %>
@@ -74,7 +80,7 @@
               },
               columnDefs: [ {
                   targets: 'no-sort',
-                  orderable: false,
+                  orderable: false
               } ]
           });
       });
