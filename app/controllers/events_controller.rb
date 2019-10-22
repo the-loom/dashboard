@@ -58,6 +58,8 @@ class EventsController < ApplicationController
 
   private
     def event_params
-      params[:event].permit(:name, :description, :batch_size, :points, :min_points, :max_points, :competence_tag_id)
+      params[:event].permit(:name, :description, :enabled,
+                            :points, :min_points, :max_points,
+                            :competence_tag_id)
     end
 end
