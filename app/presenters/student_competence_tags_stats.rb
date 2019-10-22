@@ -11,8 +11,6 @@ class StudentCompetenceTagsStats
         total_points + event.points
       end
     end
-
-    @values["Perseverancia"] = Attendance.where(user: user, condition: :present).count * 10
   end
 
   def normalized
