@@ -1,9 +1,9 @@
 module ApplicationHelper
-  def user_avatar(user)
-    if user.avatar.attached?
-      user.avatar
+  def entity_avatar(entity)
+    if entity.avatar.attached?
+      entity.avatar
     else
-      user.image
+      'https://avatars1.githubusercontent.com/u/20347933?s=400&v=4'
     end
   end
 

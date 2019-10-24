@@ -1,12 +1,10 @@
 class TeamPolicy < ApplicationPolicy
   def manage?
-    user.teacher?
+    team = user.current_membership.team
+    user.teacher? || team.members.include?(user)
   end
   def index?
     user.teacher?
-  end
-  def show?
-    user.teacher? || record.members.include?(user)
   end
 
   def create?

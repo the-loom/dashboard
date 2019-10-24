@@ -6,13 +6,33 @@
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 <div class="fb-profile">
   <div class="fb-image-lg"></div>
-  <img align="left" class="fb-image-profile thumbnail" src="<%= @team.image %>" alt="Profile image example"/>
+  <%= image_tag entity_avatar(@team), {class: "fb-image-profile thumbnail", alt: @team.name } %>
   <div class="fb-profile-text">
     <h1>
       <%= @team.name %>
       <small><%= @team.nickname %></small>
     </h1>
     <div class="student dashboard">
+
+      <div class="col-md-3">
+        <%= form_for @team do |f| %>
+
+          <%= render :partial => 'shared/errors', locals: { f: f } %>
+
+          <%= f.hidden_field :name %>
+
+          <div class="form-group">
+            <%= f.label :avatar, 'Imagen de perfil', class: 'control-label' %>
+            <%= f.file_field :avatar, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= f.submit 'Actualizar emblema', class: "btn btn-primary" %>
+          </div>
+
+        <% end %>
+      </div>
+
       <div class="col-md-3">
         <div id="chart" data-score="<%= @team.score %>" data-xp="<%= @team.points %>"></div>
       </div>
@@ -29,7 +49,7 @@
       <% @team.members.each do |student| %>
         <div class="col-md-2 col-xs-6 student-box">
           <%= link_to user_details_url(student.nickname) do %>
-            <%= image_tag user_avatar(student), { class: "avatar#{ ' disabled' unless student.enabled? }", alt: student.full_name } %>
+            <%= image_tag entity_avatar(student), {class: "avatar#{ ' disabled' unless student.enabled? }", alt: student.full_name } %>
             <p class="data">
               <%= student.nickname %><br/>
               <small><%= student.full_name %></small><br/>

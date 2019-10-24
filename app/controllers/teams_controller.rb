@@ -10,7 +10,7 @@ class TeamsController < ApplicationController
 
   def show
     @team = Course.current.teams.find_by(nickname: params[:nickname]) if params[:nickname]
-    authorize @team
+    authorize @team, :manage?
   end
 
   def new
@@ -34,21 +34,26 @@ class TeamsController < ApplicationController
   end
 
   def edit
-    authorize Team, :manage?
     @team = Course.current.teams.find(params[:id])
+    authorize @team, :manage?
     @labels = OpenStruct.new(title: "Editar equipo", button: "Actualizar equipo")
     render :form
   end
 
   def update
-    authorize Team, :manage?
     @team = Course.current.teams.find(params[:id])
+    authorize @team, :manage?
 
     if @team.update_attributes(team_params)
       redirect_to team_profile_path(@team.nickname)
       flash[:info] = "Se actualizó correctamente el equipo"
     else
-      render action: :edit
+      if current_user.teacher?
+        @labels = OpenStruct.new(title: "Editar equipo", button: "Actualizar equipo")
+        render action: :form
+      else
+        render action: :show
+      end
     end
   end
 
@@ -64,6 +69,6 @@ class TeamsController < ApplicationController
 
   private
     def team_params
-      params[:team].permit(:name, :nickname, :image)
+      params[:team].permit(:name, :nickname, :avatar)
     end
 end
