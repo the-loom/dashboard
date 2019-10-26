@@ -12,6 +12,13 @@ class UsersController < ApplicationController
     @teams = Team.all.order(name: :asc)
     @badges = Badge.all
     @events = Event.all.order(name: :asc) - [Course.current.attendance_event]
+
+    respond_to do |format|
+      format.html
+      format.csv do
+        send_data User.to_csv, filename: "attendance_sheet.csv"
+      end
+    end
   end
 
   def show

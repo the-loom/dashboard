@@ -29,6 +29,17 @@ class User < ApplicationRecord
 
   has_many :peer_review_solutions, foreign_key: :author_id, class_name: "PeerReview::Solution"
 
+  def self.to_csv
+    CSV.generate do |csv|
+      csv << ["Grupo", "Apellido", "Nombre", "Presente"]
+
+      enabled_students_for_course = User.includes(:memberships).includes(memberships: :team).where(memberships: {course: Course.current, role: :student, enabled: true}).order('teams.name, last_name, first_name')
+      enabled_students_for_course.each do |x|
+        csv << [x.current_membership.team.name, x.last_name, x.first_name]
+      end
+    end
+  end
+
   def points
     events.inject(0) { | total, event | total + event.points }
   end
