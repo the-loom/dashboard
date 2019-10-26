@@ -104,6 +104,16 @@
   </div>
   <div class="col-md-6">
 
+    <% if Course.current.on?(:competences) %>
+
+      <legend>
+        Estadísticas
+      </legend>
+
+      <div class="radarChart"></div>
+
+    <% end %>
+
     <% if Course.current.on?(:badges) %>
 
       <legend>Emblemas
@@ -226,10 +236,6 @@
 
 <% end %>
 
-
-<div class="radarChart"></div>
-
-
 <% content_for :javascript do %>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js" charset="utf-8"></script>
@@ -294,15 +300,15 @@
           margin = {top: 75, right: 75, bottom: 75, left: 75};
 
       var radarChartOptions = {
-          w: 500,
-          h: 300,
+          w: 450,
+          h: 350,
           margin: margin,
 //          maxValue: 100,
           levels: 5,
           roundStrokes: false,
           color: color,
-          bgColor: '#288',
-          lineColor: '#288',
+          bgColor: '#6e6485',
+          lineColor: '#6e6485',
           //format: d3.format('d')
           format: function(){}
       };
