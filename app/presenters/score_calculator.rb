@@ -1,5 +1,4 @@
 class ScoreCalculator
-
   attr_reader :min_points, :max_points
 
   def initialize
@@ -18,5 +17,4 @@ class ScoreCalculator
       (normalized.to_f / spread) * 6 + 4
     end
   end
-
 end
