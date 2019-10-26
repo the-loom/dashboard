@@ -29,7 +29,7 @@
       %>
         <tr>
           <td>
-            <%= image_tag user_avatar(student), { class: "avatar#{ ' disabled' unless student.enabled? }", alt: student.full_name, "data-id": student.id } %>
+            <%= image_tag entity_avatar(student), {class: "avatar#{ ' disabled' unless student.enabled? }", alt: student.full_name, "data-id": student.id } %>
           </td>
           <td>
             <%= link_to student.current_membership.team.try(:name), team_profile_url(student.current_membership.team.nickname) if student.current_membership.team.present? %>

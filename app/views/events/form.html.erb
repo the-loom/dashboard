@@ -39,6 +39,11 @@
   </div>
 
   <div class="form-group">
+    <%= f.check_box :enabled %>
+    <%= f.label :enabled, 'Evento habilitado', class: 'control-label' %>
+  </div>
+
+  <div class="form-group">
     <%= f.submit @labels.button, class: "btn btn-primary" %>
   </div>
 

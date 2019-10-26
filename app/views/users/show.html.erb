@@ -11,7 +11,7 @@
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 <div class="fb-profile">
   <div class="fb-image-lg"></div>
-  <%= image_tag user_avatar(@user), { class: 'fb-image-profile thumbnail', alt: @user.full_name, align: 'left' } %>
+  <%= image_tag entity_avatar(@user), {class: 'fb-image-profile thumbnail', alt: @user.full_name, align: 'left' } %>
   <div class="fb-profile-text">
     <h1>
       <%= @user.full_name %>
@@ -26,7 +26,7 @@
           <% team = @user.current_membership.team %>
           <% if team.present? %>
             <%= link_to team_profile_url(team.nickname) do %>
-              <img class="team avatar" title="<%= team.name %>" src="<%= team.image %>">
+              <%= image_tag entity_avatar(team), {class: "team avatar", alt: team.name } %>
             <% end %>
           <% end %>
         <% end %>
@@ -200,7 +200,7 @@
           <div class="comment-box">
             <div class="col-sm-2">
               <div class="thumbnail">
-                <%= image_tag user_avatar(comment.commenter), { class: 'img-responsive user-photo', alt: comment.commenter.full_name } %>
+                <%= image_tag entity_avatar(comment.commenter), {class: 'img-responsive user-photo', alt: comment.commenter.full_name } %>
               </div>
             </div>
 

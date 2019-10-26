@@ -1,9 +1,13 @@
 class Team < ApplicationRecord
   include CourseLock
 
-  validates_presence_of :name, :nickname, :image
+  has_one_attached :avatar
+
+  validates_presence_of :name, :nickname
   validates :name, uniqueness: { scope: :course_id }
   validates :nickname, uniqueness: { scope: :course_id }
+  validates :avatar, size: { less_than: 1.megabyte }, content_type: [:png, :jpg, :jpeg]
+
 
   has_many :memberships
   has_many :members, through: :memberships, source: :user, class_name: "User"
@@ -25,19 +29,7 @@ class Team < ApplicationRecord
     enabled_members.sum(&:points) / enabled_members.size
   end
 
-  # TODO(delucas): migrate to service, dupped code!
   def score
-    min = Event.min_points
-    max = Event.max_points
-    spread = max - min
-    pts = self.points
-    normalized = pts - min
-    if pts < min
-      2.0
-    elsif pts > max
-      10.0
-    else
-      (normalized.to_f / spread) * 6 + 4
-    end
+    ScoreCalculator.new.score_for(points)
   end
 end

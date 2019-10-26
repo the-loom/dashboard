@@ -19,6 +19,7 @@
     <tr>
       <th>Evento</th>
       <th>Descripción</th>
+      <th>Habilitado</th>
       <th>Otorgamientos</th>
       <th>Puntos</th>
       <th>Pts Mínimos</th>
@@ -35,6 +36,9 @@
         </td>
         <td>
           <%= event.description %>
+        </td>
+        <td>
+          <%= yes_no(event.enabled) %>
         </td>
         <td>
           <%= event.occurrences.size %> veces

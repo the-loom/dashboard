@@ -45,3 +45,6 @@ gem "responders"
 gem "bootsnap", require: false
 
 gem "aws-sdk-s3"
+
+gem 'active_storage_validations'
+gem 'mini_magick', '>= 4.9.5'
