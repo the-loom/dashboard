@@ -12,4 +12,18 @@ class StudentCompetenceTagsStats
       end
     end
   end
+
+  def normalized
+    baseline = CourseCompetenceTagsStats.new.values
+    @values.map do |key, value|
+      divisor = baseline[key] == 0 ? ( value == 0 ? 1 : value ) : baseline[key]
+      { axis: key, value: [value / divisor.to_f, 1].min }
+    end
+  end
+
+  def present
+    @values.map do |key, value|
+      { axis: key, value: value }
+    end
+  end
 end

@@ -104,6 +104,16 @@
   </div>
   <div class="col-md-6">
 
+    <% if Course.current.on?(:competences) %>
+
+      <legend>
+        Estadísticas
+      </legend>
+
+      <div class="radarChart"></div>
+
+    <% end %>
+
     <% if Course.current.on?(:badges) %>
 
       <legend>Emblemas
@@ -226,7 +236,6 @@
 
 <% end %>
 
-
 <% content_for :javascript do %>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js" charset="utf-8"></script>
@@ -243,7 +252,7 @@
       var xp = +$chart.data("xp"),
           score = +$chart.data("score");
 
-      var chart = c3.generate({
+      window.chart = c3.generate({
           data: {
               columns: [
                   ['data', score]
@@ -279,5 +288,31 @@
               height: 100
           }
       });
+  </script>
+
+  <script>
+
+      var data = [
+          <%== @user.stats.normalized.to_json %>
+      ];
+
+      var color = d3.scale.ordinal().range(["#00A0B0","#EDC951","#CC333F"]),
+          margin = {top: 75, right: 75, bottom: 75, left: 75};
+
+      var radarChartOptions = {
+          w: 450,
+          h: 350,
+          margin: margin,
+          maxValue: 1,
+          levels: 5,
+          roundStrokes: false,
+          color: color,
+          bgColor: '#6e6485',
+          lineColor: '#6e6485',
+          //format: d3.format('d')
+          format: function(){}
+      };
+      RadarChart(".radarChart", data, radarChartOptions);
+
   </script>
 <% end %>

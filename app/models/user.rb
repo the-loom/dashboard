@@ -45,7 +45,7 @@ class User < ApplicationRecord
   end
 
   def stats
-    CompetenceTagsStats.for(self)
+    ::StudentCompetenceTagsStats.new(self)
   end
 
   def score
