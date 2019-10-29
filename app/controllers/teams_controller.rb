@@ -57,6 +57,15 @@ class TeamsController < ApplicationController
     end
   end
 
+  def destroy
+    @team = Course.current.teams.find(params[:id])
+    if @team.enabled_members.size == 0
+      @team.destroy
+      flash[:info] = "Se eliminó el equipo '#{@team.name}'"
+    end
+    redirect_to teams_path
+  end
+
   def add_member
     @team = Course.current.teams.find(params[:team_id])
     authorize @team
