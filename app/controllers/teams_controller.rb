@@ -66,16 +66,6 @@ class TeamsController < ApplicationController
     redirect_to teams_path
   end
 
-  def add_member
-    @team = Course.current.teams.find(params[:team_id])
-    authorize @team
-    membership = Membership.where(user: User.where(nickname: params[:nickname]),
-                                  course: current_user.current_membership.course)
-    @team.memberships << membership
-
-    redirect_to team_profile_url(@team.nickname)
-  end
-
   private
     def team_params
       params[:team].permit(:name, :nickname, :avatar)

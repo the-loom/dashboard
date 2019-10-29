@@ -69,9 +69,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :teams, except: :show do
-    patch :add_member
-  end
+  resources :teams, except: :show
 
   get "/teams/:nickname" => "teams#show", as: :team_profile, constraints: { nickname: /[0-z\.-]+/ }
   # resources :articles, param: :slug
