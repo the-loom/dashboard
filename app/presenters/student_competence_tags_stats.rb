@@ -2,7 +2,7 @@ class StudentCompetenceTagsStats
   attr_reader :values
 
   def initialize(user)
-    @values = Hash[CompetenceTag.all.map { |c| [c.name, 0] }]
+    @values = Hash.new(0)
 
     user.events.group_by do |event|
       event.competence_tag
