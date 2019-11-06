@@ -15,6 +15,10 @@ class EventsController < ApplicationController
     @occurrences = @event.occurrences
   end
 
+  def stats
+    @calculator = ScoreCalculator.new
+  end
+
   def new
     authorize Event, :create?
     @event = Event.new

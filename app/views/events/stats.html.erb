@@ -1,0 +1,109 @@
+<% nav_add 'Gamificación', '#' %>
+<% nav_add 'Eventos', events_path %>
+<% nav_add 'Estadísticas', '#' %>
+<%= nav_render %>
+
+<legend>
+  Puntajes de corte
+</legend>
+
+<div class="row">
+
+  <div class="col-lg-3 col-md-3 col-sm-6 col-12">
+    <div class="inforide">
+      <div class="row">
+        <div class="col-lg-3 col-md-4 col-sm-4 col-4 rideone" style="background-color: #F6C600">
+          &nbsp;
+        </div>
+        <div class="col-lg-9 col-md-8 col-sm-8 col-8 fontsty">
+          <h4>Puntaje de cursada</h4>
+          <h2><%= @calculator.min_points %></h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-3 col-sm-6 col-12">
+    <div class="inforide">
+      <div class="row">
+        <div class="col-lg-3 col-md-4 col-sm-4 col-4 rideone" style="background-color: #60B044">
+          &nbsp;
+        </div>
+        <div class="col-lg-9 col-md-8 col-sm-8 col-8 fontsty">
+          <h4>Puntaje de promoción</h4>
+          <h2><%= @calculator.promotion_score %></h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-3 col-sm-6 col-12">
+    <div class="inforide">
+      <div class="row">
+        <div class="col-lg-3 col-md-4 col-sm-4 col-4 rideone" style="background-color: #0000FF">
+          &nbsp;
+        </div>
+        <div class="col-lg-9 col-md-8 col-sm-8 col-8 fontsty">
+          <h4>Puntaje perfecto</h4>
+          <h2><%= @calculator.max_points %></h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<br>
+
+<legend>
+  Estudiantes por corte
+</legend>
+
+<div class="well">TBD</div>
+
+<legend>
+  Espectro de estudiantes
+</legend>
+
+<div class="well">TBD</div>
+
+<%= content_for :head do %>
+  <style>
+
+    .inforide {
+      box-shadow: 1px 2px 8px 0px gray;
+      background-color: white;
+      border-radius: 8px;
+      height: 10em;
+    }
+
+    .rideone {
+      background-color: #6CC785;
+      padding-top: 25px;
+      border-radius: 8px 0px 0px 8px;
+      text-align: center;
+      height: 10em;
+      margin-left: 15px;
+    }
+
+    .fontsty {
+      margin-right: -15px;
+    }
+
+    .fontsty h2{
+      color: #6E6E6E;
+      font-size: 35px;
+      margin-top: 15px;
+      text-align: right;
+      margin-right: 30px;
+    }
+
+    .fontsty h4{
+      color: #6E6E6E;
+      font-size: 25px;
+      margin-top: 20px;
+      text-align: right;
+      margin-right: 30px;
+    }
+  </style>
+
+<% end %>

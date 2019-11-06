@@ -17,4 +17,9 @@ class ScoreCalculator
       (normalized.to_f / spread) * 6 + 4
     end
   end
+
+  def promotion_score
+    (@max_points + @min_points) / 2
+  end
+
 end
