@@ -104,13 +104,20 @@
   </div>
   <div class="col-md-6">
 
-    <% if Course.current.on?(:competences) %>
+    <% if Course.current.on?(:competences) && @user.points > 0 %>
 
       <legend>
-        Estadísticas
+        Habilidades
       </legend>
 
       <div class="radarChart"></div>
+
+      <p>
+        <span style="background-color: #00A0B0; min-width: 1em; display: inline-block">&nbsp;</span> Equipo
+      </p>
+      <p>
+        <span style="background-color: #EDC951; min-width: 1em; display: inline-block">&nbsp;</span> Propia
+      </p>
 
     <% end %>
 
@@ -290,29 +297,36 @@
       });
   </script>
 
-  <script>
+  <% if @user.points > 0 %>
 
-      var data = [
-          <%== @user.stats.normalized.to_json %>
-      ];
+    <script>
 
-      var color = d3.scale.ordinal().range(["#00A0B0","#EDC951","#CC333F"]),
-          margin = {top: 75, right: 75, bottom: 75, left: 75};
+        var data = [
+            <% if @user.current_membership.team.present? %>
+            <%== @user.current_membership.team.stats.normalized.to_json %>,
+            <% end %>
+            <%== @user.stats.normalized.to_json %>
+        ];
 
-      var radarChartOptions = {
-          w: 450,
-          h: 350,
-          margin: margin,
-          maxValue: 1,
-          levels: 5,
-          roundStrokes: false,
-          color: color,
-          bgColor: '#6e6485',
-          lineColor: '#6e6485',
-          //format: d3.format('d')
-          format: function(){}
-      };
-      RadarChart(".radarChart", data, radarChartOptions);
+        var color = d3.scale.ordinal().range(["#00A0B0","#EDC951","#CC333F"]),
+            margin = {top: 75, right: 75, bottom: 75, left: 75};
 
-  </script>
+        var radarChartOptions = {
+            w: 450,
+            h: 350,
+            margin: margin,
+            maxValue: 1,
+            levels: 5,
+            roundStrokes: false,
+            color: color,
+            bgColor: '#6e6485',
+            lineColor: '#6e6485',
+            //format: d3.format('d')
+            format: function(){}
+        };
+        RadarChart(".radarChart", data, radarChartOptions);
+
+    </script>
+
+  <% end %>
 <% end %>

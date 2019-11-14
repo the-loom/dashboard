@@ -16,6 +16,10 @@ class Team < ApplicationRecord
     self.order(:name)
   end
 
+  def stats
+    ::TeamCompetenceTagsStats.new(self)
+  end
+
   def badges
     members.select { |m| m.enabled? }.collect { |member| member.badges }.flatten
   end
