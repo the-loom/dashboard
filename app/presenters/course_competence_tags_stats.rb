@@ -1,15 +1,21 @@
-class CourseCompetenceTagsStats
+class CourseCompetenceTagsStats < CompetenceTagsStats
   attr_reader :values
 
-  def initialize
+  def initialize(course)
     @values = Hash.new(0)
 
-    Event.all.group_by do |event|
-      event.competence_tag
-    end.each do |group, events|
-      @values[group.name] = events.inject(0) do |total_points, event|
-        total_points + event.max_points
-      end
+    individual_stats = course.users.
+        includes(:occurrences).
+        includes(:events).
+        includes(occurrences: { event: :competence_tag }).
+        map do |student|
+      nil unless student.enabled?
+      StudentCompetenceTagsStats.new(student)
+    end.compact
+
+    CompetenceTag.all.each do |competence|
+      points = individual_stats.map { |stat| stat.values[competence.name] }
+      @values[competence.name] = points.sum / individual_stats.size
     end
   end
 end

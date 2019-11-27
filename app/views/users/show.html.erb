@@ -113,10 +113,15 @@
       <div class="radarChart"></div>
 
       <p>
-        <span style="background-color: #00A0B0; min-width: 1em; display: inline-block">&nbsp;</span> Equipo
+        <span style="background-color: #00A0B0; min-width: 1em; display: inline-block">&nbsp;</span> Curso
       </p>
+      <% if @user.current_membership.team.present? %>
+        <p>
+          <span style="background-color: #EDC951; min-width: 1em; display: inline-block">&nbsp;</span> Equipo
+        </p>
+      <% end %>
       <p>
-        <span style="background-color: #EDC951; min-width: 1em; display: inline-block">&nbsp;</span> Propia
+        <span style="background-color: #CC333F; min-width: 1em; display: inline-block">&nbsp;</span> Propia
       </p>
 
     <% end %>
@@ -297,13 +302,14 @@
       });
   </script>
 
-  <% if @user.points > 0 %>
+  <% if @user.points > 0 && Course.current.on?(:competences) %>
 
     <script>
 
         var data = [
+            <%== Course.current.stats %>,
             <% if @user.current_membership.team.present? %>
-            <%== @user.current_membership.team.stats.normalized.to_json %>,
+            <%== @user.current_membership.team.stats %>,
             <% end %>
             <%== @user.stats.normalized.to_json %>
         ];

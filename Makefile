@@ -28,6 +28,9 @@ routes:
 logs:
 	docker-compose logs -tf
 
+app_logs:
+	tail -f log/development.log
+
 tests:
 	docker-compose run app rake db:test:prepare
 	docker-compose run app ./bin/rake
