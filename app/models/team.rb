@@ -8,7 +8,7 @@ class Team < ApplicationRecord
   validates_presence_of :name, :nickname
   validates :name, uniqueness: { scope: :course_id }
   validates :nickname, uniqueness: { scope: :course_id }
-  validates :avatar, size: { less_than: 1.megabyte }, content_type: [:png, :jpg, :jpeg]
+  validates :avatar, size: { less_than: 500.kilobyte }, content_type: [:png, :jpg, :jpeg]
 
   has_many :memberships
   has_many :members, through: :memberships, source: :user, class_name: "User"
