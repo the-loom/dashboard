@@ -84,14 +84,12 @@
       <% else %>
         <table class="table table-striped table-bordered">
           <tbody>
-          <% @user.occurrences.group_by(&:event).each do |event, occurrences| %>
+          <% @user.occurrences.each do |occurrence| %>
             <tr>
-              <td><%= occurrences.last.created_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y") %></td>
+              <td><%= occurrence.updated_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y") %></td>
               <td>
-                <% if occurrences.size > 1 %>
-                  <label class="badge"><%= occurrences.size %>&times;</label>
-                <% end %>
-                <%= event.name %>
+                <label class="badge"><%= occurrence.multiplier %>&times;</label>
+                <%= occurrence.event.name %>
               </td>
             </tr>
           <% end %>

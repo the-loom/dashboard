@@ -43,7 +43,7 @@ class User < ApplicationRecord
   end
 
   def points
-    events.inject(0) { | total, event | total + event.points }
+    occurrences.inject(0) { | total, occurrence | total + occurrence.total_points }
   end
 
   def stats
@@ -109,15 +109,17 @@ class User < ApplicationRecord
     return unless Course.current.attendance_event # TODO: preventive fix, needs to be handled in a better way
     return if present_at(lecture)
     if condition == :present
-      register(Course.current.attendance_event)
+      register(Course.current.attendance_event, 1)
     end
     attendance = Attendance.find_or_create_by(user: self, lecture: lecture)
     attendance.update_attributes(condition: condition)
   end
 
-  def register(event)
+  def register(event, times = 1)
     return unless current_membership && current_membership.enabled? # TODO: preventive fix, needs re-do
-    occurrences.create(event: event, points: event.points)
+    occurrence = occurrences.find_or_create_by(event: event)
+    occurrence.multiplier += times
+    occurrence.save
   end
 
   def earn(badge)

@@ -10,9 +10,7 @@ class MassiveEventRegister
   def execute
     @students.each do |student|
       if @lecture == nil || student.present_at(@lecture)
-        @multiplier.times do
-          student.register(@event)
-        end
+        student.register(@event, @multiplier)
       end
     end
 

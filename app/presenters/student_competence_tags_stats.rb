@@ -3,11 +3,11 @@ class StudentCompetenceTagsStats < CompetenceTagsStats
   def initialize(user)
     @values = Hash.new(0)
 
-    user.events.includes(:competence_tag).group_by do |event|
-      event.competence_tag
-    end.each do |group, events|
-      @values[group.name] = events.inject(0) do |total_points, event|
-        total_points + event.points
+    user.occurrences.group_by do |occurrence|
+      occurrence.event.competence_tag
+    end.each do |group, occurrences|
+      @values[group.name] = occurrences.inject(0) do |total_points, occurrence|
+        total_points + occurrence.total_points
       end
     end
   end
