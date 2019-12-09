@@ -17,9 +17,6 @@ class User < ApplicationRecord
   has_many :earnings, -> { order(created_at: :desc) }
   has_many :badges, through: :earnings
 
-  has_many :attendances
-  has_many :lectures, through: :attendances
-
   has_many :comments
 
   has_many :user_solutions
