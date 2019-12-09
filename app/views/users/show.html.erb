@@ -44,11 +44,11 @@
 
       <legend>Asistencia
         <small>
-          (<%= @user.attendances.select {|a| a.condition == 'present'}.count %>/<%= Lecture.required.count %>)
+          (<%= @user.total_attendance %>/<%= Lecture.required.count %>)
         </small>
       </legend>
 
-      <% if @user.attendances.size == 0 %>
+      <% if @user.total_attendance == 0 %>
 
         <div class="alert alert-info">
           <p>Aún no se registran asistencias...</p>

@@ -1,6 +1,8 @@
 class Membership < ApplicationRecord
   include Discard::Model
 
+  serialize :present_at_lecture_ids, JSON
+
   belongs_to :course
   belongs_to :user
 

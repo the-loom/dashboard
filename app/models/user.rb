@@ -104,15 +104,19 @@ class User < ApplicationRecord
     current_membership.student?
   end
 
-  def register_attendance(lecture, condition)
+  def register_attendance(lecture)
+    membership = current_membership
     return unless current_membership # TODO: preventive fix, needs re-do
     return unless Course.current.attendance_event # TODO: preventive fix, needs to be handled in a better way
     return if present_at(lecture)
-    if condition == :present
-      register(Course.current.attendance_event, 1)
+    register(Course.current.attendance_event, 1)
+
+    if membership.present_at_lecture_ids != nil
+      membership.present_at_lecture_ids << lecture.id
+    else
+      membership.present_at_lecture_ids = [lecture.id]
     end
-    attendance = Attendance.find_or_create_by(user: self, lecture: lecture)
-    attendance.update_attributes(condition: condition)
+    membership.save
   end
 
   def register(event, times = 1)
@@ -135,7 +139,11 @@ class User < ApplicationRecord
   end
 
   def present_at(lecture)
-    attendances.where(lecture: lecture, condition: :present).size > 0
+    current_membership.present_at_lecture_ids.include? lecture.id
+  end
+
+  def total_attendance
+    current_membership.present_at_lecture_ids.size
   end
 
   def enabled?

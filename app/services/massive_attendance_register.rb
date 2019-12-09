@@ -6,7 +6,7 @@ class MassiveAttendanceRegister
 
   def execute
     @students.each do |student|
-      student.register_attendance(@lecture, :present)
+      student.register_attendance(@lecture)
     end
 
     true

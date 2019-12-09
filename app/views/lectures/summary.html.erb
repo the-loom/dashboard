@@ -35,8 +35,7 @@
         <% @lectures.each do |lecture| %>
           <td>
             <% if lecture.required? %>
-              <% attendance = (@attendances_per_student[student] || []).find { |a| a.lecture == lecture }
-                 present = attendance && attendance.condition == 'present' %>
+              <% present = student.present_at(lecture) %>
               <label class="label label-<%= present ? 'success' : 'danger' %>">
                 <%= present ? '✔' : '✘' %>
               </label>
@@ -48,7 +47,7 @@
           </td>
         <% end %>
         <td>
-          <%= (((@attendances_per_student[student] || []).size).to_d * 100 / @lectures.required.size).round(2) %>%
+          <%= (student.total_attendance.to_d * 100 / @lectures.required.size).round(2) %>%
         </td>
       </tr>
     <% end %>
@@ -56,7 +55,7 @@
     <tfoot>
     <th>Totales</th>
     <% @lectures.each do |lecture| %>
-      <th><%= @attendances.select { |a| a.lecture == lecture && a.condition == 'present' }.size %></th>
+      <th><%= @students.count { |student| student.present_at(lecture)} %></th>
     <% end %>
     </tfoot>
   </table>
