@@ -40,7 +40,13 @@ class User < ApplicationRecord
   end
 
   def points
-    occurrences.inject(0) { | total, occurrence | total + occurrence.total_points }
+    current_membership.points
+  end
+
+  def refresh_points_cache!
+    cm = current_membership
+    cm.points = occurrences.inject(0) { | total, occurrence | total + occurrence.total_points }
+    cm.save
   end
 
   def stats
@@ -90,7 +96,7 @@ class User < ApplicationRecord
   end
 
   def current_membership
-    self.all_memberships.find_by(course: Course.current)
+    @current_membership ||= self.memberships.find { |m| m.course == Course.current }
   end
 
   def teacher?
@@ -121,6 +127,8 @@ class User < ApplicationRecord
     occurrence = occurrences.find_or_create_by(event: event)
     occurrence.multiplier += times
     occurrence.save
+
+    refresh_points_cache!
   end
 
   def earn(badge)

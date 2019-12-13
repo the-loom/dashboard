@@ -63,7 +63,7 @@
             <%= student.points %>
           </td>
           <td>
-            <%= student.score.round(2) %>
+            <%= @score_calculator.score_for(student.points).round(2) %>
           </td>
           <% if Course.current.on?(:badges) %>
             <td>

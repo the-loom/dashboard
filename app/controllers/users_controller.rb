@@ -5,13 +5,14 @@ class UsersController < ApplicationController
 
   def index
     authorize User
-    @students = User.includes(:memberships).where(memberships: { course: Course.current, role: :student })
+    @students = User.includes(:memberships).includes(avatar_attachment: :blob).where(memberships: { course: Course.current, role: :student })
 
     # Just for massive actions
     @lectures = Lecture.all.order(date: :asc)
     @teams = Team.all.order(name: :asc)
     @badges = Badge.all
     @events = Event.all.order(name: :asc) - [Course.current.attendance_event]
+    @score_calculator = ScoreCalculator.new
 
     respond_to do |format|
       format.html

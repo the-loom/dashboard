@@ -5,8 +5,8 @@ class StudentCompetenceTagsStats < CompetenceTagsStats
 
     user.occurrences.group_by do |occurrence|
       occurrence.event.competence_tag
-    end.each do |group, occurrences|
-      @values[group.name] = occurrences.inject(0) do |total_points, occurrence|
+    end.each do |competence, occurrences|
+      @values[competence.name] = occurrences.inject(0) do |total_points, occurrence|
         total_points + occurrence.total_points
       end
     end
