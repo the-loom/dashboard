@@ -45,6 +45,7 @@ class User < ApplicationRecord
 
   def refresh_points_cache!
     cm = current_membership
+    return unless cm
     cm.points = occurrences.inject(0) { | total, occurrence | total + occurrence.total_points }
     cm.save
   end
