@@ -136,20 +136,24 @@ class User < ApplicationRecord
     earnings.create(badge: badge)
   end
 
+  # TODO(delucas): move to scope?
   def self.sorted
     self.order(points: :desc)
   end
 
+  # TODO(delucas): move to scope?
   def self.sorted_by_name
     self.order(name: :asc)
   end
 
+  # TODO(delucas): move to presenter
   def present_at(lecture)
     current_membership.present_at_lecture_ids.include? lecture.id
   end
 
+  # TODO(delucas): move to presenter
   def total_attendance
-    current_membership.present_at_lecture_ids.size
+    current_membership.present_at_lecture_ids.try(:size) || 0
   end
 
   def enabled?
