@@ -31,7 +31,7 @@ class BadgesController < ApplicationController
       redirect_to badges_path
       flash[:info] = "Se creo correctamente el emblema"
     else
-      render action: :new
+      redirect_to new_badge_path
     end
   end
 
@@ -62,6 +62,6 @@ class BadgesController < ApplicationController
 
   private
     def badge_params
-      params[:badge].permit(:name, :description, :slug, :featured)
+      params[:badge].permit(:name, :description, :image, :featured)
     end
 end

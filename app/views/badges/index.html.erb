@@ -29,7 +29,7 @@
     <% @badges.each do |badge| %>
       <tr>
         <td>
-          <img class="loom-badge" src="http://www.delucas.com.ar/loom/badges/<%= badge.slug %>.png"></td>
+          <%= image_tag badge.image, {class: "loom-badge", alt: badge.name } %>
         </td>
         <td>
           <%= link_to badge.name, badge_path(badge.id) %>

@@ -4,7 +4,6 @@ RSpec.describe Badge, type: :model do
   it {
     should validate_presence_of(:name)
     should validate_presence_of(:description)
-    should validate_presence_of(:slug)
   }
 
   it {
@@ -13,15 +12,12 @@ RSpec.describe Badge, type: :model do
     end
     should validate_uniqueness_of(:name)
                .scoped_to(:course_id)
-
-    should validate_uniqueness_of(:slug)
-               .scoped_to(:course_id)
   }
 
   it "is assigned correctly" do
     user = User.create!(first_name: "John")
     user.memberships << Membership.new(course: Course.current, role: :student)
-    badge = Badge.create!(name: "Neat", description: "Some description", slug: "slug", course: Course.current)
+    badge = Badge.create!(name: "Neat", description: "Some description", course: Course.current)
 
     user.earn(badge)
 

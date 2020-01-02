@@ -144,8 +144,9 @@
                 <%= earning.badge.name %>
               </div>
               <div class="panel-body">
-                <img class="loom-badge" src="http://www.delucas.com.ar/loom/badges/<%= earning.badge.slug %>.png" data-toggle="tooltip"
-                     data-placement="bottom" title="<%= earning.badge.description %>"/>
+                <%= image_tag earning.badge.image, {class: "loom-badge", alt: earning.badge.name,
+                                                    "data-toggle": "tooltip", "data-placement": "bottom",
+                                                    title: earning.badge.description } %>
               </div>
               <div class="panel-footer">
                 <%= earning.created_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y") %>
@@ -160,8 +161,9 @@
                 <%= badge.name %>
               </div>
               <div class="panel-body">
-                <img class="loom-badge" src="http://www.delucas.com.ar/loom/badges/incognito.png" data-toggle="tooltip"
-                     data-placement="bottom" title="<%= badge.description %>"/>
+                <%= image_tag "incognito.png", {class: "loom-badge", alt: badge.name,
+                                            "data-toggle": "tooltip", "data-placement": "bottom",
+                                            title: badge.description } %>
               </div>
               <div class="panel-footer">
                 Aún no...

@@ -134,9 +134,11 @@
               <% else %>
                 <% @badges.each do |badge| %>
                   <div class="col-xs-4">
-                    <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit', data: {action: 'assign_badge', id: badge.id} do %>
-                      <img class="loom-badge" src="http://www.delucas.com.ar/loom/badges/<%= badge.slug %>.png" data-toggle="tooltip"
-                           data-placement="bottom" title="<%= badge.description %>"/>
+                    <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit',
+                                   data: {action: 'assign_badge', id: badge.id} do %>
+                      <%= image_tag badge.image, {class: "loom-badge", alt: badge.name,
+                                                  "data-toggle": "tooltip", "data-placement": "bottom",
+                                                  title: badge.description } %>
                     <% end %>
                     <p>
                       <%= badge.name %>
