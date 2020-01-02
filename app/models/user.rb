@@ -101,7 +101,7 @@ class User < ApplicationRecord
   end
 
   def teacher?
-    current_membership.teacher? || current_membership.admin?
+    admin? || current_membership.teacher?
   end
 
   def student?
