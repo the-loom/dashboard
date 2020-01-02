@@ -13,14 +13,7 @@
 
 <div class="row">
 
-  <% registers = [
-      OpenStruct.new(name: 'Soluciones', value: @challenge.solutions.size),
-      OpenStruct.new(name: 'Revisiones', value: @challenge.reviews.size),
-      OpenStruct.new(name: 'Revisiones por ejercicio', value: (@challenge.reviews.size.to_f / @challenge.solutions.size).round(2)),
-      OpenStruct.new(name: 'Revisiones potenciales', value: @challenge.solutions.size * (@challenge.solutions.size - 1))
-  ] %>
-
-  <% registers.each do |register| %>
+  <% @overview.registers.each do |register| %>
     <div class="col-lg-3 col-md-3 col-sm-6 col-12">
       <div class="inforide">
         <div class="row">

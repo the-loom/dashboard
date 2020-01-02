@@ -16,6 +16,7 @@ module PeerReview
     def overview
       authorize PeerReview::Challenge, :manage?
       @challenge = PeerReview::Challenge.find(params[:id])
+      @overview = PeerReview::OverviewPresenter.new(@challenge)
     end
 
     def new
