@@ -9,7 +9,11 @@ class TeamCompetenceTagsStats < CompetenceTagsStats
 
     CompetenceTag.all.each do |competence|
       points = individual_stats.map { |stat| stat.values[competence.name] }
-      @values[competence.name] = points.sum / team.enabled_members.size
+      if team.enabled_members.size > 0
+        @values[competence.name] = points.sum / team.enabled_members.size
+      else
+        @values[competence.name] = 0
+      end
     end
   end
 end
