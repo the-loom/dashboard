@@ -25,9 +25,13 @@ class Team < ApplicationRecord
     members.select { |m| m.enabled? }
   end
 
-  def points
-    return 0 if enabled_members.empty?
-    enabled_members.sum(&:points) / enabled_members.size
+  def refresh_points_cache!
+    if enabled_members.empty?
+      self.points = 0
+    else
+      self.points = enabled_members.sum(&:points) / enabled_members.size
+    end
+    save
   end
 
   def score

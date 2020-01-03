@@ -48,6 +48,8 @@ class User < ApplicationRecord
     return unless cm
     cm.points = occurrences.inject(0) { | total, occurrence | total + occurrence.total_points }
     cm.save
+
+    cm.team.refresh_points_cache! if cm.team
   end
 
   def stats
