@@ -25,7 +25,7 @@ gem "dotenv-rails", "2.5.0", groups: [:development, :test]
 gem "omniauth-github", "1.3.0"
 gem "omniauth-google-oauth2", "0.5.3"
 gem "omniauth-rails_csrf_protection", "~> 0.1"
-gem "discard", "~> 1.0"
+gem "discard", "~> 1.1"
 
 gem "ffaker", "2.10.0"
 
