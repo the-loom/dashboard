@@ -23,9 +23,9 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
-.logo {
-    display: inline-block;
-    margin: 0 0.5em;
+.loom-logo {
+    display: inline-block !important;
+    margin: 0 0.5em !important;
 }
 
 .clickable {

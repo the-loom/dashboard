@@ -311,7 +311,7 @@
             <% if @user.current_membership.team.present? %>
             <%== @user.current_membership.team.stats %>,
             <% end %>
-            <%== @user.stats.normalized.to_json %>
+            <%== @user.stats %>
         ];
 
         var color = d3.scale.ordinal().range(["#00A0B0","#EDC951","#CC333F"]),

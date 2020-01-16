@@ -53,7 +53,7 @@ class User < ApplicationRecord
   end
 
   def stats
-    ::StudentCompetenceTagsStats.new(self)
+    current_membership.stats
   end
 
   def score

@@ -8,6 +8,8 @@ class Membership < ApplicationRecord
 
   belongs_to :team, optional: true
 
+  serialize :stats, JSON
+
   default_scope -> { kept }
   scope :enabled, -> { joins(:course).where(courses: { enabled: true }) }
 

@@ -1,8 +1,9 @@
 class StudentCompetenceTagsStats < CompetenceTagsStats
-  def initialize(user)
+  def initialize(student)
     @values = Hash.new(0)
+    return unless student.enabled?
 
-    user.occurrences.group_by do |occurrence|
+    student.occurrences.group_by do |occurrence|
       occurrence.event.competence_tag
     end.each do |competence, occurrences|
       @values[competence.name] = occurrences.inject(0) do |total_points, occurrence|
