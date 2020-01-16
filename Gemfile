@@ -27,7 +27,7 @@ gem "omniauth-google-oauth2", "0.5.3"
 gem "omniauth-rails_csrf_protection", "~> 0.1"
 gem "discard", "~> 1.1"
 
-gem "ffaker", "2.10.0"
+gem "ffaker", "2.13.0"
 
 group :development do
   gem "rack-mini-profiler"
