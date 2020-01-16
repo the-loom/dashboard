@@ -23,7 +23,7 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
-img.logo {
+.logo {
     display: inline-block;
     margin: 0 0.5em;
 }
