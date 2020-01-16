@@ -92,7 +92,6 @@ class UsersController < ApplicationController
   end
 
   def bulk_edit
-
     if !params[:students].present? || !params[:students][:ids].present?
       flash[:info] = "Debes seleccionar al menos a un estudiante para asignar una acción masiva"
       redirect_to students_url

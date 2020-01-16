@@ -9,5 +9,4 @@ class Occurrence < ApplicationRecord
   def total_points
     event.points * multiplier
   end
-
 end

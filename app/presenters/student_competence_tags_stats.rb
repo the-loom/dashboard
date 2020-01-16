@@ -1,5 +1,4 @@
 class StudentCompetenceTagsStats < CompetenceTagsStats
-
   def initialize(user)
     @values = Hash.new(0)
 

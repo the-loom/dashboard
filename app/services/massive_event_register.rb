@@ -1,5 +1,4 @@
 class MassiveEventRegister
-
   def initialize(students, event, multiplier, lecture)
     @students = students
     @event = event

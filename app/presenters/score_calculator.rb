@@ -21,5 +21,4 @@ class ScoreCalculator
   def promotion_score
     (@max_points + @min_points) / 2
   end
-
 end

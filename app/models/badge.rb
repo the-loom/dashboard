@@ -8,5 +8,4 @@ class Badge < ApplicationRecord
   validates_presence_of :name, :description
   validates :name, uniqueness: { scope: :course_id }
   validates :image, size: { less_than: 500.kilobyte }, content_type: [:png, :jpg, :jpeg]
-
 end
