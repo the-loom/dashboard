@@ -23,6 +23,11 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
+img.logo {
+    display: inline-block;
+    margin: 0 0.5em;
+}
+
 .clickable {
     cursor: pointer;
 }
