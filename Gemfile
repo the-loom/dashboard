@@ -28,6 +28,7 @@ gem "omniauth-rails_csrf_protection", "~> 0.1"
 gem "discard", "~> 1.1"
 
 gem "ffaker", "2.13.0"
+gem "simple_form"
 
 group :development do
   gem "rack-mini-profiler"

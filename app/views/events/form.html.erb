@@ -4,47 +4,20 @@
 <% nav_add @labels.title, '#' %>
 <%= nav_render %>
 
-<%= form_for @event do |f| %>
+<%= simple_form_for @event do |f| %>
 
   <%= render :partial => 'shared/errors', locals: { f: f } %>
 
-  <div class="form-group">
-    <%= f.label :name, 'Nombre', class: 'control-label' %>
-    <%= f.text_field :name, class: 'form-control' %>
-  </div>
+  <%= f.input :name, label: "Nombre" %>
+  <%= f.input :description, label: "Descripción" %>
 
-  <div class="form-group">
-    <%= f.label :description, 'Descripción', class: 'control-label' %>
-    <%= f.text_field :description, class: 'form-control' %>
-  </div>
+  <%= f.input :points, label: "Puntos", as: :numeric %>
+  <%= f.input :min_points, label: "Puntos mínimos para la actividad", as: :numeric %>
+  <%= f.input :max_points, label: "Puntos máximos para la actividad", as: :numeric %>
+  <%= f.input :competence_tag_id, label: "Competencia aplicable", collection: CompetenceTag.all %>
 
-  <div class="form-group">
-    <%= f.label :points, 'Puntos por lote', class: 'control-label' %>
-    <%= f.number_field :points, class: 'form-control' %>
-  </div>
+  <%= f.input :enabled, label: "Evento habilitado" %>
 
-  <div class="form-group">
-    <%= f.label :min_points, 'Puntos mínimos para la actividad', class: 'control-label' %>
-    <%= f.number_field :min_points, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :max_points, 'Puntos máximos para la actividad', class: 'control-label' %>
-    <%= f.number_field :max_points, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :competence_tag_id, 'Competencia aplicable', class: 'control-label' %>
-    <%= f.collection_select :competence_tag_id, CompetenceTag.all, :id, :name, { include_blank: true }, { class: 'form-control' } %>
-  </div>
-
-  <div class="form-group">
-    <%= f.check_box :enabled %>
-    <%= f.label :enabled, 'Evento habilitado', class: 'control-label' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.submit @labels.button, class: "btn btn-primary" %>
-  </div>
+  <%= f.button :submit, @labels.button, class: "btn-primary" %>
 
 <% end %>
