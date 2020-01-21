@@ -67,7 +67,6 @@ module Admin
     end
 
     private
-
       def course_params
         features = params[:course][:features].present? ? params[:course][:features].map(&:to_i).inject(0, :|) : 0
 

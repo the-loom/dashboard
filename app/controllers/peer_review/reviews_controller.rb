@@ -42,7 +42,6 @@ module PeerReview
     end
 
     private
-
       def solution_params
         params[:peer_review_review].permit(:wording)
       end

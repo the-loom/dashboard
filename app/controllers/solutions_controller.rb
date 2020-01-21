@@ -5,7 +5,7 @@ class SolutionsController < ApplicationController
     if @solution.finished?
       flash[:alert] = "No se puede volver a trabajar en una solución finalizada"
       redirect_to exercise_path(@solution.exercise)
-      return
+      nil
     end
   end
 

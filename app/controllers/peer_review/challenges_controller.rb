@@ -96,7 +96,6 @@ module PeerReview
     end
 
     private
-
       def challenge_params
         params[:peer_review_challenge].permit(:title, :instructions, :reviewer_instructions, :difficulty)
       end

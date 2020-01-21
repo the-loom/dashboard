@@ -45,7 +45,6 @@ class ReposController < ApplicationController
   end
 
   private
-
     def repo_params
       params[:automatic_correction_repo].permit(:user, :name, :git_url, :avatar_url, :description, :difficulty)
     end

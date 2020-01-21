@@ -160,12 +160,11 @@ class UsersController < ApplicationController
       end
 
       redirect_to students_url
-      return
+      nil
     end
   end
 
   private
-
     def set_user
       @user ||= current_user
     end

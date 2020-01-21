@@ -28,7 +28,6 @@ class ApplicationController < ActionController::Base
     end
 
   private
-
     def check_feature(feature)
       unless Course.current.on?(feature)
         flash[:alert] = "Esa característica no está habilitada para este curso"

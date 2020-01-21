@@ -29,7 +29,6 @@ class NotificationsController < ApplicationController
   end
 
   private
-
     def notification_params
       params[:notification].permit(:subject, :text)
     end
