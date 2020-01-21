@@ -22,7 +22,7 @@ class Team < ApplicationRecord
   end
 
   def enabled_members
-    members.select { |m| m.enabled? }
+    members.includes(:memberships).select { |m| m.enabled? }
   end
 
   def refresh_points_cache!

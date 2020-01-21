@@ -5,7 +5,7 @@ class TeamsController < ApplicationController
 
   def index
     authorize Team
-    @teams = Team.sorted
+    @teams = Team.includes([{ avatar_attachment: :blob }]).sorted
   end
 
   def show
