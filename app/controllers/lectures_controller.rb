@@ -52,7 +52,7 @@ class LecturesController < ApplicationController
   def summary
     authorize Lecture
     @lectures = Lecture.all
-    @students = Course.current.memberships.student.collect(&:user)
+    @students = Course.current.memberships.includes({ user: :memberships }).student.collect(&:user)
   end
 
   private
