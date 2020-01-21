@@ -17,7 +17,7 @@ group :development, :test do
   gem "byebug", platform: :mri
   gem "bullet"
   gem "rubocop-rails_config"
-  gem "rspec-rails", "~> 3.5"
+  gem "rspec-rails", "~> 3.9"
   gem "shoulda-matchers", "~> 4.2"
 end
 
