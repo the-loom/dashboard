@@ -33,7 +33,7 @@ gem "simple_form"
 group :development do
   gem "rack-mini-profiler"
   gem "web-console", ">= 3.3.0"
-  gem "listen", "~> 3.1.5"
+  gem "listen", "~> 3.2.1"
   gem "better_errors"
   gem "binding_of_caller"
   gem "spring"
