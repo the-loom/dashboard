@@ -26,14 +26,16 @@ Rails.application.routes.draw do
 
   resources :badges, only: [:index, :show, :new, :create, :edit, :update]
   resources :occurrences, only: :destroy
-  resources :events, only: [:index, :show, :new, :create, :edit, :update] do
-    collection do
-      get :stats
-    end
-  end
+  resources :events, only: [:index, :show, :new, :create, :edit, :update]
   resources :earnings, only: :destroy
 
   resources :competence_tags, except: :show
+
+  resources :stats do
+    collection do
+      get :points
+    end
+  end
 
   resources :lectures, except: :destroy do
     collection do
