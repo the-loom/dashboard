@@ -33,6 +33,7 @@ es:
       peer_review_challenges: 'Desafíos de Revisión por Pares'
       exercises: 'Ejercicios'
       competences: 'Competencias'
+      tiny_cards: 'Tarjetas'
 
   activerecord:
     errors:

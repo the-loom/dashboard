@@ -1,0 +1,83 @@
+<% nav_add 'Mazos', tiny_cards_decks_path %>
+<% nav_add @deck.name, '#' %>
+<%= nav_render %>
+
+<% if policy(TinyCards::Card).manage? %>
+  <%= link_to 'Nueva carta', new_tiny_cards_deck_card_path(@deck), class: 'btn btn-primary pull-right' %>
+<% end %>
+
+<section class="forks">
+
+  <% if @deck.cards.empty? %>
+
+    <div class="alert alert-info">
+      <p>Aún no hay cartas en el mazo</p>
+    </div>
+
+  <% else %>
+
+    <table class="cards table table-striped">
+      <thead>
+      <tr>
+        <th>Frente</th>
+        <th>Dorso</th>
+        <th>Autor</th>
+        <th class="no-sort">&nbsp;</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @deck.cards.each do |card| %>
+        <tr class="fork">
+          <td>
+            <%== card.front %>
+          </td>
+          <td>
+            <%== card.back %>
+          </td>
+          <td>
+            <%= card.author.try(:full_name) %>
+          </td>
+          <td>
+            <% if policy(TinyCards::Card).manage? %>
+              <%= link_to "Editar", edit_tiny_cards_deck_card_path(@deck, card), class: 'btn btn-default btn-sm' %>
+              <%= link_to "Eliminar", tiny_cards_deck_card_path(@deck, card), method: :delete, class: 'btn btn-danger btn-sm' %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</section>
+
+<%= content_for :head do %>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+
+  <style>
+    form.button_to {
+      display: inline-block;
+      margin: 0 0.1em;
+    }
+  </style>
+
+<% end %>
+
+<%= content_for :javascript do %>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="application/javascript"></script>
+
+  <script type="application/javascript">
+      $(function () {
+          $('.cards').DataTable({
+              order: [[0, "asc"]],
+              paging: false,
+              language: {
+                  url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+              },
+              columnDefs: [{
+                  targets: 'no-sort',
+                  orderable: false
+              }]
+          });
+      });
+  </script>
+<% end %>

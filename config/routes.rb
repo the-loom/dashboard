@@ -107,6 +107,12 @@ Rails.application.routes.draw do
 
   resources :notifications, only: [:index, :new, :create]
 
+  namespace :tiny_cards do
+    resources :decks do
+      resources :cards
+    end
+  end
+
   namespace :peer_review do
     resources :challenges do
       member do

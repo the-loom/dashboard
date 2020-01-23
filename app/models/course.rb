@@ -7,6 +7,8 @@ class Course < ApplicationRecord
   has_many :events
   has_many :teams
 
+  has_and_belongs_to_many :decks, join_table: :courses_tiny_cards_decks, class_name: "TinyCards::Deck"
+
   serialize :stats, JSON
 
   belongs_to :attendance_event, class_name: "Event", foreign_key: "attendance_event_id", optional: true
@@ -33,7 +35,8 @@ class Course < ApplicationRecord
         automatic_correction_challenges: 16,
         peer_review_challenges: 32,
         exercises: 64,
-        competences: 128
+        competences: 128,
+        tiny_cards: 256
     }
 
     features & all_features[requested_feature] == all_features[requested_feature]

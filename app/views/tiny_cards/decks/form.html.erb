@@ -1,0 +1,14 @@
+<% nav_add 'Mazos', tiny_cards_decks_path %>
+<% nav_add @deck.name, tiny_cards_deck_path(@deck) unless @deck.new_record? %>
+<% nav_add @labels.title, '#' %>
+<%= nav_render %>
+
+<%= simple_form_for @deck do |f| %>
+
+  <%= render :partial => 'shared/errors', locals: { f: f } %>
+
+  <%= f.input :name, label: "Nombre" %>
+
+  <%= f.button :submit, @labels.button, class: "btn-primary" %>
+
+<% end %>

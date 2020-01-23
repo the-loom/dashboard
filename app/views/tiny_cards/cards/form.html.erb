@@ -1,0 +1,31 @@
+<% nav_add 'Mazos', tiny_cards_decks_path %>
+<% nav_add @deck.name, tiny_cards_deck_path(@deck) %>
+<% nav_add @labels.title, '#' %>
+<%= nav_render %>
+
+<%  url = @card.new_record? ? tiny_cards_deck_cards_path(@deck) : tiny_cards_deck_card_path(@deck, @card) %>
+<%= simple_form_for([@deck, @card], url: url) do |f| %>
+
+  <%= render :partial => 'shared/errors', locals: { f: f } %>
+
+  <label>Frente</label>
+  <%= f.trix_editor :front, label: "Frente", as: :trix_editor %>
+
+  <br>
+
+  <label>Dorso</label>
+  <%= f.trix_editor :back, label: "Dorso", as: :trix_editor %>
+
+  <br>
+
+  <%= f.button :submit, @labels.button, class: "btn-primary" %>
+
+<% end %>
+
+<% content_for :head do %>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.0/trix.css" rel="stylesheet">
+<% end %>
+
+<% content_for :javascript do %>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.0/trix.js" type="application/javascript"></script>
+<% end %>
