@@ -57,9 +57,8 @@ module TinyCards
     end
 
     private
-    def deck_params
-      params[:tiny_cards_deck].permit(:name, course_ids: [])
-    end
-
+      def deck_params
+        params[:tiny_cards_deck].permit(:name, course_ids: [])
+      end
   end
 end

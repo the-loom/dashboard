@@ -29,7 +29,7 @@ gem "discard", "~> 1.1"
 
 gem "ffaker", "2.13.0"
 gem "simple_form"
-gem 'trix-rails', require: 'trix'
+gem "trix-rails", require: "trix"
 
 group :development do
   gem "rack-mini-profiler"

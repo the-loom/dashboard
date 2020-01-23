@@ -62,9 +62,8 @@ module TinyCards
     end
 
     private
-    def card_params
-      params[:tiny_cards_card].permit(:front, :back)
-    end
-
+      def card_params
+        params[:tiny_cards_card].permit(:front, :back)
+      end
   end
 end
