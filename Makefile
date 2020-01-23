@@ -1,3 +1,6 @@
+browser:
+	google-chrome --new-window https://trello.com/b/ARo5MV67/the-loom http://localhost:3000
+
 start:
 	rm -f tmp/pids/server.pid
 	docker-compose up -d
