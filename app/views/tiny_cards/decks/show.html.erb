@@ -29,10 +29,10 @@
       <% @deck.cards.each do |card| %>
         <tr class="fork">
           <td>
-            <%== card.front %>
+            <pre><%= card.front %></pre>
           </td>
           <td>
-            <%== card.back %>
+            <pre><%= card.back %></pre>
           </td>
           <td>
             <%= card.author.try(:full_name) %>

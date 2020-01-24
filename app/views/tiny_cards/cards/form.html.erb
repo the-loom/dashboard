@@ -8,24 +8,24 @@
 
   <%= render :partial => 'shared/errors', locals: { f: f } %>
 
-  <label>Frente</label>
-  <%= f.trix_editor :front, label: "Frente", as: :trix_editor %>
+  <%= f.input :front, label: "Frente", as: :text, input_html: { maxlength: 200 } %>
+
+  <% if @card.front_image.attached? %>
+    <%= image_tag @card.front_image %>
+  <% end %>
+  <%= f.input :front_image, label: "Imagen al frente, opcional" %>
 
   <br>
 
-  <label>Dorso</label>
-  <%= f.trix_editor :back, label: "Dorso", as: :trix_editor %>
+  <%= f.input :back, label: "Dorso", as: :text, input_html: { maxlength: 200 } %>
+
+  <% if @card.back_image.attached? %>
+    <%= image_tag @card.back_image %>
+  <% end %>
+  <%= f.input :back_image, label: "Imagen al dorso, opcional" %>
 
   <br>
 
   <%= f.button :submit, @labels.button, class: "btn-primary" %>
 
-<% end %>
-
-<% content_for :head do %>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.0/trix.css" rel="stylesheet">
-<% end %>
-
-<% content_for :javascript do %>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.0/trix.js" type="application/javascript"></script>
 <% end %>

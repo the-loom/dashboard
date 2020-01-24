@@ -84,20 +84,35 @@
         <%= link_to "Tablero", dashboard_index_path %>
       </li>
 
-      <% if Course.current.on?(:automatic_correction_challenges) && policy(AutomaticCorrection::Repo).index? %>
-        <li>
-          <%= link_to "Desafíos de Corrección Automática", repos_path %>
-        </li>
-      <% end %>
-      <% if Course.current.on?(:peer_review_challenges) && policy(PeerReview::Challenge).index? %>
-        <li>
-          <%= link_to "Desafíos de Revisión", peer_review_challenges_path %>
-        </li>
-      <% end %>
-      <% if Course.current.on?(:exercises) && policy(Exercise).index? %>
-        <li>
-          <%= link_to "Ejercicios", exercises_path %>
-        </li>
+      <% if Course.current.on?(:automatic_correction_challenges) || Course.current.on?(:peer_review_challenges) || Course.current.on?(:exercises) %>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle tour-exit" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            Ejercitación
+            <span class="caret"></span>
+          </a>
+            <ul class="dropdown-menu">
+              <% if Course.current.on?(:tiny_cards) %>
+                <li>
+                  <%= link_to "Tarjetas", tiny_cards_decks_path %>
+                </li>
+              <% end %>
+              <% if Course.current.on?(:automatic_correction_challenges) && policy(AutomaticCorrection::Repo).index? %>
+                <li>
+                  <%= link_to "Desafíos de Corrección Automática", repos_path %>
+                </li>
+              <% end %>
+              <% if Course.current.on?(:peer_review_challenges) && policy(PeerReview::Challenge).index? %>
+                <li>
+                  <%= link_to "Desafíos de Revisión", peer_review_challenges_path %>
+                </li>
+              <% end %>
+              <% if Course.current.on?(:exercises) && policy(Exercise).index? %>
+                <li>
+                  <%= link_to "Ejercicios", exercises_path %>
+                </li>
+              <% end %>
+            </ul>
+          </li>
       <% end %>
     <% end %>
     <% if Course.current %>

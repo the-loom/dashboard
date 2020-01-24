@@ -19,6 +19,7 @@
       <thead>
       <tr>
         <th>Nombre</th>
+        <th>Tarjetas</th>
         <th class="no-sort">&nbsp;</th>
       </tr>
       </thead>
@@ -29,8 +30,12 @@
             <%= link_to deck.name, tiny_cards_deck_path(deck) %>
           </td>
           <td>
+            <%= deck.cards.count %>
+          </td>
+          <td>
             <% if policy(TinyCards::Deck).manage? %>
               <%= link_to "Editar", edit_tiny_cards_deck_path(deck), class: 'btn btn-default btn-sm' %>
+              <%= link_to "Eliminar", tiny_cards_deck_path(deck), method: :delete, class: 'btn btn-danger btn-sm' %>
             <% end %>
           </td>
         </tr>

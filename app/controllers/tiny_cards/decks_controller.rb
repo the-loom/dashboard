@@ -51,6 +51,15 @@ module TinyCards
       end
     end
 
+    def destroy
+      authorize TinyCards::Deck, :manage?
+      @deck = TinyCards::Deck.find(params[:id])
+      @deck.destroy
+
+      redirect_to tiny_cards_decks_path
+      flash[:info] = "Se eliminó el mazo"
+    end
+
     def show
       @deck = TinyCards::Deck.find(params[:id])
       authorize @deck, :manage?
