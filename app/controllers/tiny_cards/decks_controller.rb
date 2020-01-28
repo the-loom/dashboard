@@ -65,6 +65,12 @@ module TinyCards
       authorize @deck, :manage?
     end
 
+    def practice
+      @deck = TinyCards::Deck.find(params[:id])
+      authorize @deck, :access?
+      @deck = TinyCards::DeckPresenter.new(@deck)
+    end
+
     private
       def deck_params
         params[:tiny_cards_deck].permit(:name, course_ids: [])

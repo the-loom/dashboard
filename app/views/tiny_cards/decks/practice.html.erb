@@ -1,0 +1,56 @@
+<% nav_add 'Mazos', tiny_cards_decks_path %>
+<% nav_add @deck.name, '#' %>
+<% nav_add 'Práctica', '#' %>
+<%= nav_render %>
+
+<div id="card-container">
+
+</div>
+
+
+
+<button type="button" class="btn btn-secondary" onclick='anterior()'>Anterior</button>
+<button type="button" class="btn btn-secondary" onclick='siguiente()'>Siguiente</button>
+
+<button type="button" class="btn btn-primary" onclick='$(".card").flip("toggle");'>Flip!</button>
+
+<%= content_for :head do %>
+
++
+
+<% end %>
+
+<%= content_for :javascript do %>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="application/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Flip/1.1.2/jquery.flip.min.js" type="application/javascript"></script>
+  <script type="application/javascript">
+      var deck = <%== @deck.to_json %>;
+      var index = 0;
+
+      cambio();
+
+      function cambio() {
+          var front = deck.cards[index].front;
+          var back = deck.cards[index].back;
+          var html = "<div class='card'><div class='front'>" + front + "</div><div class='back'>" + back + "</div></div>";
+
+          $("#card-container").html(html);
+          $(".card").flip();
+      }
+
+      function anterior() {
+          if (index > 0) {
+              index--;
+              cambio();
+          }
+      }
+
+      function siguiente() {
+          if (index < deck.cards.length - 1) {
+              index++;
+              cambio();
+          }
+      }
+
+  </script>
+<% end %>

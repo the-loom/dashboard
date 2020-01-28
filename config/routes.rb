@@ -110,6 +110,9 @@ Rails.application.routes.draw do
   namespace :tiny_cards do
     resources :decks do
       resources :cards
+      member do
+        get :practice
+      end
     end
   end
 

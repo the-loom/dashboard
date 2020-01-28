@@ -33,6 +33,7 @@
             <%= deck.cards.count %>
           </td>
           <td>
+            <%= link_to "Practicar", practice_tiny_cards_deck_path(deck), class: 'btn btn-default btn-sm' %>
             <% if policy(TinyCards::Deck).manage? %>
               <%= link_to "Editar", edit_tiny_cards_deck_path(deck), class: 'btn btn-default btn-sm' %>
               <%= link_to "Eliminar", tiny_cards_deck_path(deck), method: :delete, class: 'btn btn-danger btn-sm' %>
