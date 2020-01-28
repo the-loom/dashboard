@@ -28,7 +28,7 @@ module TinyCards
         redirect_to tiny_cards_deck_path(@deck)
         flash[:info] = "Se creó correctamente la carta"
       else
-        render action: :new
+        redirect_to action: :new
       end
     end
 
@@ -48,7 +48,7 @@ module TinyCards
         redirect_to tiny_cards_deck_path(@card.deck)
         flash[:info] = "Se editó correctamente la carta"
       else
-        render action: :edit
+        redirect_to action: :edit
       end
     end
 
