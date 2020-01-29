@@ -28,7 +28,8 @@ module TinyCards
         redirect_to tiny_cards_decks_path
         flash[:info] = "Se creó correctamente el mazo"
       else
-        render action: :new
+        @labels = OpenStruct.new(title: "Nuevo mazo", button: "Guardar mazo")
+        render :form
       end
     end
 
@@ -47,7 +48,8 @@ module TinyCards
         redirect_to tiny_cards_decks_path
         flash[:info] = "Se editó correctamente el mazo"
       else
-        render action: :edit
+        @labels = OpenStruct.new(title: "Editar mazo", button: "Actualizar mazo")
+        render :form
       end
     end
 

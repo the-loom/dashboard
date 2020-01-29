@@ -8,15 +8,25 @@
 
   </div>
 </div>
-<div id="card-commands">
-  <button type="button" class="btn btn-secondary" onclick='anterior()'>Anterior</button>
-  <button type="button" class="btn btn-secondary" onclick='siguiente()'>Siguiente</button>
+
+<div class="row">
+  <div class="col-md-3">
+    <div>
+      <p><code>space</code>: voltear carta</p>
+      <p><code>enter</code>: siguiente carta</p>
+      <p><code>🡐 / 🡒</code>: navegar</p>
+    </div>
+  </div>
+  <div id="card-commands" class="col-md-6">
+    <button type="button" class="btn btn-secondary" onclick='previousCard()'>Anterior</button>
+    <button type="button" class="btn btn-secondary" onclick='nextCard()'>Siguiente</button>
+  </div>
+  <div class="col-md-3"></div>
 </div>
 
 <%= content_for :head do %>
   <style>
     #card-commands {
-      margin: 10px;
       text-align: center;
     }
 
@@ -61,21 +71,21 @@
       var proportion = 10 / 16;
       var card_margin;
 
-      function cambio() {
+      function change() {
           $("#card-slider").css('margin-left', (card_width + 2 * card_margin) * -index + "px");
       }
 
-      function anterior() {
+      function previousCard() {
           if (index > 0) {
               index--;
-              cambio();
+              change();
           }
       }
 
-      function siguiente() {
+      function nextCard() {
           if (index < deck.cards.length - 1) {
               index++;
-              cambio();
+              change();
           }
       }
 
@@ -100,7 +110,7 @@
               .css("margin-right", card_margin + "px")
               .css("perspective", "1000px");
           $("#card-slider").css("height", card_width / proportion + "px");
-          cambio();
+          change();
       }
 
       $(window).on('resize', resize);
@@ -108,10 +118,14 @@
       $(document).keydown(function (e) {
           switch (e.which) {
               case 37: // left
-                  anterior();
+                  previousCard();
                   break;
+              case 13: // enter
               case 39: // right
-                  siguiente();
+                  nextCard();
+                  break;
+              case 32: // space
+                  $(".card").eq(index).flip('toggle');
                   break;
           }
       });
@@ -151,9 +165,9 @@
 
           if (Math.abs(xDiff) > Math.abs(yDiff)) {/*most significant*/
               if (xDiff > 0) {
-                  siguiente();
+                  nextCard();
               } else {
-                  anterior();
+                  previousCard();
               }
           } else {
               if (yDiff > 0) {

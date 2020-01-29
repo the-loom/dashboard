@@ -16,7 +16,7 @@
 
   <% else %>
 
-    <table class="cards table table-striped">
+    <table class="cards table table-striped table-hover">
       <thead>
       <tr>
         <th>Frente</th>
@@ -30,9 +30,15 @@
         <tr class="fork">
           <td>
             <pre><%= card.front %></pre>
+            <% if card.front_image.attached? %>
+              <%= image_tag card.front_image, class: 'card-preview' %>
+            <% end %>
           </td>
           <td>
             <pre><%= card.back %></pre>
+            <% if card.back_image.attached? %>
+              <%= image_tag card.back_image, class: 'card-preview' %>
+            <% end %>
           </td>
           <td>
             <%= card.author.try(:full_name) %>

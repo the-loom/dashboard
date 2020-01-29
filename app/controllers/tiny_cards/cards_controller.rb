@@ -28,7 +28,8 @@ module TinyCards
         redirect_to tiny_cards_deck_path(@deck)
         flash[:info] = "Se creó correctamente la carta"
       else
-        redirect_to action: :new
+        @labels = OpenStruct.new(title: "Nueva carta", button: "Guardar carta")
+        render :form
       end
     end
 
@@ -48,7 +49,9 @@ module TinyCards
         redirect_to tiny_cards_deck_path(@card.deck)
         flash[:info] = "Se editó correctamente la carta"
       else
-        redirect_to action: :edit
+        @deck = TinyCards::Deck.find(@card.deck.id)
+        @labels = OpenStruct.new(title: "Editar carta", button: "Actualizar carta")
+        render :form
       end
     end
 
