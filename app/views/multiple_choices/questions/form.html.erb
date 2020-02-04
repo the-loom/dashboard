@@ -1,0 +1,14 @@
+<% nav_add 'Preguntas de Opción Múltiple', multiple_choices_questions_path %>
+<% nav_add "##{@question.id}", multiple_choices_question_path(@question) unless @question.new_record? %>
+<% nav_add @labels.title, '#' %>
+<%= nav_render %>
+
+<%= simple_form_for @question do |f| %>
+
+  <%= render :partial => 'shared/errors', locals: { f: f } %>
+
+  <%= f.input :wording, label: "Enunciado" %>
+
+  <%= f.button :submit, @labels.button, class: "btn-primary" %>
+
+<% end %>

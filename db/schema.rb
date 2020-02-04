@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_23_143255) do
+ActiveRecord::Schema.define(version: 2020_02_04_152721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -185,6 +185,22 @@ ActiveRecord::Schema.define(version: 2020_01_23_143255) do
     t.integer "points", default: 0
     t.string "stats"
     t.index ["discarded_at"], name: "index_memberships_on_discarded_at"
+  end
+
+  create_table "multiple_choices_answers", force: :cascade do |t|
+    t.string "text"
+    t.boolean "correct"
+    t.string "explanation"
+    t.integer "multiple_choices_question_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "multiple_choices_questions", force: :cascade do |t|
+    t.string "wording"
+    t.integer "course_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "notifications", id: :serial, force: :cascade do |t|

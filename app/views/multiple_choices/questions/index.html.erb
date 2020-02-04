@@ -1,0 +1,75 @@
+<% nav_add 'Preguntas de Opción Múltiple', '#' %>
+<%= nav_render %>
+
+<% if policy(MultipleChoices::Question).manage? %>
+  <%= link_to 'Nueva pregunta', new_multiple_choices_question_path, class: 'btn btn-primary pull-right' %>
+<% end %>
+
+<section class="forks">
+
+  <% if @questions.empty? %>
+
+    <div class="alert alert-info">
+      <p>Aún no hay ninguna pregunta</p>
+    </div>
+
+  <% else %>
+
+    <table class="questions table table-striped">
+      <thead>
+      <tr>
+        <th>Enunciado</th>
+        <th>Opciones</th>
+        <th class="no-sort">&nbsp;</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @questions.each do |question| %>
+        <tr class="fork">
+          <td>
+            <%= question.wording %>
+          </td>
+          <td>
+            <%= question.answers.count %>
+          </td>
+          <td>
+
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</section>
+
+<%= content_for :head do %>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+
+  <style>
+    form.button_to {
+      display: inline-block;
+      margin: 0 0.1em;
+    }
+  </style>
+
+<% end %>
+
+<%= content_for :javascript do %>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="application/javascript"></script>
+
+  <script type="application/javascript">
+      $(function () {
+          $('.questions').DataTable({
+              order: [[0, "asc"]],
+              paging: false,
+              language: {
+                  url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+              },
+              columnDefs: [{
+                  targets: 'no-sort',
+                  orderable: false
+              }]
+          });
+      });
+  </script>
+<% end %>

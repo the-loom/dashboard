@@ -107,6 +107,10 @@ Rails.application.routes.draw do
 
   resources :notifications, only: [:index, :new, :create]
 
+  namespace :multiple_choices do
+    resources :questions
+  end
+
   namespace :tiny_cards do
     resources :decks do
       resources :cards
