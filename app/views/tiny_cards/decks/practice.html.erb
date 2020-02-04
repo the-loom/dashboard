@@ -54,6 +54,17 @@
       padding: 15px;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     }
+
+    .front p, .back p {
+      margin-top: 1em;
+      font-size: 2em;
+    }
+
+      .card img {
+        max-width: 100%;
+        max-height: 100%;
+        display: block;
+      }
   </style>
 
 <% end %>
@@ -94,7 +105,16 @@
               card;
           for (var i = 0; i < deck.cards.length; i++) {
               card = deck.cards[i];
-              html.push("<div class='card'><div class='front'>" + card.front + "</div><div class='back'>" + card.back + "</div></div>");
+              html.push("<div class='card'><div class='front'>");
+              if (card.front_image) {
+                  html.push("<img src='" + card.front_image + "'/>");
+              }
+              html.push("<p>" + card.front + "</p></div>");
+              html.push("<div class='back'>");
+              if (card.back_image) {
+                  html.push("<img src='" + card.back_image + "'/>");
+              }
+              html.push("<p>"+ card.back + "</p></div></div>");
           }
           $("#card-slider").html(html.join(""));
           $(".card").flip();
