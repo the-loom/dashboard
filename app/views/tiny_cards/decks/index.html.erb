@@ -1,0 +1,79 @@
+<% nav_add 'Mazos', '#' %>
+<%= nav_render %>
+
+<% if policy(TinyCards::Deck).manage? %>
+  <%= link_to 'Nuevo mazo', new_tiny_cards_deck_path, class: 'btn btn-primary pull-right' %>
+<% end %>
+
+<section class="forks">
+
+  <% if @decks.empty? %>
+
+    <div class="alert alert-info">
+      <p>Aún no hay ningún mazo</p>
+    </div>
+
+  <% else %>
+
+    <table class="decks table table-striped">
+      <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Tarjetas</th>
+        <th class="no-sort">&nbsp;</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @decks.each do |deck| %>
+        <tr class="fork">
+          <td>
+            <%= link_to deck.name, tiny_cards_deck_path(deck) %>
+          </td>
+          <td>
+            <%= deck.cards.count %>
+          </td>
+          <td>
+            <%= link_to "Practicar", practice_tiny_cards_deck_path(deck), class: 'btn btn-default btn-sm' %>
+            <% if policy(TinyCards::Deck).manage? %>
+              <%= link_to "Editar", edit_tiny_cards_deck_path(deck), class: 'btn btn-default btn-sm' %>
+              <%= link_to "Eliminar", tiny_cards_deck_path(deck), method: :delete, class: 'btn btn-danger btn-sm' %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</section>
+
+<%= content_for :head do %>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+
+  <style>
+    form.button_to {
+      display: inline-block;
+      margin: 0 0.1em;
+    }
+  </style>
+
+<% end %>
+
+<%= content_for :javascript do %>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="application/javascript"></script>
+
+  <script type="application/javascript">
+      $(function () {
+          $('.decks').DataTable({
+              order: [[0, "asc"]],
+              paging: false,
+              language: {
+                  url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+              },
+              columnDefs: [{
+                  targets: 'no-sort',
+                  orderable: false
+              }]
+          });
+      });
+  </script>
+<% end %>
