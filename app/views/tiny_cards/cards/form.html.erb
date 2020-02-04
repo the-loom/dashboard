@@ -1,0 +1,31 @@
+<% nav_add 'Mazos', tiny_cards_decks_path %>
+<% nav_add @deck.name, tiny_cards_deck_path(@deck) %>
+<% nav_add @labels.title, '#' %>
+<%= nav_render %>
+
+<%  url = @card.new_record? ? tiny_cards_deck_cards_path(@deck) : tiny_cards_deck_card_path(@deck, @card) %>
+<%= simple_form_for([@deck, @card], url: url) do |f| %>
+
+  <%= render :partial => 'shared/errors', locals: { f: f } %>
+
+  <%= f.input :front, label: "Frente", as: :text, input_html: { maxlength: 200 } %>
+
+  <% if @card.front_image.attached? %>
+    <%= image_tag @card.front_image %>
+  <% end %>
+  <%= f.input :front_image, label: "Imagen al frente, opcional" %>
+
+  <br>
+
+  <%= f.input :back, label: "Dorso", as: :text, input_html: { maxlength: 200 } %>
+
+  <% if @card.back_image.attached? %>
+    <%= image_tag @card.back_image %>
+  <% end %>
+  <%= f.input :back_image, label: "Imagen al dorso, opcional" %>
+
+  <br>
+
+  <%= f.button :submit, @labels.button, class: "btn-primary" %>
+
+<% end %>

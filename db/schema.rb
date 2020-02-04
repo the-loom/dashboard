@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_16_182418) do
+ActiveRecord::Schema.define(version: 2020_01_23_143255) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -116,6 +116,11 @@ ActiveRecord::Schema.define(version: 2020_01_16_182418) do
     t.integer "attendance_event_id"
     t.string "stats"
     t.index ["discarded_at"], name: "index_courses_on_discarded_at"
+  end
+
+  create_table "courses_tiny_cards_decks", force: :cascade do |t|
+    t.integer "course_id"
+    t.integer "deck_id"
   end
 
   create_table "earnings", id: :serial, force: :cascade do |t|
@@ -260,6 +265,21 @@ ActiveRecord::Schema.define(version: 2020_01_16_182418) do
     t.datetime "started_at"
     t.string "description"
     t.integer "course_id"
+  end
+
+  create_table "tiny_cards_cards", force: :cascade do |t|
+    t.string "front"
+    t.string "back"
+    t.integer "tiny_cards_deck_id"
+    t.integer "author_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tiny_cards_decks", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "user_solutions", id: :serial, force: :cascade do |t|
