@@ -2,11 +2,6 @@
 <% nav_add @exercise.name, '#' %>
 <%= nav_render %>
 
-<div class="row">
-  <div class="col-md-6">
-
-      <%== @exercise.notes %>
-
-  </div>
+<div class="exercise-wording">
+  <%== @exercise.notes %>
 </div>
-
