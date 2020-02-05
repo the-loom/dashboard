@@ -29,8 +29,8 @@
           <%= link_to exercise.name, exercise_path(exercise.id) %>
         </td>
         <td>
-          <% if exercise.active_solution_for?(current_user) %>
-            <%= link_to 'Continuar resolviendo', solution_path(exercise.active_solution_for?(current_user)), class: 'btn btn-default' %>
+          <% if policy(Exercise).manage? %>
+            <%= link_to "Editar", edit_exercise_path(exercise), class: 'btn btn-default btn-sm' %>
           <% end %>
         </td>
       </tr>

@@ -43,9 +43,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :exercises do
-    get :start
-  end
+  resources :exercises
 
   resources :partners, only: :index
 

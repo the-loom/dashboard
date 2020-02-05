@@ -1,0 +1,33 @@
+<% nav_add 'Ejercicios', exercises_path %>
+<% nav_add @exercise.name, exercise_path(@exercise) unless @exercise.new_record? %>
+<% nav_add @labels.title, '#' %>
+<%= nav_render %>
+
+<%= form_for @exercise do |f| %>
+
+  <%= render :partial => 'shared/errors', locals: { f: f } %>
+
+  <div class="form-group">
+    <%= f.label :name, 'Nombre', class: 'control-label' %>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :notes, 'Notas', class: 'control-label' %>
+    <%= f.text_area :notes, hidden: true %>
+    <trix-editor input="exercise_notes"></trix-editor>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit @labels.button, class: "btn btn-primary" %>
+  </div>
+
+<% end %>
+
+<% content_for :head do %>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.0/trix.css" rel="stylesheet">
+<% end %>
+
+<% content_for :javascript do %>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.0/trix.js" type="application/javascript"></script>
+<% end %>

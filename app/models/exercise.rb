@@ -2,7 +2,7 @@ class Exercise < ApplicationRecord
   include CourseLock
   include Publishable
 
-  validates_presence_of :name, :url
+  validates_presence_of :name
   validates :name, uniqueness: { scope: :course_id }
 
   has_many :solutions
