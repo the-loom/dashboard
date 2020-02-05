@@ -36,7 +36,8 @@ class Course < ApplicationRecord
         peer_review_challenges: 32,
         exercises: 64,
         competences: 128,
-        tiny_cards: 256
+        tiny_cards: 256,
+        multiple_choices: 512
     }
 
     features & all_features[requested_feature] == all_features[requested_feature]
