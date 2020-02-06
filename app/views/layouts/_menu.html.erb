@@ -96,9 +96,9 @@
                   <%= link_to "Tarjetas", tiny_cards_decks_path %>
                 </li>
               <% end %>
-              <% if Course.current.on?(:multiple_choices) && policy(MultipleChoices::Question).manage? %>
+              <% if Course.current.on?(:multiple_choices) && policy(MultipleChoices::Questionnaire).manage? %>
                 <li>
-                  <%= link_to "Preguntas de Opción Múltiple", multiple_choices_questions_path %>
+                  <%= link_to "Preguntas de Opción Múltiple", multiple_choices_questionnaires_path %>
                 </li>
               <% end %>
               # agregar opcion para practicar!

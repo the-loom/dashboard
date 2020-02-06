@@ -1,13 +1,16 @@
-<% nav_add 'Preguntas de Opción Múltiple', '#' %>
+<% nav_add 'Cuestionarios de Opción Múltiple', multiple_choices_questionnaires_path %>
+<% nav_add @questionnaire.name, '#' %>
 <%= nav_render %>
 
-<% if policy(MultipleChoices::Question).manage? %>
-  <%= link_to 'Nueva pregunta', new_multiple_choices_question_path, class: 'btn btn-primary pull-right' %>
+<% if policy(MultipleChoices::Questionnaire).manage? %>
+  <%= link_to 'Nueva pregunta', new_multiple_choices_questionnaire_question_path(@questionnaire), class: 'btn btn-primary pull-right' %>
 <% end %>
+
+<br><br>
 
 <section class="forks">
 
-  <% if @questions.empty? %>
+  <% if @questionnaire.questions.empty? %>
 
     <div class="alert alert-info">
       <p>Aún no hay ninguna pregunta</p>
@@ -24,7 +27,7 @@
       </tr>
       </thead>
       <tbody>
-      <% @questions.each do |question| %>
+      <% @questionnaire.questions.each do |question| %>
         <tr class="fork">
           <td>
             <%= question.wording %>
@@ -33,7 +36,9 @@
             <%= question.answers.count %>
           </td>
           <td>
-
+            <% if policy(MultipleChoices::Questionnaire).manage? %>
+              <%= link_to "Editar", edit_multiple_choices_questionnaire_question_path(@questionnaire, question), class: 'btn btn-default btn-sm' %>
+            <% end %>
           </td>
         </tr>
       <% end %>

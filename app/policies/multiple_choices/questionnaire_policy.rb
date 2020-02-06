@@ -1,4 +1,4 @@
-class MultipleChoices::QuestionPolicy < ApplicationPolicy
+class MultipleChoices::QuestionnairePolicy < ApplicationPolicy
   def manage?
     user.teacher?
   end

@@ -1,0 +1,14 @@
+<% nav_add 'Cuestionario de Opción Múltiple', multiple_choices_questionnaires_path %>
+<% nav_add "##{@questionnaire.id}", multiple_choices_questionnaire_path(@questionnaire) unless @questionnaire.new_record? %>
+<% nav_add @labels.title, '#' %>
+<%= nav_render %>
+
+<%= simple_form_for @questionnaire do |f| %>
+
+  <%= render :partial => 'shared/errors', locals: { f: f } %>
+
+  <%= f.input :name, label: "Nombre" %>
+
+  <%= f.button :submit, @labels.button, class: "btn-primary" %>
+
+<% end %>

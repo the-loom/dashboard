@@ -144,7 +144,6 @@ ActiveRecord::Schema.define(version: 2020_02_04_152721) do
 
   create_table "exercises", id: :serial, force: :cascade do |t|
     t.string "name"
-    t.string "url"
     t.text "notes"
     t.integer "course_id"
     t.boolean "published", default: true
@@ -196,9 +195,16 @@ ActiveRecord::Schema.define(version: 2020_02_04_152721) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "multiple_choices_questionnaires", force: :cascade do |t|
+    t.string "name"
+    t.integer "course_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "multiple_choices_questions", force: :cascade do |t|
     t.string "wording"
-    t.integer "course_id"
+    t.integer "multiple_choices_questionnaire_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
