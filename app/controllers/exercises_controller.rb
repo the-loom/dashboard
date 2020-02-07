@@ -1,11 +1,14 @@
 class ExercisesController < ApplicationController
-  before_action :verify_pending_solutions, only: [:show, :index]
   before_action do
     check_feature(:exercises)
   end
 
   def index
-    @exercises = Exercise.published
+    if current_user.teacher?
+      @exercises = Exercise.all
+    else
+      @exercises = Exercise.published
+    end
   end
 
   def new
@@ -49,6 +52,19 @@ class ExercisesController < ApplicationController
   def show
     @exercise = Exercise.find(params[:id])
     authorize @exercise
+  end
+
+  def publish
+    authorize Exercise, :manage?
+    exercise = Exercise.find(params[:id])
+
+    if params[:mode] == "publish"
+      exercise.publish!
+    else
+      exercise.unpublish!
+    end
+
+    redirect_to exercises_path
   end
 
   private

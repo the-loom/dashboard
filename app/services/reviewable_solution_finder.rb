@@ -4,7 +4,6 @@ class ReviewableSolutionFinder
     @user = user
   end
 
-
   def find_review
     started_reviews = @challenge.reviews.where(reviewer: @user, status: :draft)
     return started_reviews.first unless started_reviews.empty?

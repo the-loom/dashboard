@@ -2,9 +2,9 @@
 <%= nav_render %>
 
 <% if policy(Exercise).create? %>
-  <div class="row">
-    <%= link_to 'Nuevo ejercicio', new_exercise_path, class: 'btn btn-primary pull-right' %>
-  </div>
+  <%= link_to 'Nuevo ejercicio', new_exercise_path, class: 'btn btn-primary pull-right' %>
+
+  <br><br>
 <% end %>
 
 <% if @exercises.empty? %>
@@ -30,6 +30,11 @@
         </td>
         <td>
           <% if policy(Exercise).manage? %>
+            <% if exercise.published? %>
+              <%= button_to "Despublicar", publish_exercise_path(exercise, mode: 'unpublish'), method: :post, class: 'btn btn-default btn-sm' %>
+            <% else %>
+              <%= link_to "Publicar", publish_exercise_path(exercise, mode: 'publish'), method: :post, class: 'btn btn-default btn-sm' %>
+            <% end %>
             <%= link_to "Editar", edit_exercise_path(exercise), class: 'btn btn-default btn-sm' %>
           <% end %>
         </td>
@@ -42,6 +47,14 @@
 
 <%= content_for :head do %>
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+
+  <style>
+    form.button_to {
+      display: inline-block;
+      margin: 0 0.1em;
+    }
+  </style>
+
 <% end %>
 
 <%= content_for :javascript do %>

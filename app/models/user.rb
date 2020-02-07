@@ -19,9 +19,6 @@ class User < ApplicationRecord
 
   has_many :comments
 
-  has_many :user_solutions
-  has_many :solutions, through: :user_solutions
-
   has_many :repos, foreign_key: :author_id, class_name: "AutomaticCorrection::Repo"
 
   has_many :peer_review_solutions, foreign_key: :author_id, class_name: "PeerReview::Solution"

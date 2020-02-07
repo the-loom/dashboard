@@ -21,12 +21,6 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    def verify_pending_solutions
-      if session[:course_id] && current_user.solutions.detect { |s| s.finished_at == nil }
-        flash[:info] = "Tenés un ejercicio en curso. Si lo olvidaste, podés accederlo y finalizarlo. O eliminarlo"
-      end
-    end
-
   private
     def check_feature(feature)
       unless Course.current.on?(feature)
