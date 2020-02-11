@@ -61,6 +61,8 @@
     <% @lectures.each do |lecture| %>
       <th><%= @students.count { |student| student.present_at(lecture)} %></th>
     <% end %>
+    <th>Asist.</th>
+    <th>Asist. %</th>
     </tfoot>
   </table>
 

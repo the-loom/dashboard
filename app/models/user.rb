@@ -31,7 +31,8 @@ class User < ApplicationRecord
 
       enabled_students_for_course = User.includes(:memberships).includes(memberships: :team).where(memberships: { course: Course.current, role: :student, enabled: true }).order("teams.name, last_name, first_name")
       enabled_students_for_course.each do |x|
-        csv << [x.current_membership.team.name, x.uuid.upcase, x.last_name, x.first_name]
+        team_name = x.current_membership.team.try(:name)
+        csv << [team_name, x.uuid.upcase, x.last_name, x.first_name]
       end
     end
   end
@@ -147,7 +148,7 @@ class User < ApplicationRecord
 
   # TODO(delucas): move to presenter
   def present_at(lecture)
-    current_membership.present_at_lecture_ids.include? lecture.id
+    (current_membership.present_at_lecture_ids || []).include? lecture.id
   end
 
   # TODO(delucas): move to presenter
