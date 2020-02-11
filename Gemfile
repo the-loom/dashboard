@@ -22,7 +22,7 @@ group :development, :test do
 end
 
 gem "dotenv-rails", "2.7.5", groups: [:development, :test]
-gem "omniauth-github", "1.3.0"
+gem "omniauth-github", "1.4.0"
 gem "omniauth-google-oauth2", "0.5.3"
 gem "omniauth-rails_csrf_protection", "~> 0.1"
 gem "discard", "~> 1.1"
