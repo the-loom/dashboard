@@ -96,12 +96,11 @@
                   <%= link_to "Tarjetas", tiny_cards_decks_path %>
                 </li>
               <% end %>
-              <% if Course.current.on?(:multiple_choices) && policy(MultipleChoices::Questionnaire).manage? %>
+              <% if Course.current.on?(:multiple_choices) %>
                 <li>
                   <%= link_to "Preguntas de Opción Múltiple", multiple_choices_questionnaires_path %>
                 </li>
               <% end %>
-              # agregar opcion para practicar!
               <% if Course.current.on?(:automatic_correction_challenges) && policy(AutomaticCorrection::Repo).index? %>
                 <li>
                   <%= link_to "Desafíos de Corrección Automática", repos_path %>

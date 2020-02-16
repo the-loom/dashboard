@@ -1,0 +1,45 @@
+<% nav_add 'Cuestionarios de Opción Múltiple', multiple_choices_questionnaires_path %>
+<% nav_add @questionnaire.name, '#' %>
+<% nav_add 'Resultados', '#' %>
+<%= nav_render %>
+
+<legend><%= @questionnaire.name %></legend>
+
+<ol>
+  <% @questionnaire.questions.each do |question| %>
+    <li>
+      <%= question.wording %> <%= question.correct ? "YAY" : "NOPE!" %>
+      <ol>
+        <% question.answers.each do |answer| %>
+          <li class="<%= answer.classes %>">
+            <input type="radio" disabled="disabled" <%= answer.chosen ? 'checked' : '' %>/>
+            <%= answer.text %>
+            <% if answer.chosen %>
+              <p class="help-block">
+                <%= answer.explanation %>
+              </p>
+            <% end %>
+          </li>
+        <% end %>
+      </ol>
+    </li>
+  <% end %>
+</ol>
+
+
+Puntaje:
+<%= @questionnaire.points %> / <%= @questionnaire.total_points %>
+
+<% content_for :head do %>
+  <style>
+    .chosen {
+      border: 5px solid black;
+      background-color: #ff7d79;
+    }
+
+    .chosen.correct {
+      background-color: #65bc84;
+    }
+
+  </style>
+<% end %>

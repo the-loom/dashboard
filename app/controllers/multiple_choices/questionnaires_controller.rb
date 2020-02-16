@@ -65,11 +65,15 @@ module MultipleChoices
     end
 
     def practice
-=begin
       @questionnaire = MultipleChoices::Questionnaire.find(params[:id])
       authorize @questionnaire, :access?
-      @questionnaire = MultipleChoices::QuestionnairePresenter.new(@questionnaire)
-=end
+      #@questionnaire = MultipleChoices::QuestionnairePresenter.new(@questionnaire)
+    end
+
+    def grade
+      @questionnaire = MultipleChoices::Questionnaire.find(params[:id])
+      authorize @questionnaire, :access?
+      @questionnaire = MultipleChoices::SolvedQuestionnairePresenter.new(@questionnaire, params[:question])
     end
 
     private

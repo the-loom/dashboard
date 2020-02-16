@@ -10,9 +10,6 @@ module MultipleChoices
       @question = @questionnaire.questions.new
       @question.answers.build
       @labels = OpenStruct.new(title: "Nueva pregunta", button: "Guardar pregunta")
-
-      # utilizar el código de contact data de MM para esto, con vuejs, agregar preguntas
-
       render :form
     end
 
@@ -64,7 +61,8 @@ module MultipleChoices
 
     private
       def question_params
-        params[:multiple_choices_question].permit(:wording, answers_attributes: %i[id text explanation correct _destroy deleted_at])
+        params[:multiple_choices_question].permit(:wording,
+                                                  answers_attributes: %i[id text explanation correct _destroy deleted_at])
       end
   end
 end

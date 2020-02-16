@@ -113,6 +113,7 @@ Rails.application.routes.draw do
     resources :questionnaires do
       member do
         get :practice
+        post :grade
       end
       resources :questions, except: :index
     end
