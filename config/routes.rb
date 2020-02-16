@@ -44,7 +44,9 @@ Rails.application.routes.draw do
   end
 
   resources :exercises do
-    get :start
+    member do
+      post :publish
+    end
   end
 
   resources :partners, only: :index
@@ -131,7 +133,6 @@ Rails.application.routes.draw do
         get :overview
         get :toggle
         post :publish
-        post :unpublish
         get :purge
       end
       resources :solutions, only: [:new, :update, :show]

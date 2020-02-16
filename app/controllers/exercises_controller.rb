@@ -1,56 +1,74 @@
 class ExercisesController < ApplicationController
-  before_action :verify_pending_solutions, only: [:show, :index]
   before_action do
     check_feature(:exercises)
   end
 
   def index
-    @exercises = Exercise.published
+    if current_user.teacher?
+      @exercises = Exercise.all
+    else
+      @exercises = Exercise.published
+    end
   end
 
   def new
     authorize Exercise, :new?
     @exercise = Exercise.new
+    @labels = OpenStruct.new(title: "Nuevo ejercicio", button: "Guardar ejercicio")
+    render :form
   end
 
   def create
     authorize Exercise, :create?
     @exercise = Exercise.new(exercise_params)
-    if @exercise.save
-      flash[:info] = "Se creo correctamente el ejercicio"
+    if @exercise.valid?
+      @exercise.save
+      redirect_to exercises_path
+      flash[:info] = "Se creó correctamente el ejercicio"
+    else
+      render action: :new
     end
-    redirect_to exercises_path
+  end
+
+  def edit
+    authorize Exercise, :create?
+    @exercise = Exercise.find(params[:id])
+    @labels = OpenStruct.new(title: "Editar ejercicio", button: "Actualizar ejercicio")
+    render :form
+  end
+
+  def update
+    authorize Exercise, :create?
+    @exercise = Exercise.find(params[:id])
+
+    if @exercise.update_attributes(exercise_params)
+      redirect_to exercises_path
+      flash[:info] = "Se editó correctamente el ejercicio"
+    else
+      render action: :edit
+    end
   end
 
   def show
     @exercise = Exercise.find(params[:id])
     authorize @exercise
-
-    @solution = @exercise.solutions.find { |s| s.users.include?(current_user) && !s.finished? }
-
-    if current_user.teacher?
-      @solutions = @exercise.solutions
-    elsif current_user.student?
-      @solutions = @exercise.solutions.find_all { |s| s.users.include?(current_user) && s.finished? }
-    end
   end
 
-  def start
-    if current_user.solutions.where(finished_at: nil).empty?
-      @exercise = Exercise.find(params[:exercise_id])
-      authorize @exercise
-      @solution = Solution.create(
-        exercise: @exercise,
-        users: [current_user])
-      redirect_to solution_path(@solution.id)
+  def publish
+    authorize Exercise, :manage?
+    exercise = Exercise.find(params[:id])
+
+    if params[:mode] == "publish"
+      exercise.publish!
     else
-      flash[:alert] = "No se puede iniciar una resolución con otra en curso"
-      redirect_to exercises_path
+      exercise.unpublish!
     end
+
+    redirect_to exercises_path
   end
 
   private
     def exercise_params
-      params[:exercise].permit(:name, :url, :notes)
+      params[:exercise].permit(:name, :notes)
     end
 end
