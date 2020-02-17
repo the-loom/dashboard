@@ -9,7 +9,14 @@ class TinyCards::DeckPresenter
   end
 
   def image_url(img)
-    rails_blob_url(img) if img.attached?
+    if img&.attachment
+      if Rails.env.development?
+        re = Rails.application.routes.url_helpers.rails_blob_url(img, only_path: true)
+      else
+        re = img&.service_url&.split("?")&.first
+      end
+    end
+    re
   end
 
   def to_json
