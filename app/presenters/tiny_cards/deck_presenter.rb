@@ -13,7 +13,7 @@ class TinyCards::DeckPresenter
       if Rails.env.development?
         re = Rails.application.routes.url_helpers.rails_blob_url(img, only_path: true)
       else
-        re = img&.service_url&.split("?")&.first
+        re = img&.service_url
       end
     end
     re
