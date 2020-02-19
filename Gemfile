@@ -18,7 +18,7 @@ group :development, :test do
   gem "bullet"
   gem "rubocop-rails_config"
   gem "rspec-rails", "~> 3.9"
-  gem "shoulda-matchers", "~> 4.2"
+  gem "shoulda-matchers", "~> 4.3"
 end
 
 gem "dotenv-rails", "2.7.5", groups: [:development, :test]
