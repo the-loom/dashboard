@@ -9,6 +9,7 @@ module MultipleChoices
       @questionnaire = MultipleChoices::Questionnaire.find(params[:questionnaire_id])
       @question = @questionnaire.questions.new
       @question.answers.build
+      @question.answers.build
       @labels = OpenStruct.new(title: "Nueva pregunta", button: "Guardar pregunta")
       render :form
     end

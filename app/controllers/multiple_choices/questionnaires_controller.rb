@@ -65,12 +65,13 @@ module MultipleChoices
     end
 
     def practice
+      # randomize all!
       @questionnaire = MultipleChoices::Questionnaire.find(params[:id])
       authorize @questionnaire, :access?
-      #@questionnaire = MultipleChoices::QuestionnairePresenter.new(@questionnaire)
     end
 
     def grade
+      # honor randomization!
       @questionnaire = MultipleChoices::Questionnaire.find(params[:id])
       authorize @questionnaire, :access?
       @questionnaire = MultipleChoices::SolvedQuestionnairePresenter.new(@questionnaire, params[:question])

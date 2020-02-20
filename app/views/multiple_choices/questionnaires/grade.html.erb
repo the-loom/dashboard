@@ -3,43 +3,56 @@
 <% nav_add 'Resultados', '#' %>
 <%= nav_render %>
 
-<legend><%= @questionnaire.name %></legend>
+<div class="row">
+  <div class="col-md-9">
+    <legend><%= @questionnaire.name %></legend>
 
-<ol>
-  <% @questionnaire.questions.each do |question| %>
-    <li>
-      <%= question.wording %> <%= question.correct ? "YAY" : "NOPE!" %>
-      <ol>
-        <% question.answers.each do |answer| %>
-          <li class="<%= answer.classes %>">
-            <input type="radio" disabled="disabled" <%= answer.chosen ? 'checked' : '' %>/>
-            <%= answer.text %>
-            <% if answer.chosen %>
-              <p class="help-block">
-                <%= answer.explanation %>
-              </p>
-            <% end %>
-          </li>
-        <% end %>
-      </ol>
-    </li>
-  <% end %>
-</ol>
+    <ol class="questionnaire">
+      <% @questionnaire.questions.each do |question| %>
+        <li class="question">
+          <%= question.wording %>
+          <% question.answers.each do |answer| %>
+            <div class="answer <%= answer.classes %>">
+              <label>
+                <input type="radio" disabled="disabled" <%= answer.chosen ? 'checked' : '' %>/>
+                <%= answer.text %>
+              </label>
+              <% if answer.chosen %>
+                <p class="help-block">
+                  <%= answer.explanation %>
+                </p>
+              <% end %>
+            </div>
+          <% end %>
+        </li>
+      <% end %>
+    </ol>
+  </div>
 
+  <div class="col-md-3">
+    <legend>Resumen</legend>
 
-Puntaje:
-<%= @questionnaire.points %> / <%= @questionnaire.total_points %>
-
-<% content_for :head do %>
-  <style>
-    .chosen {
-      border: 5px solid black;
-      background-color: #ff7d79;
-    }
-
-    .chosen.correct {
-      background-color: #65bc84;
-    }
-
-  </style>
-<% end %>
+    <table class="table table-bordered table-stripped table-hover">
+      <thead>
+      <tr>
+        <th>
+          Resultado
+        </th>
+        <th>
+          Porcentual
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>
+          <%= @questionnaire.points %> / <%= @questionnaire.total_points %>
+        </td>
+        <td>
+          <%= (@questionnaire.points.to_f * 100 / @questionnaire.total_points).round(2) %> %
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -11,5 +11,4 @@ class MultipleChoices::SolvedQuestionPresenter
     }
     @correct = question.correct_answer.id == answer[:answer].to_i
   end
-
 end

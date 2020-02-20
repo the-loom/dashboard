@@ -11,8 +11,8 @@ class MultipleChoices::SolvedAnswerPresenter
 
   def classes
     classes = []
-    classes << 'correct' if answer.correct
-    classes << 'chosen' if @chosen
+    classes << "correct" if answer.correct
+    classes << "chosen selected" if @chosen
     classes.join(" ")
   end
 end

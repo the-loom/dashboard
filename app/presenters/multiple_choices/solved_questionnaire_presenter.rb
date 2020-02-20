@@ -15,5 +15,4 @@ class MultipleChoices::SolvedQuestionnairePresenter
   def total_points
     @questions.size
   end
-
 end

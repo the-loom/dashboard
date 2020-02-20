@@ -8,22 +8,31 @@
 
 <%= form_tag grade_multiple_choices_questionnaire_path(@questionnaire) do %>
 
-  <ol>
+  <ol class="questionnaire">
     <% @questionnaire.questions.each do |question| %>
-      <li>
+      <li class="question">
         <%= question.wording %>
-        <ol>
-          <%= collection_radio_buttons(:questionnaire, :question_ids, question.answers, :id, :text, include_hidden: false) do |r| %>
-            <li>
-              <%= r.radio_button(name: "question[#{question.id}]answer") %>
-              <%= r.label %>
-            </li>
+        <%= collection_radio_buttons(:questionnaire, :question_ids, question.answers, :id, :text, include_hidden: false) do |r| %>
+          <%= r.label(class: 'answer hoverable do-select') do %>
+            <%= r.radio_button(name: "question[#{question.id}]answer", required: true) %>
+            <%= r.text %>
           <% end %>
-        </ol>
+        <% end %>
       </li>
     <% end %>
   </ol>
 
-  <%= submit_tag %>
+  <%= submit_tag "Enviar", class: 'btn btn-primary' %>
+
+<% end %>
+
+<%= content_for :javascript do %>
+
+<script>
+  $(".do-select").on('click', function() {
+      $(this).parent().find(".do-select").removeClass("selected");
+      $(this)[$(this).find('input:checked').length ? "addClass" : "removeClass"]('selected');
+  })
+</script>
 
 <% end %>
