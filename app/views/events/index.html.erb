@@ -24,7 +24,9 @@
       <th>Puntos</th>
       <th>Pts Mínimos</th>
       <th>Pts Máximos</th>
-      <th>Competencia</th>
+      <% if Course.current.on?(:competences) %>
+        <th>Competencia</th>
+      <% end %>
       <th class="no-sort">&nbsp;</th>
     </tr>
     </thead>
@@ -52,9 +54,11 @@
         <td>
           <%= event.max_points %> pts.
         </td>
-        <td>
-          <%= event.competence_tag.try(:name) %>
-        </td>
+        <% if Course.current.on?(:competences) %>
+          <td>
+            <%= event.competence_tag.try(:name) %>
+          </td>
+        <% end %>
         <td>
           <%= link_to "Editar", edit_event_path(event), class: 'btn btn-default' %>
         </td>

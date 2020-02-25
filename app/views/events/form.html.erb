@@ -14,7 +14,10 @@
   <%= f.input :points, label: "Puntos", as: :numeric %>
   <%= f.input :min_points, label: "Puntos mínimos para la actividad", as: :numeric %>
   <%= f.input :max_points, label: "Puntos máximos para la actividad", as: :numeric %>
-  <%= f.input :competence_tag_id, label: "Competencia aplicable", collection: CompetenceTag.all %>
+
+  <% if Course.current.on?(:competences) %>
+    <%= f.input :competence_tag_id, label: "Competencia aplicable", collection: CompetenceTag.all %>
+  <% end %>
 
   <%= f.input :enabled, label: "Evento habilitado" %>
 
