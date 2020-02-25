@@ -5,7 +5,7 @@ class MultipleChoices::SolvedQuestionnairePresenter
 
   def initialize(questionnaire, answers)
     @questionnaire = questionnaire
-    @questions = questionnaire.questions.map { |q| MultipleChoices::SolvedQuestionPresenter.new(q, answers[q.id.to_s]) }
+    @questions = questionnaire.questions.includes(:answers).map { |q| MultipleChoices::SolvedQuestionPresenter.new(q, answers[q.id.to_s]) }
   end
 
   def points
