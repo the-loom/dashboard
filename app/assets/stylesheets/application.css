@@ -35,3 +35,7 @@ body {
 .golden-badge {
     background-color: goldenrod;
 }
+
+.red-badge {
+    background-color: #d43f3a;
+}
