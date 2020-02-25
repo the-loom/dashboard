@@ -16,7 +16,12 @@ gem "request_store"
 group :development, :test do
   gem "byebug", platform: :mri
   gem "bullet"
+
   gem "rubocop-rails_config"
+  gem "rubocop-performance", require: false
+  gem "rubocop-rake", require: false
+  gem "rubocop-i18n"
+
   gem "rspec-rails", "~> 3.9"
   gem "shoulda-matchers", "~> 4.2"
 end

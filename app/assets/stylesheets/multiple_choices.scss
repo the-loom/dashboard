@@ -1,0 +1,46 @@
+// Place all the styles related to the users controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.questionnaire {
+  .question {
+    margin-bottom: 1em;
+  }
+
+  .answer {
+    width: 100%;
+    margin: 0.5em;
+    display: block;
+    background-color: #ddd;
+    padding: 4px 10px;
+
+    &:hover.hoverable {
+      cursor: pointer;
+      background-color: #357d7e;
+      color: whitesmoke;
+    }
+
+    &.selected {
+      background-color: #357d7e;
+      color: whitesmoke;
+    }
+
+    &.chosen {
+      color: #721c24;
+      background-color: #f8d7da;
+      border-color: #f5c6cb;
+
+      position: relative;
+      padding: .75rem 1.25rem;
+      margin-bottom: 1rem;
+      border: 1px solid transparent;
+      border-radius: .25rem;
+    }
+
+    &.chosen.correct {
+      color: #155724;
+      background-color: #d4edda;
+      border-color: #c3e6cb;
+    }
+  }
+}

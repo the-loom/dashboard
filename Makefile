@@ -8,6 +8,9 @@ start:
 console:
 	docker-compose run app rails console
 
+mine:
+	sudo chown -R 1000:1000 .
+
 from_scratch:
 	docker-compose run app rake db:setup db:seed
 
@@ -21,6 +24,9 @@ just_db:
 build:
 	docker-compose build
 	docker-compose run app bundle
+
+migrate:
+	docker-compose run app rake db:migrate
 
 rubocop:
 	docker-compose run app rubocop -a
@@ -42,8 +48,8 @@ use_production_db:
 	heroku pg:backups capture --app the-loom
 	curl -o tmp/latest.dump `heroku pg:backups public-url --app the-loom`
 	docker-compose run app bundle exec rake db:drop db:create
-	docker cp tmp/latest.dump loomdashboard_db_1:/latest.dump
-	! docker exec loomdashboard_db_1 pg_restore --verbose --clean --no-acl --no-owner -h localhost -d loom_development -U loom /latest.dump
+	docker cp tmp/latest.dump loom-dashboard_db_1:/latest.dump
+	! docker exec loom-dashboard_db_1 pg_restore --verbose --clean --no-acl --no-owner -h localhost -d loom_development -U loom /latest.dump
 	docker-compose run app bundle exec rake db:migrate
 
 cleanup_download:

@@ -1,0 +1,81 @@
+<% nav_add 'Cuestionarios de Opción Múltiple', '#' %>
+<%= nav_render %>
+
+<% if policy(MultipleChoices::Questionnaire).manage? %>
+  <%= link_to 'Nuevo cuestionario', new_multiple_choices_questionnaire_path, class: 'btn btn-primary pull-right' %>
+<% end %>
+
+<br><br>
+
+<section class="forks">
+
+  <% if @questionnaires.empty? %>
+
+    <div class="alert alert-info">
+      <p>Aún no hay ningun cuestionario</p>
+    </div>
+
+  <% else %>
+
+    <table class="questionnaires table table-striped">
+      <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Preguntas</th>
+        <th class="no-sort">&nbsp;</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @questionnaires.each do |questionnaire| %>
+        <tr class="fork">
+          <td>
+            <%= questionnaire.name %>
+          </td>
+          <td>
+            <%= questionnaire.questions.count %>
+          </td>
+          <td>
+            <% if policy(MultipleChoices::Questionnaire).manage? %>
+              <%= link_to "Editar", edit_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-default btn-sm' %>
+              <%= link_to "Configurar", multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-default btn-sm' %>
+            <% end %>
+            <%= link_to "Practicar", practice_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-primary btn-sm' %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</section>
+
+<%= content_for :head do %>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+
+  <style>
+    form.button_to {
+      display: inline-block;
+      margin: 0 0.1em;
+    }
+  </style>
+
+<% end %>
+
+<%= content_for :javascript do %>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="application/javascript"></script>
+
+  <script type="application/javascript">
+      $(function () {
+          $('.questionnaires').DataTable({
+              order: [[0, "asc"]],
+              paging: false,
+              language: {
+                  url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+              },
+              columnDefs: [{
+                  targets: 'no-sort',
+                  orderable: false
+              }]
+          });
+      });
+  </script>
+<% end %>

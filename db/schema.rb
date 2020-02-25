@@ -186,6 +186,29 @@ ActiveRecord::Schema.define(version: 2020_02_07_185457) do
     t.index ["discarded_at"], name: "index_memberships_on_discarded_at"
   end
 
+  create_table "multiple_choices_answers", force: :cascade do |t|
+    t.string "text"
+    t.boolean "correct"
+    t.string "explanation"
+    t.integer "multiple_choices_question_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "multiple_choices_questionnaires", force: :cascade do |t|
+    t.string "name"
+    t.integer "course_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "multiple_choices_questions", force: :cascade do |t|
+    t.string "wording"
+    t.integer "multiple_choices_questionnaire_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "notifications", id: :serial, force: :cascade do |t|
     t.string "subject"
     t.text "text"

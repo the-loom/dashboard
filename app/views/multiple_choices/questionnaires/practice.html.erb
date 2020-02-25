@@ -1,0 +1,38 @@
+<% nav_add 'Cuestionarios de Opción Múltiple', multiple_choices_questionnaires_path %>
+<% nav_add @questionnaire.name, '#' %>
+<% nav_add 'Práctica', '#' %>
+<%= nav_render %>
+
+<legend><%= @questionnaire.name %></legend>
+
+
+<%= form_tag grade_multiple_choices_questionnaire_path(@questionnaire) do %>
+
+  <ol class="questionnaire">
+    <% @questionnaire.questions.includes(:answers).each do |question| %>
+      <li class="question">
+        <%= question.wording %>
+        <%= collection_radio_buttons(:questionnaire, :question_ids, question.answers, :id, :text, include_hidden: false) do |r| %>
+          <%= r.label(class: 'answer hoverable do-select') do %>
+            <%= r.radio_button(name: "question[#{question.id}]answer", required: true) %>
+            <%= r.text %>
+          <% end %>
+        <% end %>
+      </li>
+    <% end %>
+  </ol>
+
+  <%= submit_tag "Enviar", class: 'btn btn-primary' %>
+
+<% end %>
+
+<%= content_for :javascript do %>
+
+<script>
+  $(".do-select").on('click', function() {
+      $(this).parent().find(".do-select").removeClass("selected");
+      $(this)[$(this).find('input:checked').length ? "addClass" : "removeClass"]('selected');
+  })
+</script>
+
+<% end %>

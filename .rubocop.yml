@@ -2,8 +2,18 @@ inherit_gem:
   rubocop-rails_config:
     - config/rails.yml
 
+require:
+  - rubocop-performance
+  - rubocop-rake
+  - rubocop-i18n
+
 AllCops:
   TargetRubyVersion: 2.4
 
 Style/FrozenStringLiteralComment:
+  Enabled: false
+
+RailsI18n:
+  Enabled: true
+GetText:
   Enabled: false

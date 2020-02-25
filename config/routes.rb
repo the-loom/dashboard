@@ -109,6 +109,16 @@ Rails.application.routes.draw do
 
   resources :notifications, only: [:index, :new, :create]
 
+  namespace :multiple_choices do
+    resources :questionnaires do
+      member do
+        get :practice
+        post :grade
+      end
+      resources :questions, except: :index
+    end
+  end
+
   namespace :tiny_cards do
     resources :decks do
       resources :cards
