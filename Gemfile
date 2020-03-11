@@ -32,7 +32,7 @@ gem "omniauth-google-oauth2", "0.8.0"
 gem "omniauth-rails_csrf_protection", "~> 0.1"
 gem "discard", "~> 1.2"
 
-gem "ffaker", "2.13.0"
+gem "ffaker", "2.14.0"
 gem "simple_form"
 gem "trix-rails", require: "trix"
 
