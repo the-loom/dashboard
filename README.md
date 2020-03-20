@@ -10,7 +10,8 @@ loom es una aplicación web que acompaña a los estudiantes en su cursada
   cp .env.example .env
   nano .env
   docker-compose build
-```
+  docker-compose run app rake db:setup
+  
 
 ## Running the app
 
