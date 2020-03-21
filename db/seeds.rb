@@ -1,46 +1,6 @@
 require "ffaker"
 require "roman"
 
-delucas = User.create(
-    first_name: "Lucas",
-    last_name: "Videla",
-    nickname: "delucas",
-    email: "lucas@wecode.io",
-    image: "https://avatars1.githubusercontent.com/u/684051?v=4",
-    uuid: "0", 
-    admin: true
-)
-
-lago = User.create(
-    first_name: "Fabian",
-    last_name: "Lagorio",
-    nickname: "lagofa",
-    email: "falago@gmail.com",
-    uuid: "1", 
-    admin: true
-)
-
-Identity.create(
-    user: delucas,
-    provider: "github",
-    uid: "684051",
-    first_name: "Lucas",
-    last_name: "Videla",
-    nickname: "delucas",
-    email: "lucas@wecode.io",
-    image: "https://avatars1.githubusercontent.com/u/684051?v=4"
-)
-
-Identity.create(
-    user: lago,
-    provider: "github",
-    uid: "684052",
-    first_name: "Fabian",
-    last_name: "Lagorio",
-    nickname: "lagofa",
-    email: "falago@gmail.com",
-)
-
 # TODO(delucas): organizar esto en grupos
 3.times do |c|
     
@@ -48,20 +8,8 @@ Identity.create(
       name: "Programación #{c.roman}",
       password: "123456"
   )
+
   Course.current = course
-  
-  Membership.create(
-      course: course,
-      role: :teacher,
-      user: delucas,
-      enabled: true
-  )
-  Membership.create(
-    course: course,
-    role: :teacher,
-    user: lago,
-    enabled: true
-)
 
   35.times do |i|
     first_name = FFaker::NameMX.first_name
