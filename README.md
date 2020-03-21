@@ -18,6 +18,29 @@ loom es una aplicación web que acompaña a los estudiantes en su cursada
   make start
 ```
 
+## Developer helpers
+
+In order to load seeds, run
+
+```
+  make dev_seed
+```
+
+You'll get three courses with students. You need to log-in now.
+
+After logged in, you might want to do some or all of these actions:
+
+```
+  # make yourself admin
+  make dev_admin
+
+  # subscribe yourself to all courses at once
+  make dev_courses
+
+  # promote yourself as teacher (only for your courses)
+  make dev_teacher
+```
+
 ## Stopping the app
 
 ```shell

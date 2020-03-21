@@ -11,7 +11,7 @@ console:
 mine:
 	sudo chown -R 1000:1000 .
 
-dev_from_scratch:
+dev_seed:
 	docker-compose run app rake db:setup db:seed
 
 dev_admin:
