@@ -1,17 +1,20 @@
 require "ffaker"
 require "roman"
 
-# TODO(delucas): organizar esto en grupos
+TEAMS_PER_COURSE = 7
+
 3.times do |course_number|
   course = Course.create(
     name: "Programación #{(course_number + 1).roman}",
-    password: "123456"
+    password: "123456",
+    features: 4
     # TODO: enable some features?
   )
 
   Course.current = course
 
-  7.times do |team_number|
+
+  TEAMS_PER_COURSE.times do |team_number|
     current_team = Team.create(
       name: "Equipo #{(team_number + 1).roman}",
       nickname: "equipo_#{team_number + 1}"
@@ -29,7 +32,7 @@ require "roman"
         last_name: last_name,
         nickname: nickname,
         email: "#{nickname}@yopmail.com",
-        uuid: ((course_number + 1) * 100 + (student_number + 1)).to_s(16).upcase
+        uuid: ((course_number + 1) * 100 + (team_number * TEAMS_PER_COURSE + student_number)).to_s(16).upcase
         # TODO: add avatar!
       )
       membership = Membership.create(
