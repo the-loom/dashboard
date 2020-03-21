@@ -5,7 +5,7 @@ require "roman"
 3.times do |c|
     
   course = Course.create(
-      name: "Programación #{c.roman}",
+      name: "Programación #{(c + 1).roman}",
       password: "123456"
   )
 

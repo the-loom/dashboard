@@ -11,8 +11,17 @@ console:
 mine:
 	sudo chown -R 1000:1000 .
 
-from_scratch:
+dev_from_scratch:
 	docker-compose run app rake db:setup db:seed
+
+dev_admin:
+	docker-compose run app rake dev:admin_setup
+
+dev_courses:
+	docker-compose run app rake dev:courses_setup
+
+dev_teacher:
+	docker-compose run app rake dev:teacher_setup
 
 stop:
 	docker-compose down
@@ -29,7 +38,7 @@ migrate:
 	docker-compose run app rake db:migrate
 
 rubocop:
-	docker-compose run app rubocop -a
+	docker-compose run app rubocop --auto-correct
 
 routes:
 	docker-compose run app rake routes
