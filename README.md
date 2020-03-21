@@ -22,7 +22,7 @@ loom es una aplicación web que acompaña a los estudiantes en su cursada
 
 In order to load seeds, run
 
-```
+```shell
   make dev_seed
 ```
 
@@ -30,7 +30,7 @@ You'll get three courses with students. You need to log-in now.
 
 After logged in, you might want to do some or all of these actions:
 
-```
+```shell
   # make yourself admin
   make dev_admin
 
