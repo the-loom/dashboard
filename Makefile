@@ -23,6 +23,11 @@ dev_courses:
 dev_teacher:
 	docker-compose run app rake dev:teacher_setup
 
+dev_all:
+	$(MAKE) dev_courses
+	$(MAKE) dev_teacher
+	$(MAKE) dev_admin
+
 stop:
 	docker-compose down
 	rm -f tmp/pids/server.pid

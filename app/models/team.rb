@@ -7,6 +7,8 @@ class Team < ApplicationRecord
 
   validates_presence_of :name, :nickname
   validates :name, uniqueness: { scope: :course_id }
+
+  # TODO: use slug, remove nickname
   validates :nickname, uniqueness: { scope: :course_id }
   validates :avatar, size: { less_than: 500.kilobyte }, content_type: [:png, :jpg, :jpeg]
 
