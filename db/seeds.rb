@@ -1,7 +1,35 @@
 require "ffaker"
 require "roman"
+require "uri"
 
 TEAMS_PER_COURSE = 7
+MAX_RETRIES = 3
+
+def get_avatar_file
+  ffaker_avatar = FFaker::Avatar.image
+  puts "Fetching avatar #{ffaker_avatar}"
+  i = 1
+  begin
+    file = URI.open(ffaker_avatar)
+  rescue OpenURI::HTTPError
+    if i > MAX_RETRIES
+      puts "MAX_RETRIES for avatar, exiting... try again later"
+      exit 1
+    end
+    puts "retrying #{i}/#{MAX_RETRIES}"
+    sleep(1)
+    i+=1
+    retry
+  end
+  file
+end
+
+puts "Fetching 10 avatars for this seed..."
+avatars = []
+10.times do
+  avatars << get_avatar_file
+end
+puts "Done fetching avatars"
 
 3.times do |course_number|
   course = Course.create(
@@ -13,13 +41,14 @@ TEAMS_PER_COURSE = 7
 
   Course.current = course
 
-
   TEAMS_PER_COURSE.times do |team_number|
+    team_name = FFaker::Product.brand
+
     current_team = Team.create(
-      name: "Equipo #{(team_number + 1).roman}",
-      nickname: "equipo_#{team_number + 1}"
-      # TODO: add avatar!
+      name: team_name,
+      nickname: ActiveSupport::Inflector.transliterate(team_name.downcase.gsub(/\s/, "_"))
     )
+    # TODO: avatar for teams!
 
     5.times do |student_number|
       first_name = FFaker::NameMX.first_name
@@ -33,8 +62,11 @@ TEAMS_PER_COURSE = 7
         nickname: nickname,
         email: "#{nickname}@yopmail.com",
         uuid: ((course_number + 1) * 100 + (team_number * TEAMS_PER_COURSE + student_number)).to_s(16).upcase
-        # TODO: add avatar!
       )
+      avatar = avatars.sample
+      user.avatar.attach(io: avatar, filename: "avatar.png")
+      avatar.rewind
+
       membership = Membership.create(
         course: course,
         role: :student,
