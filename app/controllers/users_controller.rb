@@ -39,7 +39,7 @@ class UsersController < ApplicationController
     authorize current_user, :promote?
     user.current_membership.update(role: :student)
     flash[:info] = "#{user.full_name} fue degradado a Estudiante"
-    redirect_to students_path
+    redirect_to teachers_path
   end
 
   def comment
