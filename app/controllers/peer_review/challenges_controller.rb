@@ -35,7 +35,8 @@ module PeerReview
         redirect_to peer_review_challenges_path
         flash[:info] = "Se creó correctamente el desafío"
       else
-        render action: :new
+        @labels = OpenStruct.new(title: "Nuevo desafio", button: "Guardar desaf\u00EDo")
+        render :form
       end
     end
 
@@ -54,7 +55,8 @@ module PeerReview
         redirect_to peer_review_challenges_path
         flash[:info] = "Se editó correctamente el desafío"
       else
-        render action: :edit
+        @labels = OpenStruct.new(title: "Editar desaf\u00EDo", button: "Actualizar desaf\u00EDo")
+        render :form
       end
     end
 
