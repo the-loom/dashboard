@@ -25,6 +25,16 @@
         <span class="icon-bar"></span>
       </button>
       <%= link_to root_path, class: 'navbar-brand' do %>
+
+        <% if current_user %>
+          <% if current_user.admin? %>
+            <span class="admin ribbon" title="Tienes rol administrador"></span>
+          <% end %>
+          <% if Course.current && current_user.teacher? %>
+            <span class="teacher ribbon" title="Tienes rol docente en este curso"></span>
+          <% end %>
+        <% end %>
+
         <%= image_tag "logo.svg", { width: 25, height: 25, alt: 'Loom', title: 'Loom', class: 'loom-logo'} %>
         <strong>
           loom
