@@ -9,7 +9,7 @@
 
   <%= f.input :name, label: "Nombre" %>
 
-  <%= f.input :difficulty, label: "Dificultad" %>
+  <%= f.input :difficulty, label: "Dificultad", input_html: {min: 1, max: 5} %>
 
   <%= f.input :notes, label: "Notas", as: :trix_editor %>
 
