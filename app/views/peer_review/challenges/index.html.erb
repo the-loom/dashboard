@@ -42,11 +42,11 @@
           <td>
             <% if policy(PeerReview::Challenge).manage? %>
               <% if challenge.published? %>
-                <%= button_to publish_peer_review_challenge_path(challenge, mode: 'unpublish'), method: :post, class: 'btn btn-default btn-sm' do %>
+                <%= button_to unpublish_peer_review_challenge_path(challenge), method: :post, class: 'btn btn-default btn-sm' do %>
                   Despublicar
                 <% end %>
               <% else %>
-                <%= button_to publish_peer_review_challenge_path(challenge, mode: 'publish'), method: :post, class: 'btn btn-default btn-sm' do %>
+                <%= button_to publish_peer_review_challenge_path(challenge), method: :post, class: 'btn btn-default btn-sm' do %>
                   Publicar
                 <% end %>
               <% end %>

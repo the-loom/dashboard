@@ -8,7 +8,6 @@ class PeerReview::Challenge < ApplicationRecord
   has_many :solutions, foreign_key: :peer_review_challenge_id
   has_many :reviews, through: :solutions
 
-  scope :published, -> { where(published: true) }
   scope :enabled, -> { where(enabled: true) }
 
   def solution_by(user)

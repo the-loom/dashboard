@@ -1,5 +1,8 @@
 module PeerReview
   class ChallengesController < ApplicationController
+
+    include Publisher.new(PeerReview::Challenge, :peer_review_challenges)
+
     before_action do
       check_feature(:peer_review_challenges)
     end
@@ -68,19 +71,6 @@ module PeerReview
       authorize PeerReview::Challenge, :manage?
       challenge = PeerReview::Challenge.find(params[:id])
       challenge.update_attributes(enabled: !challenge.enabled?)
-      redirect_to peer_review_challenges_path
-    end
-
-    def publish
-      authorize PeerReview::Challenge, :manage?
-      challenge = PeerReview::Challenge.find(params[:id])
-
-      if params[:mode] == "publish"
-        challenge.publish!
-      else
-        challenge.unpublish!
-      end
-
       redirect_to peer_review_challenges_path
     end
 

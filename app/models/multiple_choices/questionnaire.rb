@@ -1,5 +1,6 @@
 class MultipleChoices::Questionnaire < ApplicationRecord
   include CourseLock
+  include Publishable
 
   has_many :questions, foreign_key: :multiple_choices_questionnaire_id, dependent: :destroy
 

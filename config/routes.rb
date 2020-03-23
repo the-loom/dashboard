@@ -43,10 +43,13 @@ Rails.application.routes.draw do
     end
   end
 
+  def publishable
+    post :publish, on: :member
+    post :unpublish, on: :member
+  end
+
   resources :exercises do
-    member do
-      post :publish
-    end
+    publishable
   end
 
   resources :partners, only: :index
@@ -111,6 +114,7 @@ Rails.application.routes.draw do
 
   namespace :multiple_choices do
     resources :questionnaires do
+      publishable
       member do
         get :practice
         post :grade
@@ -121,6 +125,7 @@ Rails.application.routes.draw do
 
   namespace :tiny_cards do
     resources :decks do
+      publishable
       resources :cards
       member do
         get :practice
@@ -130,10 +135,10 @@ Rails.application.routes.draw do
 
   namespace :peer_review do
     resources :challenges do
+      publishable
       member do
         get :overview
         get :toggle
-        post :publish
         get :purge
       end
       resources :solutions, only: [:new, :update, :show]

@@ -1,5 +1,8 @@
 module MultipleChoices
   class QuestionnairesController < ApplicationController
+
+    include Publisher.new(MultipleChoices::Questionnaire, :multiple_choices_questionnaires)
+
     before_action do
       check_feature(:multiple_choices)
     end

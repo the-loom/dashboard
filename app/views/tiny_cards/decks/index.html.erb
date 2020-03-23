@@ -35,6 +35,13 @@
           <td>
             <%= link_to "Practicar", practice_tiny_cards_deck_path(deck), class: 'btn btn-default btn-sm' %>
             <% if policy(TinyCards::Deck).manage? %>
+
+              <% if deck.published? %>
+                <%= button_to "Despublicar", unpublish_tiny_cards_deck_path(deck), method: :post, class: 'btn btn-default btn-sm' %>
+              <% else %>
+                <%= link_to "Publicar", publish_tiny_cards_deck_path(deck), method: :post, class: 'btn btn-default btn-sm' %>
+              <% end %>
+
               <%= link_to "Editar", edit_tiny_cards_deck_path(deck), class: 'btn btn-default btn-sm' %>
               <%= link_to "Eliminar", tiny_cards_deck_path(deck), method: :delete, class: 'btn btn-danger btn-sm' %>
             <% end %>

@@ -31,9 +31,9 @@
         <td>
           <% if policy(Exercise).manage? %>
             <% if exercise.published? %>
-              <%= button_to "Despublicar", publish_exercise_path(exercise, mode: 'unpublish'), method: :post, class: 'btn btn-default btn-sm' %>
+              <%= button_to "Despublicar", unpublish_exercise_path(exercise), method: :post, class: 'btn btn-default btn-sm' %>
             <% else %>
-              <%= link_to "Publicar", publish_exercise_path(exercise, mode: 'publish'), method: :post, class: 'btn btn-default btn-sm' %>
+              <%= link_to "Publicar", publish_exercise_path(exercise), method: :post, class: 'btn btn-default btn-sm' %>
             <% end %>
             <%= link_to "Editar", edit_exercise_path(exercise), class: 'btn btn-default btn-sm' %>
           <% end %>
