@@ -2,7 +2,7 @@ class Exercise < ApplicationRecord
   include CourseLock
   include Publishable
 
-  validates_presence_of :name
+  validates_presence_of :name, :notes, :difficulty
   validates :name, uniqueness: { scope: :course_id }
 
   default_scope { order(name: :asc) }
