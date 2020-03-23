@@ -42,6 +42,8 @@ After logged in, you might want to do some or all of these actions:
   make dev_teacher
 ```
 
+Tip: A shorthand for all actions is `make dev_all`
+
 ## Stopping the app
 
 ```shell
