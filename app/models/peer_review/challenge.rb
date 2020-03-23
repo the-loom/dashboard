@@ -4,8 +4,8 @@ class PeerReview::Challenge < ApplicationRecord
 
   validates_presence_of :title, :difficulty, :instructions,
                         :reviewer_instructions
-  validates_numericality_of :difficulty, greater_than_or_equal_to: 1, less_than_or_equal_to: 5, message: "cannot be less than 1 or greater than 5"
-
+  validates :difficulty, inclusion: { in: 1..5, message: "cannot be less than 1 or greater than 5" }
+  
   has_many :solutions, foreign_key: :peer_review_challenge_id
   has_many :reviews, through: :solutions
 
