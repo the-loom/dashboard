@@ -1,0 +1,78 @@
+<% nav_add 'Recursos', '#' %>
+<%= nav_render %>
+
+<% if policy(Resource).manage? %>
+  <%= link_to 'Nuevo recurso', new_resource_path, class: 'btn btn-primary' %>
+  <%= link_to 'Categorías',resource_categories_path, class: 'btn btn-primary' %>
+  <br><br>
+<% end %>
+
+<% if @resources.empty? %>
+
+  <div class="alert alert-info">
+    <p>Aún no hay ningún recurso</p>
+  </div>
+
+<% else %>
+
+  <table class="resources table table-hover">
+    <thead>
+    <tr>
+      <th>Categoría</th>
+      <th>Recurso</th>
+      <th class="no-sort">&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @resources.each do |resource| %>
+      <tr>
+        <td>
+          <%= resource.resource_category.name %>
+        </td>
+        <td>
+          <p>
+            <%= link_to resource.title, resource.url, target: "blank" %>
+          </p>
+          <p><%= resource.description %></p>
+        </td>
+        <td>
+          <%= render partial: 'shared/actions', locals: { entity_class: Resource, entity: resource, controller: :resources } %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+<% end %>
+
+<%= content_for :head do %>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+
+  <style>
+    form.button_to {
+      display: inline-block;
+      margin: 0 0.1em;
+    }
+  </style>
+
+<% end %>
+
+<%= content_for :javascript do %>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="application/javascript"></script>
+
+  <script type="application/javascript">
+      $(function () {
+          $('.resources').DataTable({
+              order: [[0, "asc"], [1, "asc"]],
+              paging: false,
+              language: {
+                  url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+              },
+              columnDefs: [{
+                  targets: 'no-sort',
+                  orderable: false
+              }]
+          });
+      });
+  </script>
+<% end %>
