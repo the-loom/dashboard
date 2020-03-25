@@ -9,8 +9,7 @@ class PeerReview::ChallengePolicy < ApplicationPolicy
     record.enabled?
   end
   def review?
-    solution = record.solution_by user
-    record.enabled? && (user.teacher? || user.student?) && solution.present? && solution.final?
+    record.reviewable_by? user
   end
   def manage?
     user.teacher?

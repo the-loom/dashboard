@@ -64,7 +64,7 @@ module PeerReview
     def show
       @challenge = PeerReview::Challenge.find(params[:id])
       authorize @challenge, :show?
-      @solution = @challenge.solution_by(current_user) if @challenge.already_solved_by? current_user
+      @solution = @challenge.solution_by(current_user)
     end
 
     def toggle
@@ -87,7 +87,7 @@ module PeerReview
 
     private
       def challenge_params
-        params[:peer_review_challenge].permit(:title, :instructions, :reviewer_instructions, :difficulty)
+        params[:peer_review_challenge].permit(:title, :instructions, :reviewer_instructions, :difficulty, :challenge_mode)
       end
   end
 end

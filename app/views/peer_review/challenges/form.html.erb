@@ -18,6 +18,11 @@
   </div>
 
   <div class="form-group">
+    <%= f.label :challenge_mode, 'Tipo de Revisiones', class: 'control-label' %>
+    <%= f.select :challenge_mode, PeerReview::Challenge.challenge_modes.map { |key, _| [key.humanize, key]}, { }, {class: 'form-control' } %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :instructions, 'Instrucciones', class: 'control-label' %>
     <%= f.text_area :instructions, hidden: true %>
     <trix-editor input="peer_review_challenge_instructions"></trix-editor>

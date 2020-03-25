@@ -21,6 +21,7 @@
         <th>Título</th>
         <th>Estado</th>
         <th>Dificultad</th>
+        <th>Tipo de Revisiones</th>
         <th class="no-sort">&nbsp;</th>
       </tr>
       </thead>
@@ -38,6 +39,9 @@
           </td>
           <td>
             <%= difficulty challenge.difficulty %>
+          </td>
+          <td>
+            <%= t "challenges.challenge_modes.#{challenge.challenge_mode}" %>
           </td>
           <td>
             <% if policy(PeerReview::Challenge).manage? %>
