@@ -41,6 +41,6 @@ body {
 }
 
 .trix-content{
-    height: 200px;
+    height: 250px;
     overflow-y: auto;
 }
