@@ -11,6 +11,14 @@
 
   <%= f.input :difficulty, label: 'Dificultad', input_html: {min: 1, max: 5} %>
 
+
+  <div class="form-group">
+    <%= f.label :challenge_mode, 'Tipo de Revisiones', class: 'control-label' %>
+    <%= f.select :challenge_mode, PeerReview::Challenge.challenge_modes.map { |key, _| [key.humanize, key]}, { }, {class: 'form-control' } %>
+  </div>
+
+  <%= f.input :challenge_mode, collection: PeerReview::Challenge.challenge_modes %>
+
   <%= f.input :instructions, label: 'Instrucciones', as: :trix_editor %>
 
   <%= f.input :reviewer_instructions, label: 'Instrucciones para el revisor', as: :trix_editor %>

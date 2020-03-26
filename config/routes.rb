@@ -141,7 +141,10 @@ Rails.application.routes.draw do
         get :toggle
         get :purge
       end
-      resources :solutions, only: [:new, :update, :show]
+      resources :solutions, only: [:new, :update, :show] do
+        get :review, on: :member
+        post :save_review, on: :member
+      end
       resources :reviews, only: [:new, :update] do
         post :assess, on: :member
       end

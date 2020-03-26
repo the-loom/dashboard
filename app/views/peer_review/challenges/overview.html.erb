@@ -50,6 +50,10 @@
       <td>
         <%= stats.solver.full_name %> <br/>
         <%= link_to "Ver solución", peer_review_challenge_solution_path(@challenge, stats.solution) %>
+        <% unless stats.solution.review_by(current_user).present? || stats.solution.draft? %>
+          •
+          <%= link_to "Revisar", review_peer_review_challenge_solution_path(@challenge, stats.solution) %>
+        <% end %>
       </td>
       <td>
         <%= stats.solution.final? ? 'Final' : 'Borrador' %><br/>

@@ -21,6 +21,10 @@
   </div>
 </div>
 
+<% unless @solution.review_by(current_user).present? %>
+  <%= link_to "Agregar mi revisión", review_peer_review_challenge_solution_path(@challenge, @solution), class: 'btn btn-primary' %>
+<% end %>
+
 <h2>Revisiones Recibidas</h2>
 
 <% if @solution.reviews.empty? %>
