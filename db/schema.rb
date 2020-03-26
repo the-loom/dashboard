@@ -147,6 +147,7 @@ ActiveRecord::Schema.define(version: 2020_03_24_230453) do
     t.text "notes"
     t.integer "course_id"
     t.boolean "published", default: true
+    t.integer "difficulty"
   end
 
   create_table "identities", id: :serial, force: :cascade do |t|

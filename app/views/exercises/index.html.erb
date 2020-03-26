@@ -19,6 +19,7 @@
     <thead>
     <tr>
       <th>Nombre</th>
+      <th>Dificultad</th>
       <th class="no-sort">&nbsp;</th>
     </tr>
     </thead>
@@ -27,6 +28,9 @@
       <tr>
         <td>
           <%= link_to exercise.name, exercise_path(exercise.id) %>
+        </td>
+        <td>
+          <%= difficulty exercise.difficulty %>
         </td>
         <td>
           <% if policy(Exercise).manage? %>
