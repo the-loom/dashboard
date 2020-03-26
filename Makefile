@@ -45,6 +45,9 @@ migrate:
 rubocop:
 	docker-compose run app rubocop --auto-correct
 
+rbp:
+	docker-compose run app bundle exec rails_best_practices -f html .
+
 routes:
 	docker-compose run app rake routes
 
