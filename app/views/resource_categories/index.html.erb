@@ -1,0 +1,71 @@
+<% nav_add 'Recursos', resources_path %>
+<% nav_add 'Categorías', '#' %>
+<%= nav_render %>
+
+<% if policy(Resource).manage? %>
+  <%= link_to 'Nueva categoría', new_resource_category_path, class: 'btn btn-primary' %>
+  <br><br>
+<% end %>
+
+<% if @resource_categories.empty? %>
+
+  <div class="alert alert-info">
+    <p>Aún no hay ningúna categoría</p>
+  </div>
+
+<% else %>
+
+  <table class="categories table table-hover">
+    <thead>
+    <tr>
+      <th>Nombre</th>
+      <th class="no-sort">&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @resource_categories.each do |category| %>
+      <tr>
+        <td>
+          <%= category.name %>
+        </td>
+        <td>
+          <%= render partial: 'shared/actions', locals: { entity_class: Resource, entity: category, controller: :resource_categories } %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+<% end %>
+
+<%= content_for :head do %>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+
+  <style>
+    form.button_to {
+      display: inline-block;
+      margin: 0 0.1em;
+    }
+  </style>
+
+<% end %>
+
+<%= content_for :javascript do %>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="application/javascript"></script>
+
+  <script type="application/javascript">
+      $(function () {
+          $('.categories').DataTable({
+              order: [[0, "asc"], [1, "asc"]],
+              paging: false,
+              language: {
+                  url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+              },
+              columnDefs: [{
+                  targets: 'no-sort',
+                  orderable: false
+              }]
+          });
+      });
+  </script>
+<% end %>

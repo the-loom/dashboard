@@ -263,6 +263,23 @@ ActiveRecord::Schema.define(version: 2020_03_24_230453) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "resource_categories", force: :cascade do |t|
+    t.string "name"
+    t.integer "course_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "resources", force: :cascade do |t|
+    t.string "url"
+    t.string "title"
+    t.string "description"
+    t.integer "resource_category_id"
+    t.integer "course_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "teams", id: :serial, force: :cascade do |t|
     t.string "name"
     t.string "nickname"

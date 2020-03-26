@@ -36,6 +36,7 @@ just_db:
 	docker-compose up -d db
 
 build:
+	$(MAKE) mine
 	docker-compose build
 	docker-compose run app bundle
 

@@ -3,40 +3,27 @@
 <% nav_add @labels.title, '#' %>
 <%= nav_render %>
 
-<%= form_for @challenge do |f| %>
+<%= simple_form_for @challenge do |f| %>
 
   <%= render :partial => 'shared/errors', locals: { f: f } %>
+  
+  <%= f.input :title, label: 'Título' %>
 
-  <div class="form-group">
-    <%= f.label :title, 'Título', class: 'control-label' %>
-    <%= f.text_field :title, class: 'form-control' %>
-  </div>
+  <%= f.input :difficulty, label: 'Dificultad', input_html: {min: 1, max: 5} %>
 
-  <div class="form-group">
-    <%= f.label :difficulty, 'Dificultad', class: 'control-label' %>
-    <%= f.number_field :difficulty, class: 'form-control', min: 1, max: 5 %>
-  </div>
 
   <div class="form-group">
     <%= f.label :challenge_mode, 'Tipo de Revisiones', class: 'control-label' %>
     <%= f.select :challenge_mode, PeerReview::Challenge.challenge_modes.map { |key, _| [key.humanize, key]}, { }, {class: 'form-control' } %>
   </div>
 
-  <div class="form-group">
-    <%= f.label :instructions, 'Instrucciones', class: 'control-label' %>
-    <%= f.text_area :instructions, hidden: true %>
-    <trix-editor input="peer_review_challenge_instructions"></trix-editor>
-  </div>
+  <%= f.input :challenge_mode, collection: PeerReview::Challenge.challenge_modes %>
 
-  <div class="form-group">
-    <%= f.label :reviewer_instructions, 'Instrucciones para el revisor', class: 'control-label' %>
-    <%= f.text_area :reviewer_instructions, hidden: true %>
-    <trix-editor input="peer_review_challenge_reviewer_instructions"></trix-editor>
-  </div>
+  <%= f.input :instructions, label: 'Instrucciones', as: :trix_editor %>
 
-  <div class="form-group">
-    <%= f.submit @labels.button, class: "btn btn-primary" %>
-  </div>
+  <%= f.input :reviewer_instructions, label: 'Instrucciones para el revisor', as: :trix_editor %>
+
+  <%= f.button :submit, @labels.button, class: 'btn-primary' %>
 
 <% end %>
 

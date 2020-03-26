@@ -147,4 +147,9 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  resources :resource_categories, except: [:show]
+  resources :resources, except: [:show] do
+    publishable
+  end
 end

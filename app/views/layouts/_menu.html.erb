@@ -84,6 +84,12 @@
         <%= link_to "Tablero", dashboard_index_path %>
       </li>
 
+      <% if Course.current.on?(:resources) %>
+        <li class="dropdown">
+          <%= link_to "Recursos", resources_path %>
+        </li>
+      <% end %>
+
       <% if Course.current.on?(:multiple_choices) || Course.current.on?(:tiny_cards) || Course.current.on?(:automatic_correction_challenges) || Course.current.on?(:peer_review_challenges) || Course.current.on?(:exercises) %>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle tour-exit" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">

@@ -1,6 +1,5 @@
 module PeerReview
   class ChallengesController < ApplicationController
-
     include Publisher.new(PeerReview::Challenge, :peer_review_challenges)
 
     before_action do
@@ -25,7 +24,7 @@ module PeerReview
     def new
       authorize PeerReview::Challenge, :manage?
       @challenge = PeerReview::Challenge.new
-      @labels = OpenStruct.new(title: "Nuevo desafio", button: "Guardar desaf\u00EDo")
+      @labels = OpenStruct.new(title: "Nuevo desafío", button: "Guardar desafío")
       render :form
     end
 
@@ -38,14 +37,15 @@ module PeerReview
         redirect_to peer_review_challenges_path
         flash[:info] = "Se creó correctamente el desafío"
       else
-        render action: :new
+        @labels = OpenStruct.new(title: "Nuevo desafío", button: "Guardar desafío")
+        render :form
       end
     end
 
     def edit
       authorize PeerReview::Challenge, :manage?
       @challenge = PeerReview::Challenge.find(params[:id])
-      @labels = OpenStruct.new(title: "Editar desaf\u00EDo", button: "Actualizar desaf\u00EDo")
+      @labels = OpenStruct.new(title: "Editar desafío", button: "Actualizar desafío")
       render :form
     end
 
@@ -57,7 +57,8 @@ module PeerReview
         redirect_to peer_review_challenges_path
         flash[:info] = "Se editó correctamente el desafío"
       else
-        render action: :edit
+        @labels = OpenStruct.new(title: "Editar desafío", button: "Actualizar desafío")
+        render :form
       end
     end
 
