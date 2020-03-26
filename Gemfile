@@ -22,7 +22,7 @@ group :development, :test do
   gem "rubocop-rake", require: false
   gem "rubocop-i18n"
 
-  gem "rspec-rails", "~> 3.9"
+  gem "rspec-rails", "~> 4.0"
   gem "shoulda-matchers", "~> 4.3"
 end
 
