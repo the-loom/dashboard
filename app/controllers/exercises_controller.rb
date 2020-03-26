@@ -1,5 +1,4 @@
 class ExercisesController < ApplicationController
-
   include Publisher.new(Exercise)
 
   before_action do

@@ -1,6 +1,5 @@
 module PeerReview
   class ChallengesController < ApplicationController
-
     include Publisher.new(PeerReview::Challenge, :peer_review_challenges)
 
     before_action do

@@ -18,16 +18,8 @@ class Course < ApplicationRecord
 
   scope :enabled, -> { where(enabled: true) }
 
-  def self.current
-    RequestStore.store[:current_course]
-  end
-
-  def self.current=(course)
-    RequestStore.store[:current_course] = course
-  end
-
-  def on?(requested_feature)
-    all_features = {
+  def self.all_features
+    {
         badges: 1,
         events: 2,
         teams: 4,
@@ -37,9 +29,20 @@ class Course < ApplicationRecord
         exercises: 64,
         competences: 128,
         tiny_cards: 256,
-        multiple_choices: 512
+        multiple_choices: 512,
+        resources: 1024
     }
+  end
 
-    features & all_features[requested_feature] == all_features[requested_feature]
+  def self.current
+    RequestStore.store[:current_course]
+  end
+
+  def self.current=(course)
+    RequestStore.store[:current_course] = course
+  end
+
+  def on?(requested_feature)
+    features & Course.all_features[requested_feature] == Course.all_features[requested_feature]
   end
 end

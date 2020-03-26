@@ -1,9 +1,7 @@
 class Publisher
-
   # redirect_path is a fallback for when class name has a module prefix. Use it wisely.
   def self.new(entity_class, redirect_path = nil)
     Module.new do
-
       define_method(:publish) do
         authorize entity_class, :manage?
         entity = entity_class.find(params[:id])
@@ -21,5 +19,4 @@ class Publisher
       end
     end
   end
-
 end
