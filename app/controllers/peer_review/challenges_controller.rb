@@ -49,6 +49,13 @@ module PeerReview
       render :form
     end
 
+    def duplicate
+      authorize PeerReview::Challenge, :manage?
+      @challenge = PeerReview::Challenge.find(params[:id]).dup
+      @labels = OpenStruct.new(title: "Nuevo desafío", button: "Guardar desafío")
+      render :form
+    end
+
     def update
       authorize PeerReview::Challenge, :manage?
       @challenge = PeerReview::Challenge.find(params[:id])

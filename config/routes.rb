@@ -136,6 +136,7 @@ Rails.application.routes.draw do
   namespace :peer_review do
     resources :challenges do
       publishable
+      get :duplicate, on: :member
       member do
         get :overview
         get :toggle
