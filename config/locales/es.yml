@@ -17,6 +17,12 @@ es:
       coding: 'Desarrollo'
       text_execution: 'Ejecución de la prueba'
 
+  challenges:
+    challenge_modes:
+      student_and_teacher_reviews: '360°'
+      student_reviews_only: 'Pares'
+      teacher_reviews_only: 'Docentes'
+
   reviews:
     assessments:
       pending: 'pendiente'
@@ -35,6 +41,7 @@ es:
       competences: 'Competencias'
       tiny_cards: 'Tarjetas'
       multiple_choices: 'Preguntas de Opción Múltiple'
+      resources: 'Recursos'
 
   activerecord:
     errors:

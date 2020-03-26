@@ -13,8 +13,6 @@ class AutomaticCorrection::Repo < ApplicationRecord
   validates_numericality_of :difficulty
   validates :git_url, uniqueness: { scope: :course_id }
 
-  scope :published, -> { where(published: true) }
-
   def full_name
     "#{user}/#{name}"
   end

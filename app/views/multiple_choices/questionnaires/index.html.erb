@@ -36,6 +36,13 @@
           </td>
           <td>
             <% if policy(MultipleChoices::Questionnaire).manage? %>
+
+              <% if questionnaire.published? %>
+                <%= button_to "Despublicar", unpublish_multiple_choices_questionnaire_path(questionnaire), method: :post, class: 'btn btn-default btn-sm' %>
+              <% else %>
+                <%= link_to "Publicar", publish_multiple_choices_questionnaire_path(questionnaire), method: :post, class: 'btn btn-default btn-sm' %>
+              <% end %>
+
               <%= link_to "Editar", edit_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-default btn-sm' %>
               <%= link_to "Configurar", multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-default btn-sm' %>
             <% end %>

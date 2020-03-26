@@ -1,5 +1,7 @@
 module PeerReview
   class ChallengesController < ApplicationController
+    include Publisher.new(PeerReview::Challenge, :peer_review_challenges)
+
     before_action do
       check_feature(:peer_review_challenges)
     end
@@ -22,7 +24,7 @@ module PeerReview
     def new
       authorize PeerReview::Challenge, :manage?
       @challenge = PeerReview::Challenge.new
-      @labels = OpenStruct.new(title: "Nuevo desafio", button: "Guardar desaf\u00EDo")
+      @labels = OpenStruct.new(title: "Nuevo desafío", button: "Guardar desafío")
       render :form
     end
 
@@ -35,14 +37,15 @@ module PeerReview
         redirect_to peer_review_challenges_path
         flash[:info] = "Se creó correctamente el desafío"
       else
-        render action: :new
+        @labels = OpenStruct.new(title: "Nuevo desafío", button: "Guardar desafío")
+        render :form
       end
     end
 
     def edit
       authorize PeerReview::Challenge, :manage?
       @challenge = PeerReview::Challenge.find(params[:id])
-      @labels = OpenStruct.new(title: "Editar desaf\u00EDo", button: "Actualizar desaf\u00EDo")
+      @labels = OpenStruct.new(title: "Editar desafío", button: "Actualizar desafío")
       render :form
     end
 
@@ -54,33 +57,21 @@ module PeerReview
         redirect_to peer_review_challenges_path
         flash[:info] = "Se editó correctamente el desafío"
       else
-        render action: :edit
+        @labels = OpenStruct.new(title: "Editar desafío", button: "Actualizar desafío")
+        render :form
       end
     end
 
     def show
       @challenge = PeerReview::Challenge.find(params[:id])
       authorize @challenge, :show?
-      @solution = @challenge.solution_by(current_user) if @challenge.already_solved_by? current_user
+      @solution = @challenge.solution_by(current_user)
     end
 
     def toggle
       authorize PeerReview::Challenge, :manage?
       challenge = PeerReview::Challenge.find(params[:id])
       challenge.update_attributes(enabled: !challenge.enabled?)
-      redirect_to peer_review_challenges_path
-    end
-
-    def publish
-      authorize PeerReview::Challenge, :manage?
-      challenge = PeerReview::Challenge.find(params[:id])
-
-      if params[:mode] == "publish"
-        challenge.publish!
-      else
-        challenge.unpublish!
-      end
-
       redirect_to peer_review_challenges_path
     end
 
@@ -97,7 +88,7 @@ module PeerReview
 
     private
       def challenge_params
-        params[:peer_review_challenge].permit(:title, :instructions, :reviewer_instructions, :difficulty)
+        params[:peer_review_challenge].permit(:title, :instructions, :reviewer_instructions, :difficulty, :challenge_mode)
       end
   end
 end

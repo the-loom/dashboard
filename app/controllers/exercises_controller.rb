@@ -1,4 +1,6 @@
 class ExercisesController < ApplicationController
+  include Publisher.new(Exercise)
+
   before_action do
     check_feature(:exercises)
   end
@@ -54,19 +56,6 @@ class ExercisesController < ApplicationController
   def show
     @exercise = Exercise.find(params[:id])
     authorize @exercise
-  end
-
-  def publish
-    authorize Exercise, :manage?
-    exercise = Exercise.find(params[:id])
-
-    if params[:mode] == "publish"
-      exercise.publish!
-    else
-      exercise.unpublish!
-    end
-
-    redirect_to exercises_path
   end
 
   private

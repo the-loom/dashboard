@@ -1,46 +1,35 @@
-<% nav_add 'Ejercicios', '#' %>
+<% nav_add 'Recursos', resources_path %>
+<% nav_add 'Categorías', '#' %>
 <%= nav_render %>
 
-<% if policy(Exercise).create? %>
-  <%= link_to 'Nuevo ejercicio', new_exercise_path, class: 'btn btn-primary pull-right' %>
-
+<% if policy(Resource).manage? %>
+  <%= link_to 'Nueva categoría', new_resource_category_path, class: 'btn btn-primary' %>
   <br><br>
 <% end %>
 
-<% if @exercises.empty? %>
+<% if @resource_categories.empty? %>
 
   <div class="alert alert-info">
-    <p>Aún no hay ningún ejercicio para comenzar a resolver</p>
+    <p>Aún no hay ningúna categoría</p>
   </div>
 
 <% else %>
 
-  <table class="exercises table table-hover">
+  <table class="categories table table-hover">
     <thead>
     <tr>
       <th>Nombre</th>
-      <th>Dificultad</th>
       <th class="no-sort">&nbsp;</th>
     </tr>
     </thead>
     <tbody>
-    <% @exercises.each do |exercise| %>
+    <% @resource_categories.each do |category| %>
       <tr>
         <td>
-          <%= link_to exercise.name, exercise_path(exercise.id) %>
+          <%= category.name %>
         </td>
         <td>
-          <%= difficulty exercise.difficulty %>
-        </td>
-        <td>
-          <% if policy(Exercise).manage? %>
-            <% if exercise.published? %>
-              <%= button_to "Despublicar", unpublish_exercise_path(exercise), method: :post, class: 'btn btn-default btn-sm' %>
-            <% else %>
-              <%= link_to "Publicar", publish_exercise_path(exercise), method: :post, class: 'btn btn-default btn-sm' %>
-            <% end %>
-            <%= link_to "Editar", edit_exercise_path(exercise), class: 'btn btn-default btn-sm' %>
-          <% end %>
+          <%= render partial: 'shared/actions', locals: { entity_class: Resource, entity: category, controller: :resource_categories } %>
         </td>
       </tr>
     <% end %>
@@ -66,8 +55,8 @@
 
   <script type="application/javascript">
       $(function () {
-          $('.exercises').DataTable({
-              order: [[0, "asc"]],
+          $('.categories').DataTable({
+              order: [[0, "asc"], [1, "asc"]],
               paging: false,
               language: {
                   url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"

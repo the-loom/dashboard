@@ -7,5 +7,4 @@ class Exercise < ApplicationRecord
   validates :difficulty, inclusion: { in: 1..5, message: "must be between 1 and 5" }
 
   default_scope { order(name: :asc) }
-  scope :published, -> { where(published: true) }
 end

@@ -5,7 +5,7 @@ ruby "2.6.1"
 gem "rails", "~> 5.2.4"
 gem "pg"
 gem "puma", "~> 3.12"
-gem "sass-rails", "~> 5.0"
+gem "sass-rails", "~> 6.0"
 gem "uglifier", ">= 1.3.0"
 gem "therubyracer", platforms: :ruby
 
@@ -22,7 +22,7 @@ group :development, :test do
   gem "rubocop-rake", require: false
   gem "rubocop-i18n"
 
-  gem "rspec-rails", "~> 3.9"
+  gem "rspec-rails", "~> 4.0"
   gem "shoulda-matchers", "~> 4.3"
 end
 
@@ -44,6 +44,7 @@ group :development do
   gem "binding_of_caller"
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"
+  gem "rails_best_practices"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

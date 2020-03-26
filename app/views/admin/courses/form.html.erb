@@ -18,25 +18,7 @@
     <%= f.text_field :password, class: 'form-control' %>
   </div>
 
-  <%
-
-    # TODO(delucas): define this on a centralized place
-    all_features = {
-        badges: 1,
-        events: 2,
-        teams: 4,
-        lectures: 8,
-        automatic_correction_challenges: 16,
-        peer_review_challenges: 32,
-        exercises: 64,
-        competences: 128,
-        tiny_cards: 256,
-        multiple_choices: 512
-    }
-
-  %>
-
-  <% all_features.each do |feature, value| %>
+  <% Course.all_features.each do |feature, value| %>
 
     <div class="checkbox">
       <label>

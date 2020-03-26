@@ -1,5 +1,7 @@
 module TinyCards
   class DecksController < ApplicationController
+    include Publisher.new(TinyCards::Deck, :tiny_cards_decks)
+
     before_action do
       check_feature(:tiny_cards)
     end

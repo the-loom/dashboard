@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_24_154453) do
+ActiveRecord::Schema.define(version: 2020_03_24_230453) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -201,6 +201,7 @@ ActiveRecord::Schema.define(version: 2020_03_24_154453) do
     t.integer "course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "published", default: true
   end
 
   create_table "multiple_choices_questions", force: :cascade do |t|
@@ -240,6 +241,7 @@ ActiveRecord::Schema.define(version: 2020_03_24_154453) do
     t.datetime "updated_at", null: false
     t.boolean "enabled", default: true
     t.boolean "published", default: true
+    t.integer "challenge_mode", default: 0
   end
 
   create_table "peer_review_reviews", force: :cascade do |t|
@@ -258,6 +260,23 @@ ActiveRecord::Schema.define(version: 2020_03_24_154453) do
     t.integer "status", default: 0
     t.integer "peer_review_challenge_id"
     t.integer "author_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "resource_categories", force: :cascade do |t|
+    t.string "name"
+    t.integer "course_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "resources", force: :cascade do |t|
+    t.string "url"
+    t.string "title"
+    t.string "description"
+    t.integer "resource_category_id"
+    t.integer "course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -283,6 +302,7 @@ ActiveRecord::Schema.define(version: 2020_03_24_154453) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "published", default: true
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
