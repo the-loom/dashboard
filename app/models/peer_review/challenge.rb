@@ -5,7 +5,7 @@ class PeerReview::Challenge < ApplicationRecord
   validates_presence_of :title, :difficulty, :instructions,
                         :reviewer_instructions
   validates :difficulty, inclusion: { in: 1..5, message: "must be between 1 and 5" }
-  
+
   has_many :solutions, foreign_key: :peer_review_challenge_id
   has_many :reviews, through: :solutions
 
@@ -16,7 +16,7 @@ class PeerReview::Challenge < ApplicationRecord
   }
 
   scope :enabled, -> { where(enabled: true) }
-  
+
   def solution_by(user)
     solutions.find_by(author: user)
   end
