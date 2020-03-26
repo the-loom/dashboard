@@ -58,6 +58,18 @@ class User < ApplicationRecord
     ScoreCalculator.new.score_for(points)
   end
 
+  def short_name
+    if last_name.present? && first_name.present?
+      "#{first_name.strip} #{last_name[0]}."
+    elsif last_name.present?
+      last_name.strip
+    elsif first_name.present?
+      first_name.strip
+    else
+      "N/A"
+    end
+  end
+
   def full_name
     if last_name.present? && first_name.present?
       "#{last_name.strip}, #{first_name.strip}"
