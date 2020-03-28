@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_26_230617) do
+ActiveRecord::Schema.define(version: 2020_03_28_230601) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -147,7 +147,7 @@ ActiveRecord::Schema.define(version: 2020_03_26_230617) do
     t.text "notes"
     t.integer "course_id"
     t.boolean "published", default: true
-    t.integer "difficulty"
+    t.integer "difficulty", default: 1
   end
 
   create_table "identities", id: :serial, force: :cascade do |t|
@@ -233,7 +233,7 @@ ActiveRecord::Schema.define(version: 2020_03_26_230617) do
 
   create_table "peer_review_challenges", force: :cascade do |t|
     t.string "title"
-    t.integer "difficulty"
+    t.integer "difficulty", default: 1
     t.string "instructions"
     t.string "reviewer_instructions"
     t.integer "course_id"
