@@ -13,6 +13,19 @@
   <%= raw @review.solution.wording %>
 </div>
 
+<% if @challenge.allows_attachment? %>
+  <div>
+    <% document = @review.solution.solution_attachment %>
+    <% if document.attached? %>
+      <p>Adjunto:</p>
+      <%= link_to rails_blob_path(document, disposition: 'preview') do %>
+        <i class="fa fa-paperclip"></i>
+        <%= document.filename %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
+
 <h2>Instrucciones para el revisor</h2>
 
 <div class="trix-content">
