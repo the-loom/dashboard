@@ -27,7 +27,7 @@ class User < ApplicationRecord
 
   def self.to_csv
     CSV.generate do |csv|
-      csv << ["Grupo", "Loom ID", "Apellido", "Nombre", "Correo", "Presente"]
+      csv << ["Grupo", "Loom ID", "Apellido", "Nombre", "Correo Electrónico", "Presente"]
 
       enabled_students_for_course = User.includes(:memberships).includes(memberships: :team).where(memberships: { course: Course.current, role: :student, enabled: true }).order("teams.name, last_name, first_name")
       enabled_students_for_course.each do |x|
