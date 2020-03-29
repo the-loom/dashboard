@@ -39,8 +39,3 @@ body {
 .red-badge {
     background-color: #d43f3a;
 }
-
-.trix-content{
-    height: 250px;
-    overflow-y: auto;
-}
