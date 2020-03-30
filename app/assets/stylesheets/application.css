@@ -39,3 +39,19 @@ body {
 .red-badge {
     background-color: #d43f3a;
 }
+
+.ribbon {
+    min-width: 1em;
+    background-color: gray;
+    display: inline-block;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.ribbon.admin {
+    background-color: darkred;
+}
+
+.ribbon.teacher {
+    background-color: steelblue;
+}
