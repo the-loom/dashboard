@@ -15,20 +15,15 @@
     <div class="student dashboard">
 
       <div class="col-md-3">
-        <%= form_for @team do |f| %>
+        <%= simple_form_for @team do |f| %>
 
           <%= render :partial => 'shared/errors', locals: { f: f } %>
 
           <%= f.hidden_field :name %>
 
-          <div class="form-group">
-            <%= f.label :avatar, 'Imagen de perfil', class: 'control-label' %>
-            <%= f.file_field :avatar, class: 'form-control' %>
-          </div>
+          <%= f.input :avatar, label: 'Imagen de perfil' %>
 
-          <div class="form-group">
-            <%= f.submit 'Actualizar emblema', class: "btn btn-primary" %>
-          </div>
+          <%= f.button :submit, 'Actualizar emblema', class: "btn-primary" %>
 
         <% end %>
       </div>
