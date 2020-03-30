@@ -19,6 +19,7 @@
       <thead>
       <tr>
         <th>Título</th>
+        <th>Vencimiento</th>
         <th>Estado</th>
         <th>Dificultad</th>
         <th>Tipo de Revisiones</th>
@@ -33,6 +34,9 @@
               <i class="fa <%= challenge.published? ? 'fa-eye' : 'fa-eye-slash' %>"></i>
             <% end %>
             <%= link_to challenge.title, peer_review_challenge_path(challenge) %>
+          </td>
+          <td>
+            <%= display_date challenge.due_date %>
           </td>
           <td>
             <%= challenge.enabled? ? "Vigente" : "Finalizado" %>

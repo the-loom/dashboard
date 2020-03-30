@@ -95,7 +95,8 @@ module PeerReview
 
     private
       def challenge_params
-        params[:peer_review_challenge].permit(:title, :instructions, :reviewer_instructions, :difficulty, :challenge_mode)
+        params[:peer_review_challenge].permit(:title, :instructions, :reviewer_instructions,
+                                              :difficulty, :challenge_mode, :due_date)
       end
   end
 end
