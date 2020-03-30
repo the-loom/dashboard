@@ -8,29 +8,21 @@
 
   <div class="col-xs-12 col-md-4">
 
-    <%= form_for @user, url: update_user_url do |f| %>
+    <%= simple_form_for @user, url: update_user_url do |f| %>
 
       <%= render :partial => 'shared/errors', locals: { f: f } %>
 
-      <div class="form-group">
-        <%= f.label :first_name, 'Nombres', class: 'control-label' %>
-        <%= f.text_field :first_name, class: 'form-control' %>
-      </div>
+      <%= f.input :first_name, label: 'Nombres' %>
 
-      <div class="form-group">
-        <%= f.label :last_name, 'Apellidos', class: 'control-label' %>
-        <%= f.text_field :last_name, class: 'form-control' %>
-      </div>
+      <%= f.input :last_name, label: 'Apellidos' %>
 
-      <div class="form-group">
-        <%= f.label :avatar, 'Imagen de perfil', class: 'control-label' %>
-        <%= f.file_field :avatar, class: 'form-control' %>
-      </div>
+      <%= f.input :avatar, label: 'Imagen de perfil' %>
 
-      <div class="form-group">
-        <%= f.submit "Actualizar", class: "btn btn-primary" %>
-      </div>
+      <%= f.button :submit, 'Actualizar', class: "btn-primary" %>
+
     <% end %>
+  
+    <hr/>
 
   </div>
 
