@@ -1,7 +1,7 @@
 module ApplicationHelper
   def entity_avatar(entity)
     if entity.avatar.attached?
-      entity.avatar
+      entity.avatar.variant(auto_orient: true)
     elsif entity.respond_to?(:image) && entity.image.present?
       entity.image
     else # fallback
