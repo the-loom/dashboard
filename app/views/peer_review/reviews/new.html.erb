@@ -3,21 +3,15 @@
 <% nav_add 'Revisar', '#' %>
 <%= nav_render %>
 
-<div class="trix-content">
-  <%= raw @challenge.instructions %>
-</div>
+<%= raw @challenge.instructions %>
 
 <h2>Solución a revisar</h2>
 
-<div class="trix-content">
-  <%= raw @review.solution.wording %>
-</div>
+<%= raw @review.solution.wording %>
 
 <h2>Instrucciones para el revisor</h2>
 
-<div class="trix-content">
-  <%= raw @challenge.reviewer_instructions %>
-</div>
+<%= raw @challenge.reviewer_instructions %>
 
 <hr/>
 

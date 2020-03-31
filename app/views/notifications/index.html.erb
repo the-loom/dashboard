@@ -19,11 +19,7 @@
         <blockquote>
           <strong><%= notification.subject %></strong>
           <br/>
-
-          <div class="trix-content">
             <%= raw notification.text %>
-          </div>
-
           <hr/>
           <%= notification.created_at.strftime("%d/%m/%Y") %>
           &mdash;
