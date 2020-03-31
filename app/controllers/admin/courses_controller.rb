@@ -20,7 +20,8 @@ module Admin
         redirect_to admin_courses_path
         flash[:info] = "Se creó correctamente el curso"
       else
-        render action: :new
+        @labels = OpenStruct.new(title: "Nuevo curso", button: "Guardar curso")
+        render :form
       end
     end
 
@@ -39,7 +40,8 @@ module Admin
         redirect_to admin_courses_path
         flash[:info] = "Se editó correctamente el curso"
       else
-        render action: :edit
+        @labels = OpenStruct.new(title: "Editar curso", button: "Actualizar curso")
+        render :form
       end
     end
 
