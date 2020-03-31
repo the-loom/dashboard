@@ -4,32 +4,19 @@
 <% nav_add @labels.title, '#' %>
 <%= nav_render %>
 
-<%= form_for @badge do |f| %>
+<%= simple_form_for @badge do |f| %>
 
   <%= render :partial => 'shared/errors', locals: { f: f } %>
 
-  <div class="form-group">
-    <%= f.label :name, 'Nombre', class: 'control-label' %>
-    <%= f.text_field :name, class: 'form-control' %>
-  </div>
+  <%= f.input :name, label: 'Nombre' %>
 
-  <div class="form-group">
-    <%= f.label :description, 'Descripción', class: 'control-label' %>
-    <%= f.text_field :description, class: 'form-control' %>
-  </div>
+  <%= f.input :description, label: 'Descripción' %>
 
-  <div class="form-group">
-    <%= f.label :image, 'Imagen', class: 'control-label' %>
-    <%= f.file_field :image, class: 'form-control' %>
-  </div>
+  <%= f.input :image, label: 'Imagen' %>
 
-  <div class="form-group">
-    <%= f.check_box :featured %>
-    <%= f.label :featured, 'Especial', class: 'control-label' %>
-  </div>
+  <%= f.input :featured, label: 'Especial', as: :boolean %>
 
-  <div class="form-group">
-    <%= f.submit @labels.button, class: "btn btn-primary" %>
-  </div>
+  <%= f.button :submit, @labels.button, class: "btn-primary" %>
+
 
 <% end %>
