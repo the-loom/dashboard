@@ -23,6 +23,7 @@
         <th>Estado</th>
         <th>Dificultad</th>
         <th>Tipo de Revisiones</th>
+        <th><i class="fa fa-paperclip" title="¿Permite archivos adjuntos?"></i></th>
         <th class="no-sort">&nbsp;</th>
       </tr>
       </thead>
@@ -46,6 +47,9 @@
           </td>
           <td>
             <%= t "challenges.challenge_modes.#{challenge.challenge_mode}" %>
+          </td>
+          <td>
+            <%= yes_no challenge.allows_attachment? %>
           </td>
           <td>
             <% if policy(PeerReview::Challenge).manage? %>

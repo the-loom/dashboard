@@ -17,6 +17,24 @@
     <trix-editor input="peer_review_solution_wording"></trix-editor>
   </div>
 
+  <% if @challenge.allows_attachment? %>
+    <div class="form-group">
+      <%= f.label :solution_attachment, 'Adjunto (un solo archivo < 250Kb)', class: 'control-label' %>
+      <%= f.file_field :solution_attachment, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <% document = @solution.solution_attachment %>
+      <% if document.attached? %>
+        <p>Adjunto anterior:</p>
+        <%= link_to rails_blob_path(document, disposition: 'preview') do %>
+          <i class="fa fa-paperclip"></i>
+          <%= document.filename %> <%= link_to "(Eliminar)", remove_attachment_peer_review_challenge_solution_path(@challenge, @solution), method: :post %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+
   <div class="form-group">
     <% if @solution.draft? %>
       <%= f.button 'Guardar borrador', name: :status, value: :draft, class: "btn btn-primary" %>

@@ -243,6 +243,7 @@ ActiveRecord::Schema.define(version: 2020_03_30_142810) do
     t.boolean "published", default: false
     t.integer "challenge_mode", default: 0
     t.date "due_date"
+    t.boolean "allows_attachment", default: false
   end
 
   create_table "peer_review_reviews", force: :cascade do |t|
