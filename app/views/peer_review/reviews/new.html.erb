@@ -3,15 +3,11 @@
 <% nav_add 'Revisar', '#' %>
 <%= nav_render %>
 
-<div class="trix-content">
-  <%= raw @challenge.instructions %>
-</div>
+<%= raw @challenge.instructions %>
 
 <h2>Solución a revisar</h2>
 
-<div class="trix-content">
-  <%= raw @review.solution.wording %>
-</div>
+<%= raw @review.solution.wording %>
 
 <% if @challenge.allows_attachment? %>
   <div>
@@ -28,9 +24,7 @@
 
 <h2>Instrucciones para el revisor</h2>
 
-<div class="trix-content">
-  <%= raw @challenge.reviewer_instructions %>
-</div>
+<%= raw @challenge.reviewer_instructions %>
 
 <hr/>
 
@@ -39,7 +33,7 @@
   <div class="form-group">
     <%= f.label :wording, 'Desarrollo', class: 'control-label' %>
     <%= f.text_area :wording, hidden: true %>
-    <trix-editor input="peer_review_review_wording"></trix-editor>
+    <trix-editor input="peer_review_review_wording" class="trix-content"></trix-editor>
   </div>
 
   <div class="form-group">
