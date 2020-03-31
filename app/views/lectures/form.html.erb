@@ -4,27 +4,16 @@
 <% nav_add @labels.title, '#' %>
 <%= nav_render %>
 
-<%= form_for @lecture do |f| %>
+<%= simple_form_for @lecture do |f| %>
 
   <%= render :partial => 'shared/errors', locals: { f: f } %>
+ 
+  <%= f.input :summary, label: 'Resumen' %>
 
-  <div class="form-group">
-    <%= f.label :summary, 'Resumen', class: 'control-label' %>
-    <%= f.text_field :summary, class: 'form-control' %>
-  </div>
+  <%= f.input :date, label: 'Fecha' %>
 
-  <div class="form-group">
-    <%= f.label :date, 'Fecha', class: 'control-label' %>
-    <%= f.date_select :date, {}, { class: 'form-control' } %>
-  </div>
+  <%= f.input :required, label: 'Asistencia requerida', as: :boolean %>
 
-  <div class="form-group">
-    <%= f.check_box :required %>
-    <%= f.label :required, 'Asistencia requerida', class: 'control-label' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.submit @labels.button, class: "btn btn-primary" %>
-  </div>
+  <%= f.button :submit, @labels.button, class: "btn-primary" %>
 
 <% end %>
