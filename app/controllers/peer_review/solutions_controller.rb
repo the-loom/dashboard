@@ -21,6 +21,15 @@ module PeerReview
       authorize @solution, :solve?
     end
 
+    def remove_attachment
+      @challenge = PeerReview::Challenge.find(params[:challenge_id])
+      @solution = PeerReview::Solution.find_by(challenge: @challenge, author: current_user)
+      authorize @solution, :solve?
+      @solution.solution_attachment.purge
+
+      render action: :new
+    end
+
     def update
       @challenge = PeerReview::Challenge.find(params[:challenge_id])
       @solution = PeerReview::Solution.find_by(challenge: @challenge, author: current_user)
@@ -33,13 +42,14 @@ module PeerReview
         redirect_to peer_review_challenge_path(@challenge)
         flash[:info] = "Se guardó correctamente la solución"
       else
+        @solution.solution_attachment.purge
         render action: :new
       end
     end
 
     private
       def solution_params
-        params[:peer_review_solution].permit(:wording)
+        params[:peer_review_solution].permit(:wording, :solution_attachment)
       end
 
       def publishing?

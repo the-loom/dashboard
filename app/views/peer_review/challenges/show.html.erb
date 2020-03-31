@@ -42,6 +42,19 @@
     <%= raw @solution.wording %>
   </div>
 
+  <% if @challenge.allows_attachment? %>
+    <div>
+      <% document = @solution.solution_attachment %>
+      <% if document.attached? %>
+        <p>Adjunto:</p>
+        <%= link_to rails_blob_path(document, disposition: 'preview') do %>
+          <i class="fa fa-paperclip"></i>
+          <%= document.filename %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+
   <% if @solution.draft? %>
 
     <div class="alert alert-info">
