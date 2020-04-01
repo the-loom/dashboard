@@ -4,22 +4,15 @@
 <% nav_add @labels.title, '#' %>
 <%= nav_render %>
 
-<%= form_for [:admin, @course] do |f| %>
+<%= simple_form_for [:admin, @course] do |f| %>
 
   <%= render :partial => 'shared/errors', locals: { f: f } %>
 
-  <div class="form-group">
-    <%= f.label :name, 'Nombre', class: 'control-label' %>
-    <%= f.text_field :name, class: 'form-control' %>
-  </div>
+  <%= f.input :name, label: 'nombre' %>
 
-  <div class="form-group">
-    <%= f.label :password, 'Contraseña', class: 'control-label' %>
-    <%= f.text_field :password, class: 'form-control' %>
-  </div>
+  <%= f.input :password, label: 'Contraseña' %>
 
   <% Course.all_features.each do |feature, value| %>
-
     <div class="checkbox">
       <label>
         <input type="checkbox" name="course[features][]"
@@ -27,16 +20,10 @@
         <%= t "course.features.#{feature}" %>
       </label>
     </div>
-
   <% end %>
 
-  <div class="form-group">
-    <%= f.label :attendance_event_id, 'Evento de asistencia', class: 'control-label' %>
-    <%= f.collection_select :attendance_event_id, @course.events, :id, :name, { include_blank: true }, { class: 'form-control' } %>
-  </div>
+  <%= f.input :attendance_event_id, label: 'Evento de asistencia', collection: @course.events, label_method: :name , value_method: :id, include_blank: true %>
 
-  <div class="form-group">
-    <%= f.submit @labels.button, class: "btn btn-primary" %>
-  </div>
+  <%= f.button :submit, @labels.button, class: "btn-primary" %>
 
 <% end %>
