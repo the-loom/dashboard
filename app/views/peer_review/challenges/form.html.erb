@@ -13,6 +13,10 @@
 
   <%= f.input :challenge_mode, collection: PeerReview::Challenge.challenge_modes.map { |key, _| [key.humanize, key]} %>
 
+  <%= f.input :due_date, label: 'Vencimiento', as: :date, html5: true %>
+
+  <%= f.input :allows_attachment, label: 'Permite archivo adjunto' %>
+
   <%= f.input :instructions, label: 'Instrucciones', as: :trix_editor %>
 
   <%= f.input :reviewer_instructions, label: 'Instrucciones para el revisor', as: :trix_editor %>

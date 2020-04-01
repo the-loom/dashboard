@@ -145,6 +145,7 @@ Rails.application.routes.draw do
       resources :solutions, only: [:new, :update, :show] do
         get :review, on: :member
         post :save_review, on: :member
+        post :remove_attachment, on: :member
       end
       resources :reviews, only: [:new, :update] do
         post :assess, on: :member

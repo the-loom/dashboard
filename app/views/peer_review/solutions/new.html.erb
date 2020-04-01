@@ -3,15 +3,26 @@
 <% nav_add 'Resolver', '#' %>
 <%= nav_render %>
 
-<div class="trix-content">
-  <%= raw @challenge.instructions %>
-</div>
+<%= raw @challenge.instructions %>
 
 <hr/>
-
 <%= simple_form_for @solution, url: peer_review_challenge_solution_path(peer_review_id: @challenge.id, id: @solution.id) do |f| %>
 
   <%= f.input :wording, label: 'Desarrollo', as: :trix_editor %>
+
+  <% if @challenge.allows_attachment? %>
+    <%= f.input :solution_attachment, label: 'Adjunto (un solo archivo < 250Kb)' %>
+    <div class="form-group">
+      <% document = @solution.solution_attachment %>
+      <% if document.attached? %>
+        <p>Adjunto anterior:</p>
+        <%= link_to rails_blob_path(document, disposition: 'preview') do %>
+          <i class="fa fa-paperclip"></i>
+          <%= document.filename %> <%= link_to "(Eliminar)", remove_attachment_peer_review_challenge_solution_path(@challenge, @solution), method: :post %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
 
   <%= f.button :button, 'Guardar borrador', type: 'submit', name: :status, value: :draft, class: "btn-primary" %>
   <%= f.button :button, 'Publicar', type: 'submit', name: :status, value: :final, class: "btn-success" %>

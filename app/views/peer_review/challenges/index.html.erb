@@ -19,9 +19,11 @@
       <thead>
       <tr>
         <th>Título</th>
+        <th>Vencimiento</th>
         <th>Estado</th>
         <th>Dificultad</th>
         <th>Tipo de Revisiones</th>
+        <th><i class="fa fa-paperclip" title="¿Permite archivos adjuntos?"></i></th>
         <th class="no-sort">&nbsp;</th>
       </tr>
       </thead>
@@ -35,6 +37,9 @@
             <%= link_to challenge.title, peer_review_challenge_path(challenge) %>
           </td>
           <td>
+            <%= display_date challenge.due_date %>
+          </td>
+          <td>
             <%= challenge.enabled? ? "Vigente" : "Finalizado" %>
           </td>
           <td>
@@ -42,6 +47,9 @@
           </td>
           <td>
             <%= t "challenges.challenge_modes.#{challenge.challenge_mode}" %>
+          </td>
+          <td>
+            <%= yes_no challenge.allows_attachment? %>
           </td>
           <td>
             <% if policy(PeerReview::Challenge).manage? %>

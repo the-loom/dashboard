@@ -17,6 +17,16 @@ class PeerReview::Challenge < ApplicationRecord
 
   scope :enabled, -> { where(enabled: true) }
 
+  def due?
+    return false unless due_date
+    now = Time.zone.now
+    self.due_date < now
+  end
+
+  def disable!
+    self.update_attribute(:enabled, false)
+  end
+
   def solution_by(user)
     solutions.find_by(author: user)
   end
