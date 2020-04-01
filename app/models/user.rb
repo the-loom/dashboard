@@ -138,7 +138,7 @@ class User < ApplicationRecord
   def register(event, times = 1)
     return unless current_membership && current_membership.enabled? # TODO: preventive fix, needs re-do
     occurrence = occurrences.find_or_initialize_by(event: event)
-    occurrence.multiplier += occurrence.new_record? ? times -1 : times
+    occurrence.multiplier = occurrence.new_record? ? times : occurrence.multiplier + times
     occurrence.save
 
     refresh_points_cache!
