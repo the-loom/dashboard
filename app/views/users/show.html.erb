@@ -199,23 +199,16 @@
       <div class="col-md-6">
         <legend>Comentarios</legend>
 
-        <%= form_for :comment, url: comment_user_url(@user.nickname) do |f| %>
-          <div class="form-group">
-            <%= f.label :body, 'Texto' %>
-            <%= f.text_area :body, class: 'form-control' %>
-          </div>
+        <%= simple_form_for :comment, url: comment_user_url(@user.nickname) do |f| %>
+          
+          <%= f.input :body, label: 'Texto', as: :text, required: false %>
 
-          <div class="form-group">
-            <%= f.label :mood, 'Humor' %>
-            <%= f.select :mood, Comment.moods, class: 'form-control' %>
-          </div>
+          <%= f.input :mood, label: 'Humor',  collection: Comment.moods, include_blank: false, required: false %>
 
-          <div class="form-group">
-            <%= f.submit "Comentar", class: "btn btn-primary" %>
-          </div>
+          <%= f.button :submit, 'Comentar', class: "btn-primary" %>
+        
         <% end %>
-
-
+        
         <hr/>
 
         <% @user.comments.each do |comment| %>

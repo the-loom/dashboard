@@ -28,20 +28,12 @@
 
 <hr/>
 
-<%= form_for @review, url: peer_review_challenge_review_path(peer_review_id: @challenge.id, id: @review.id) do |f| %>
+<%= simple_form_for @review, url: peer_review_challenge_review_path(peer_review_id: @challenge.id, id: @review.id) do |f| %>
 
-  <div class="form-group">
-    <%= f.label :wording, 'Desarrollo', class: 'control-label' %>
-    <%= f.text_area :wording, hidden: true %>
-    <trix-editor input="peer_review_review_wording" class="trix-content"></trix-editor>
-  </div>
+  <%= f.input :wording, label: 'Desarrollo', as: :trix_editor %>
 
-  <div class="form-group">
-    <% if @review.draft? %>
-      <%= f.button 'Guardar borrador', name: :status, value: :draft, class: "btn btn-primary" %>
-      <%= f.button 'Publicar', name: :status, value: :final, class: "btn btn-success" %>
-    <% end %>
-  </div>
+  <%= f.button :button, 'Guardar borrador', type: 'submit', name: :status, value: :draft, class: "btn-primary" %>
+  <%= f.button :button, 'Publicar', type: 'submit', name: :status, value: :final, class: "btn-success" %>
 
 <% end %>
 

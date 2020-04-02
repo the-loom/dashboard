@@ -6,21 +6,12 @@
 <%= raw @challenge.instructions %>
 
 <hr/>
+<%= simple_form_for @solution, url: peer_review_challenge_solution_path(peer_review_id: @challenge.id, id: @solution.id) do |f| %>
 
-<%= form_for @solution, url: peer_review_challenge_solution_path(peer_review_id: @challenge.id, id: @solution.id) do |f| %>
-
-  <div class="form-group">
-    <%= f.label :wording, 'Desarrollo', class: 'control-label' %>
-    <%= f.text_area :wording, hidden: true %>
-    <trix-editor input="peer_review_solution_wording" class="trix-content"></trix-editor>
-  </div>
+  <%= f.input :wording, label: 'Desarrollo', as: :trix_editor %>
 
   <% if @challenge.allows_attachment? %>
-    <div class="form-group">
-      <%= f.label :solution_attachment, 'Adjunto (un solo archivo < 250Kb)', class: 'control-label' %>
-      <%= f.file_field :solution_attachment, class: 'form-control' %>
-    </div>
-
+    <%= f.input :solution_attachment, label: 'Adjunto (un solo archivo < 250Kb)' %>
     <div class="form-group">
       <% document = @solution.solution_attachment %>
       <% if document.attached? %>
@@ -33,12 +24,8 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <% if @solution.draft? %>
-      <%= f.button 'Guardar borrador', name: :status, value: :draft, class: "btn btn-primary" %>
-      <%= f.button 'Publicar', name: :status, value: :final, class: "btn btn-success" %>
-    <% end %>
-  </div>
+  <%= f.button :button, 'Guardar borrador', type: 'submit', name: :status, value: :draft, class: "btn-primary" %>
+  <%= f.button :button, 'Publicar', type: 'submit', name: :status, value: :final, class: "btn-success" %>
 
 <% end %>
 

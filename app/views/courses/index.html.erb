@@ -24,13 +24,11 @@
             <% end %>
           <% else %>
 
-            <%= form_for :enrollment, url: enroll_course_path(course), html: { class: 'form-inline' } do |f| %>
+            <%= simple_form_for :enrollment, url: enroll_course_path(course), html: { class: 'form-inline' } do |f| %>
+            
+            <%= f.input :password, label: false, input_html: {placeholder: 'Contraseña', autocomplete: "new-password"} %>
 
-              <div class="form-group">
-                <%= f.text_field :password, class: 'form-control', placeholder: 'Contraseña', autocomplete: "new-password" %>
-              </div>
-
-              <%= f.submit "Inscribirse", class: 'btn btn-primary' %>
+            <%= f.button :submit, 'Inscribirse', class: "btn-primary" %>
 
             <% end %>
           <% end %>

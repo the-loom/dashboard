@@ -1,41 +1,21 @@
 <legend>Nuevo desafío</legend>
 
-<%= form_for @repo, url: repos_path do |f| %>
+<%= simple_form_for @repo, url: repos_path do |f| %>
 
   <%= render :partial => 'shared/errors', locals: { f: f } %>
+  
+  <%= f.input :user, label: 'Usuario de GitHub' %>
 
-  <div class="form-group">
-    <%= f.label :user, 'Usuario de GitHub', class: 'control-label' %>
-    <%= f.text_field :user, class: 'form-control' %>
-  </div>
+  <%= f.input :name, label: 'Nombre del Repo' %>
 
-  <div class="form-group">
-    <%= f.label :name, 'Nombre del Repo', class: 'control-label' %>
-    <%= f.text_field :name, class: 'form-control' %>
-  </div>
+  <%= f.input :git_url, label: 'URL en GitHub' %>
 
-  <div class="form-group">
-    <%= f.label :git_url, 'URL en GitHub', class: 'control-label' %>
-    <%= f.text_field :git_url, class: 'form-control' %>
-  </div>
+  <%= f.input :description, label: 'Descripción' %>
 
-  <div class="form-group">
-    <%= f.label :description, 'Descripción', class: 'control-label' %>
-    <%= f.text_field :description, class: 'form-control' %>
-  </div>
+  <%= f.input :avatar_url, label: 'URL de la Imagen' %>
 
-  <div class="form-group">
-    <%= f.label :avatar_url, 'URL de la Imagen', class: 'control-label' %>
-    <%= f.text_field :avatar_url, class: 'form-control' %>
-  </div>
+  <%= f.input :difficulty, label: 'Dificultad', input_html: {min: 1, max: 5} %>
 
-  <div class="form-group">
-    <%= f.label :difficulty, 'Dificultad', class: 'control-label' %>
-    <%= f.number_field :difficulty, class: 'form-control', min: 1, max: 5 %>
-  </div>
-
-  <div class="form-group">
-    <%= f.submit "Crear desafío", class: "btn btn-primary" %>
-  </div>
+  <%= f.button :submit, 'Crear desafío', class: "btn-primary" %>
 
 <% end %>

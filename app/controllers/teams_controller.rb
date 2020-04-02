@@ -29,7 +29,8 @@ class TeamsController < ApplicationController
       redirect_to team_profile_path(@team.nickname)
       flash[:info] = "Se creo correctamente el equipo"
     else
-      render action: :new
+      @labels = OpenStruct.new(title: "Nuevo equipo", button: "Guardar equipo")
+      render :form
     end
   end
 
