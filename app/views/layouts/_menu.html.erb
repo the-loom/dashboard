@@ -1,6 +1,6 @@
 <div id="navbar" class="navbar-collapse collapse">
   <ul class="nav navbar-nav navbar-right">
-    <% if current_user and Course.current %>
+    <% if current_user and current_user.current_membership %>
 
       <% if current_user.admin? %>
         <li class="dropdown">
@@ -125,8 +125,7 @@
             </ul>
           </li>
       <% end %>
-    <% end %>
-    <% if Course.current %>
+
       <li>
         <%= link_to notifications_path do %>
           <i class="fa fa-envelope"></i>

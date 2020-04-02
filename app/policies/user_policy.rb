@@ -3,7 +3,7 @@ class UserPolicy < ApplicationPolicy
     user.teacher?
   end
   def show?
-    team = record.current_membership.team
+    team = record.current_membership.try(:team)
     user.teacher? || (team && team.members.include?(user)) || record == user
   end
   def promote?

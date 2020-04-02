@@ -38,6 +38,10 @@ class ApplicationController < ActionController::Base
       unless current_user
         redirect_to root_path
       end
+      unless current_user.memberships.enabled.size > 0 || controller_path == "courses"
+        flash[:info] = "Aún no pertenecés a ningún curso. Podés inscribirte desde aquí"
+        redirect_to courses_path and return
+      end
     end
 
     def pages_controller?
@@ -49,6 +53,6 @@ class ApplicationController < ActionController::Base
     end
 
     def current_user
-      @current_user ||= User.find(session[:user_id]) if session[:user_id]
+      @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
     end
 end
