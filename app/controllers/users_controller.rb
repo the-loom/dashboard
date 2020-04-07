@@ -34,14 +34,6 @@ class UsersController < ApplicationController
     authorize @user
   end
 
-  def demote
-    user = User.find(params[:id])
-    authorize current_user, :promote?
-    user.current_membership.update(role: :student)
-    flash[:info] = "#{user.full_name} fue degradado a Estudiante"
-    redirect_to teachers_path
-  end
-
   def comment
     unless @user = Course.current.memberships.includes(:user).find_by(users: { nickname: params[:nickname] }).try(:user)
       flash[:alert] = "No existe el usuario"

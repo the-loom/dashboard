@@ -21,4 +21,8 @@ class UserPolicy < ApplicationPolicy
   def comment?
     user.teacher?
   end
+
+  def join?
+    user.admin?
+  end
 end

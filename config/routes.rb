@@ -19,10 +19,12 @@ Rails.application.routes.draw do
     member do
       post :toggle
       post :promote
-      post :demote
     end
   end
-  resources :teachers, only: [:index, :destroy]
+  resources :teachers, only: [:index, :destroy] do
+    post :join, on: :collection
+    post :demote, on: :member
+  end
 
   resources :badges, only: [:index, :show, :new, :create, :edit, :update]
   resources :occurrences, only: :destroy
