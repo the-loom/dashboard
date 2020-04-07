@@ -8,9 +8,9 @@
 
   <%= render :partial => 'shared/errors', locals: { f: f } %>
 
-  <%= f.input :name, label: 'nombre' %>
+  <%= f.input :name, label: 'Nombre' %>
 
-  <%= f.input :password, label: 'Contraseña' %>
+  <%= f.input :password, label: 'Contraseña', as: :string  %>
 
   <% Course.all_features.each do |feature, value| %>
     <div class="checkbox">
