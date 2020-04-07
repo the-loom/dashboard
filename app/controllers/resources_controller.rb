@@ -16,7 +16,7 @@ class ResourcesController < ApplicationController
   end
 
   def create
-    authorize Resource, :create?
+    authorize Resource, :manage?
     @resource = Resource.new(resource_params)
     if @resource.valid?
       @resource.save
@@ -28,14 +28,14 @@ class ResourcesController < ApplicationController
   end
 
   def edit
-    authorize Resource, :create?
+    authorize Resource, :manage?
     @resource = Resource.find(params[:id])
     @labels = OpenStruct.new(title: "Editar recurso", button: "Actualizar recurso")
     render :form
   end
 
   def update
-    authorize Resource, :create?
+    authorize Resource, :manage?
     @resource = Resource.find(params[:id])
 
     if @resource.update_attributes(resource_params)
