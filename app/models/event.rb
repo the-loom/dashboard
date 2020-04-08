@@ -1,7 +1,7 @@
 class Event < ApplicationRecord
   include CourseLock
 
-  validates :points, :min_points, :max_points, numericality: { only_integer: true }
+  validates :points, :min_points, :max_points, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates_presence_of :name, :description
   validates :name, uniqueness: { scope: :course_id }
   validate :points_min_and_max
@@ -14,15 +14,6 @@ class Event < ApplicationRecord
   belongs_to :competence_tag, optional: true
 
   def points_min_and_max
-    if self.points.present? && self.points < 0
-      errors.add(:points, "cannot be less than 0")
-    end
-    if self.min_points.present? && self.min_points < 0
-      errors.add(:min_points, "cannot be less than 0")
-    end
-    if self.max_points.present? && self.max_points < 0
-      errors.add(:max_points, "cannot be less than 0")
-    end
     if self.min_points.present? && self.max_points.present? && self.min_points > self.max_points
       errors.add(:min_points, "cannot be greater than max points")
     end  
