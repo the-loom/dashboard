@@ -1,7 +1,8 @@
 class Event < ApplicationRecord
   include CourseLock
 
-  validates_presence_of :name, :description, :points, :min_points, :max_points
+  validates :points, :min_points, :max_points, numericality: { only_integer: true }
+  validates_presence_of :name, :description
   validates :name, uniqueness: { scope: :course_id }
   validate :points_min_and_max
 
