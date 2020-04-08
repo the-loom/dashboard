@@ -11,9 +11,9 @@
   <%= f.input :name, label: "Nombre" %>
   <%= f.input :description, label: "Descripción" %>
 
-  <%= f.input :points, label: "Puntos", as: :numeric %>
-  <%= f.input :min_points, label: "Puntos mínimos para la actividad", as: :numeric %>
-  <%= f.input :max_points, label: "Puntos máximos para la actividad", as: :numeric %>
+  <%= f.input :points, label: "Puntos", input_html: {min: 0} %>
+  <%= f.input :min_points, label: "Puntos mínimos para la actividad", input_html: {min: 0} %>
+  <%= f.input :max_points, label: "Puntos máximos para la actividad", input_html: {min: 0} %>
 
   <% if Course.current.on?(:competences) %>
     <%= f.input :competence_tag_id, label: "Competencia aplicable", collection: CompetenceTag.all %>
