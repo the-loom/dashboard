@@ -20,5 +20,4 @@
 //= require vue/dist/vue
 //= require bootstrap3-typeahead/bootstrap3-typeahead
 //= require bootstrap-tour/build/js/bootstrap-tour
-//= require trix
 //= require_tree .
