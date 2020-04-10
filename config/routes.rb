@@ -56,18 +56,6 @@ Rails.application.routes.draw do
 
   resources :partners, only: :index
 
-  resources :solutions do
-    get :start
-    get :summary
-    patch :finish
-    delete :cancel
-    patch :add_partner
-    resources :timers do
-      post :play
-      post :pause
-    end
-  end
-
   resources :repos, only: [:index, :new, :create]
   get "repos/:user/:name" => "repos#show", as: :repo, constraints: { user: /[0-z\.-]+/ }
   get "repos/:user/:name/grade" => "repos#grade", as: :grade, constraints: { user: /[0-z\.-]+/ }
@@ -148,6 +136,7 @@ Rails.application.routes.draw do
         get :review, on: :member
         post :save_review, on: :member
         post :remove_attachment, on: :member
+        post :unpublish, on: :member
       end
       resources :reviews, only: [:new, :update] do
         post :assess, on: :member

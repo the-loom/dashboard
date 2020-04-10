@@ -24,6 +24,11 @@
   <p>
     <%= link_to 'Resolver', new_peer_review_challenge_solution_path(@challenge.id), class: 'btn btn-large btn-primary', disabled: !@challenge.solvable_by?(current_user) %>
     <%= link_to 'Revisar alguna solución', new_peer_review_challenge_review_path(@challenge.id), class: 'btn btn-large btn-primary', disabled: !@challenge.reviewable_by?(current_user) %>
+
+    <% if @solution && @solution.unpublishable? %>
+      <%= link_to 'Despublicar solución', unpublish_peer_review_challenge_solution_path(@challenge.id, @solution), method: :post, class: 'btn btn-large btn-warning', disabled: !@challenge.reviewable_by?(current_user) %>
+    <% end %>
+
   </p>
 
 <% end %>
@@ -68,7 +73,7 @@
 
     <h2>Revisiones Recibidas</h2>
 
-    <% if @solution.reviews.empty? %>
+    <% if @solution.reviews.final.empty? %>
 
       <div class="alert alert-info">
         <p>Tu solución aún no ha recibido revisiones.</p>

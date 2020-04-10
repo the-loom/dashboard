@@ -12,8 +12,18 @@ class PeerReview::Solution < ApplicationRecord
       final: 1
   }
 
+  def unpublishable?
+    status.to_sym == :final && reviews.empty? && !challenge.reviewers.include?(self.author)
+  end
+
   def publish!
     self.status = :final
+    self.save
+  end
+
+  def unpublish!
+    self.status = :draft
+    self.save
   end
 
   def review_by(reviewer)

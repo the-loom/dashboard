@@ -47,6 +47,18 @@ module PeerReview
       end
     end
 
+    def unpublish
+      @challenge = PeerReview::Challenge.find(params[:challenge_id])
+      @solution = PeerReview::Solution.find_by(challenge: @challenge, author: current_user)
+      if @solution.author == current_user && @solution.unpublishable?
+        @solution.unpublish!
+        flash[:info] = "Se despublicó tu solución. Podés volver a trabajar en ella"
+      else
+        flash[:alert] = "Esta vez no ha podido despublicarse tu solución"
+      end
+      redirect_to peer_review_challenge_path(@challenge)
+    end
+
     private
       def solution_params
         params[:peer_review_solution].permit(:wording, :solution_attachment)
