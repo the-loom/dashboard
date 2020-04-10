@@ -19,6 +19,7 @@ module PeerReview
 
       review.teacher_assessment = params[:teacher_assessment].to_sym
       review.assessor = current_user
+      review.teacher_assessment_description = params[:assessment][:teacher_assessment_description]
 
       review.save
 
