@@ -17,6 +17,19 @@
   <%= raw @solution.wording %>
 </div>
 
+<% if @challenge.allows_attachment? %>
+  <div>
+    <% document = @solution.solution_attachment %>
+    <% if document.attached? %>
+      <p>Adjunto:</p>
+      <%= link_to rails_blob_path(document, disposition: 'preview') do %>
+        <i class="fa fa-paperclip"></i>
+        <%= document.filename %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
+
 <% unless @solution.review_by(current_user).present? %>
   <%= link_to "Agregar mi revisión", review_peer_review_challenge_solution_path(@challenge, @solution), class: 'btn btn-primary' %>
 <% end %>
@@ -84,6 +97,19 @@
         <div class="well">
           <%= raw review.solution.wording %>
         </div>
+
+        <% if @challenge.allows_attachment? %>
+          <div>
+            <% document = review.solution.solution_attachment %>
+            <% if document.attached? %>
+              <p>Adjunto:</p>
+              <%= link_to rails_blob_path(document, disposition: 'preview') do %>
+                <i class="fa fa-paperclip"></i>
+                <%= document.filename %>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
 
         <h4>Revisión de <%= review.reviewer.full_name %></h4>
         <div class="well">

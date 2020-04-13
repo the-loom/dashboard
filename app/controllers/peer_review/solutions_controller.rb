@@ -42,7 +42,8 @@ module PeerReview
         redirect_to peer_review_challenge_path(@challenge)
         flash[:info] = "Se guardó correctamente la solución"
       else
-        @solution.solution_attachment.purge
+        @solution.solution_attachment.purge if @solution.errors.include?(:solution_attachment)
+        flash[:alert] = "Ha ocurrido un error con tu solución"
         render action: :new
       end
     end

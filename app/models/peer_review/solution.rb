@@ -7,6 +7,8 @@ class PeerReview::Solution < ApplicationRecord
   has_one_attached :solution_attachment
   validates :solution_attachment, size: { less_than: 250.kilobyte }, content_type: [:zip, :rar, "text/x-java", "text/plain", :jpg, :png]
 
+  validates :wording, presence: true, if: :final?
+
   enum status: {
       draft: 0,
       final: 1
