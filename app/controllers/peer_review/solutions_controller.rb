@@ -34,17 +34,20 @@ module PeerReview
       @challenge = PeerReview::Challenge.find(params[:challenge_id])
       @solution = PeerReview::Solution.find_by(challenge: @challenge, author: current_user)
       authorize @solution, :solve?
-      @solution.publish! if publishing?
       @solution.update_attributes(solution_params)
+
+      @solution.publish! if publishing?
 
       if @solution.valid?
         @solution.save
-        redirect_to peer_review_challenge_path(@challenge)
+        redirect_to peer_review_challenge_path(@challenge) and return
         flash[:info] = "Se guardó correctamente la solución"
       else
         @solution.solution_attachment.purge if @solution.errors.include?(:solution_attachment)
-        flash[:alert] = "Ha ocurrido un error con tu solución"
-        render action: :new
+        flash[:alert] = "Ha ocurrido un error con tu solución. " + @solution.errors.full_messages.join(", ")
+        @solution.unpublish!
+        # TEMP FIX
+        redirect_to peer_review_challenge_path(@challenge) and return
       end
     end
 
