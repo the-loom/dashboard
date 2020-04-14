@@ -92,3 +92,6 @@ production_deploy:
 	heroku ps:scale web=1 --app the-loom
 	heroku restart --app the-loom
 	heroku maintenance:off --app the-loom
+
+emergency_deploy:
+	git push -ff production master
