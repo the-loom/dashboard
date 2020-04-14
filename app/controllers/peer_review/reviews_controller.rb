@@ -19,11 +19,10 @@ module PeerReview
 
       review.teacher_assessment = params[:teacher_assessment].to_sym
       review.assessor = current_user
-      review.teacher_assessment_description = params[:assessment][:teacher_assessment_description]
-
+      review.update_attributes(assessment_params)
       review.save
 
-      redirect_to peer_review_challenge_solution_path(review.challenge, params[:assessment][:current_solution_id])
+      redirect_to peer_review_challenge_solution_path(review.challenge, review.solution)
     end
 
     def update
@@ -43,6 +42,11 @@ module PeerReview
     end
 
     private
+
+      def assessment_params
+        params[:peer_review_review].permit(:teacher_assessment_description)
+      end
+
       def solution_params
         params[:peer_review_review].permit(:wording)
       end
