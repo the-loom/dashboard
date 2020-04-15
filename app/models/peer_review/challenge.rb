@@ -19,8 +19,7 @@ class PeerReview::Challenge < ApplicationRecord
 
   def due?
     return false unless due_date
-    now = Time.zone.now
-    self.due_date < now
+    Time.zone.now > self.due_date + 1.day
   end
 
   def disable!
