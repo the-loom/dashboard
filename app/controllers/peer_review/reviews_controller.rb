@@ -22,7 +22,7 @@ module PeerReview
       review.update_attributes(assessment_params)
       review.save
 
-      redirect_to peer_review_challenge_solution_path(review.challenge, review.solution)
+      redirect_to peer_review_challenge_solution_path(review.challenge, params[:peer_review_review][:current_solution_id])
     end
 
     def update

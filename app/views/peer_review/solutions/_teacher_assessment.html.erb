@@ -36,6 +36,7 @@
   <% if policy(PeerReview::Review).assess? %>
 
     <%= simple_form_for review, url: assess_peer_review_challenge_review_path(challenge, review) do |f| %>
+      <%= f.hidden_field :current_solution_id, value: solution.id %>
 
       <%= f.input :teacher_assessment_description, label: 'Descripción', as: :trix_editor, required: false, input_html: {value: review.teacher_assessment_description} %>
 
