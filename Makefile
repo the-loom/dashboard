@@ -1,6 +1,9 @@
 browser:
 	google-chrome --new-window https://trello.com/b/ARo5MV67/the-loom http://localhost:3000
 
+init:
+	git config core.hooksPath .githooks
+
 start:
 	rm -f tmp/pids/server.pid
 	docker-compose up -d
@@ -36,6 +39,7 @@ just_db:
 	docker-compose up -d db
 
 build:
+	$(MAKE) init
 	$(MAKE) mine
 	docker-compose build
 	docker-compose run app bundle
