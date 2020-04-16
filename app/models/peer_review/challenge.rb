@@ -35,6 +35,19 @@ class PeerReview::Challenge < ApplicationRecord
     solution && solution.final?
   end
 
+  def progress_by?(user)
+    progress = 0
+
+    # solved?
+    progress += 1 if already_solved_by?(user)
+    # reviewed?
+    progress += solutions.map do |solution|
+      solution.reviews.final.where(reviewer: user)
+    end.flatten.count
+
+    progress.to_f / (expected_reviews + 1)
+  end
+
   def solvers
     solutions.includes(:author).map(&:author).uniq.compact
   end
