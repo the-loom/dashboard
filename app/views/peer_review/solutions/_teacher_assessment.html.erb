@@ -36,9 +36,10 @@
   <% if policy(PeerReview::Review).assess? %>
 
     <%= simple_form_for review, url: assess_peer_review_challenge_review_path(challenge, review) do |f| %>
+      
       <%= f.hidden_field :current_solution_id, value: solution.id %>
 
-      <%= f.input :teacher_assessment_description, label: 'Descripción', as: :text, required: false, input_html: { value: review.teacher_assessment_description } %>
+      <%= f.input :teacher_assessment_description, label: 'Descripción', as: :text, input_html: {rows: 7} %>
 
       <%= f.button :button, 'Buena revisión', value: :good, name: 'teacher_assessment', class: 'btn-sm btn-success', type: 'submit' %>
       <%= f.button :button, 'Mala revisión', value: :bad, name: 'teacher_assessment', class: 'btn-sm btn-danger', type: 'submit' %>
