@@ -10,7 +10,7 @@ module PeerReview
     def review
       @challenge = PeerReview::Challenge.find(params[:challenge_id])
       @solution = PeerReview::Solution.find(params[:id])
-      @review = @solution.reviews.create(reviewer: current_user, status: :draft)
+      @review = @solution.reviews.find_or_create_by(reviewer: current_user, status: :draft)
       render "peer_review/reviews/new"
     end
 
