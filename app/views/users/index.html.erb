@@ -171,6 +171,8 @@
                 <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit', data: { action: 'join_profiles', id: nil} do %>
                   Unir perfiles
                 <% end %>
+              <% end %>
+              <% if policy(User).promote? %>
                 <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit', data: { action: 'promote', id: nil} do %>
                   Nombrar docentes
                 <% end %>
