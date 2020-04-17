@@ -2,7 +2,7 @@
 <%= nav_render %>
 
 <% if policy(PeerReview::Challenge).manage? %>
-  <%= link_to 'Nuevo desafio', new_peer_review_challenge_path, class: 'btn btn-primary pull-right' %>
+  <%= link_to 'Nuevo desafio', new_peer_review_challenge_path, class: 'btn btn-primary' %>
 <% end %>
 
 <section class="forks">
@@ -23,6 +23,7 @@
         <th>Estado</th>
         <th>Dificultad</th>
         <th>Tipo de Revisiones</th>
+        <th>Revisiones esperadas</th>
         <th><i class="fa fa-paperclip" title="¿Permite archivos adjuntos?"></i></th>
         <th class="no-sort">&nbsp;</th>
       </tr>
@@ -49,6 +50,9 @@
             <%= t "challenges.challenge_modes.#{challenge.challenge_mode}" %>
           </td>
           <td>
+            <%= challenge.expected_reviews %>
+          </td>
+          <td>
             <%= yes_no challenge.allows_attachment? %>
           </td>
           <td>
@@ -62,7 +66,7 @@
                   Publicar
                 <% end %>
               <% end %>
-              <%= link_to challenge.enabled? ? "Cerrar" : "Abrir", toggle_peer_review_challenge_path(challenge), class: 'btn btn-default btn-sm' %>
+              <%= link_to challenge.enabled? ? "Finalizar" : "Reabrir", toggle_peer_review_challenge_path(challenge), class: 'btn btn-default btn-sm' %>
               <%= link_to "Duplicar", duplicate_peer_review_challenge_path(challenge), class: 'btn btn-default btn-sm' %>
               <%= link_to "Editar", edit_peer_review_challenge_path(challenge), class: 'btn btn-default btn-sm' %>
               <%= link_to "Panorama", overview_peer_review_challenge_path(challenge), class: 'btn btn-default btn-sm' %>
