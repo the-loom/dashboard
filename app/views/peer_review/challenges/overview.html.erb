@@ -36,6 +36,7 @@
   <tr>
     <th>Participantes</th>
     <th>Estado</th>
+    <th>Progreso</th>
     <th class="no-sort">Fecha de Resolución</th>
     <th>Revisiones recibidas</th>
     <th>Revisiones realizadas</th>
@@ -56,6 +57,11 @@
       <td>
         <%= stats.solution.final? ? 'Final' : 'Borrador' %><br/>
         <%= stats.solution.size %>
+      </td>
+      <td>
+        <nobr>
+          <%= ratio_to_percentage @challenge.progress_by? stats.solver %>
+        </nobr>
       </td>
       <td>
         <%= stats.solution.updated_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M") %>
