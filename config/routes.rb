@@ -139,7 +139,7 @@ Rails.application.routes.draw do
         post :unpublish, on: :member
       end
       resources :reviews, only: [:new, :update] do
-        post :assess, on: :member
+        patch :assess, on: :member
       end
     end
   end
