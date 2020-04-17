@@ -14,17 +14,16 @@
   </thead>
   <tbody>
   <% @challenges.each do |challenge| %>
-    <% percentage = (challenge.progress_by?(current_user) * 100).to_i %>
+    <%
+      progress = challenge.progress_by? current_user
+      percentage = (progress * 100).to_i
+    %>
     <tr class="fork <%= 'finished' if percentage == 100 %> <%= 'missed' if percentage < 100 && !challenge.enabled %>">
       <td>
-        <div class="progress" style="max-width: 100px; margin-top: 1em;">
-          <div class="progress-bar" role="progressbar" aria-valuenow="<%= percentage %>"
-               aria-valuemin="0" aria-valuemax="100" style="width: <%= percentage %>%;">
-            <span <%== 'style="color: black;"' if percentage == 0 %>>
-            <%= percentage %>%
-            </span>
-          </div>
+        <div class="progress" style="height: 10px;">
+          <div class="progress-bar progress-bar-success" role="progressbar" style="width: <%= percentage %>%;" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
+        <%= percentage %> %
       </td>
       <td>
         <%= link_to challenge.title, peer_review_challenge_path(challenge) %>
