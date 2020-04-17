@@ -42,7 +42,6 @@ module PeerReview
     end
 
     private
-
       def assessment_params
         params[:peer_review_review].permit(:teacher_assessment_description)
       end

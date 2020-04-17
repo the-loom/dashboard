@@ -46,7 +46,7 @@ class PeerReview::Challenge < ApplicationRecord
     # reviewed?
     progress += solutions.includes(:reviews).includes(reviews: :reviewer)
                     .where(peer_review_reviews: { status: 1 }) # :final == 1
-                    .where(peer_review_reviews: { reviewer_id: user.id})
+                    .where(peer_review_reviews: { reviewer_id: user.id })
                     .count
 
     [progress / (expected_reviews + 1), 1.0].min

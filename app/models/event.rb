@@ -16,8 +16,8 @@ class Event < ApplicationRecord
   def points_min_and_max
     if self.min_points.present? && self.max_points.present? && self.min_points > self.max_points
       errors.add(:min_points, "cannot be greater than max points")
-    end  
-  end  
+    end
+  end
 
   def self.min_points
     Event.enabled.sum(:min_points)

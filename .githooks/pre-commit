@@ -4,5 +4,5 @@
 if git diff --name-only --cached | grep '\.rb$'
 then
   echo "Running rubocop for added ruby files..."
-  git diff --name-only --cached | grep '\.rb$' | xargs docker-compose run app bundle exec rubocop
+  git diff --name-only --cached | grep '\.rb$' | grep -v schema.rb | xargs docker-compose run app bundle exec rubocop
 fi
