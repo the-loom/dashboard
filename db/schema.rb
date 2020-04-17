@@ -256,6 +256,7 @@ ActiveRecord::Schema.define(version: 2020_04_16_121851) do
     t.datetime "updated_at", null: false
     t.integer "teacher_assessment", default: 0
     t.integer "assessor_id"
+    t.string "teacher_assessment_description"
   end
 
   create_table "peer_review_solutions", force: :cascade do |t|

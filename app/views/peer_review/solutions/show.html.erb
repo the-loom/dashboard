@@ -45,7 +45,7 @@
 <% else %>
 
   <ul class="nav nav-tabs" id="myTabs" role="tablist">
-    <% @solution.reviews.where(status: :final).each_with_index do |review, index| %>
+    <% @solution.reviews.sorted.where(status: :final).each_with_index do |review, index| %>
       <li role="presentation" class="<%= 'active' if index == 0 %>">
         <a href="#<%= "review_#{index}" %>" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
           <%= "Revisión ##{index + 1}" %>
@@ -54,7 +54,7 @@
     <% end %>
   </ul>
   <div class="tab-content" id="myTabContent">
-    <% @solution.reviews.where(status: :final).each_with_index do |review, index| %>
+    <% @solution.reviews.sorted.where(status: :final).each_with_index do |review, index| %>
       <div class="tab-pane fade <%= 'active in' if index == 0 %>" role="tabpanel" id="<%= "review_#{index}" %>" aria-labelledby="home-tab">
         <h3>Revisión de <%= review.reviewer.full_name %> (<%= review.status %>)</h3>
 
@@ -82,7 +82,7 @@
 <% else %>
 
   <ul class="nav nav-tabs" id="myTabs2" role="tablist">
-    <% @reviews.each_with_index do |_, index| %>
+    <% @reviews.sorted.each_with_index do |_, index| %>
       <li role="presentation" class="<%= 'active' if index == 0 %>">
         <a href="#<%= "rreview_#{index}" %>" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
           <%= "Revisión ##{index + 1}" %>
@@ -91,7 +91,7 @@
     <% end %>
   </ul>
   <div class="tab-content" id="myTabContent">
-    <% @reviews.each_with_index do |review, index| %>
+    <% @reviews.sorted.each_with_index do |review, index| %>
       <div class="tab-pane fade <%= 'active in' if index == 0 %>" role="tabpanel" id="<%= "rreview_#{index}" %>" aria-labelledby="home-tab">
         <h4>Solución de <%= review.solution.author.full_name %></h4>
         <div class="well">
@@ -122,4 +122,12 @@
     <% end %>
   </div>
 
+<% end %>
+
+<% content_for :head do %>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.0/trix.css" rel="stylesheet">
+<% end %>
+
+<% content_for :javascript do %>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.0/trix.js" type="application/javascript"></script>
 <% end %>
