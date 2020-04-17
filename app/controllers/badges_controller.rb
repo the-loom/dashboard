@@ -52,7 +52,7 @@ class BadgesController < ApplicationController
       flash[:info] = "Se actualizó correctamente el emblema"
     else
       @labels = OpenStruct.new(title: "Editar emblema", button: "Actualizar emblema")
-      render :form    
+      render :form
     end
   end
 

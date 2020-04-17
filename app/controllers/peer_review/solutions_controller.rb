@@ -40,14 +40,14 @@ module PeerReview
 
       if @solution.valid?
         @solution.save
-        redirect_to peer_review_challenge_path(@challenge) and return
+        redirect_to(peer_review_challenge_path(@challenge)) && (return)
         flash[:info] = "Se guardó correctamente la solución"
       else
         @solution.solution_attachment.purge if @solution.errors.include?(:solution_attachment)
         flash[:alert] = "Ha ocurrido un error con tu solución. " + @solution.errors.full_messages.join(", ")
         @solution.unpublish!
         # TEMP FIX
-        redirect_to peer_review_challenge_path(@challenge) and return
+        redirect_to(peer_review_challenge_path(@challenge)) && (return)
       end
     end
 
