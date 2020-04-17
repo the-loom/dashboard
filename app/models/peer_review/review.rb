@@ -15,6 +15,8 @@ class PeerReview::Review < ApplicationRecord
       bad: 2
   }
 
+  scope :sorted, -> { order(id: :asc) }
+
   def publish!
     self.status = :final
   end
