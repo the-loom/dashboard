@@ -59,9 +59,11 @@
         <%= stats.solution.size %>
       </td>
       <td>
-        <nobr>
-          <%= ratio_to_percentage @challenge.progress_by? stats.solver %>
-        </nobr>
+        <% progress = @challenge.progress_by? stats.solver %>
+        <div class="progress" style="height: 10px;">
+          <div class="progress-bar progress-bar-success" role="progressbar" style="width: <%= ratio_to_percentage progress %>;" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>  
+        <%= ratio_to_percentage progress %>  
       </td>
       <td>
         <%= stats.solution.updated_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M") %>
