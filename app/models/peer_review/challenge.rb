@@ -3,7 +3,7 @@ class PeerReview::Challenge < ApplicationRecord
   include Publishable
 
   validates_presence_of :title, :difficulty, :instructions,
-                        :reviewer_instructions
+                        :reviewer_instructions, :language
   validates :difficulty, inclusion: { in: 1..5, message: "must be between 1 and 5" }
 
   has_many :solutions, foreign_key: :peer_review_challenge_id

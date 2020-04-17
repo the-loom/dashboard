@@ -43,8 +43,8 @@
 
   <h2>Mi solución (<%= @solution.status %>)</h2>
 
-  <div class="well">
-    <%= raw @solution.wording %>
+  <div class="well highlight">
+    <%=  raw rouge(@solution.wording, @challenge.language) %>
   </div>
 
   <% if @challenge.allows_attachment? %>

@@ -15,6 +15,8 @@
 
   <%= f.input :due_date, label: 'Vencimiento', as: :date, html5: true %>
 
+  <%= f.input :language, label: 'Lenguaje', collection: Rouge::Lexer.all.map(&:tag).sort, include_blank: false %>
+
   <%= f.input :allows_attachment, label: 'Permite archivo adjunto' %>
 
   <%= f.input :instructions, label: 'Instrucciones', as: :trix_editor %>
