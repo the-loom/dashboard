@@ -15,7 +15,10 @@
 
 <h2>Consigna</h2>
 
-<%= raw @challenge.instructions %>
+<div class="well">
+  <%= raw @challenge.instructions %>
+</div>
+
 
 <hr/>
 
@@ -43,9 +46,12 @@
 
   <h2>Mi solución (<%= @solution.status %>)</h2>
 
-  <div class="well highlight">
-    <%=  raw rouge(@solution.wording, @challenge.language) %>
+  <div class="highlight">
+    <div class="well">
+      <%= rouge(@solution.wording, @challenge.language).html_safe %>
+    </div>
   </div>
+
 
   <% if @challenge.allows_attachment? %>
     <div>
