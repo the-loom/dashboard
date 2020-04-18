@@ -3,7 +3,9 @@ class PeerReview::Challenge < ApplicationRecord
   include Publishable
 
   validates_presence_of :title, :difficulty, :instructions,
-                        :reviewer_instructions, :language
+                        :reviewer_instructions, :solution_type
+  validates_presence_of :language, if: :source_code?
+
   validates :difficulty, inclusion: { in: 1..5, message: "must be between 1 and 5" }
 
   has_many :solutions, foreign_key: :peer_review_challenge_id
@@ -13,6 +15,11 @@ class PeerReview::Challenge < ApplicationRecord
       student_and_teacher_reviews: 0,
       student_reviews_only: 1,
       teacher_reviews_only: 2
+  }
+
+  enum solution_type: { 
+      free_text: 0, 
+      source_code: 1 
   }
 
   scope :enabled, -> { where(enabled: true) }
@@ -29,7 +36,7 @@ class PeerReview::Challenge < ApplicationRecord
   def solution_by(user)
     solutions.find_by(author: user)
   end
-
+  
   def already_solved_by?(user)
     solution = solution_by(user)
     solution && solution.final?
