@@ -1,6 +1,6 @@
 module RougeHelper
   def rouge(text, language)
-    formatter.format(lexer(language).lex(text))
+    text.present? ? formatter.format(lexer(language).lex(text)) : text
   end
   
   private

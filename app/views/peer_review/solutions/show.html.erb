@@ -7,15 +7,25 @@
 
 <h2>Consigna</h2>
 
-<%= raw @challenge.instructions %>
+<div class="well">
+  <%= raw @challenge.instructions %>
+</div>
 
 <hr/>
 
 <h2><%= title %> (<%= @solution.status %>)</h2>
 
-<div class="well">
-  <%= raw @solution.wording %>
-</div>
+<% if @challenge.source_code?%>
+  <div class="highlight">
+    <div class="well">
+      <%= raw rouge(@solution.wording, @challenge.language) %>
+    </div>
+  </div>
+<% else %>
+  <div class="well">
+    <%= raw @solution.wording %>
+  </div>
+<% end %>
 
 <% if @challenge.allows_attachment? %>
   <div>
@@ -93,10 +103,19 @@
   <div class="tab-content" id="myTabContent">
     <% @reviews.each_with_index do |review, index| %>
       <div class="tab-pane fade <%= 'active in' if index == 0 %>" role="tabpanel" id="<%= "rreview_#{index}" %>" aria-labelledby="home-tab">
-        <h4>Solución de <%= review.solution.author.full_name %></h4>
-        <div class="well">
-          <%= raw review.solution.wording %>
-        </div>
+        <h3>Solución de <%= review.solution.author.full_name %></h3>
+        
+        <% if @challenge.source_code?%>
+          <div class="highlight">
+            <div class="well">
+              <%= raw rouge(review.solution.wording, @challenge.language) %>
+            </div>
+          </div>
+        <% else %>
+          <div class="well">
+            <%= raw review.solution.wording %>
+          </div>
+        <% end %>
 
         <% if @challenge.allows_attachment? %>
           <div>
@@ -111,7 +130,7 @@
           </div>
         <% end %>
 
-        <h4>Revisión de <%= review.reviewer.full_name %></h4>
+        <h3>Revisión de <%= review.reviewer.full_name %></h3>
         <div class="well">
           <%= raw review.wording %>
         </div>

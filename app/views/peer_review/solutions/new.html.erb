@@ -8,7 +8,7 @@
 <hr/>
 <%= simple_form_for @solution, url: peer_review_challenge_solution_path(peer_review_id: @challenge.id, id: @solution.id) do |f| %>
 
-  <%= f.input :wording, label: 'Desarrollo', as: :trix_editor %>
+  <%= f.input :wording, label: 'Desarrollo', as: @challenge.free_text? ? :trix_editor : :text, input_html:{rows:15}%>
 
   <% if @challenge.allows_attachment? %>
     <%= f.input :solution_attachment, label: 'Adjunto (un solo archivo < 250Kb)' %>

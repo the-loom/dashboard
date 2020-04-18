@@ -3,11 +3,23 @@
 <% nav_add 'Revisar', '#' %>
 <%= nav_render %>
 
-<%= raw @challenge.instructions %>
+<div class="well">
+  <%= raw @challenge.instructions %>
+</div>
 
 <h2>Solución a revisar</h2>
 
-<%= raw @review.solution.wording %>
+<% if @challenge.source_code?%>
+  <div class="highlight">
+    <div class="well">
+      <%= raw rouge(@review.solution.wording, @challenge.language) %>
+    </div>
+  </div>
+<% else %>
+  <div class="well">
+    <%= raw @review.solution.wording.wording %>
+  </div>
+<% end %>
 
 <% if @challenge.allows_attachment? %>
   <div>
@@ -24,7 +36,9 @@
 
 <h2>Instrucciones para el revisor</h2>
 
-<%= raw @challenge.reviewer_instructions %>
+<div class="well">
+  <%= raw @challenge.reviewer_instructions %>
+</div>
 
 <hr/>
 
