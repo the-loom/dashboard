@@ -34,8 +34,12 @@ module PeerReview
 
       if @review.valid?
         @review.save
-        redirect_to peer_review_challenge_path(@challenge)
         flash[:info] = "Se guardó correctamente la revisión"
+        if current_user.teacher?
+          redirect_to overview_peer_review_challenge_path(@challenge)
+        else
+          redirect_to peer_review_challenge_path(@challenge)
+        end
       else
         render action: :new
       end
