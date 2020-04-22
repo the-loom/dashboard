@@ -10,7 +10,7 @@ module PeerReview
     def review
       @challenge = PeerReview::Challenge.find(params[:challenge_id])
       @solution = PeerReview::Solution.find(params[:id])
-      @review = @solution.reviews.create(reviewer: current_user, status: :draft)
+      @review = @solution.reviews.find_or_create_by(reviewer: current_user, status: :draft)
       render "peer_review/reviews/new"
     end
 
@@ -40,27 +40,38 @@ module PeerReview
 
       if @solution.valid?
         @solution.save
-        redirect_to peer_review_challenge_path(@challenge) and return
+        redirect_to(peer_review_challenge_path(@challenge)) && (return)
         flash[:info] = "Se guardó correctamente la solución"
       else
         @solution.solution_attachment.purge if @solution.errors.include?(:solution_attachment)
         flash[:alert] = "Ha ocurrido un error con tu solución. " + @solution.errors.full_messages.join(", ")
         @solution.unpublish!
         # TEMP FIX
-        redirect_to peer_review_challenge_path(@challenge) and return
+        redirect_to(peer_review_challenge_path(@challenge)) && (return)
       end
     end
 
     def unpublish
       @challenge = PeerReview::Challenge.find(params[:challenge_id])
-      @solution = PeerReview::Solution.find_by(challenge: @challenge, author: current_user)
-      if @solution.author == current_user && @solution.unpublishable?
+
+      @solution = PeerReview::Solution.find(params[:id])
+      if current_user.teacher?
+      else
+        @solution = PeerReview::Solution.find_by(challenge: @challenge, author: current_user)
+      end
+
+      if policy(@solution).unpublish?
         @solution.unpublish!
         flash[:info] = "Se despublicó tu solución. Podés volver a trabajar en ella"
       else
         flash[:alert] = "Esta vez no ha podido despublicarse tu solución"
       end
-      redirect_to peer_review_challenge_path(@challenge)
+
+      if current_user.teacher?
+        redirect_to overview_peer_review_challenge_path(@challenge)
+      else
+        redirect_to peer_review_challenge_path(@challenge)
+      end
     end
 
     private

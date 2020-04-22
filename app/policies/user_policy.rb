@@ -15,9 +15,11 @@ class UserPolicy < ApplicationPolicy
   def update?
     user.teacher? || user == record
   end
+
   def impersonate?
     user.admin?
   end
+
   def comment?
     user.teacher?
   end

@@ -1,26 +1,82 @@
-<legend>Desafíos de revisión pendientes</legend>
+<% nav_add 'Tablero', '#' %>
+<%= nav_render %>
 
-<% if @peer_review_challenges.empty? %>
+<legend>Desafíos de revisión</legend>
 
-  <div class="alert alert-info">
-    <p>No tenés desafíos de revisión pendientes. ¡Buen trabajo!</p>
-  </div>
+<table class="challenges table table-striped">
+  <thead>
+  <tr>
+    <th>Progreso</th>
+    <th>Título</th>
+    <th>Vencimiento</th>
+    <th>Estado</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @challenges.each do |challenge| %>
+    <%
+      progress = challenge.progress_by? current_user
+      percentage = (progress * 100).to_i
+    %>
+    <tr class="fork <%= 'finished' if percentage == 100 %> <%= 'missed' if percentage < 100 && !challenge.enabled %>">
+      <td>
+        <div class="progress" style="height: 10px;">
+          <div class="progress-bar progress-bar-success" role="progressbar" style="width: <%= percentage %>%;" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <%= percentage %> %
+      </td>
+      <td>
+        <%= link_to challenge.title, peer_review_challenge_path(challenge) %>
+      </td>
+      <td>
+        <%= display_date challenge.due_date %>
+      </td>
+      <td>
+        <%= challenge.enabled? ? "Vigente" : "Finalizado" %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
 
-<% else %>
-
-  <div class="alert alert-warning">
-    <p>Tenés pendientes los siguientes desafíos de revisión:</p>
-    <ul>
-      <% @peer_review_challenges.each do |challenge| %>
-        <li><%= challenge.title %></li>
-      <% end %>
-    </ul>
-    <br>
-    <p>
-      <%= link_to "Resolver desafíos", peer_review_challenges_path, class: 'btn btn-warning' %>
-    </p>
-  </div>
 
 
+<%= content_for :head do %>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
 
+  <style>
+    form.button_to {
+      display: inline-block;
+      margin: 0 0.1em;
+    }
+
+    tr.finished {
+      background-color: #dff0d8 !important;
+    }
+
+    tr.missed {
+      background-color: #f2dede !important;
+    }
+  </style>
+
+<% end %>
+
+<%= content_for :javascript do %>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="application/javascript"></script>
+
+  <script type="application/javascript">
+      $(function () {
+          $('.challenges').DataTable({
+              order: [[1, "asc"]],
+              paging: false,
+              language: {
+                  url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+              },
+              columnDefs: [{
+                  targets: 'no-sort',
+                  orderable: false
+              }]
+          });
+      });
+  </script>
 <% end %>

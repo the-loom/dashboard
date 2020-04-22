@@ -36,11 +36,11 @@ class ApplicationController < ActionController::Base
 
     def authenticate_user!
       unless current_user
-        redirect_to root_path and return
+        redirect_to(root_path) && (return)
       end
       unless controller_path == "courses" || current_user.memberships.enabled.size > 0
         flash[:info] = "Aún no pertenecés a ningún curso. Podés inscribirte desde aquí"
-        redirect_to courses_path and return
+        redirect_to(courses_path) && (return)
       end
     end
 

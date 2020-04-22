@@ -7,6 +7,7 @@ class PeerReview::Challenge < ApplicationRecord
   validates_presence_of :language, if: :source_code?
 
   validates :difficulty, inclusion: { in: 1..5, message: "must be between 1 and 5" }
+  validates_numericality_of :expected_reviews, greater_than_or_equal_to: 0, only_integer: true
 
   has_many :solutions, foreign_key: :peer_review_challenge_id
   has_many :reviews, through: :solutions
@@ -40,6 +41,22 @@ class PeerReview::Challenge < ApplicationRecord
   def already_solved_by?(user)
     solution = solution_by(user)
     solution && solution.final?
+  end
+
+  def progress_by?(user)
+    progress = 0.0
+
+    # solved?
+    progress += 1 if already_solved_by?(user)
+
+    return [progress / 1, 1.0].min if teacher_reviews_only?
+    # reviewed?
+    progress += solutions.includes(:reviews).includes(reviews: :reviewer)
+                    .where(peer_review_reviews: { status: 1 }) # :final == 1
+                    .where(peer_review_reviews: { reviewer_id: user.id })
+                    .count
+
+    [progress / (expected_reviews + 1), 1.0].min
   end
 
   def solvers

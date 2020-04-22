@@ -21,10 +21,9 @@ class TeachersController < ApplicationController
   end
 
   def join
-
     if !params[:teachers].present? || !params[:teachers][:ids].present?
       flash[:alert] = "Debes seleccionar al menos a un docente para unir perfiles"
-      redirect_to teachers_path and return
+      redirect_to(teachers_path) && (return)
     end
 
     teachers = User.where(id: params[:teachers][:ids].map(&:to_i))

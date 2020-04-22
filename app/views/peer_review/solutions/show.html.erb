@@ -40,8 +40,31 @@
   </div>
 <% end %>
 
-<% unless @solution.review_by(current_user).present? %>
-  <%= link_to "Agregar mi revisión", review_peer_review_challenge_solution_path(@challenge, @solution), class: 'btn btn-primary' %>
+<% if @solution.final? %>
+  <% my_review = @solution.review_by(current_user) %>
+  <% if my_review.present? && my_review.draft? %>
+    <%= link_to "Continuar mi revisión", review_peer_review_challenge_solution_path(@challenge, @solution), class: 'btn btn-primary' %>
+  <% elsif !my_review.present? %>
+    <%= link_to "Agregar mi revisión", review_peer_review_challenge_solution_path(@challenge, @solution), class: 'btn btn-primary' %>
+  <% end %>
+<% end %>
+
+<br><br>
+
+<% if policy(@solution).unpublish? %>
+  <div class="alert alert-danger">
+    <ul>
+      <li>Sólo deberías despublicar una solución si es extremadamente necesario</li>
+      <li>Esta acción ocasionará que el estudiante
+        vuelva a publicarla luego de hacer las ediciones correspondientes
+      </li>
+      <li>Tené en cuenta que las revisiones que haya recibido
+        quedarán obsoletas.
+      </li>
+    </ul>
+    <br>
+    <%= link_to 'Despublicar solución del estudiante', unpublish_peer_review_challenge_solution_path(@challenge.id, @solution), method: :post, class: 'btn btn-large btn-danger' %>
+  </div>
 <% end %>
 
 <h2>Revisiones Recibidas</h2>
@@ -55,7 +78,7 @@
 <% else %>
 
   <ul class="nav nav-tabs" id="myTabs" role="tablist">
-    <% @solution.reviews.where(status: :final).each_with_index do |review, index| %>
+    <% @solution.reviews.sorted.where(status: :final).each_with_index do |review, index| %>
       <li role="presentation" class="<%= 'active' if index == 0 %>">
         <a href="#<%= "review_#{index}" %>" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
           <%= "Revisión ##{index + 1}" %>
@@ -64,7 +87,7 @@
     <% end %>
   </ul>
   <div class="tab-content" id="myTabContent">
-    <% @solution.reviews.where(status: :final).each_with_index do |review, index| %>
+    <% @solution.reviews.sorted.where(status: :final).each_with_index do |review, index| %>
       <div class="tab-pane fade <%= 'active in' if index == 0 %>" role="tabpanel" id="<%= "review_#{index}" %>" aria-labelledby="home-tab">
         <h3>Revisión de <%= review.reviewer.full_name %> (<%= review.status %>)</h3>
 
@@ -92,7 +115,7 @@
 <% else %>
 
   <ul class="nav nav-tabs" id="myTabs2" role="tablist">
-    <% @reviews.each_with_index do |_, index| %>
+    <% @reviews.sorted.each_with_index do |_, index| %>
       <li role="presentation" class="<%= 'active' if index == 0 %>">
         <a href="#<%= "rreview_#{index}" %>" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
           <%= "Revisión ##{index + 1}" %>
@@ -101,7 +124,7 @@
     <% end %>
   </ul>
   <div class="tab-content" id="myTabContent">
-    <% @reviews.each_with_index do |review, index| %>
+    <% @reviews.sorted.each_with_index do |review, index| %>
       <div class="tab-pane fade <%= 'active in' if index == 0 %>" role="tabpanel" id="<%= "rreview_#{index}" %>" aria-labelledby="home-tab">
         <h3>Solución de <%= review.solution.author.full_name %></h3>
         
@@ -141,4 +164,12 @@
     <% end %>
   </div>
 
+<% end %>
+
+<% content_for :head do %>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.0/trix.css" rel="stylesheet">
+<% end %>
+
+<% content_for :javascript do %>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.0/trix.js" type="application/javascript"></script>
 <% end %>

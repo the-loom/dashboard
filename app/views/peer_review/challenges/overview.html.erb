@@ -36,6 +36,7 @@
   <tr>
     <th>Participantes</th>
     <th>Estado</th>
+    <th>Progreso</th>
     <th class="no-sort">Fecha de Resolución</th>
     <th>Revisiones recibidas</th>
     <th>Revisiones realizadas</th>
@@ -48,14 +49,22 @@
       <td>
         <%= stats.solver.full_name %> <br/>
         <%= link_to "Ver solución", peer_review_challenge_solution_path(@challenge, stats.solution) %>
-        <% unless stats.solution.review_by(current_user).present? || stats.solution.draft? %>
+        <% my_review = stats.solution.review_by(current_user) %>
+        <% unless my_review.present? && my_review.status.to_sym == :final || stats.solution.draft? %>
           •
-          <%= link_to "Revisar", review_peer_review_challenge_solution_path(@challenge, stats.solution) %>
+          <%= link_to (my_review.present? ? 'Continuar revisión' : 'Revisar'), review_peer_review_challenge_solution_path(@challenge, stats.solution) %>
         <% end %>
       </td>
       <td>
         <%= stats.solution.final? ? 'Final' : 'Borrador' %><br/>
         <%= stats.solution.size %>
+      </td>
+      <td>
+        <% progress = @challenge.progress_by? stats.solver %>
+        <div class="progress" style="height: 10px;">
+          <div class="progress-bar progress-bar-success" role="progressbar" style="width: <%= ratio_to_percentage progress %>;" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>  
+        <%= ratio_to_percentage progress %>  
       </td>
       <td>
         <%= stats.solution.updated_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M") %>
