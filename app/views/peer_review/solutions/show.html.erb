@@ -15,17 +15,7 @@
 
 <h2><%= title %> (<%= @solution.status %>)</h2>
 
-<% if @challenge.source_code?%>
-  <div class="highlight">
-    <div class="well">
-      <%= raw rouge(@solution.wording, @challenge.language) %>
-    </div>
-  </div>
-<% else %>
-  <div class="well">
-    <%= raw @solution.wording %>
-  </div>
-<% end %>
+<%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: @solution.wording, language: @challenge.language } %>
 
 <% if @challenge.allows_attachment? %>
   <div>
@@ -127,19 +117,7 @@
     <% @reviews.sorted.each_with_index do |review, index| %>
       <div class="tab-pane fade <%= 'active in' if index == 0 %>" role="tabpanel" id="<%= "rreview_#{index}" %>" aria-labelledby="home-tab">
         <h3>Solución de <%= review.solution.author.full_name %></h3>
-        
-        <% if @challenge.source_code?%>
-          <div class="highlight">
-            <div class="well">
-              <%= raw rouge(review.solution.wording, @challenge.language) %>
-            </div>
-          </div>
-        <% else %>
-          <div class="well">
-            <%= raw review.solution.wording %>
-          </div>
-        <% end %>
-
+        <%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: review.solution.wording, language: @challenge.language } %>
         <% if @challenge.allows_attachment? %>
           <div>
             <% document = review.solution.solution_attachment %>
@@ -168,6 +146,7 @@
 
 <% content_for :head do %>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.0/trix.css" rel="stylesheet">
+  <style><%= ::Rouge::Themes::Base16.mode(:dark).render(scope: '.highlight' ) %></style>
 <% end %>
 
 <% content_for :javascript do %>

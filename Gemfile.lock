@@ -200,7 +200,6 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    redcarpet (3.5.0)
     ref (2.0.0)
     request_store (1.5.0)
       rack (>= 1.4)
@@ -326,7 +325,6 @@ DEPENDENCIES
   rack-mini-profiler
   rails (~> 5.2.4)
   rails_best_practices
-  redcarpet
   request_store
   responders
   rollbar

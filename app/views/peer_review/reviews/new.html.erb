@@ -8,18 +8,7 @@
 </div>
 
 <h2>Solución a revisar</h2>
-
-<% if @challenge.source_code?%>
-  <div class="highlight">
-    <div class="well">
-      <%= raw rouge(@review.solution.wording, @challenge.language) %>
-    </div>
-  </div>
-<% else %>
-  <div class="well">
-    <%= raw @review.solution.wording.wording %>
-  </div>
-<% end %>
+<%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: @review.solution.wording, language: @challenge.language } %>
 
 <% if @challenge.allows_attachment? %>
   <div>
@@ -53,6 +42,7 @@
 
 <% content_for :head do %>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.0/trix.css" rel="stylesheet">
+  <style><%= ::Rouge::Themes::Base16.mode(:dark).render(scope: '.highlight' ) %></style>
 <% end %>
 
 <% content_for :javascript do %>
