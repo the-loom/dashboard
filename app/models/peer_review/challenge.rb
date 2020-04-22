@@ -18,9 +18,9 @@ class PeerReview::Challenge < ApplicationRecord
       teacher_reviews_only: 2
   }
 
-  enum solution_type: { 
-      free_text: 0, 
-      source_code: 1 
+  enum solution_type: {
+      free_text: 0,
+      source_code: 1
   }
 
   scope :enabled, -> { where(enabled: true) }
@@ -37,7 +37,7 @@ class PeerReview::Challenge < ApplicationRecord
   def solution_by(user)
     solutions.find_by(author: user)
   end
-  
+
   def already_solved_by?(user)
     solution = solution_by(user)
     solution && solution.final?
