@@ -3,9 +3,7 @@
 <% nav_add 'Revisar', '#' %>
 <%= nav_render %>
 
-<div class="well">
-  <%= raw @challenge.instructions %>
-</div>
+<%= raw @challenge.instructions %>
 
 <h2>Solución a revisar</h2>
 <%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: @review.solution.wording, language: @challenge.language } %>
