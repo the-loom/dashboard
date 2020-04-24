@@ -5,7 +5,6 @@ class SolutionFinder
   end
 
   def find_solution
-
     # 1. if myself only, as usual
     unless @challenge.team_challenge
       return PeerReview::Solution.find_or_create_by(challenge: @challenge, author: @user)
