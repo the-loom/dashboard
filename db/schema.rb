@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_16_121851) do
+ActiveRecord::Schema.define(version: 2020_04_22_144001) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -245,6 +245,7 @@ ActiveRecord::Schema.define(version: 2020_04_16_121851) do
     t.date "due_date"
     t.boolean "allows_attachment", default: false
     t.integer "expected_reviews", default: 1
+    t.boolean "allows_quick_reviews", default: false
   end
 
   create_table "peer_review_reviews", force: :cascade do |t|

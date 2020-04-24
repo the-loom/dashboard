@@ -1,0 +1,28 @@
+class QuickReviewGenerator
+  def self.generate(challenge, current_review)
+    lines = challenge.reviews.final.map do |review|
+      to_list(review)
+    end.flatten.compact.group_by(&:itself).map do |line, repetitions|
+      [repetitions.size, line]
+    end.sort do |x, y|
+      y[0] <=> x[0]
+    end.map do |repetitions_and_line|
+      repetitions_and_line[1]
+    end
+
+    my_reviews = to_list(current_review)
+
+    lines.map do |x|
+      { text: x, checked: current_review.wording && my_reviews.include?(x) }
+    end
+  end
+
+  private
+    def self.to_list(review)
+      if review.wording
+        (ActionController::Base.helpers.strip_tags review.wording.gsub(/\<\/li\>/, "\n").gsub(/\<\/p\>/, "\n").gsub("\n\n", "\n")).gsub("\n\n", "\n").gsub("\n$", "").gsub("&gt;", ">").gsub("&lt;", "<").split("\n")
+      else
+        []
+      end
+    end
+end
