@@ -1,4 +1,9 @@
-<% title = "Solución de #{@solution.author.full_name}" %>
+<% if @challenge.team_challenge %>
+  <% title = "Solución del grupo #{@solution.author.current_membership.team.name}" %>
+<% else %>
+  <% title = "Solución de #{@solution.author.full_name}" %>
+<% end %>
+
 
 <% nav_add 'Desafíos', peer_review_challenges_path %>
 <% nav_add @challenge.title, peer_review_challenge_path(@challenge) %>
