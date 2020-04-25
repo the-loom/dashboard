@@ -19,7 +19,29 @@
 
 <hr/>
 
-<% if @challenge.enabled? %>
+<% if @challenge.team_challenge && !current_user.current_membership.team %>
+  <div class="alert alert-danger">
+    <p>
+      <strong>¡Oops!</strong>
+      No podés resolver este desafío hasta que no tengas un equipo.
+    </p>
+  </div>
+<% end %>
+
+<% if @challenge.enabled? && (current_user.current_membership.team || !@challenge.team_challenge) %>
+
+  <% if @challenge.team_challenge %>
+    <div class="alert alert-info">
+      <p>
+        <strong>¡Atención!</strong>
+        Esta tarea se resuelve por equipos. La estás resolviendo junto a
+        <strong><%= current_user.current_membership.team.members.map(&:short_name).join(", ") %></strong>
+        para el equipo <strong><%= current_user.current_membership.team.name %></strong>.
+      </p>
+      <p>La última edición la realizó <strong><%= @solution.author.short_name %></strong>
+        (<%= @solution.updated_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M") %>)</p>
+    </div>
+  <% end %>
 
   <p>
     <%= link_to 'Resolver', new_peer_review_challenge_solution_path(@challenge.id), class: 'btn btn-large btn-primary', disabled: !@challenge.solvable_by?(current_user) %>

@@ -1,8 +1,19 @@
 #!/bin/bash
 
+red='\e[31m'
+green='\e[32m'
+yellow='\e[33m'
+NC='\e[0m'
 
 if git diff --name-only --cached | grep '\.rb$'
 then
-  echo "Running rubocop for added ruby files..."
+  echo -e "${yellow}[Ruby Style][Info]: Running rubocop for added ruby files${NC}"
   git diff --name-only --cached | grep '\.rb$' | grep -v schema.rb | xargs docker-compose run app bundle exec rubocop
+
+  if [ $? -ne 0 ]; then
+    echo -e "${red}[Ruby Style][Error]: Fix the issues and commit again${NC}"
+    exit 1
+  fi
+else
+	echo -e "${green}[Ruby Style][Info]: No files to check${NC}"
 fi
