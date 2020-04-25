@@ -7,16 +7,18 @@
 
 <hr/>
 
-<div class="alert alert-info">
-  <p>
-    <strong>¡Atención!</strong>
-    Esta tarea se resuelve por equipos. La estás resolviendo junto a
-    <strong><%= current_user.current_membership.team.members.map(&:short_name).join(", ") %></strong>
-    para el equipo <strong><%= current_user.current_membership.team.name %></strong>.
-  </p>
-  <p>La última edición la realizó <strong><%= @solution.author.short_name %></strong>
-    (<%= @solution.updated_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M") %>)</p>
-</div>
+<% if @challenge.team_challenge && current_user.current_membership.team %>
+  <div class="alert alert-info">
+    <p>
+      <strong>¡Atención!</strong>
+      Esta tarea se resuelve por equipos. La estás resolviendo junto a
+      <strong><%= current_user.current_membership.team.members.map(&:short_name).join(", ") %></strong>
+      para el equipo <strong><%= current_user.current_membership.team.name %></strong>.
+    </p>
+    <p>La última edición la realizó <strong><%= @solution.author.short_name %></strong>
+      (<%= @solution.updated_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M") %>)</p>
+  </div>
+<% end %>
 
 <%= simple_form_for @solution, url: peer_review_challenge_solution_path(peer_review_id: @challenge.id, id: @solution.id) do |f| %>
 
