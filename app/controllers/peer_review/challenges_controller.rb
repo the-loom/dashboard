@@ -97,7 +97,8 @@ module PeerReview
       def challenge_params
         params[:peer_review_challenge].permit(:title, :instructions, :reviewer_instructions,
                                               :difficulty, :challenge_mode, :due_date,
-                                              :allows_attachment, :expected_reviews, :team_challenge)
+                                              :allows_attachment, :expected_reviews, :team_challenge,
+                                              :solution_type, :language)
       end
   end
 end

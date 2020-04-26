@@ -3,7 +3,9 @@ class PeerReview::Challenge < ApplicationRecord
   include Publishable
 
   validates_presence_of :title, :difficulty, :instructions,
-                        :reviewer_instructions
+                        :reviewer_instructions, :solution_type
+  validates_presence_of :language, if: :source_code?
+
   validates :difficulty, inclusion: { in: 1..5, message: "must be between 1 and 5" }
   validates_numericality_of :expected_reviews, greater_than_or_equal_to: 0, only_integer: true
 
@@ -22,6 +24,11 @@ class PeerReview::Challenge < ApplicationRecord
       student_and_teacher_reviews: 0,
       student_reviews_only: 1,
       teacher_reviews_only: 2
+  }
+
+  enum solution_type: {
+      free_text: 0,
+      source_code: 1
   }
 
   scope :enabled, -> { where(enabled: true) }

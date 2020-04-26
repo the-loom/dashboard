@@ -65,9 +65,7 @@
 
   <h2>Mi solución (<%= @solution.status %>)</h2>
 
-  <div class="well">
-    <%= raw @solution.wording %>
-  </div>
+  <%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: @solution.wording, language: @challenge.language } %>
 
   <% if @challenge.allows_attachment? %>
     <div>
@@ -119,7 +117,7 @@
         <% @solution.reviews.where(status: :final).each_with_index do |review, index| %>
           <div class="tab-pane fade <%= 'active in' if index == 0 %>" role="tabpanel" id="<%= "review_#{index}" %>" aria-labelledby="home-tab">
             <% if review.reviewer.teacher? %>
-              <h4>Revisión realizada por <%= review.reviewer.full_name %></h4>
+              <h3>Revisión realizada por <%= review.reviewer.full_name %></h3>
             <% end %>
             <div class="well">
               <%= raw review.wording %>
@@ -156,11 +154,8 @@
       <div class="tab-content" id="myTabContent">
         <% @challenge.reviews.where(reviewer: current_user).each_with_index do |review, index| %>
           <div class="tab-pane fade <%= 'active in' if index == 0 %>" role="tabpanel" id="<%= "rreview_#{index}" %>" aria-labelledby="home-tab">
-            <h4>Solución revisada</h4>
-            <div class="well">
-              <%= raw review.solution.wording %>
-            </div>
-
+            <h3>Solución revisada</h3>
+            <%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: review.solution.wording, language: @challenge.language } %>
             <% if @challenge.allows_attachment? %>
               <div>
                 <% document = review.solution.solution_attachment %>
@@ -197,4 +192,9 @@
           //$('a[disabled="disabled"]').removeAttr('href');
       });
   </script>
+<% end %>
+
+<% content_for :head do %>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.0/trix.css" rel="stylesheet">
+  <style><%= ::Rouge::Themes::Base16.mode(:dark).render(scope: '.highlight' ) %></style>
 <% end %>

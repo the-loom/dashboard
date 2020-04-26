@@ -14,6 +14,10 @@
   <%= f.input :challenge_mode, collection: PeerReview::Challenge.challenge_modes.map { |key, _| [key.humanize, key]} %>
 
   <%= f.input :due_date, label: 'Vencimiento', as: :date, html5: true %>
+    
+  <%= f.input :solution_type, label: 'Solución', collection: PeerReview::Challenge.solution_types.map { |key, _| [key.humanize, key]}, include_blank: false %>
+
+  <%= f.input :language, label: 'Lenguaje', collection: Rouge::Lexer.all.map(&:tag).sort, include_blank: true %>
 
   <%= f.input :expected_reviews, label: 'Revisiones esperadas', input_html: { min: 0 } %>
 

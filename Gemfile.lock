@@ -209,6 +209,7 @@ GEM
       railties (>= 5.0)
     rexml (3.2.4)
     rollbar (2.24.0)
+    rouge (3.18.0)
     rspec-core (3.9.1)
       rspec-support (~> 3.9.1)
     rspec-expectations (3.9.1)
@@ -327,6 +328,7 @@ DEPENDENCIES
   request_store
   responders
   rollbar
+  rouge
   rspec-rails (~> 4.0)
   rubocop-i18n
   rubocop-performance
