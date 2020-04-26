@@ -56,24 +56,35 @@
             <%= yes_no challenge.allows_attachment? %>
           </td>
           <td>
-            <% if policy(PeerReview::Challenge).manage? %>
-              <% if challenge.published? %>
-                <%= button_to unpublish_peer_review_challenge_path(challenge), method: :post, class: 'btn btn-default btn-sm' do %>
-                  Despublicar
-                <% end %>
-              <% else %>
-                <%= button_to publish_peer_review_challenge_path(challenge), method: :post, class: 'btn btn-default btn-sm' do %>
-                  Publicar
-                <% end %>
+            <div class="btn-group display">
+              <% if policy(PeerReview::Challenge).manage? %>
+                <%= link_to "Panorama", overview_peer_review_challenge_path(challenge), class: 'btn btn-primary btn-sm' %>  
+                <%= link_to "Editar", edit_peer_review_challenge_path(challenge), class: 'btn btn-default btn-sm' %>
+                <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <% if challenge.published? %>
+                    <li>
+                      <%= link_to unpublish_peer_review_challenge_path(challenge), method: :post  do %>
+                        Despublicar
+                      <% end %>
+                    </li>
+                  <% else %>
+                    <li>
+                      <%= link_to publish_peer_review_challenge_path(challenge), method: :post do %>
+                        Publicar
+                      <% end %>
+                    </li>
+                  <% end %>
+                  <li><%= link_to challenge.enabled? ? "Finalizar" : "Reabrir", toggle_peer_review_challenge_path(challenge)%></li>
+                  <li><%= link_to "Duplicar", duplicate_peer_review_challenge_path(challenge) %></li>
+                  <% if policy(PeerReview::Challenge).purge? %>
+                    <li><%= link_to "Purgar", purge_peer_review_challenge_path(challenge), style:"Color: red;" %></li>
+                  <% end %>
+                </ul>
               <% end %>
-              <%= link_to challenge.enabled? ? "Finalizar" : "Reabrir", toggle_peer_review_challenge_path(challenge), class: 'btn btn-default btn-sm' %>
-              <%= link_to "Duplicar", duplicate_peer_review_challenge_path(challenge), class: 'btn btn-default btn-sm' %>
-              <%= link_to "Editar", edit_peer_review_challenge_path(challenge), class: 'btn btn-default btn-sm' %>
-              <%= link_to "Panorama", overview_peer_review_challenge_path(challenge), class: 'btn btn-default btn-sm' %>
-            <% end %>
-            <% if policy(PeerReview::Challenge).purge? %>
-              <%= link_to "Purgar", purge_peer_review_challenge_path(challenge), class: 'btn btn-danger btn-sm' %>
-            <% end %>
+            </div>    
           </td>
         </tr>
       <% end %>
@@ -89,6 +100,10 @@
     form.button_to {
       display: inline-block;
       margin: 0 0.1em;
+    }
+
+    div.display {
+      display: flex;
     }
   </style>
 
