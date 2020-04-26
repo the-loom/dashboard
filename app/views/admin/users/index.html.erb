@@ -8,7 +8,7 @@
     <tr>
       <th class="no-sort">Foto</th>
       <th>Nombre</th>
-      <th>Membresías</th>
+      <th>Membresías activas</th>
       <th>Correo electrónico</th>
       <th class="no-sort">Acciones</th>
     </tr>
@@ -17,7 +17,7 @@
     <% @users.each do |user| %>
       <tr>
         <td>
-          <%= image_tag entity_avatar(user), {class: "avatar#{ ' disabled' unless user.enabled? }", alt: user.full_name, "data-id": user.id } %>
+          <%= image_tag entity_avatar(user), {class: "avatar", alt: user.full_name, "data-id": user.id } %>
         </td>
         <td>
           <%= link_to user.full_name, user_details_url(user.nickname) %>
@@ -56,8 +56,8 @@
   <script type="application/javascript">
       $(function () {
           $('.members').DataTable({
-              order: [[2, "asc"]],
-              paging: false,
+              order: [[1, "asc"]],
+              paging: true,
               language: {
                   url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
               },
