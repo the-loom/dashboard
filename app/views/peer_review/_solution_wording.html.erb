@@ -1,12 +1,7 @@
-  <% if source_code %>
-    <div class="highlight">
-      <div class="well">
-        <%= raw rouge(wording, language) %>
-      </div>
-    </div>
-  <% else %>
-    <div class="well">
-      <%= raw wording %>
-    </div>
-  <% end %>
-  
+<% if source_code %>
+  <%= raw rouge(wording, language) %>
+<% else %>
+  <div class="well">
+    <%= raw wording %>
+  </div>
+<% end %>
