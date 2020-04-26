@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_18_153910) do
+ActiveRecord::Schema.define(version: 2020_04_25_225245) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -247,6 +247,7 @@ ActiveRecord::Schema.define(version: 2020_04_18_153910) do
     t.integer "expected_reviews", default: 1
     t.string "language"
     t.integer "solution_type", default: 0
+    t.boolean "team_challenge", default: false
   end
 
   create_table "peer_review_reviews", force: :cascade do |t|
@@ -321,6 +322,8 @@ ActiveRecord::Schema.define(version: 2020_04_18_153910) do
     t.string "uuid"
     t.string "last_name"
     t.boolean "admin", default: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_users_on_discarded_at"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
