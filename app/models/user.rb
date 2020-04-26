@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  include Discard::Model
+
   validates_uniqueness_of :uuid
 
   has_one_attached :avatar
@@ -22,6 +24,7 @@ class User < ApplicationRecord
   has_many :repos, foreign_key: :author_id, class_name: "AutomaticCorrection::Repo"
 
   has_many :peer_review_solutions, foreign_key: :author_id, class_name: "PeerReview::Solution"
+  has_many :peer_review_reviews, foreign_key: :reviewer_id, class_name: "PeerReview::Review"
 
   validates :avatar, size: { less_than: 500.kilobyte }, content_type: [:png, :jpg, :jpeg]
 
