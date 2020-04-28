@@ -3,9 +3,19 @@ class PeerReview::Challenge < ApplicationRecord
   include Publishable
 
   validates_presence_of :title, :difficulty, :instructions,
-                        :reviewer_instructions
+                        :reviewer_instructions, :solution_type
+  validates_presence_of :language, if: :source_code?
+
   validates :difficulty, inclusion: { in: 1..5, message: "must be between 1 and 5" }
   validates_numericality_of :expected_reviews, greater_than_or_equal_to: 0, only_integer: true
+
+  validate :team_challenge_must_be_teacher_only
+
+  def team_challenge_must_be_teacher_only
+    if team_challenge && challenge_mode.to_sym != :teacher_reviews_only
+      errors.add(:team_challenge, "sólo puede ser revisado por docentes")
+    end
+  end
 
   has_many :solutions, foreign_key: :peer_review_challenge_id
   has_many :reviews, through: :solutions
@@ -14,6 +24,11 @@ class PeerReview::Challenge < ApplicationRecord
       student_and_teacher_reviews: 0,
       student_reviews_only: 1,
       teacher_reviews_only: 2
+  }
+
+  enum solution_type: {
+      free_text: 0,
+      source_code: 1
   }
 
   scope :enabled, -> { where(enabled: true) }
@@ -36,11 +51,16 @@ class PeerReview::Challenge < ApplicationRecord
     solution && solution.final?
   end
 
+  def already_solved_by_team?(team)
+    return false unless team
+    team.members.inject(false) { |accum, user| accum || already_solved_by?(user) }
+  end
+
   def progress_by?(user)
     progress = 0.0
 
     # solved?
-    progress += 1 if already_solved_by?(user)
+    progress += 1 if already_solved_by?(user) || already_solved_by_team?(user.current_membership.team)
 
     return [progress / 1, 1.0].min if teacher_reviews_only?
     # reviewed?
@@ -61,7 +81,8 @@ class PeerReview::Challenge < ApplicationRecord
   end
 
   def solvable_by?(user)
-    !already_solved_by?(user) || user.teacher?
+    solved = team_challenge ? already_solved_by_team?(user.current_membership.team) : already_solved_by?(user)
+    !solved || user.teacher?
   end
 
   def reviewable_by?(user)

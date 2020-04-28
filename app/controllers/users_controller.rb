@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
   def index
     authorize User
-    @students = User.includes(:memberships).includes(avatar_attachment: :blob).where(memberships: { course: Course.current, role: :student })
+    @students = User.kept.includes(:memberships).includes(avatar_attachment: :blob).where(memberships: { course: Course.current, role: :student })
 
     # Just for massive actions
     @lectures = Lecture.all.order(date: :asc)

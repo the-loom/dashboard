@@ -1,7 +1,7 @@
 module Admin
   class UsersController < ApplicationController
     def index
-      @users = User.all
+      @users = User.all.includes([:memberships, avatar_attachment: :blob, memberships: :course])
     end
 
     def edit

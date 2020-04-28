@@ -6,8 +6,7 @@
 <%= raw @challenge.instructions %>
 
 <h2>Solución a revisar</h2>
-
-<%= raw @review.solution.wording %>
+<%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: @review.solution.wording, language: @challenge.language } %>
 
 <% if @challenge.allows_attachment? %>
   <div>
@@ -24,7 +23,9 @@
 
 <h2>Instrucciones para el revisor</h2>
 
-<%= raw @challenge.reviewer_instructions %>
+<div class="well">
+  <%= raw @challenge.reviewer_instructions %>
+</div>
 
 <hr/>
 
@@ -130,6 +131,7 @@
 <% end %>
 
 <% content_for :head do %>
+  <style><%= ::Rouge::Themes::Base16.mode(:dark).render(scope: '.highlight' ) %></style>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.0/trix.css" rel="stylesheet">
 
   <style>

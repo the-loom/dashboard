@@ -20,7 +20,7 @@ module PeerReview
     def new
       @challenge = PeerReview::Challenge.find(params[:challenge_id])
       authorize @challenge, :solve?
-      @solution = PeerReview::Solution.find_or_create_by(challenge: @challenge, author: current_user)
+      @solution = ::SolutionFinder.new(@challenge, current_user).find_solution
       authorize @solution, :solve?
     end
 
@@ -35,9 +35,10 @@ module PeerReview
 
     def update
       @challenge = PeerReview::Challenge.find(params[:challenge_id])
-      @solution = PeerReview::Solution.find_by(challenge: @challenge, author: current_user)
+      @solution = ::SolutionFinder.new(@challenge, current_user).find_solution
       authorize @solution, :solve?
       @solution.update_attributes(solution_params)
+      @solution.update_attributes(author: current_user)
 
       @solution.publish! if publishing?
 

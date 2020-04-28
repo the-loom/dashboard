@@ -1,4 +1,9 @@
-<% title = "Solución de #{@solution.author.full_name}" %>
+<% if @challenge.team_challenge %>
+  <% title = "Solución del grupo #{@solution.author.current_membership.team.name}" %>
+<% else %>
+  <% title = "Solución de #{@solution.author.full_name}" %>
+<% end %>
+
 
 <% nav_add 'Desafíos', peer_review_challenges_path %>
 <% nav_add @challenge.title, peer_review_challenge_path(@challenge) %>
@@ -13,9 +18,7 @@
 
 <h2><%= title %> (<%= @solution.status %>)</h2>
 
-<div class="well">
-  <%= raw @solution.wording %>
-</div>
+<%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: @solution.wording, language: @challenge.language } %>
 
 <% if @challenge.allows_attachment? %>
   <div>
@@ -116,11 +119,8 @@
   <div class="tab-content" id="myTabContent">
     <% @reviews.sorted.each_with_index do |review, index| %>
       <div class="tab-pane fade <%= 'active in' if index == 0 %>" role="tabpanel" id="<%= "rreview_#{index}" %>" aria-labelledby="home-tab">
-        <h4>Solución de <%= review.solution.author.full_name %></h4>
-        <div class="well">
-          <%= raw review.solution.wording %>
-        </div>
-
+        <h3>Solución de <%= review.solution.author.full_name %></h3>
+        <%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: review.solution.wording, language: @challenge.language } %>
         <% if @challenge.allows_attachment? %>
           <div>
             <% document = review.solution.solution_attachment %>
@@ -134,7 +134,7 @@
           </div>
         <% end %>
 
-        <h4>Revisión de <%= review.reviewer.full_name %></h4>
+        <h3>Revisión de <%= review.reviewer.full_name %></h3>
         <div class="well">
           <%= raw review.wording %>
         </div>
@@ -149,6 +149,7 @@
 
 <% content_for :head do %>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.0/trix.css" rel="stylesheet">
+  <style><%= ::Rouge::Themes::Base16.mode(:dark).render(scope: '.highlight' ) %></style>
 <% end %>
 
 <% content_for :javascript do %>
