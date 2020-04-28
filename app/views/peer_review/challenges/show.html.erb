@@ -120,7 +120,7 @@
               <h3>Revisión realizada por <%= review.reviewer.full_name %></h3>
             <% end %>
             <div class="well">
-              <%= raw review.wording %>
+              <%= render partial: '/peer_review/review_wording', locals: { quick_review: @challenge.allows_quick_reviews?, wording: review.wording } %>
             </div>
 
             <%= render partial: 'assessment', locals: { review: review } %>
@@ -171,7 +171,7 @@
 
             <h4>Mi revisión</h4>
             <div class="well">
-              <%= raw review.wording %>
+              <%= render partial: '/peer_review/review_wording', locals: { quick_review: @challenge.allows_quick_reviews?, wording: review.wording } %>
             </div>
 
             <%= render partial: 'assessment', locals: { review: review } %>

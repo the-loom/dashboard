@@ -20,7 +20,7 @@ class QuickReviewGenerator
   private
     def self.to_list(review)
       if review.wording
-        (ActionController::Base.helpers.strip_tags review.wording.gsub(/\<\/li\>/, "\n").gsub(/\<\/p\>/, "\n").gsub("\n\n", "\n")).gsub("\n\n", "\n").gsub("\n$", "").gsub("&gt;", ">").gsub("&lt;", "<").split("\n")
+        JSON.parse(review.wording)
       else
         []
       end

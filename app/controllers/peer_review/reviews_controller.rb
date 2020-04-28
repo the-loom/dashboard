@@ -53,7 +53,7 @@ module PeerReview
 
     private
       def wording_params
-        "<ul><li>" + params[:peer_review_review_items].join("</li><li>") + "</ul>"
+        params[:peer_review_review_items].to_s
       end
 
       def assessment_params
