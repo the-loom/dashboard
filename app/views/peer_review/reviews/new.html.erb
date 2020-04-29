@@ -56,7 +56,7 @@
           <div class="well" v-if="selectedItems.length > 0">
             <ul>
               <template v-for="item in selectedItems">
-                <li>{{ item.text }}</li>
+                <li><span v-html="item.text"></span></li>
                 <input type="hidden" name="peer_review_review_items[]" v-bind:value="item.text"/>
               </template>
             </ul>
@@ -77,19 +77,21 @@
         <div style="max-height: 50vh; overflow: auto; margin-bottom: 1em">
           <div class="checkbox" v-for="(item, index) in items">
             <label v-bind:class="{ deletable: item.deletable && !item.checked }">
-              <input type="checkbox" :name="'quick_review_items' + index" v-model="item.checked"> {{ item.text }}
+              <input type="checkbox" :name="'quick_review_items' + index" v-model="item.checked"> <span v-html="item.text"></span>
             </label>
           </div>
         </div>
 
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Nueva corrección a utilizar" v-model="newField" v-on:keyup="btnStatus">
-          <span class="input-group-btn">
-            <button type="button" class="btn btn-primary" v-on:click="addItem" :disabled="btnDisable">
-              <i class="fa fa-plus"></i>
-            </button>
-          </span>
+
+        <div>
+          <VueTrix v-model="newField" placeholder="Escribe tu ítem de corrección aquí..."/>
         </div>
+
+
+        <br/>
+        <button type="button" class="btn btn-primary btn-block" v-on:click="addItem">
+          <i class="fa fa-plus"></i> Agregar ítem
+        </button>
 
       </div>
     </div>
@@ -143,51 +145,48 @@
 <% end %>
 
 <% content_for :javascript do %>
-  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.0/trix.js" type="application/javascript"></script>
   <script type="text/javascript" charset="utf-8">
 
-      var app = new Vue({
-          el: '#quick-reviews',
-          data: {
-              items: <%== @quick_reviews.to_json %>,
-              newField: "",
-              btnDisable: true
-          },
-          computed: {
-              selectedItems: function () {
-                  return this.items.filter(function (item) {
-                      return item.checked;
-                  })
-              }
-          },
-          methods: {
-              addItem: function () {
-                  this.items.push({ text: this.newField, checked: true, deletable: true });
-                  this.newField = "";
-                  this.btnStatus();
-              },
-              btnStatus(e) {
-                  this.btnDisable = this.newField.length == 0;
-                  if (e.keyCode === 13) {
-                      this.addItem();
-                  }
-              }
-          }
-      })
-  </script>
-  <script type="text/javascript" charset="utf-8">
-      var content = $("textarea").val();
-      var submitting = false;
+    data = null;
+    $(function(){
+        data = new Vue({
+            el: '#quick-reviews',
+            data() {
+                return { items: <%== @quick_reviews.to_json %>,
+                    newField: ""}
+            },
+            computed: {
+                selectedItems: function () {
+                    return this.items.filter(function (item) {
+                        return item.checked;
+                    })
+                }
+            },
+            methods: {
+                addItem: function () {
+                    this.items.push({ text: this.newField, checked: true, deletable: true });
+                    this.newField = "";
+                },
+                updateEditorContent(value) {
+                    console.log(value);
+                }
+            },
+            components: {
+                'vuetrix': VueTrix
+            },
+            watch: {
+                newField (value) {
+                    value = value === undefined ? '' : value;
+                    if (this.$refs.trix.innerHTML !== value) {
+                        this.$refs.trix.editor.loadHTML(value)
+                    }
+                }
+            }
+        });
+        data.$mount();
+    });
 
-      $(window).on("beforeunload", function () {
-          if (!submitting && content !== $("textarea").val()) {
-              return "Se perderán los cambios realizados. ¿Desea salir?";
-          }
-      });
-
-      $("form").on("submit", function () {
-          submitting = true;
-      })
   </script>
 <% end %>
