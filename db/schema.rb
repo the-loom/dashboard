@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_25_225245) do
+ActiveRecord::Schema.define(version: 2020_04_30_125021) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -323,6 +323,7 @@ ActiveRecord::Schema.define(version: 2020_04_25_225245) do
     t.string "last_name"
     t.boolean "admin", default: false
     t.datetime "discarded_at"
+    t.integer "last_visited_course_id", default: 0
     t.index ["discarded_at"], name: "index_users_on_discarded_at"
   end
 

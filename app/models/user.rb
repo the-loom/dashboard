@@ -10,6 +10,7 @@ class User < ApplicationRecord
 
   has_many :courses, through: :memberships
   has_many :all_courses, through: :all_memberships, source: :course
+  belongs_to :last_visited_course, optional: true
 
   has_many :identities
 
