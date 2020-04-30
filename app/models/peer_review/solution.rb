@@ -9,6 +9,8 @@ class PeerReview::Solution < ApplicationRecord
 
   validates :wording, presence: true, if: :final?
 
+  scope :picked, -> { where(picked: true) }
+
   enum status: {
       draft: 0,
       final: 1

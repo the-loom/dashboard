@@ -52,6 +52,32 @@ module PeerReview
       end
     end
 
+    def pick
+      @solution = PeerReview::Solution.find(params[:id])
+      authorize @solution, :manage?
+
+      @solution.picked = true
+      if @solution.save
+        flash[:info] = "Se ha elegido esta solución como ejemplo para los estudiantes"
+      else
+        flash[:alert] = @solution.errors.full_messages
+      end
+      redirect_to peer_review_challenge_solution_path(@solution.challenge, @solution)
+    end
+
+    def unpick
+      @solution = PeerReview::Solution.find(params[:id])
+      authorize @solution, :manage?
+
+      @solution.picked = false
+      if @solution.save
+        flash[:info] = "Se ha dejado de elegir esta solución como ejemplo"
+      else
+        flash[:alert] = @solution.errors.full_messages
+      end
+      redirect_to peer_review_challenge_solution_path(@solution.challenge, @solution)
+    end
+
     def unpublish
       @challenge = PeerReview::Challenge.find(params[:challenge_id])
 

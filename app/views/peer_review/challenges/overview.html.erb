@@ -60,6 +60,10 @@
           •
           <%= link_to (my_review.present? ? 'Continuar revisión' : 'Revisar'), review_peer_review_challenge_solution_path(@challenge, stats.solution) %>
         <% end %>
+        <% if stats.solution.picked? %>
+          <br>
+          <div class="label label-success">Solución ejemplar</div>
+        <% end %>
       </td>
       <td>
         <%= stats.solution.final? ? 'Final' : 'Borrador' %><br/>

@@ -133,7 +133,6 @@
 
     <h2>Revisiones Realizadas</h2>
 
-
     <% if @challenge.reviews.where(reviewer: current_user).empty? %>
 
       <div class="alert alert-info">
@@ -184,14 +183,45 @@
 
   <% end %>
 
-<% end %>
+  <% if @challenge.has_picked_solutions? %>
 
-<% content_for :javascript do %>
-  <script type="application/javascript">
-      $(function () {
-          //$('a[disabled="disabled"]').removeAttr('href');
-      });
-  </script>
+    <h2>Soluciones ejemplares escogidas</h2>
+
+    <ul class="nav nav-tabs" id="myTabs2" role="tablist">
+      <% @challenge.picked_solutions.each_with_index do |_, index| %>
+        <li role="presentation" class="<%= 'active' if index == 0 %>">
+          <a href="#<%= "ssolution_#{index}" %>" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
+            <%= "Solución ##{index + 1}" %>
+          </a>
+        </li>
+      <% end %>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <% @challenge.picked_solutions.each_with_index do |solution, index| %>
+        <div class="tab-pane fade <%= 'active in' if index == 0 %>" role="tabpanel" id="<%= "ssolution_#{index}" %>" aria-labelledby="home-tab">
+          <br>
+
+          <% if @challenge.allows_attachment? %>
+            <div>
+              <% document = solution.solution_attachment %>
+              <% if document.attached? %>
+                <p>
+                  Adjunto:
+                  <%= link_to rails_blob_path(document, disposition: 'preview') do %>
+                    <i class="fa fa-paperclip"></i>
+                    <%= document.filename %>
+                  <% end %>
+                </p>
+              <% end %>
+            </div>
+          <% end %>
+
+          <%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: solution.wording, language: @challenge.language} %>
+        </div>
+      <% end %>
+    </div>
+
+  <% end %>
 <% end %>
 
 <% content_for :head do %>

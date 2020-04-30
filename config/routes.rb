@@ -133,10 +133,14 @@ Rails.application.routes.draw do
         get :purge
       end
       resources :solutions, only: [:new, :update, :show] do
-        get :review, on: :member
-        post :save_review, on: :member
-        post :remove_attachment, on: :member
-        post :unpublish, on: :member
+        member do
+          get :review
+          post :save_review
+          post :remove_attachment
+          post :unpublish
+          post :pick
+          post :unpick
+        end
       end
       resources :reviews, only: [:new, :update] do
         patch :assess, on: :member
