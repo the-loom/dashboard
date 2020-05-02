@@ -43,7 +43,7 @@
   </tr>
   </thead>
   <tbody>
-  <% @challenge.solvers.each do |solver| %>
+  <% @solvers.each do |solver| %>
     <% stats = PeerReviewChallengeSolverStats.new(@challenge, solver) %>
     <tr>
       <td>
@@ -54,16 +54,22 @@
         <% end %>
 
         <br/>
-        <%= link_to "Ver solución", peer_review_challenge_solution_path(@challenge, stats.solution) %>
-        <% my_review = stats.solution.review_by(current_user) %>
-        <% unless my_review.present? && my_review.status.to_sym == :final || stats.solution.draft? %>
-          •
-          <%= link_to (my_review.present? ? 'Continuar revisión' : 'Revisar'), review_peer_review_challenge_solution_path(@challenge, stats.solution) %>
+        <% if stats.solution %>
+          <%= link_to "Ver solución", peer_review_challenge_solution_path(@challenge, stats.solution) %>
+          <% my_review = stats.solution.review_by(current_user) %>
+          <% unless my_review.present? && my_review.status.to_sym == :final || stats.solution.draft? %>
+            •
+            <%= link_to (my_review.present? ? 'Continuar revisión' : 'Revisar'), review_peer_review_challenge_solution_path(@challenge, stats.solution) %>
+          <% end %>
         <% end %>
       </td>
       <td>
-        <%= stats.solution.final? ? 'Final' : 'Borrador' %><br/>
-        <%= stats.solution.size %>
+        <% if stats.solution %>
+          <%= stats.solution.final? ? 'Final' : 'Borrador' %><br/>
+          <%= stats.solution.size %>
+        <% else %>
+          No resuelto
+        <% end %>
       </td>
       <td>
         <% progress = @challenge.progress_by? stats.solver %>
@@ -73,10 +79,15 @@
         <%= ratio_to_percentage progress %>  
       </td>
       <td>
-        <%= stats.solution.updated_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M") %>
+        <%= stats.solution.updated_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M") if stats.solution %>
       </td>
-      <td><%= stats.reviews_received %> (<%= stats.reviews_received(:draft) %>)</td>
-      <td><%= stats.reviews_made %> (<%= stats.reviews_made(:draft) %>)</td>
+      <% if stats.solution %>
+        <td><%= stats.reviews_received %> (<%= stats.reviews_received(:draft) %>)</td>
+        <td><%= stats.reviews_made %> (<%= stats.reviews_made(:draft) %>)</td>
+      <% else %>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      <% end %>
     </tr>
   <% end %>
   </tbody>
