@@ -1,13 +1,22 @@
 class SessionsController < ApplicationController
   def create
     auth = request.env["omniauth.auth"]
+
     identity = Identity.by_omniauth(auth)
-    session[:user_id] = identity.user.id
-    if identity.user.memberships.count >= 1
-      # TODO(delucas): log into latest used course
-      session[:course_id] = identity.user.courses.first.id
+    user = identity.user
+    memberships = user.memberships
+
+    session[:user_id] = user.id
+    if memberships.count >= 1
+
+      if user.last_visited_course_id > 0
+        session[:course_id] = user.last_visited_course_id
+      else
+        session[:course_id] = memberships.first.course_id
+      end
+
       redirect_to profile_url, notice: "Signed in!"
-    elsif identity.user.memberships.count == 0
+    elsif memberships.count == 0
       redirect_to courses_url
     end
   end
