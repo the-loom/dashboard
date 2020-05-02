@@ -16,7 +16,12 @@
 
 <hr/>
 
-<h2><%= title %> (<%= @solution.status %>)</h2>
+<h2>
+  <% if @solution.picked? %>
+  <div class="label label-success">Ejemplar</div>
+  <% end %>
+  <%= title %> (<%= @solution.status %>)
+</h2>
 
 <%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: @solution.wording, language: @challenge.language } %>
 
@@ -39,6 +44,12 @@
     <%= link_to "Continuar mi revisión", review_peer_review_challenge_solution_path(@challenge, @solution), class: 'btn btn-primary' %>
   <% elsif !my_review.present? %>
     <%= link_to "Agregar mi revisión", review_peer_review_challenge_solution_path(@challenge, @solution), class: 'btn btn-primary' %>
+  <% end %>
+
+  <% if @solution.picked? %>
+    <%= link_to "Dejar de elegir como ejemplo", unpick_peer_review_challenge_solution_path(@challenge, @solution), class: 'btn btn-warning', method: :post %>
+  <% else %>
+    <%= link_to "Elegir como ejemplo", pick_peer_review_challenge_solution_path(@challenge, @solution), class: 'btn btn-success', method: :post %>
   <% end %>
 <% end %>
 

@@ -20,6 +20,8 @@ class PeerReview::Challenge < ApplicationRecord
   has_many :solutions, foreign_key: :peer_review_challenge_id
   has_many :reviews, through: :solutions
 
+  has_many :picked_solutions, -> { picked }, foreign_key: :peer_review_challenge_id, class_name: "PeerReview::Solution"
+
   enum challenge_mode: {
       student_and_teacher_reviews: 0,
       student_reviews_only: 1,
@@ -32,6 +34,10 @@ class PeerReview::Challenge < ApplicationRecord
   }
 
   scope :enabled, -> { where(enabled: true) }
+
+  def has_picked_solutions?
+    !enabled? && picked_solutions.size > 0
+  end
 
   def due?
     return false unless due_date
