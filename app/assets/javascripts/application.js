@@ -17,7 +17,6 @@
 //= require c3/c3
 //= require moment/moment
 //= require messenger/build/js/messenger
-//= require vue/dist/vue
 //= require bootstrap3-typeahead/bootstrap3-typeahead
 //= require bootstrap-tour/build/js/bootstrap-tour
 //= require_tree .

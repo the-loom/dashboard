@@ -1,6 +1,9 @@
 class QuickReviewGenerator
   def self.generate(challenge, current_review)
-    lines = challenge.reviews.final.map do |review|
+    notable_reviews = challenge.reviews.final
+    notable_reviews += current_review.draft? ? [current_review] : []
+
+    lines = notable_reviews.map do |review|
       to_list(review)
     end.flatten.compact.group_by(&:itself).map do |line, repetitions|
       [repetitions.size, line]
