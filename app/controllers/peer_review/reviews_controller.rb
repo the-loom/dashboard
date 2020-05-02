@@ -7,9 +7,11 @@ module PeerReview
       @review = ::ReviewableSolutionFinder.new(@challenge, current_user).find_review
 
       if @review.nil?
-        redirect_to peer_review_challenge_path(@challenge)
         flash[:info] = "No se puede revisar ninguna solución"
+        redirect_to peer_review_challenge_path(@challenge) && return
       end
+
+      @quick_reviews = QuickReviewGenerator.generate(@challenge, @review) if current_user.teacher? && @challenge.allows_quick_reviews?
     end
 
     def assess
@@ -30,7 +32,11 @@ module PeerReview
       authorize @challenge, :review?
       @review = @challenge.reviews.find(params[:id])
       @review.publish! if publishing?
-      @review.update_attributes(solution_params)
+      if @challenge.allows_quick_reviews?
+        @review.wording = wording_params
+      else
+        @review.update_attributes(solution_params)
+      end
 
       if @review.valid?
         @review.save
@@ -46,6 +52,10 @@ module PeerReview
     end
 
     private
+      def wording_params
+        params[:peer_review_review_items].to_s
+      end
+
       def assessment_params
         params[:peer_review_review].permit(:teacher_assessment_description)
       end

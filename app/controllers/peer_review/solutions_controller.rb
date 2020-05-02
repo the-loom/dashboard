@@ -11,6 +11,9 @@ module PeerReview
       @challenge = PeerReview::Challenge.find(params[:challenge_id])
       @solution = PeerReview::Solution.find(params[:id])
       @review = @solution.reviews.find_or_create_by(reviewer: current_user, status: :draft)
+
+      @quick_reviews = QuickReviewGenerator.generate(@challenge, @review) if current_user.teacher? && @challenge.allows_quick_reviews?
+
       render "peer_review/reviews/new"
     end
 

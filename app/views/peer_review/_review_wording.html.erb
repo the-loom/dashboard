@@ -1,0 +1,5 @@
+<% if quick_review %>
+  <%= raw ("<ul><li>" + JSON.parse(wording).join("</li><li>") + "</li></ul>") %>
+<% else %>
+  <%= raw wording %>
+<% end %>

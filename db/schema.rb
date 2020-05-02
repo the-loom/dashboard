@@ -245,9 +245,10 @@ ActiveRecord::Schema.define(version: 2020_04_30_131646) do
     t.date "due_date"
     t.boolean "allows_attachment", default: false
     t.integer "expected_reviews", default: 1
+    t.boolean "team_challenge", default: false
     t.string "language"
     t.integer "solution_type", default: 0
-    t.boolean "team_challenge", default: false
+    t.boolean "allows_quick_reviews", default: false
   end
 
   create_table "peer_review_reviews", force: :cascade do |t|
@@ -258,8 +259,8 @@ ActiveRecord::Schema.define(version: 2020_04_30_131646) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "teacher_assessment", default: 0
-    t.string "teacher_assessment_description"
     t.integer "assessor_id"
+    t.string "teacher_assessment_description"
   end
 
   create_table "peer_review_solutions", force: :cascade do |t|

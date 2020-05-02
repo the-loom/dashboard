@@ -96,7 +96,7 @@
         <h3>Revisión de <%= review.reviewer.full_name %> (<%= review.status %>)</h3>
 
         <div class="well">
-          <%= raw review.wording %>
+          <%= render partial: '/peer_review/review_wording', locals: { quick_review: @challenge.allows_quick_reviews?, wording: review.wording } %>
         </div>
 
         <%= render partial: 'teacher_assessment', locals: { challenge: @challenge, solution: @solution, review: review } %>
@@ -147,7 +147,7 @@
 
         <h3>Revisión de <%= review.reviewer.full_name %></h3>
         <div class="well">
-          <%= raw review.wording %>
+          <%= render partial: '/peer_review/review_wording', locals: { quick_review: @challenge.allows_quick_reviews?, wording: review.wording } %>
         </div>
 
         <%= render partial: 'teacher_assessment', locals: { challenge: @challenge, solution: @solution, review: review } %>
