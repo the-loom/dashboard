@@ -18,6 +18,7 @@ module PeerReview
     def overview
       authorize PeerReview::Challenge, :manage?
       @challenge = PeerReview::Challenge.find(params[:id])
+      @solvers = Course.current.users
       @overview = PeerReview::OverviewPresenter.new(@challenge)
     end
 
@@ -70,7 +71,13 @@ module PeerReview
     end
 
     def show
-      @challenge = PeerReview::Challenge.find(params[:id])
+      @challenge = PeerReview::Challenge.find_by(id: params[:id])
+
+      unless @challenge
+        flash[:alert] = "No pudimos encontrar el desafío que buscás... ¿es de este curso?"
+        redirect_to(peer_review_challenges_path) && return
+      end
+
       authorize @challenge, :show?
       @solution = ::SolutionFinder.new(@challenge, current_user).find_solution
     end

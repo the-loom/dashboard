@@ -324,6 +324,7 @@ ActiveRecord::Schema.define(version: 2020_04_30_131646) do
     t.string "last_name"
     t.boolean "admin", default: false
     t.datetime "discarded_at"
+    t.integer "last_visited_course_id", default: 0
     t.index ["discarded_at"], name: "index_users_on_discarded_at"
   end
 

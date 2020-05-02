@@ -42,6 +42,10 @@ class Course < ApplicationRecord
     RequestStore.store[:current_course] = course
   end
 
+  def students
+    users.joins(:memberships).where(memberships: { role: :student, course: Course.current }).distinct
+  end
+
   def on?(requested_feature)
     features & Course.all_features[requested_feature] == Course.all_features[requested_feature]
   end

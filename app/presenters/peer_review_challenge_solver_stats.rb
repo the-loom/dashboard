@@ -15,6 +15,7 @@ class PeerReviewChallengeSolverStats
   end
 
   def reviews_received(status = :final)
+    return 0 unless @sol
     solution.reviews.where(status: status).count
   end
 end
