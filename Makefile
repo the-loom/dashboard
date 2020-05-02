@@ -39,6 +39,7 @@ just_db:
 	docker-compose up -d db
 
 build:
+	$(MAKE) stop
 	$(MAKE) init
 	$(MAKE) mine
 	docker-compose build
