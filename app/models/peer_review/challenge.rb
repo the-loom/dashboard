@@ -66,7 +66,7 @@ class PeerReview::Challenge < ApplicationRecord
     progress = 0.0
 
     # solved?
-    progress += 1 if already_solved_by?(user) || already_solved_by_team?(user.current_membership.team)
+    progress += 1 if already_solved_by?(user) || (team_challenge? && already_solved_by_team?(user.current_membership.team))
 
     return [progress / 1, 1.0].min if teacher_reviews_only?
     # reviewed?

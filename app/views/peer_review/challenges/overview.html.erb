@@ -61,11 +61,11 @@
             •
             <%= link_to (my_review.present? ? 'Continuar revisión' : 'Revisar'), review_peer_review_challenge_solution_path(@challenge, stats.solution) %>
           <% end %>
-        <% end %>
-        <% if stats.solution.picked? %>
-          <br>
-          <div class="label label-success">Solución ejemplar</div>
-        <% end %>
+          <% if stats.solution.picked? %>
+            <br>
+            <div class="label label-success">Solución ejemplar</div>
+          <% end %>
+      <% end %>
       </td>
       <td>
         <% if stats.solution %>
