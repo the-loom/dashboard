@@ -1,9 +1,9 @@
 namespace :stats do
   desc "Precalculates stats for Courses and Teams"
   task calculate: :environment do
-    Course.all.each do |course|
+    Course.enabled.each do |course|
       Course.current = course
-      next unless course.on?(:competences)
+      next unless course.on?(:competences) && CompetenceTag.count > 0
       puts "Precalculating for Course #{course.name}"
 
       puts "Students for Course #{course.name}"
