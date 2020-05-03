@@ -6,9 +6,10 @@ module PeerReview
 
       @review = ::ReviewableSolutionFinder.new(@challenge, current_user).find_review
 
+
       if @review.nil?
-        flash[:info] = "No se puede revisar ninguna solución"
-        redirect_to peer_review_challenge_path(@challenge) && return
+        flash[:info] = "No se puede revisar ninguna solución aún. Volvé en unos días."
+        redirect_to(peer_review_challenge_path(@challenge)) && return
       end
 
       @quick_reviews = QuickReviewGenerator.generate(@challenge, @review) if current_user.teacher? && @challenge.allows_quick_reviews?
