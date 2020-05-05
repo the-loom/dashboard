@@ -1,5 +1,5 @@
 browser:
-	google-chrome --new-window https://trello.com/b/ARo5MV67/the-loom http://localhost:3000 https://github.com/the-loom/dashboard https://rollbar.com/the-loom/all/items
+	google-chrome --new-window https://trello.com/b/ARo5MV67/the-loom http://localhost:3000 https://github.com/the-loom/dashboard https://rollbar.com/the-loom/all/items https://app.codacy.com/manual/delucas/dashboard/dashboard
 
 init:
 	git config core.hooksPath .githooks

@@ -11,6 +11,7 @@ gem "therubyracer", platforms: :ruby
 
 gem "pundit"
 gem "rollbar"
+gem "sentry-raven", "3.0.0"
 gem "request_store"
 
 group :development, :test do
