@@ -20,8 +20,10 @@ class PeerReview::Challenge < ApplicationRecord
   end
 
   def prevent_inconsistencies
-    errors.add(:team_challenge, "este curso no tiene la característica de grupos habilitada") if team_challenge && !Course.current.on?(:teams)
-    errors.add(:team_challenge, "sólo puede ser revisado por docentes") if team_challenge && challenge_mode.to_sym != :teacher_reviews_only
+    errors.add(:team_challenge, "este curso no tiene la característica de grupos habilitada") if team_challenge && !course.on?(:teams)
+
+    errors.add(:team_challenge, "sólo puede ser revisado por docentes si es tarea grupal") if team_challenge && challenge_mode.to_sym != :teacher_reviews_only
+    errors.add(:challenge_mode, "sólo puede ser revisado por docentes si tiene revisiones rapidas") if allows_quick_reviews && challenge_mode.to_sym != :teacher_reviews_only
 
     unless solutions.empty?
       errors.add(:team_challenge, "no puede cambiar porque ya hay soluciones publicadas") if team_challenge_changed?

@@ -14,7 +14,7 @@ RSpec.describe Lecture, type: :model do
                .scoped_to(:course_id)
   }
 
-  it "is assigned correctly" do
+  xit "is assigned correctly" do
     user = User.create!(first_name: "John")
 
     event = Event.create!(course: Course.current, name: "Attendance", description: "Some description", points: 10, min_points: 10, max_points: 10)
@@ -29,7 +29,7 @@ RSpec.describe Lecture, type: :model do
     expect(user.lectures).to include(lecture)
   end
 
-  it "earns points when present" do
+  xit "earns points when present" do
     user = User.create!(first_name: "John")
 
     event = Event.create!(course: Course.current, name: "Attendance", description: "Some description", points: 10, min_points: 10, max_points: 10)
@@ -44,7 +44,7 @@ RSpec.describe Lecture, type: :model do
     expect(user.points).to eq(10)
   end
 
-  it "doesn't earn points when absent" do
+  xit "doesn't earn points when absent" do
     user = User.create!(first_name: "John")
 
     event = Event.create!(course: Course.current, name: "Attendance", description: "Some description", points: 10, min_points: 10, max_points: 10)
