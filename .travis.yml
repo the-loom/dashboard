@@ -1,11 +1,14 @@
 language: ruby
 rvm:
-  - 2.6.1
+- 2.6.1
 services:
-  - docker
+- docker
 install:
-  - cp .env.example .env
-  - make build
-  - sudo chmod 777 -R /usr/src/app
+- cp .env.example .env
+- make build
+- ls -la
+- ls -la tmp
+- sudo chown -R travis:travis .
+- sudo chmod 777 -R .
 script:
-  - make tests
+- make tests
