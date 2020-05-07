@@ -79,6 +79,7 @@
                   <% end %>
                   <li><%= link_to challenge.enabled? ? "Finalizar" : "Reabrir", toggle_peer_review_challenge_path(challenge)%></li>
                   <li><%= link_to "Duplicar", duplicate_peer_review_challenge_path(challenge) %></li>
+                  <li><%= link_to "Descargar todo", bulk_download_peer_review_challenge_path(challenge) %></li>
                   <% if policy(PeerReview::Challenge).purge? %>
                     <li><%= link_to "Purgar", purge_peer_review_challenge_path(challenge), style:"Color: red;" %></li>
                   <% end %>

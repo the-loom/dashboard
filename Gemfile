@@ -37,6 +37,9 @@ gem "ffaker", "2.14.0"
 gem "simple_form"
 gem "trix-rails", require: "trix"
 
+gem "rubyzip", ">= 1.0.0"
+gem "zip-zip"
+
 group :development do
   gem "rack-mini-profiler"
   gem "web-console", ">= 3.3.0"

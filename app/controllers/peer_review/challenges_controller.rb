@@ -22,6 +22,73 @@ module PeerReview
       @overview = PeerReview::OverviewPresenter.new(@challenge)
     end
 
+    def bulk_download
+      @challenge = PeerReview::Challenge.find(params[:id])
+      temp_file = Tempfile.new(%w(export zip))
+
+      instructions_erb = ERB.new <<-ERB
+        <html><head></head><body><h1><%= @challenge.title %></h1><%= @challenge.instructions %></body></html>
+      ERB
+
+      solution_erb = ERB.new <<-ERB
+        <html><head></head><body><h1>Solución de <%= solution.author.full_name %></h1><%= solution.wording %></body></html>
+      ERB
+
+      review_erb = ERB.new <<-ERB
+        <html><head></head><body><h1>Solución de <%= solution.author.full_name %></h1><%= solution.wording %>
+        <hr/>
+        <h2>Revisión</h2><%= review.wording %></body></html>
+      ERB
+
+      begin
+        Zip::OutputStream.open(temp_file) { |zos| }
+
+        Zip::File.open(temp_file.path, Zip::File::CREATE) do |zipfile|
+          instructions_file = Tempfile.new(%w(instructions html))
+          instructions_file.write(instructions_erb.result(binding))
+
+          instructions_file.close
+          zipfile.add("consigna.html", instructions_file.path)
+
+          temp_files = []
+          @challenge.solutions.each do |solution|
+            temp_files << Tempfile.new(%w(solution html))
+
+            temp_files.last.write(solution_erb.result(binding))
+            temp_files.last.close
+
+            folder_name = "#{solution.author.last_name.downcase}-#{solution.author.first_name.downcase}-#{solution.author.uuid}"
+            zipfile.add("soluciones/#{folder_name}/solucion.html", temp_files.last.path)
+
+            solution.reviews.each_with_index do |review, index|
+              temp_files << Tempfile.new(%w(review html))
+              temp_files.last.write(review_erb.result(binding))
+              temp_files.last.close
+
+              zipfile.add("soluciones/#{folder_name}/revision-#{(index + 1).to_s.rjust(2, "0")}.html", temp_files.last.path)
+            end
+
+            document = solution.solution_attachment
+            if document.attached?
+              temp_files << Tempfile.new("attachment")
+              temp_files.last.binmode
+              temp_files.last.write(document.attachment.download)
+              temp_files.last.close
+
+              zipfile.add("soluciones/#{folder_name}/#{document.filename}", temp_files.last.path)
+            end
+          end
+        end
+
+        zip_data = File.read(temp_file.path)
+        filename = "#{@challenge.title}.zip"
+        send_data(zip_data, type: "application/zip", disposition: "attachment", filename: filename)
+      ensure
+        temp_file.close
+        temp_file.unlink
+      end
+    end
+
     def new
       authorize PeerReview::Challenge, :manage?
       @challenge = PeerReview::Challenge.new
