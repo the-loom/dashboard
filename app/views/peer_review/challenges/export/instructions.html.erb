@@ -1,0 +1,11 @@
+<% content_for(:title, "#{@challenge.title} / Consigna") %>
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item" aria-current="page"><%= @challenge.title %></li>
+    <li class="breadcrumb-item active" aria-current="page">Consigna</li>
+  </ol>
+</nav>
+
+<h1 class="mt-5"><%= @challenge.title %></h1>
+<%== @challenge.instructions %>

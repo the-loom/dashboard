@@ -25,27 +25,14 @@ module PeerReview
     def bulk_download
       @challenge = PeerReview::Challenge.find(params[:id])
       temp_file = Tempfile.new(%w(export zip))
-
-      instructions_erb = ERB.new <<-ERB
-        <html><head></head><body><h1><%= @challenge.title %></h1><%= @challenge.instructions %></body></html>
-      ERB
-
-      solution_erb = ERB.new <<-ERB
-        <html><head></head><body><h1>Solución de <%= solution.author.full_name %></h1><%= solution.wording %></body></html>
-      ERB
-
-      review_erb = ERB.new <<-ERB
-        <html><head></head><body><h1>Solución de <%= solution.author.full_name %></h1><%= solution.wording %>
-        <hr/>
-        <h2>Revisión</h2><%= review.wording %></body></html>
-      ERB
+      layout = "../peer_review/challenges/export/layout"
 
       begin
         Zip::OutputStream.open(temp_file) { |zos| }
 
         Zip::File.open(temp_file.path, Zip::File::CREATE) do |zipfile|
           instructions_file = Tempfile.new(%w(instructions html))
-          instructions_file.write(instructions_erb.result(binding))
+          instructions_file.write(render_to_string "peer_review/challenges/export/instructions", layout: layout)
 
           instructions_file.close
           zipfile.add("consigna.html", instructions_file.path)
@@ -54,7 +41,8 @@ module PeerReview
           @challenge.solutions.each do |solution|
             temp_files << Tempfile.new(%w(solution html))
 
-            temp_files.last.write(solution_erb.result(binding))
+            @solution = solution
+            temp_files.last.write(render_to_string "peer_review/challenges/export/solution", layout: layout)
             temp_files.last.close
 
             folder_name = "#{solution.author.last_name.downcase}-#{solution.author.first_name.downcase}-#{solution.author.uuid}"
@@ -62,7 +50,8 @@ module PeerReview
 
             solution.reviews.each_with_index do |review, index|
               temp_files << Tempfile.new(%w(review html))
-              temp_files.last.write(review_erb.result(binding))
+              @review = review
+              temp_files.last.write(render_to_string "peer_review/challenges/export/review", layout: layout)
               temp_files.last.close
 
               zipfile.add("soluciones/#{folder_name}/revision-#{(index + 1).to_s.rjust(2, "0")}.html", temp_files.last.path)
