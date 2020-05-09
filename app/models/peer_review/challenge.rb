@@ -9,11 +9,42 @@ class PeerReview::Challenge < ApplicationRecord
   validates :difficulty, inclusion: { in: 1..5, message: "must be between 1 and 5" }
   validates_numericality_of :expected_reviews, greater_than_or_equal_to: 0, only_integer: true
 
-  validate :team_challenge_must_be_teacher_only
+  validate :prevent_inconsistencies
 
-  def team_challenge_must_be_teacher_only
-    if team_challenge && challenge_mode.to_sym != :teacher_reviews_only
-      errors.add(:team_challenge, "sólo puede ser revisado por docentes")
+  before_validation :expire_if_in_the_past
+
+  def expire_if_in_the_past
+    if due?
+      disable!
+    end
+  end
+
+  def prevent_inconsistencies
+    errors.add(:team_challenge, "este curso no tiene la característica de grupos habilitada") if team_challenge && !course.on?(:teams)
+
+    errors.add(:team_challenge, "una tarea grupal sólo puede ser revisado por docentes") if team_challenge && challenge_mode.to_sym != :teacher_reviews_only
+    errors.add(:challenge_mode, "las tareas de revisiones rápidas sólo pueden ser revisadas por docentes") if allows_quick_reviews && challenge_mode.to_sym != :teacher_reviews_only
+
+    unless solutions.empty?
+      errors.add(:team_challenge, "no puede cambiar porque ya hay soluciones publicadas") if team_challenge_changed?
+      errors.add(:solution_type, "no puede cambiar porque ya hay soluciones publicadas") if solution_type_changed?
+      errors.add(:language, "no puede cambiar porque ya hay soluciones publicadas") if language_changed?
+    end
+
+    unless reviews.empty?
+      errors.add(:allows_quick_reviews, "no puede cambiar el tipo de revisiones una vez que hay revisiones publicadas") if allows_quick_reviews_changed?
+    end
+
+    if reviews.includes(reviewer: :memberships).inject(false) { |v, r| v || r.reviewer.teacher? }
+      errors.add(:challenge_mode, "no puede cambiar porque ya hay revisiones de docentes publicadas") if challenge_mode.to_sym == :student_reviews_only
+    end
+
+    if reviews.includes(reviewer: :memberships).inject(false) { |v, r| v || r.reviewer.student? }
+      errors.add(:challenge_mode, "no puede cambiar porque ya hay revisiones de estudiantes publicadas") if challenge_mode.to_sym == :teacher_reviews_only
+    end
+
+    if solutions.includes(solution_attachment_attachment: :blob).inject(false) { |v, s| v || s.solution_attachment.attached? }
+      errors.add(:allows_attachment, "no puede dejar de recibirse adjuntos una vez que hay soluciones con adjuntos") if allows_attachment_changed? && !allows_attachment
     end
   end
 

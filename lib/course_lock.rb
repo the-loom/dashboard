@@ -1,6 +1,9 @@
 module CourseLock
   def self.included(base)
     base.class_eval do
+      belongs_to :course
+
+      return if ENV["RAILS_ENV"] == "test"
       default_scope {
         if Course.current
           where(course_id: Course.current.id)
@@ -9,7 +12,6 @@ module CourseLock
         end
       }
       # HELP: http://stackoverflow.com/questions/12667036/default-scope-ignoring-dynamic-value-in-condition/12667077#12667077
-      belongs_to :course
       validates_presence_of :course
 
       before_save :verify_current_course

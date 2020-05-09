@@ -5,19 +5,12 @@ RSpec.describe AutomaticCorrection::Repo, type: :model do
     ActiveRecord::Base.logger = Logger.new(STDOUT) if defined?(ActiveRecord::Base)
   end
 
-=begin
-  validates_presence_of :user, :name, :git_url, :description, :difficulty
-  validates_numericality_of :difficulty
-=end
-
   it {
     should validate_presence_of(:user)
     should validate_presence_of(:name)
     should validate_presence_of(:description)
     should validate_presence_of(:git_url)
     should validate_presence_of(:difficulty)
-
-    should validate_numericality_of(:difficulty)
   }
 
   it {
@@ -34,7 +27,7 @@ RSpec.describe AutomaticCorrection::Repo, type: :model do
     expect(repo.full_name).to eq("loom/loom")
   end
 
-  it ".latest_test_run" do
+  xit ".latest_test_run" do
     repo = AutomaticCorrection::Repo.create(user: "loom", name: "loom", git_url: "url", description: "Description", difficulty: 5, course: Course.current)
     now = Time.new
     first_test_run = AutomaticCorrection::TestRun.create(created_at: now, score: 5, course: Course.current)

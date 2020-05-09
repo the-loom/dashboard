@@ -4,7 +4,6 @@ RSpec.describe Team, type: :model do
   it {
     should validate_presence_of(:name)
     should validate_presence_of(:nickname)
-    should validate_presence_of(:image)
   }
 
   it {

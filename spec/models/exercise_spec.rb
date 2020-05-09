@@ -3,7 +3,8 @@ require "rails_helper"
 RSpec.describe Exercise, type: :model do
   it {
     should validate_presence_of(:name)
-    should validate_presence_of(:url)
+    should validate_presence_of(:notes)
+    should validate_presence_of(:difficulty)
   }
 
   it {

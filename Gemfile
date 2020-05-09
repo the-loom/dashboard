@@ -25,6 +25,8 @@ group :development, :test do
 
   gem "rspec-rails", "~> 4.0"
   gem "shoulda-matchers", "~> 4.3"
+
+  gem "factory_bot_rails", "5.2.0"
 end
 
 gem "dotenv-rails", "2.7.5", groups: [:development, :test]
