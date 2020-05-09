@@ -1,0 +1,18 @@
+<% content_for(:title, "#{@challenge.title} / Solución") %>
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item" aria-current="page"><%= @challenge.title %></li>
+    <li class="breadcrumb-item active" aria-current="page">Solución</li>
+  </ol>
+</nav>
+
+<h1 class="mt-5">Solución de <%= @solution.author.full_name %></h1>
+
+<% if @solution.solution_attachment.attached? %>
+  <div class="alert alert-primary" role="alert">
+    <strong>¡Atención!</strong> Esta solución se presentó con un archivo adjunto
+  </div>
+<% end %>
+
+<%== @solution.wording %>
