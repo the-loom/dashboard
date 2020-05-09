@@ -68,6 +68,7 @@ tests:
 	docker-compose run app ./bin/rake
 
 use_production_db:
+	$(MAKE) stop
 	heroku pg:backups capture --app the-loom
 	curl -o tmp/latest.dump `heroku pg:backups public-url --app the-loom`
 	docker-compose run app bundle exec rake db:drop db:create
