@@ -149,9 +149,7 @@ module PeerReview
       authorize PeerReview::Challenge, :purge?
       challenge = PeerReview::Challenge.find(params[:id])
 
-      # move to challenge?
-      challenge.reviews.where(status: :draft).delete_all
-      challenge.solutions.where(status: :draft).delete_all
+      challenge.purge!
 
       flash[:info] = "Se purgó correctamente el desafío"
       redirect_to peer_review_challenges_path
