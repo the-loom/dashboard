@@ -76,6 +76,17 @@ module MultipleChoices
       # honor randomization!
       @questionnaire = MultipleChoices::Questionnaire.find(params[:id])
       authorize @questionnaire, :access?
+
+      # TODO: use case
+
+      solution = MultipleChoices::Solution.create(solver: current_user, questionnaire: @questionnaire)
+      answers = params[:question]
+      @questionnaire.questions.includes(:answers).each do |q|
+        this_answer = answers[q.id.to_s][:answer]
+        solution.responses << MultipleChoices::Response.create(question: q, multiple_choices_answer_id: this_answer, correct: q.correct_answer.id == this_answer.to_i)
+      end
+      solution.refresh_score!
+
       @questionnaire = MultipleChoices::SolvedQuestionnairePresenter.new(@questionnaire, params[:question])
     end
 
