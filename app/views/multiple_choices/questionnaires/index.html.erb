@@ -35,19 +35,35 @@
             <%= questionnaire.questions.count %>
           </td>
           <td>
-            <% if policy(MultipleChoices::Questionnaire).manage? %>
-
-              <% if questionnaire.published? %>
-                <%= button_to "Despublicar", unpublish_multiple_choices_questionnaire_path(questionnaire), method: :post, class: 'btn btn-default btn-sm' %>
-              <% else %>
-                <%= link_to "Publicar", publish_multiple_choices_questionnaire_path(questionnaire), method: :post, class: 'btn btn-default btn-sm' %>
-              <% end %>
-
-              <%= link_to "Panorama", overview_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-default btn-sm' %>
-              <%= link_to "Editar", edit_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-default btn-sm' %>
-              <%= link_to "Configurar", multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-default btn-sm' %>
-            <% end %>
             <%= link_to "Practicar", practice_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-primary btn-sm' %>
+
+            <% if policy(MultipleChoices::Questionnaire).manage? %>
+              <div class="btn-group display">
+
+                <%= link_to "Panorama", overview_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-primary btn-sm' %>
+                <%= link_to "Configurar", multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-default btn-sm' %>
+                <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <% if questionnaire.published? %>
+                    <li>
+                      <%= link_to unpublish_multiple_choices_questionnaire_path(questionnaire), method: :post do %>
+                        Despublicar
+                      <% end %>
+                    </li>
+                  <% else %>
+                    <li>
+                      <%= link_to publish_multiple_choices_questionnaire_path(questionnaire), method: :post do %>
+                        Publicar
+                      <% end %>
+                    </li>
+                  <% end %>
+                  <li><%= link_to "Editar", edit_multiple_choices_questionnaire_path(questionnaire) %></li>
+                </ul>
+              </div>
+            <% end %>
+
           </td>
         </tr>
       <% end %>
@@ -58,14 +74,6 @@
 
 <%= content_for :head do %>
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
-
-  <style>
-    form.button_to {
-      display: inline-block;
-      margin: 0 0.1em;
-    }
-  </style>
-
 <% end %>
 
 <%= content_for :javascript do %>

@@ -75,13 +75,15 @@ module MultipleChoices
       @questionnaire = MultipleChoices::Questionnaire.find(params[:id])
 
       last_solution = MultipleChoices::Solution.where(questionnaire: @questionnaire, solver: current_user).order(:created_at).last
-      if last_solution.score == 100
-        flash[:alert] = "Ya no podés resolver este cuestionario: ¡Obtuviste calificación perfecta! ¡Buen trabajo!"
-        redirect_to(multiple_choices_questionnaires_path) && return
-      end
-      if last_solution.created_at > (Time.current - 1.day)
-        flash[:alert] = "Debes esperar al menos un día para volver a intentarlo..."
-        redirect_to(multiple_choices_questionnaires_path) && return
+      if last_solution
+        if last_solution.score == 100
+          flash[:alert] = "Ya no podés resolver este cuestionario: ¡Obtuviste calificación perfecta! ¡Buen trabajo!"
+          redirect_to(multiple_choices_questionnaires_path) && return
+        end
+        if last_solution.created_at > (Time.current - 1.day)
+          flash[:alert] = "Debes esperar al menos un día para volver a intentarlo..."
+          redirect_to(multiple_choices_questionnaires_path) && return
+        end
       end
 
       # randomize all!
