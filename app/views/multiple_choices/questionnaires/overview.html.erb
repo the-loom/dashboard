@@ -55,7 +55,10 @@
           </td>
           <% @questionnaire.questions.each do |question| %>
             <td>
-              <%= yes_no solution.correct_answer_for?(question) %>
+              <% correct = solution.correct_answer_for?(question) %>
+              <label class="label label-<%= correct ? 'success' : 'danger' %>">
+                <%= correct ? '✔' : '✘' %>
+              </label>
             </td>
           <% end %>
           <td>
