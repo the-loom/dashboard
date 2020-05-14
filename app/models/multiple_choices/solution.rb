@@ -10,4 +10,12 @@ class MultipleChoices::Solution < ApplicationRecord
     self.score = (responses.where(correct: true).count / responses.count.to_f) * 100
     save
   end
+
+  def total_correct_answers
+    responses.where(correct: true).count
+  end
+
+  def correct_answer_for?(question)
+    responses.find_by(question: question).correct?
+  end
 end

@@ -1,0 +1,98 @@
+<% nav_add 'Cuestionarios de Opción Múltiple', multiple_choices_questionnaires_path %>
+<% nav_add @questionnaire.name, '#' %>
+<% nav_add 'Panorama', '#' %>
+<%= nav_render %>
+
+<div class="row">
+  <div class="col-md-12">
+    <legend><%= @questionnaire.name %></legend>
+
+    <ol class="questionnaire">
+      <% @questionnaire.questions.each do |question| %>
+        <li class="question">
+          <%= question.wording %>
+          <ol>
+            <% question.answers.each do |answer| %>
+              <li <%== answer.correct ? 'style="font-weight: bold;"' : '' %>>
+                <%= answer.text %>
+              </li>
+            <% end %>
+          </ol>
+
+        </li>
+      <% end %>
+    </ol>
+  </div>
+
+  <div class="col-md-12">
+    <legend>Resumen</legend>
+
+    <table class="table solutions table-stripped table-hover">
+      <thead>
+      <tr>
+        <th>Estudiante</th>
+        <th>Fecha de Intento</th>
+        <% @questionnaire.questions.size.times do |i| %>
+          <th>
+            P<%= i + 1 %>
+          </th>
+        <% end %>
+        <th>
+          Resultado
+        </th>
+        <th>
+          Porcentual
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <% @solutions.each do |solution| %>
+        <tr>
+          <td><%= solution.solver.full_name %></td>
+          <td>
+            <%= solution.updated_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M") %>
+          </td>
+          <% @questionnaire.questions.each do |question| %>
+            <td>
+              <%= yes_no solution.correct_answer_for?(question) %>
+            </td>
+          <% end %>
+          <td>
+            <%= solution.total_correct_answers %> / <%= solution.responses.count %>
+          </td>
+          <td>
+            <%= solution.score %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%= content_for :head do %>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+<% end %>
+
+<%= content_for :javascript do %>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="application/javascript"></script>
+
+  <script type="application/javascript">
+
+      $(function () {
+          $('.solutions').DataTable({
+              order: [[0, "asc"], [1, "asc"]],
+              paging: false,
+              language: {
+                  url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+              },
+              columnDefs: [{
+                  targets: 'no-sort',
+                  orderable: false
+              }]
+          });
+      });
+  </script>
+
+<% end %>
