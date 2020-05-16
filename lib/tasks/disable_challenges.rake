@@ -7,7 +7,7 @@ namespace :challenges do
       puts "Disabling Challenges for Course #{course.name}"
 
       PeerReview::Challenge.all.each do |challenge|
-        if challenge.due?
+        if challenge.due? && challenge.enabled?
           challenge.disable!
           puts "-> #{challenge.title} has been disabled"
         end

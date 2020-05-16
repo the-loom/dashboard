@@ -72,7 +72,17 @@ class PeerReview::Challenge < ApplicationRecord
 
   def due?
     return false unless due_date
-    Time.zone.now > self.due_date + 1.day
+    Time.zone.now > self.due_date.beginning_of_day + 1.day
+  end
+
+  def needs_purge?
+    self.reviews.where(status: :draft).count > 0 ||
+        self.solutions.where(status: :draft).count > 0
+  end
+
+  def purge!
+    self.reviews.where(status: :draft).delete_all
+    self.solutions.where(status: :draft).delete_all
   end
 
   def disable!
