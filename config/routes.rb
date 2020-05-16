@@ -107,6 +107,7 @@ Rails.application.routes.draw do
       publishable
       member do
         get :practice
+        get :overview
         post :grade
       end
       resources :questions, except: :index

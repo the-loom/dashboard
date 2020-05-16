@@ -66,9 +66,27 @@ module MultipleChoices
       flash[:info] = "Se eliminó el cuestionario"
     end
 
-    def practice
-      # randomize all!
+    def overview
       @questionnaire = MultipleChoices::Questionnaire.find(params[:id])
+      @solutions = @questionnaire.solutions
+    end
+
+    def practice
+      @questionnaire = MultipleChoices::Questionnaire.find(params[:id])
+
+      last_solution = @questionnaire.solutions.where(solver: current_user).order(:created_at).last
+      if last_solution
+        if last_solution.score == 100
+          flash[:alert] = "Ya no podés resolver este cuestionario... ¡Obtuviste calificación perfecta! ¡Buen trabajo!"
+          redirect_to(multiple_choices_questionnaires_path) && return
+        end
+        if last_solution.created_at > (Time.current - 1.day)
+          flash[:alert] = "Debes esperar al menos un día para volver a intentarlo..."
+          redirect_to(multiple_choices_questionnaires_path) && return
+        end
+      end
+
+      # randomize all!
       authorize @questionnaire, :access?
     end
 
@@ -76,6 +94,17 @@ module MultipleChoices
       # honor randomization!
       @questionnaire = MultipleChoices::Questionnaire.find(params[:id])
       authorize @questionnaire, :access?
+
+      # TODO: use case
+
+      solution = MultipleChoices::Solution.create(solver: current_user, questionnaire: @questionnaire)
+      answers = params[:question]
+      @questionnaire.questions.includes(:answers).each do |q|
+        this_answer = answers[q.id.to_s][:answer]
+        solution.responses << MultipleChoices::Response.create(question: q, multiple_choices_answer_id: this_answer, correct: q.correct_answer.id == this_answer.to_i)
+      end
+      solution.refresh_score!
+
       @questionnaire = MultipleChoices::SolvedQuestionnairePresenter.new(@questionnaire, params[:question])
     end
 
