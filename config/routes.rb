@@ -129,6 +129,7 @@ Rails.application.routes.draw do
       publishable
       get :bulk_download, on: :member
       get :duplicate, on: :member
+      post :award, on: :member
       member do
         get :overview
         get :toggle

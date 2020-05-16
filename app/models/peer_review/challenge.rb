@@ -72,7 +72,17 @@ class PeerReview::Challenge < ApplicationRecord
 
   def due?
     return false unless due_date
-    Time.zone.now > self.due_date + 1.day
+    Time.zone.now > self.due_date.beginning_of_day + 1.day
+  end
+
+  def needs_purge?
+    self.reviews.where(status: :draft).count > 0 ||
+        self.solutions.where(status: :draft).count > 0
+  end
+
+  def purge!
+    self.reviews.where(status: :draft).delete_all
+    self.solutions.where(status: :draft).delete_all
   end
 
   def disable!
@@ -97,16 +107,16 @@ class PeerReview::Challenge < ApplicationRecord
     progress = 0.0
 
     # solved?
-    progress += 1 if already_solved_by?(user) || (team_challenge? && already_solved_by_team?(user.current_membership.team))
+    progress += 1.0 if already_solved_by?(user) || (team_challenge? && already_solved_by_team?(user.current_membership.team))
 
-    return [progress / 1, 1.0].min if teacher_reviews_only?
+    return [progress / 1.0, 1.0].min if teacher_reviews_only? || progress == 0.0
     # reviewed?
     progress += solutions.includes(:reviews).includes(reviews: :reviewer)
                     .where(peer_review_reviews: { status: 1 }) # :final == 1
                     .where(peer_review_reviews: { reviewer_id: user.id })
                     .count
 
-    [progress / (expected_reviews + 1), 1.0].min
+    [progress / (expected_reviews + 1.0), 1.0].min
   end
 
   def solvers

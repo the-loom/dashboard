@@ -2,6 +2,8 @@ module PeerReview
   class ChallengesController < ApplicationController
     include Publisher.new(PeerReview::Challenge, :peer_review_challenges)
 
+    MAX_EXTRA_REVIEWS = 3
+
     before_action do
       check_feature(:peer_review_challenges)
     end
@@ -23,6 +25,7 @@ module PeerReview
     end
 
     def bulk_download
+      # TODO: use case
       @challenge = PeerReview::Challenge.find(params[:id])
       temp_file = Tempfile.new(%w(export zip))
       layout = "../peer_review/challenges/export/layout"
@@ -76,6 +79,50 @@ module PeerReview
         temp_file.close
         temp_file.unlink
       end
+    end
+
+    def award
+      # TODO: use case
+      authorize PeerReview::Challenge, :manage?
+      challenge = PeerReview::Challenge.find(params[:id])
+
+      if challenge.awarded
+        flash[:alert] = "No puede volver a premiarse el desafío"
+        redirect_to(peer_review_challenges_path) && return
+      end
+
+      ActiveRecord::Base.transaction do
+        solve = "Resolver '#{challenge.title}'"
+        solve_event = Event.create(name: solve, description: solve, points: 8, min_points: 8, max_points: 8)
+
+        review = "Revisar '#{challenge.title}'"
+        review_event = Event.create(name: review, description: review, points: 6, min_points: 6, max_points: 12)
+
+        extra_review = "Revisión extra sobre '#{challenge.title}'"
+        extra_review_event = Event.create(name: extra_review, description: extra_review, points: 4, min_points: 0, max_points: 0)
+
+
+        challenge.solutions.final.each { |s|
+          next unless s.author
+          s.author.register(solve_event)
+        }
+
+        reviews_by_reviewer = challenge.reviews.group_by { |r| r.reviewer }
+        reviews_by_reviewer.each { |reviewer, reviews|
+          next unless reviewer
+          total_reviews = reviews.size
+          base_reviews = [total_reviews, challenge.expected_reviews].min
+          extra_reviews = [total_reviews - base_reviews, MAX_EXTRA_REVIEWS].min
+
+          reviewer.register(review_event, base_reviews)
+
+          reviewer.register(extra_review_event, extra_reviews)
+        }
+        challenge.update(awarded: true)
+      end
+
+      redirect_to peer_review_challenges_path
+      flash[:info] = "Se premió correctamente el desafío"
     end
 
     def new
@@ -149,9 +196,7 @@ module PeerReview
       authorize PeerReview::Challenge, :purge?
       challenge = PeerReview::Challenge.find(params[:id])
 
-      # move to challenge?
-      challenge.reviews.where(status: :draft).delete_all
-      challenge.solutions.where(status: :draft).delete_all
+      challenge.purge!
 
       flash[:info] = "Se purgó correctamente el desafío"
       redirect_to peer_review_challenges_path

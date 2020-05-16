@@ -265,6 +265,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_130519) do
     t.string "language"
     t.integer "solution_type", default: 0
     t.boolean "allows_quick_reviews", default: false
+    t.boolean "awarded", default: false
   end
 
   create_table "peer_review_reviews", force: :cascade do |t|
