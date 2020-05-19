@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/the-loom/dashboard.svg?branch=master)](https://travis-ci.org/the-loom/dashboard)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fthe-loom%2Fdashboard.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fthe-loom%2Fdashboard?ref=badge_shield)
 
 # The Loom: dashboard
 
@@ -49,3 +50,7 @@ Tip: A shorthand for all three actions is `make dev_all`
 ```shell
   make stop
 ```
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fthe-loom%2Fdashboard.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fthe-loom%2Fdashboard?ref=badge_large)
