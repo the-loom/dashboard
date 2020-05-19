@@ -10,4 +10,8 @@ module NavigationHelper
   def nav_render
     render partial: "shared/navigation", locals: { nav: nav_ensure }
   end
+
+  def nav_render4
+    render partial: "shared/navigation4", locals: { nav: nav_ensure }
+  end
 end

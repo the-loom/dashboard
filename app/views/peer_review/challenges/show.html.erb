@@ -1,6 +1,6 @@
 <% nav_add 'Desafíos', peer_review_challenges_path %>
 <% nav_add @challenge.title, '#' %>
-<%= nav_render %>
+<%= nav_render4 %>
 
 <% unless @challenge.reviews.where(reviewer: current_user, status: :draft).empty? %>
 

@@ -1,5 +1,7 @@
 module PeerReview
   class ChallengesController < ApplicationController
+    layout "application2", only: [:show]
+
     include Publisher.new(PeerReview::Challenge, :peer_review_challenges)
 
     MAX_EXTRA_REVIEWS = 3
