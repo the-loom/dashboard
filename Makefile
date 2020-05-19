@@ -1,5 +1,5 @@
 browser:
-	google-chrome --new-window https://trello.com/b/ARo5MV67/the-loom http://localhost:3000 https://github.com/the-loom/dashboard https://rollbar.com/the-loom/all/items https://sentry.io/organizations/the-loom/issues/?project=5223497 https://app.codacy.com/manual/delucas/dashboard/dashboard
+	google-chrome --new-window https://trello.com/b/ARo5MV67 http://localhost:3000 https://github.com/the-loom/dashboard https://rollbar.com/the-loom/all/items https://sentry.io/organizations/the-loom/issues/?project=5223497 https://app.codacy.com/manual/delucas/dashboard/dashboard
 
 init:
 	git config core.hooksPath .githooks
@@ -98,6 +98,11 @@ production_deploy:
 	heroku ps:scale web=1 --app the-loom
 	heroku restart --app the-loom
 	heroku maintenance:off --app the-loom
+	# marcar deploy con el nombre del backup?
 
 emergency_deploy:
 	git push -ff production master
+
+sanitize_gemfile:
+	docker-compose run app bundle exec pessimize
+	docker-compose run app bundle exec ordinare
