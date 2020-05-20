@@ -2,6 +2,7 @@
 <% nav_add @challenge.title, '#' %>
 <%= nav_render4 %>
 
+
 <% unless @challenge.reviews.where(reviewer: current_user, status: :draft).empty? %>
 
   <div class="alert alert-danger">
@@ -15,7 +16,17 @@
 
 <h2>Consigna</h2>
 
-<%= raw @challenge.instructions %>
+<div id="collapseExample" class="show">
+  <%= raw @challenge.instructions %>
+</div>
+
+<br>
+
+<div style="text-align: right;">
+  <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    Ocultar/mostrar consigna
+  </a>
+</div>
 
 <hr/>
 
@@ -50,17 +61,14 @@
     <% if @solution && policy(@solution).unpublish? %>
       <%= link_to 'Despublicar solución', unpublish_peer_review_challenge_solution_path(@challenge.id, @solution), method: :post, class: 'btn btn-large btn-warning', disabled: !@challenge.reviewable_by?(current_user) %>
     <% end %>
-
   </p>
 
 <% end %>
 
 <% unless @solution.present? %>
-
   <div class="alert alert-info">
     <p>Aún no resolviste este desafío.</p>
   </div>
-
 <% else %>
 
   <h2>Mi solución (<%= @solution.status %>)</h2>
@@ -80,6 +88,8 @@
     </div>
   <% end %>
 
+  <br>
+
   <% if @solution.draft? %>
 
     <div class="alert alert-info">
@@ -92,136 +102,145 @@
   <% else %>
 
     <h2>Revisiones Recibidas</h2>
-
     <% if @solution.reviews.final.empty? %>
-
       <div class="alert alert-info">
         <p>Tu solución aún no ha recibido revisiones.</p>
       </div>
-
     <% else %>
+      <div class="row">
+        <div class="col-2">
+          <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <% @solution.reviews.where(status: :final).each_with_index do |review, index| %>
 
-      <ul class="nav nav-tabs" id="myTabs" role="tablist">
-        <% @solution.reviews.where(status: :final).each_with_index do |review, index| %>
-          <li role="presentation" class="<%= 'active' if index == 0 %>">
-            <a href="#<%= "review_#{index}" %>" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
-              <%= "Revisión ##{index + 1}" %>
-              <% if review.reviewer.teacher? %>
-                (docente)
-              <% end %>
-            </a>
-          </li>
-        <% end %>
-      </ul>
-      <div class="tab-content" id="myTabContent">
-        <% @solution.reviews.where(status: :final).each_with_index do |review, index| %>
-          <div class="tab-pane fade <%= 'active in' if index == 0 %>" role="tabpanel" id="<%= "review_#{index}" %>" aria-labelledby="home-tab">
-            <% if review.reviewer.teacher? %>
-              <h3>Revisión realizada por <%= review.reviewer.full_name %></h3>
+              <a href="#<%= "review_#{index}" %>" id="#<%= "review_#{index}" %>" class="nav-link<%= ' active' if index == 0 %>"
+                 aria-controls="#<%= "review_#{index}" %>" role="tab" data-toggle="pill" aria-selected="<%= index == 0 %>">
+                <%= "Revisión ##{index + 1}" %>
+                <% if review.reviewer.teacher? %>
+                  (docente)
+                <% end %>
+              </a>
             <% end %>
-            <div class="well">
-              <%= render partial: '/peer_review/review_wording', locals: { quick_review: @challenge.allows_quick_reviews?, wording: review.wording } %>
-            </div>
-
-            <%= render partial: 'assessment', locals: { review: review } %>
-
           </div>
-        <% end %>
-      </div>
+        </div>
+        <div class="col-10">
+          <div class="tab-content" id="v-pills-tabContent">
+            <% @solution.reviews.where(status: :final).each_with_index do |review, index| %>
+            <div class="tab-pane fade <%= 'show active' if index == 0 %>" id="<%= "review_#{index}" %>" role="tabpanel" aria-labelledby="<%= "review_#{index}" %>">
+              <% if review.reviewer.teacher? %>
+                <h3>Revisión realizada por <%= review.reviewer.full_name %></h3>
+              <% end %>
+              <div class="well">
+                <%= render partial: '/peer_review/review_wording', locals: { quick_review: @challenge.allows_quick_reviews?, wording: review.wording } %>
+              </div>
 
+              <%= render partial: 'assessment', locals: { review: review } %>
+            </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
     <% end %>
 
+    <br>
+
     <h2>Revisiones Realizadas</h2>
-
     <% if @challenge.reviews.where(reviewer: current_user).empty? %>
-
       <div class="alert alert-info">
         <p>No realizaste revisiones aún.</p>
       </div>
-
     <% else %>
-
-      <ul class="nav nav-tabs" id="myTabs2" role="tablist">
-        <% @challenge.reviews.where(reviewer: current_user).each_with_index do |review, index| %>
-          <li role="presentation" class="<%= 'active' if index == 0 %>">
-            <a href="#<%= "rreview_#{index}" %>" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
-              <%= "Revisión ##{index + 1}" %>
-            </a>
-          </li>
-        <% end %>
-      </ul>
-      <div class="tab-content" id="myTabContent">
-        <% @challenge.reviews.where(reviewer: current_user).each_with_index do |review, index| %>
-          <div class="tab-pane fade <%= 'active in' if index == 0 %>" role="tabpanel" id="<%= "rreview_#{index}" %>" aria-labelledby="home-tab">
-            <h3>Solución revisada</h3>
-            <%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: review.solution.wording, language: @challenge.language } %>
-            <% if @challenge.allows_attachment? %>
-              <div>
-                <% document = review.solution.solution_attachment %>
-                <% if document.attached? %>
-                  <p>Adjunto:</p>
-                  <%= link_to rails_blob_path(document, disposition: 'preview') do %>
-                    <i class="fa fa-paperclip"></i>
-                    <%= document.filename %>
-                  <% end %>
+      <div class="row">
+        <div class="col-2">
+          <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <% @challenge.reviews.where(reviewer: current_user).each_with_index do |review, index| %>
+              <a href="#<%= "rreview_#{index}" %>" id="#<%= "rreview_#{index}" %>" class="nav-link<%= ' active' if index == 0 %>"
+                 aria-controls="#<%= "rreview_#{index}" %>" role="tab" data-toggle="pill" aria-selected="<%= index == 0 %>">
+                <%= "Revisión ##{index + 1}" %>
+                <% if review.reviewer.teacher? %>
+                  (docente)
                 <% end %>
+              </a>
+            <% end %>
+          </div>
+        </div>
+        <div class="col-10">
+          <div class="tab-content" id="v-pills-tabContent">
+            <% @challenge.reviews.where(reviewer: current_user).each_with_index do |review, index| %>
+              <div class="tab-pane fade <%= 'show active' if index == 0 %>" id="<%= "rreview_#{index}" %>" role="tabpanel" aria-labelledby="<%= "rreview_#{index}" %>">
+
+                <h3>Solución revisada</h3>
+                <%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: review.solution.wording, language: @challenge.language } %>
+                <% if @challenge.allows_attachment? %>
+                  <div>
+                    <% document = review.solution.solution_attachment %>
+                    <% if document.attached? %>
+                      <p>Adjunto:</p>
+                      <%= link_to rails_blob_path(document, disposition: 'preview') do %>
+                        <i class="fa fa-paperclip"></i>
+                        <%= document.filename %>
+                      <% end %>
+                    <% end %>
+                  </div>
+                <% end %>
+
+                <h4>Mi revisión</h4>
+
+                <div class="well">
+                  <%= render partial: '/peer_review/review_wording', locals: { quick_review: @challenge.allows_quick_reviews?, wording: review.wording } %>
+                </div>
+
+                <%= render partial: 'assessment', locals: { review: review } %>
               </div>
             <% end %>
-
-            <h4>Mi revisión</h4>
-            <div class="well">
-              <%= render partial: '/peer_review/review_wording', locals: { quick_review: @challenge.allows_quick_reviews?, wording: review.wording } %>
-            </div>
-
-            <%= render partial: 'assessment', locals: { review: review } %>
-
           </div>
-        <% end %>
+        </div>
       </div>
-
     <% end %>
 
   <% end %>
 
+  <br>
+
   <% if @challenge.has_picked_solutions? %>
-
     <h2>Soluciones ejemplares escogidas por los docentes</h2>
-
-    <ul class="nav nav-tabs" id="myTabs2" role="tablist">
-      <% @challenge.picked_solutions.each_with_index do |_, index| %>
-        <li role="presentation" class="<%= 'active' if index == 0 %>">
-          <a href="#<%= "ssolution_#{index}" %>" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
-            <%= "Solución ##{index + 1}" %>
-          </a>
-        </li>
-      <% end %>
-    </ul>
-    <div class="tab-content" id="myTabContent">
-      <% @challenge.picked_solutions.each_with_index do |solution, index| %>
-        <div class="tab-pane fade <%= 'active in' if index == 0 %>" role="tabpanel" id="<%= "ssolution_#{index}" %>" aria-labelledby="home-tab">
-          <br>
-
-          <% if @challenge.allows_attachment? %>
-            <div>
-              <% document = solution.solution_attachment %>
-              <% if document.attached? %>
-                <p>
-                  Adjunto:
-                  <%= link_to rails_blob_path(document, disposition: 'preview') do %>
-                    <i class="fa fa-paperclip"></i>
-                    <%= document.filename %>
+    <div class="row">
+      <div class="col-2">
+        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+          <% @challenge.picked_solutions.each_with_index do |_, index| %>
+            <a href="#<%= "ssolution_#{index}" %>" id="#<%= "ssolution_#{index}" %>" class="nav-link<%= ' active' if index == 0 %>"
+               aria-controls="#<%= "ssolution_#{index}" %>" role="tab" data-toggle="pill" aria-selected="<%= index == 0 %>">
+              <%= "Solución ##{index + 1}" %>
+            </a>
+          <% end %>
+        </div>
+      </div>
+      <div class="col-10">
+        <div class="tab-content" id="v-pills-tabContent">
+          <% @challenge.picked_solutions.each_with_index do |solution, index| %>
+            <div class="tab-pane fade <%= 'show active' if index == 0 %>" id="<%= "ssolution_#{index}" %>" role="tabpanel" aria-labelledby="<%= "ssolution_#{index}" %>">
+              <% if @challenge.allows_attachment? %>
+                <div>
+                  <% document = solution.solution_attachment %>
+                  <% if document.attached? %>
+                    <p>
+                      Adjunto:
+                      <%= link_to rails_blob_path(document, disposition: 'preview') do %>
+                        <i class="fa fa-paperclip"></i>
+                        <%= document.filename %>
+                      <% end %>
+                    </p>
                   <% end %>
-                </p>
+                </div>
               <% end %>
+
+              <%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: solution.wording, language: @challenge.language} %>
             </div>
           <% end %>
-
-          <%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: solution.wording, language: @challenge.language} %>
         </div>
-      <% end %>
+      </div>
     </div>
-
   <% end %>
+
 <% end %>
 
 <% content_for :head do %>
