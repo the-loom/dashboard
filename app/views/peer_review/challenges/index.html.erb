@@ -20,7 +20,7 @@
       <tr>
         <th>Título</th>
         <th>Vencimiento</th>
-        <th>Publicado</th>
+        <th><i class="fa fa-eye" title="Publicado"></i></th>
         <th>Estado</th>
         <th>Dificultad</th>
         <th>Tipo de Revisiones</th>
@@ -39,9 +39,7 @@
             <%= display_date challenge.due_date %>
           </td>
           <td>
-            <% if current_user.teacher? %>
               <%= challenge.published? ? 'Si' : 'No' %>
-            <% end %>
           </td>
           <td>
             <%= challenge.enabled? ? "Vigente" : "Finalizado" %>
