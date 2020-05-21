@@ -20,6 +20,7 @@
       <tr>
         <th>Título</th>
         <th>Vencimiento</th>
+        <th>Publicado</th>
         <th>Estado</th>
         <th>Dificultad</th>
         <th>Tipo de Revisiones</th>
@@ -32,13 +33,15 @@
       <% @challenges.each do |challenge| %>
         <tr class="fork">
           <td>
-            <% if current_user.teacher? %>
-              <i class="fa <%= challenge.published? ? 'fa-eye' : 'fa-eye-slash' %>"></i>
-            <% end %>
             <%= link_to challenge.title, peer_review_challenge_path(challenge) %>
           </td>
           <td>
             <%= display_date challenge.due_date %>
+          </td>
+          <td>
+            <% if current_user.teacher? %>
+              <%= challenge.published? ? 'Si' : 'No' %>
+            <% end %>
           </td>
           <td>
             <%= challenge.enabled? ? "Vigente" : "Finalizado" %>
