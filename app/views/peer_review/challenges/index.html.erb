@@ -48,7 +48,7 @@
             <%= difficulty challenge.difficulty %>
           </td>
           <td>
-            <%= challenge.optional? ? "Si" : "No" %>
+            <%= yes_no challenge.optional? %>
           </td>
           <td>
             <%= t "challenges.challenge_modes.#{challenge.challenge_mode}" %>
