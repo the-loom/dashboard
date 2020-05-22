@@ -61,6 +61,18 @@
 
       $("form").on("submit", function() {
           submitting = true;
-      })
+      });
+
+
+      <% if @challenge.source_code? %>
+        var myTextArea = document.querySelector("textarea");
+        CodeMirror.fromTextArea(myTextArea, {
+            lineNumbers: true,
+            matchBrackets: true,
+            mode: "text/x-java"
+        });
+      <% end %>
+
+
   </script>
 <% end %>
