@@ -20,12 +20,14 @@
       <tr>
         <th>Título</th>
         <th>Vencimiento</th>
-        <th><i class="fa fa-eye" title="Publicado"></i></th>
         <th>Estado</th>
         <th>Dificultad</th>
         <th>Tipo de Revisiones</th>
         <th>Revisiones esperadas</th>
         <th><i class="fa fa-paperclip" title="¿Permite archivos adjuntos?"></i></th>
+        <% if policy(PeerReview::Challenge).manage? %>
+          <th><i class="fa fa-eye" title="Publicado"></i></th>
+        <% end %>
         <th class="no-sort">&nbsp;</th>
       </tr>
       </thead>
@@ -37,9 +39,6 @@
           </td>
           <td>
             <%= display_date challenge.due_date %>
-          </td>
-          <td>
-              <%= challenge.published? ? 'Si' : 'No' %>
           </td>
           <td>
             <%= challenge.enabled? ? "Vigente" : "Finalizado" %>
@@ -56,6 +55,11 @@
           <td>
             <%= yes_no challenge.allows_attachment? %>
           </td>
+          <% if policy(PeerReview::Challenge).manage? %>
+            <td>
+              <%= yes_no challenge.published? %>
+            </td>
+          <% end %>
           <td>
             <div class="btn-group display">
               <% if policy(PeerReview::Challenge).manage? %>
