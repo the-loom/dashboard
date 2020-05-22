@@ -5,7 +5,11 @@
 
 <%= raw @challenge.instructions %>
 
-<h2>Solución a revisar</h2>
+<% if current_user.teacher? %>
+  <h2>Solución de <%= @review.solution.author.full_name %></h2>
+<% else %>
+  <h2>Solución a revisar</h2>
+<% end %>
 <%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: @review.solution.wording, language: @challenge.language } %>
 
 <% if @challenge.allows_attachment? %>

@@ -41,7 +41,7 @@ Rails.application.routes.draw do
 
   resources :lectures, except: :destroy do
     collection do
-      get :summary
+      get :overview
     end
   end
 

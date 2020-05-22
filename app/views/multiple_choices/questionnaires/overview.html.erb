@@ -57,7 +57,7 @@
             <td>
               <% correct = solution.correct_answer_for?(question) %>
               <label class="label label-<%= correct ? 'success' : 'danger' %>">
-                <%= correct ? '✔' : '✘' %>
+                <%= checkmark correct %>
               </label>
             </td>
           <% end %>

@@ -7,7 +7,7 @@ namespace :challenges do
       puts "Purging Challenges for Course #{course.name}"
 
       PeerReview::Challenge.all.each do |challenge|
-        if challenge.due? && challenge.needs_purge?
+        if (challenge.due? && challenge.needs_purge?) || !challenge.enabled?
           challenge.purge!
           puts "-> #{challenge.title} has been purged"
         end
