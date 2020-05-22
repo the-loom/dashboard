@@ -5,12 +5,8 @@
 
 <% unless @challenge.reviews.where(reviewer: current_user, status: :draft).empty? %>
 
-  <div class="alert alert-danger">
-    <p>
-      <strong>¡Cuidado!</strong> Tenés una revisión no publicada. Tomate tu tiempo, pero publicala para que otro
-      participantes puedan verla.
-    </p>
-  </div>
+  <%= render partial: 'shared/alert', locals: {alert_type: 'danger', title: '¡Cuidado!', dismissable: true,
+     message: "Tenés una revisión no publicada. Tomate tu tiempo, pero publicala para que otro participantes puedan verla."} %>
 
 <% end %>
 
@@ -27,15 +23,11 @@
   </a>
 </div>
 
-<hr/>
+<br>
 
 <% if @challenge.team_challenge && !current_user.current_membership.team %>
-  <div class="alert alert-danger">
-    <p>
-      <strong>¡Oops!</strong>
-      No podés resolver este desafío hasta que no tengas un equipo.
-    </p>
-  </div>
+  <%= render partial: 'shared/alert', locals: {alert_type: 'danger', title: '¡Oops!',
+                                               message: "No podés resolver este desafío hasta que no tengas un equipo."} %>
 <% end %>
 
 <% if @challenge.enabled? && (current_user.current_membership.team || !@challenge.team_challenge) %>
@@ -64,8 +56,6 @@
 
 <% end %>
 
-
-
 <nav>
   <div class="nav nav-tabs" id="nav-tab" role="tablist">
     <a class="nav-item nav-link active" id="nav-solution-tab" data-toggle="tab" href="#nav-solution" role="tab" aria-controls="nav-solution" aria-selected="true">Mi
@@ -78,9 +68,7 @@
 <div class="tab-content" id="nav-tabContent">
   <div class="tab-pane fade show active" id="nav-solution" role="tabpanel" aria-labelledby="nav-solution-tab">
     <% unless @solution.present? %>
-      <div class="alert alert-info">
-        <p>Aún no resolviste este desafío.</p>
-      </div>
+      <%= render partial: 'shared/alert', locals: { message: "Aún no resolviste este desafío." } %>
     <% else %>
       <%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: @solution.wording, language: @challenge.language} %>
 
@@ -101,21 +89,13 @@
 
       <% if @solution.draft? %>
 
-        <div class="alert alert-info">
-          <p>
-            Cuando consideres que tu solución está presentable... ¡publicala! Así podrás recibir revisiones, y revisar
-            las
-            soluciones de otros participantes.
-          </p>
-        </div>
+        <%= render partial: 'shared/alert', locals: { message: "Cuando consideres que tu solución está presentable... ¡publicala! Así podrás recibir revisiones, y revisar las soluciones de otros participantes." } %>
 
       <% else %>
 
         <h3>Revisiones Recibidas</h3>
         <% if @solution.reviews.final.empty? %>
-          <div class="alert alert-info">
-            <p>Tu solución aún no ha recibido revisiones.</p>
-          </div>
+          <%= render partial: 'shared/alert', locals: { message: "Tu solución aún no ha recibido revisiones." } %>
         <% else %>
           <div class="row">
             <div class="col-2">
@@ -155,9 +135,7 @@
 
   <div class="tab-pane fade" id="nav-reviews" role="tabpanel" aria-labelledby="nav-reviews-tab">
     <% if @challenge.reviews.where(reviewer: current_user).empty? %>
-      <div class="alert alert-info">
-        <p>No realizaste revisiones aún.</p>
-      </div>
+      <%= render partial: 'shared/alert', locals: { message: "No realizaste revisiones." } %>
     <% else %>
       <div class="row">
         <div class="col-2">
@@ -210,9 +188,7 @@
 
   <div class="tab-pane fade" id="nav-examples" role="tabpanel" aria-labelledby="nav-examples-tab">
     <% unless @challenge.has_picked_solutions? %>
-      <div class="alert alert-info">
-        <p>Aún no hay soluciones sugeridas.</p>
-      </div>
+      <%= render partial: 'shared/alert', locals: { message: "Aún no hay soluciones sugeridas." } %>
     <% else %>
       <div class="row">
         <div class="col-2">
@@ -243,7 +219,6 @@
                     <% end %>
                   </div>
                 <% end %>
-
                 <%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: solution.wording, language: @challenge.language} %>
               </div>
             <% end %>
