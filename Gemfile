@@ -78,7 +78,7 @@ end
 
 # File management
 gem "active_storage_validations", "~> 0.8"
-gem "aws-sdk-s3", "~> 1.64"
+gem "aws-sdk-s3", "~> 1.66"
 gem "mini_magick", "~> 4.10"
 gem "rubyzip", "~> 2.3"
 gem "zip-zip", "~> 0.3"
