@@ -26,6 +26,9 @@
         <th>Tipo de Revisiones</th>
         <th>Revisiones esperadas</th>
         <th><i class="fa fa-paperclip" title="¿Permite archivos adjuntos?"></i></th>
+        <% if policy(PeerReview::Challenge).manage? %>
+          <th><i class="fa fa-eye" title="Publicado"></i></th>
+        <% end %>
         <th class="no-sort">&nbsp;</th>
       </tr>
       </thead>
@@ -33,9 +36,6 @@
       <% @challenges.each do |challenge| %>
         <tr class="fork">
           <td>
-            <% if current_user.teacher? %>
-              <i class="fa <%= challenge.published? ? 'fa-eye' : 'fa-eye-slash' %>"></i>
-            <% end %>
             <%= link_to challenge.title, peer_review_challenge_path(challenge) %>
           </td>
           <td>
@@ -59,6 +59,11 @@
           <td>
             <%= yes_no challenge.allows_attachment? %>
           </td>
+          <% if policy(PeerReview::Challenge).manage? %>
+            <td>
+              <%= yes_no challenge.published? %>
+            </td>
+          <% end %>
           <td>
             <div class="btn-group display">
               <% if policy(PeerReview::Challenge).manage? %>
