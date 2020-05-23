@@ -12,4 +12,8 @@ module ApplicationHelper
   def yes_no(bool_value)
     bool_value ? "Si" : "No"
   end
+
+  def checkmark(bool_value)
+    render "shared/checkmark", value: bool_value
+  end
 end

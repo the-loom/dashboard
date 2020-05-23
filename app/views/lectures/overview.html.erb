@@ -37,9 +37,7 @@
           <td>
             <% if lecture.required? %>
               <% present = student.present_at(lecture) %>
-              <label class="label label-<%= present ? 'success' : 'danger' %>">
-                <%= present ? '✔' : '✘' %>
-              </label>
+              <%= checkmark present %>
             <% else %>
               <label class="label label-default">
                 ✘
