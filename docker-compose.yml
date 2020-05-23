@@ -6,10 +6,10 @@ volumes:
 
 services:
   db:
-    image: postgres:9.5.12-alpine
+    image: postgres:12.3-alpine
     env_file: .env
     volumes:
-      - $PWD/db-data:/var/lib/postgresql/data
+      - $PWD/../loom-database:/var/lib/postgresql/data
     ports:
       - "15432:5432"
 

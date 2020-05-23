@@ -46,16 +46,16 @@ build:
 	docker-compose run app bundle install --no-deployment
 
 migrate:
-	docker-compose run app rake db:migrate
+	docker-compose run app bundle exec rake db:migrate
 
 rubocop:
-	docker-compose run app rubocop --auto-correct
+	docker-compose run app bundle exec rubocop --auto-correct
 
 rbp:
 	docker-compose run app bundle exec rails_best_practices -f html .
 
 routes:
-	docker-compose run app rake routes
+	docker-compose run app bundle exec rake routes
 
 logs:
 	docker-compose logs -tf
@@ -70,11 +70,12 @@ tests:
 use_production_db:
 	$(MAKE) stop
 	heroku pg:backups capture --app the-loom
-	curl -o tmp/latest.dump `heroku pg:backups public-url --app the-loom`
+	heroku pg:backups download --app the-loom
+	mv latest.dump tmp/latest.dump
 	docker-compose run app bundle exec rake db:drop db:create
 	docker cp tmp/latest.dump loom-dashboard_db_1:/latest.dump
 	! docker exec loom-dashboard_db_1 pg_restore --verbose --clean --no-acl --no-owner -h localhost -d loom_development -U loom /latest.dump
-	docker-compose run app bundle exec rake db:migrate
+	$(MAKE) migrate
 
 cleanup_download:
 	rm tmp/latest.dump
