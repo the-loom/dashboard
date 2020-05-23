@@ -10,6 +10,7 @@
     <th>Título</th>
     <th>Vencimiento</th>
     <th>Estado</th>
+    <th>Opcional</th>
     <th>Ejemplo de resolución</th>
   </tr>
   </thead>
@@ -34,6 +35,9 @@
       </td>
       <td>
         <%= challenge.enabled? ? "Vigente" : "Finalizado" %>
+      </td>
+      <td>
+        <%= yes_no challenge.optional? %>
       </td>
       <td>
         <%= yes_no challenge.has_picked_solutions? %>

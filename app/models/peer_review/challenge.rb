@@ -29,6 +29,7 @@ class PeerReview::Challenge < ApplicationRecord
       errors.add(:team_challenge, "no puede cambiar porque ya hay soluciones publicadas") if team_challenge_changed?
       errors.add(:solution_type, "no puede cambiar porque ya hay soluciones publicadas") if solution_type_changed?
       errors.add(:language, "no puede cambiar porque ya hay soluciones publicadas") if language_changed?
+      errors.add(:optional, "no puede cambiar porque ya hay soluciones publicadas") if saved_change_to_optional?
     end
 
     unless reviews.empty?

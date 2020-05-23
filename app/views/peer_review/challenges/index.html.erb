@@ -22,6 +22,7 @@
         <th>Vencimiento</th>
         <th>Estado</th>
         <th>Dificultad</th>
+        <th>Opcional</th>
         <th>Tipo de Revisiones</th>
         <th>Revisiones esperadas</th>
         <th><i class="fa fa-paperclip" title="¿Permite archivos adjuntos?"></i></th>
@@ -45,6 +46,9 @@
           </td>
           <td>
             <%= difficulty challenge.difficulty %>
+          </td>
+          <td>
+            <%= yes_no challenge.optional? %>
           </td>
           <td>
             <%= t "challenges.challenge_modes.#{challenge.challenge_mode}" %>
