@@ -43,7 +43,7 @@ build:
 	$(MAKE) init
 	$(MAKE) mine
 	docker-compose build
-	docker-compose run app bundle
+	docker-compose run app bundle install --no-deployment
 
 migrate:
 	docker-compose run app rake db:migrate
