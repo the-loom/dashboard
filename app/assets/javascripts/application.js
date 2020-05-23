@@ -19,4 +19,6 @@
 //= require messenger/build/js/messenger
 //= require bootstrap3-typeahead/bootstrap3-typeahead
 //= require bootstrap-tour/build/js/bootstrap-tour
+//= require codemirror/lib/codemirror
+//= require codemirror/mode/clike/clike
 //= require_tree .
