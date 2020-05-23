@@ -1,0 +1,13 @@
+- alert_type ||= 'info'
+- dismissable ||= false
+- title ||= nil
+.alert.alert-dismissible.fade.show{role: "alert", class: "alert-#{alert_type}"}
+  - if title
+    %p
+      %strong
+        = title
+  %p
+    = message
+  - if dismissable
+    %button.close{"aria-label" => "Close", "data-dismiss" => "alert", type: "button"}
+      %span{"aria-hidden" => "true"} ×

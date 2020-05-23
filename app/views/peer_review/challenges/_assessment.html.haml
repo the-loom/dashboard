@@ -1,0 +1,12 @@
+- if review.teacher_assessment.to_sym != :pending
+  %div{class: "alert alert-#{review.teacher_assessment.to_sym == :good ? 'success' : 'danger'}"}
+    %p
+      Esta revisión fue evaluada como
+      %strong= t "reviews.assessments.#{review.teacher_assessment}"
+    - if review.teacher_assessment_description.present?
+      %blockquote.blockquote
+        %p
+          != review.teacher_assessment_description
+        %footer.blockquote-footer
+          = review.assessor.short_name
+

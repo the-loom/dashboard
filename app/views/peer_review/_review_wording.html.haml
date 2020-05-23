@@ -1,0 +1,4 @@
+- if quick_review
+  != "<ul><li>" + JSON.parse(wording).join("</li><li>") + "</li></ul>"
+- else
+  != wording

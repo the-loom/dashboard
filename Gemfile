@@ -12,7 +12,10 @@ gem "responders", "~> 3.0"
 gem "sass-rails", "~> 6.0"
 gem "therubyracer", "~> 0.12", platforms: :ruby
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# Templating
 gem "uglifier", "~> 4.2"
+gem "haml-rails", "~> 2.0"
 
 # Bug reporting
 gem "rollbar", "~> 2.25"
