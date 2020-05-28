@@ -54,6 +54,10 @@ Rails.application.routes.draw do
     publishable
   end
 
+  resources :suggestions, only: [:index, :new, :create, :destroy] do
+    get :dismissed, on: :collection
+  end
+
   resources :partners, only: :index
 
   resources :repos, only: [:index, :new, :create]

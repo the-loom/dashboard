@@ -1,0 +1,16 @@
+- nav_add 'Sugerencias', suggestions_path
+- nav_add @labels.title, '#'
+= nav_render
+
+= simple_form_for @suggestion do |f|
+  = render :partial => 'shared/errors', locals: { f: f }
+  = f.input :title, label: "Título"
+  = f.input :body, label: "Detalles", as: :trix_editor
+  = f.input :suggestion_type, label: 'Alcance', collection: Suggestion.suggestion_types.map { |key, _| [t("suggestions.suggestion_type.#{key}"), key]}, include_blank: false
+  = f.button :submit, @labels.button, class: "btn-primary"
+
+= content_for :head do
+  %link{href: "https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.0/trix.css", rel: "stylesheet"}
+
+= content_for :javascript do
+  %script{src: "https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.0/trix.js", type: "application/javascript"}

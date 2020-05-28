@@ -29,6 +29,11 @@ es:
       good: 'buena'
       bad: 'mala'
 
+  suggestions:
+    suggestion_type:
+      course: 'Sobre el curso'
+      platform: 'Sobre Loom'
+
   course:
     features:
       badges: 'Emblemas'

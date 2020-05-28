@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_21_144859) do
+ActiveRecord::Schema.define(version: 2020_05_28_122153) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -261,10 +261,10 @@ ActiveRecord::Schema.define(version: 2020_05_21_144859) do
     t.date "due_date"
     t.boolean "allows_attachment", default: false
     t.integer "expected_reviews", default: 1
+    t.boolean "team_challenge", default: false
     t.string "language"
     t.integer "solution_type", default: 0
     t.boolean "allows_quick_reviews", default: false
-    t.boolean "team_challenge", default: false
     t.boolean "awarded", default: false
     t.boolean "optional", default: false
   end
@@ -277,8 +277,8 @@ ActiveRecord::Schema.define(version: 2020_05_21_144859) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "teacher_assessment", default: 0
-    t.string "teacher_assessment_description"
     t.integer "assessor_id"
+    t.string "teacher_assessment_description"
   end
 
   create_table "peer_review_solutions", force: :cascade do |t|
@@ -306,6 +306,18 @@ ActiveRecord::Schema.define(version: 2020_05_21_144859) do
     t.integer "course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "suggestions", force: :cascade do |t|
+    t.string "title"
+    t.text "body"
+    t.integer "suggestion_type"
+    t.integer "course_id"
+    t.integer "author_id"
+    t.datetime "discarded_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["discarded_at"], name: "index_suggestions_on_discarded_at"
   end
 
   create_table "teams", id: :serial, force: :cascade do |t|
