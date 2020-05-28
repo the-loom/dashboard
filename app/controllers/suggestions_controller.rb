@@ -10,7 +10,11 @@ class SuggestionsController < ApplicationController
 
   def dismissed
     authorize Suggestion, :manage?
-    @suggestions = Suggestion.unscoped.discarded
+    if current_user.admin?
+      @suggestions = Suggestion.unscoped.discarded
+    else
+      @suggestions = Suggestion.discarded
+    end
     render action: :index
   end
 
@@ -41,6 +45,15 @@ class SuggestionsController < ApplicationController
 
     suggestion = Suggestion.find(params[:id])
     suggestion.discard
+
+    redirect_to suggestions_path
+  end
+
+  def restore
+    authorize Suggestion, :manage?
+
+    suggestion = Suggestion.find(params[:id])
+    suggestion.undiscard
 
     redirect_to suggestions_path
   end

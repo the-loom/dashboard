@@ -24,14 +24,19 @@
   %table.suggestions.table.table-hover
     %thead
       %tr
+        %th Fecha
         %th Tipo
         %th Sugerencia
         %th Sugerido por
+        - if current_user.admin?
+          %th Curso
         - if policy(Suggestion).manage?
           %th.no-sort  
     %tbody
       - @suggestions.each do |suggestion|
         %tr
+          %td
+            = suggestion.created_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M")
           %td
             = t "suggestions.suggestion_type.#{suggestion.suggestion_type}"
           %td
@@ -40,9 +45,15 @@
             %p!= suggestion.body
           %td
             = suggestion.author.short_name
+          - if current_user.admin?
+            %td
+              = suggestion.course.name
           - if policy(Suggestion).manage?
             %td
-              = link_to "Eliminar", suggestion_path(suggestion), method: :delete, class: 'btn btn-danger btn-sm'
+              - if suggestion.kept?
+                = link_to "Eliminar", suggestion_path(suggestion), method: :delete, class: 'btn btn-danger btn-sm'
+              - else
+                = link_to "Restaurar", restore_suggestion_path(suggestion), method: :post, class: 'btn btn-success btn-sm'
 
 = content_for :head do
   %link{href: "https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css", rel: "stylesheet"}

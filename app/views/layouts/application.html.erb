@@ -56,8 +56,12 @@
 </div> <!-- /container -->
 
 <%= javascript_include_tag 'application' %>
-<script src="https://use.fontawesome.com/0d95d7e55f.js" async="async"></script>
+<script src="https://kit.fontawesome.com/5acba6449b.js" crossorigin="anonymous"></script>
 <%= yield :javascript %>
+
+<%= link_to suggestions_path, class: 'btn btn-primary btn-suggestions' do %>
+  <i class="fas fa-lightbulb"></i> Sugerencias
+<% end %>
 
 </body>
 </html>
