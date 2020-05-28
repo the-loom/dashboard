@@ -23,7 +23,7 @@ class PeerReviewChallengeSolverStats
     solution.reviews.final.find { |r| r.reviewer.teacher? } != nil
   end
 
-  def reviewed_by_teachers
+  def teachers_who_reviewed
     solution.reviews.final.select { |r| r.reviewer.teacher? }.map(&:reviewer).map(&:short_name).join(", ")
   end
 end
