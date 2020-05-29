@@ -57,6 +57,9 @@ Rails.application.routes.draw do
   resources :suggestions, only: [:index, :new, :create, :destroy] do
     get :dismissed, on: :collection
     post :restore, on: :member
+    post :upvote, on: :member
+    post :downvote, on: :member
+    post :unvote, on: :member
   end
 
   resources :partners, only: :index

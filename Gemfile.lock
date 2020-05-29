@@ -44,6 +44,7 @@ GEM
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    acts_as_votable (0.12.1)
     annotate (3.1.1)
       activerecord (>= 3.2, < 7.0)
       rake (>= 10.4, < 14.0)
@@ -340,6 +341,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_storage_validations (~> 0.8)
+  acts_as_votable (~> 0.12)
   annotate (~> 3.1)
   aws-sdk-s3 (~> 1.66)
   better_errors (~> 2.7)

@@ -24,7 +24,7 @@
   %table.suggestions.table.table-hover
     %thead
       %tr
-        %th Fecha
+        %th Votos
         %th Tipo
         %th Sugerencia
         %th Sugerido por
@@ -35,14 +35,24 @@
     %tbody
       - @suggestions.each do |suggestion|
         %tr
-          %td
-            = suggestion.created_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M")
+          %td{style: 'text-align: center'}
+            %h4
+              = suggestion.weighted_score
+            %nobr
+              = link_to upvote_suggestion_path(suggestion), method: :post, class: 'btn btn-default btn-sm', title: 'A favor', disabled: current_user.voted_as_when_voted_for(suggestion) do
+                %i.far.fa-thumbs-up
+              = link_to downvote_suggestion_path(suggestion), method: :post, class: 'btn btn-default btn-sm', title: 'En contra', disabled: false == current_user.voted_as_when_voted_for(suggestion) do
+                %i.far.fa-thumbs-down
+              = link_to unvote_suggestion_path(suggestion), method: :post, class: 'btn btn-default btn-sm', title: 'Retirar voto', disabled: current_user.voted_as_when_voted_for(suggestion).nil? do
+                %i.fas.fa-times
           %td
             = t "suggestions.suggestion_type.#{suggestion.suggestion_type}"
           %td
             %p
               %strong= suggestion.title
             %p!= suggestion.body
+            %p
+              %em= suggestion.created_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M")
           %td
             = suggestion.author.short_name
           - if current_user.admin?
@@ -63,7 +73,7 @@
   :javascript
     $(function () {
       $('.suggestions').DataTable({
-        order: [[1, "asc"]],
+        order: [[0, "desc"]],
         paging: false,
         language: {
           url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"

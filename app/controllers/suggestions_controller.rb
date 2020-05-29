@@ -18,6 +18,30 @@ class SuggestionsController < ApplicationController
     render action: :index
   end
 
+  def upvote
+    authorize Suggestion, :use?
+    suggestion = Suggestion.find(params[:id])
+    suggestion.vote_up current_user
+    redirect_to suggestions_path
+    flash[:info] = "¡Gracias por tu voto!"
+  end
+
+  def downvote
+    authorize Suggestion, :use?
+    suggestion = Suggestion.find(params[:id])
+    suggestion.vote_down current_user
+    redirect_to suggestions_path
+    flash[:info] = "¡Gracias por tu voto!"
+  end
+
+  def unvote
+    authorize Suggestion, :use?
+    suggestion = Suggestion.find(params[:id])
+    suggestion.unvote_up current_user
+    suggestion.unvote_down current_user
+    redirect_to suggestions_path
+  end
+
   def new
     authorize Suggestion, :use?
     @suggestion = Suggestion.new

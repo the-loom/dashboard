@@ -1,6 +1,7 @@
 class Suggestion < ApplicationRecord
   include CourseLock
   include Discard::Model
+  acts_as_votable
 
   validates_presence_of :title, :body
 
