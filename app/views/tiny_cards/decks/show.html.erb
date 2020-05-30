@@ -3,7 +3,8 @@
 <%= nav_render %>
 
 <% if policy(TinyCards::Card).manage? %>
-  <%= link_to 'Nueva carta', new_tiny_cards_deck_card_path(@deck), class: 'btn btn-primary pull-right' %>
+  <%= link_to 'Nueva carta', new_tiny_cards_deck_card_path(@deck), class: 'btn btn-primary' %>
+  <br><br>
 <% end %>
 
 <section class="forks">
