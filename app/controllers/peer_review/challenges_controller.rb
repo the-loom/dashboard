@@ -26,6 +26,10 @@ module PeerReview
       @overview = PeerReview::OverviewPresenter.new(@challenge)
     end
 
+    def flow_overview
+      @flow_overview = PeerReview::FlowOverviewPresenter.new(PeerReview::Review.includes(:reviewer, :solution, solution: :author))
+    end
+
     def bulk_download
       # TODO: use case
       @challenge = PeerReview::Challenge.find(params[:id])
