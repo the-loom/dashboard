@@ -59,8 +59,10 @@
 <script src="https://kit.fontawesome.com/5acba6449b.js" crossorigin="anonymous"></script>
 <%= yield :javascript %>
 
-<%= link_to suggestions_path, class: 'btn btn-primary btn-suggestions' do %>
-  <i class="fas fa-lightbulb"></i> Sugerencias
+<% if current_user and current_user.current_membership %>
+  <%= link_to suggestions_path, class: 'btn btn-primary btn-suggestions' do %>
+    <i class="fas fa-lightbulb"></i> Sugerencias
+  <% end %>
 <% end %>
 
 </body>
