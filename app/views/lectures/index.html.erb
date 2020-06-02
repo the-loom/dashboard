@@ -2,9 +2,8 @@
 <% nav_add 'Clases', '#' %>
 <%= nav_render %>
 
-<div class="row">
-  <%= link_to 'Nueva clase', new_lecture_path, class: 'btn btn-primary pull-right' %>
-</div>
+<%= link_to 'Nueva clase', new_lecture_path, class: 'btn btn-primary' %>
+<br><br>
 
 <% if @lectures.empty? %>
 
