@@ -309,6 +309,18 @@ ActiveRecord::Schema.define(version: 2020_05_30_221702) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "suggestions", force: :cascade do |t|
+    t.string "title"
+    t.text "body"
+    t.integer "suggestion_type"
+    t.integer "course_id"
+    t.integer "author_id"
+    t.datetime "discarded_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["discarded_at"], name: "index_suggestions_on_discarded_at"
+  end
+
   create_table "teams", id: :serial, force: :cascade do |t|
     t.string "name"
     t.string "nickname"
@@ -346,6 +358,20 @@ ActiveRecord::Schema.define(version: 2020_05_30_221702) do
     t.datetime "discarded_at"
     t.integer "last_visited_course_id", default: 0
     t.index ["discarded_at"], name: "index_users_on_discarded_at"
+  end
+
+  create_table "votes", id: :serial, force: :cascade do |t|
+    t.string "votable_type"
+    t.integer "votable_id"
+    t.string "voter_type"
+    t.integer "voter_id"
+    t.boolean "vote_flag"
+    t.string "vote_scope"
+    t.integer "vote_weight"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["votable_id", "votable_type", "vote_scope"], name: "index_votes_on_votable_id_and_votable_type_and_vote_scope"
+    t.index ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

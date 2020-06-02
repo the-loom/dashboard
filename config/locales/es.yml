@@ -9,13 +9,6 @@ es:
   time:
     formats:
       default: "%d/%m/%Y"
-  timers:
-    stages:
-      analysis: 'Análisis'
-      test_preparation: 'Preparación de la prueba'
-      design: 'Diseño'
-      coding: 'Desarrollo'
-      text_execution: 'Ejecución de la prueba'
 
   challenges:
     challenge_modes:
@@ -28,6 +21,11 @@ es:
       pending: 'pendiente'
       good: 'buena'
       bad: 'mala'
+
+  suggestions:
+    suggestion_type:
+      course: 'Sobre el curso'
+      platform: 'Sobre Loom'
 
   course:
     features:

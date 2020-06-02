@@ -1,0 +1,86 @@
+
+- if params[:action] == "dismissed"
+  - nav_add 'Sugerencias', suggestions_path
+  - nav_add 'Rechazadas', '#'
+- else
+  - nav_add 'Sugerencias', '#'
+= nav_render
+
+- if policy(Suggestion).manage?
+  - if params[:action] == "index"
+    = link_to({ controller: 'suggestions', action: 'dismissed' }, { class: 'btn btn-default' }) do
+      %i.fa.fa-recycle
+      Sugerencias rechazadas
+
+- if policy(Suggestion).use?
+  = link_to 'Nueva sugerencia', new_suggestion_path, class: 'btn btn-primary'
+  %br/
+  %br/
+
+- if @suggestions.empty?
+  .alert.alert-info
+    %p Aún no hay ninguna sugerencia
+- else
+  %table.suggestions.table.table-hover
+    %thead
+      %tr
+        %th Votos
+        %th Tipo
+        %th Sugerencia
+        %th Sugerido por
+        - if current_user.admin?
+          %th Curso
+        - if policy(Suggestion).manage?
+          %th.no-sort  
+    %tbody
+      - @suggestions.each do |suggestion|
+        %tr
+          %td{style: 'text-align: center'}
+            %h4
+              = suggestion.weighted_score
+            %nobr
+              = link_to upvote_suggestion_path(suggestion), method: :post, class: 'btn btn-default btn-sm', title: 'A favor', disabled: current_user.voted_as_when_voted_for(suggestion) do
+                %i.far.fa-thumbs-up
+              = link_to downvote_suggestion_path(suggestion), method: :post, class: 'btn btn-default btn-sm', title: 'En contra', disabled: false == current_user.voted_as_when_voted_for(suggestion) do
+                %i.far.fa-thumbs-down
+              = link_to unvote_suggestion_path(suggestion), method: :post, class: 'btn btn-default btn-sm', title: 'Retirar voto', disabled: current_user.voted_as_when_voted_for(suggestion).nil? do
+                %i.fas.fa-times
+          %td
+            = t "suggestions.suggestion_type.#{suggestion.suggestion_type}"
+          %td
+            %p
+              %strong= suggestion.title
+            %p!= suggestion.body
+            %p
+              %em= suggestion.created_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M")
+          %td
+            = suggestion.author.short_name
+          - if current_user.admin?
+            %td
+              = suggestion.course.name
+          - if policy(Suggestion).manage?
+            %td
+              - if suggestion.kept?
+                = link_to "Eliminar", suggestion_path(suggestion), method: :delete, class: 'btn btn-danger btn-sm'
+              - else
+                = link_to "Restaurar", restore_suggestion_path(suggestion), method: :post, class: 'btn btn-success btn-sm'
+
+= content_for :head do
+  %link{href: "https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css", rel: "stylesheet"}
+
+= content_for :javascript do
+  %script{src: "https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js", type: "application/javascript"}
+  :javascript
+    $(function () {
+      $('.suggestions').DataTable({
+        order: [[0, "desc"]],
+        paging: false,
+        language: {
+          url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+        },
+        columnDefs: [{
+          targets: 'no-sort',
+          orderable: false
+        }]
+      });
+    });

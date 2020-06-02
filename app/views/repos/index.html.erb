@@ -1,9 +1,11 @@
 <legend>
   Listado de desafíos
-  <% if policy(AutomaticCorrection::Repo).manage? %>
-    <%= link_to 'Nuevo desafio', new_repo_path, class: 'btn btn-primary pull-right' %>
-  <% end %>
 </legend>
+
+<% if policy(AutomaticCorrection::Repo).manage? %>
+  <%= link_to 'Nuevo desafio', new_repo_path, class: 'btn btn-primary' %>
+  <br><br>
+<% end %>
 
 <section class="forks">
 

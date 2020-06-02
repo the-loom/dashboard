@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   include Discard::Model
+  acts_as_voter
 
   validates_uniqueness_of :uuid
 
