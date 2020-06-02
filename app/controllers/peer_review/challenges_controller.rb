@@ -27,6 +27,7 @@ module PeerReview
     end
 
     def flow_overview
+      # optimizar: pedir memberships?
       @flow_overview = PeerReview::FlowOverviewPresenter.new(PeerReview::Review.includes(:reviewer, :solution, solution: :author))
     end
 

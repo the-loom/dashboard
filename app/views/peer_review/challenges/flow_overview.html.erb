@@ -1,36 +1,53 @@
-<!DOCTYPE html>
-<html class="ocks-org do-not-copy">
-<meta charset="utf-8">
-<title>Uber Rides by Neighborhood</title>
-<style>
+<div class="row">
+  <legend>Distribución de Revisiones</legend>
+  <div class="col-md-6">
+  <div id="teacher_reviews_chart"></div>
+  </div>
+  <div class="col-md-6">
+    <div id="student_reviews_chart"></div>
+  </div>
+</div>
 
-  #circle circle {
-    fill: none;
-    pointer-events: all;
-  }
+<div class="row">
+  <legend>Flujo de revisiones</legend>
+  <div class="col-md-12">
+    <div id="flow_chart" style="text-align: center"></div>
+  </div>
+</div>
 
-  .group path {
-    fill-opacity: .5;
-  }
 
-  path.chord {
-    stroke: #000;
-    stroke-width: .25px;
-  }
+<% content_for :head do %>
+  <style>
 
-  #circle:hover path.fade {
-    display: none;
-  }
+    #circle circle {
+      fill: none;
+      pointer-events: all;
+    }
 
-</style>
+    .group path {
+      fill-opacity: .5;
+    }
 
+    path.chord {
+      stroke: #000;
+      stroke-width: .25px;
+    }
+
+    #circle:hover path.fade {
+      display: none;
+    }
+
+  </style>
+<% end %>
 
 <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script src="//d3js.org/queue.v1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.22/c3.min.js"></script>
 <script>
 
-    var width = 1080,
-        height = 1080,
+  // make it "responsive"?
+    var width = 720,
+        height = 720,
         outerRadius = Math.min(width, height) / 2 - 10,
         innerRadius = outerRadius - 24;
 
@@ -47,7 +64,7 @@
         .radius(innerRadius);
 
     // ubicar el chart
-    var svg = d3.select("body").append("svg")
+    var svg = d3.select("#flow_chart").append("svg")
         .attr("width", width)
         .attr("height", height)
         .append("g")
@@ -57,8 +74,6 @@
     svg.append("circle")
         .attr("r", outerRadius);
 
-
-    // ordenar por cantidad de correcciones
     var members = <%== @flow_overview.reviewers.to_json %>;
     var matrix = <%== @flow_overview.matrix.to_json %>;
     ready(members, matrix);
@@ -135,6 +150,32 @@
             });
         }
     }
+
+
+
+
+  c3.generate({
+      bindto: "#teacher_reviews_chart",
+      data: {
+          columns: <%== @flow_overview.teacher_reviews.to_json %>,
+          type : 'donut'
+      },
+      donut: {
+          title: "Docentes"
+      }
+  });
+
+  c3.generate({
+      bindto: "#student_reviews_chart",
+      data: {
+          columns: <%== @flow_overview.student_reviews.to_json %>,
+          type : 'donut'
+      },
+      donut: {
+          title: "Estudiantes"
+      }
+  });
+
 
 </script>
 
