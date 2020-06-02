@@ -14,8 +14,8 @@ gem "therubyracer", "~> 0.12", platforms: :ruby
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Templating
-gem "uglifier", "~> 4.2"
 gem "haml-rails", "~> 2.0"
+gem "uglifier", "~> 4.2"
 
 # Bug reporting
 gem "rollbar", "~> 2.25"
@@ -63,7 +63,7 @@ group :development do
   gem "web-console", "~> 3.7"
 
   # Creating dev data
-  gem "ffaker", "~> 2.14"
+  gem "ffaker", "~> 2.15"
 
   # Best practices
   gem "rails_best_practices", "~> 1.20"
@@ -80,10 +80,13 @@ end
 
 # File management
 gem "active_storage_validations", "~> 0.8"
-gem "aws-sdk-s3", "~> 1.66"
+gem "aws-sdk-s3", "~> 1.67"
 gem "mini_magick", "~> 4.10"
 gem "rubyzip", "~> 2.3"
 gem "zip-zip", "~> 0.3"
 
 # Syntax highlighting
 gem "rouge", "~> 3.19"
+
+# Voting
+gem "acts_as_votable", "~> 0.12"

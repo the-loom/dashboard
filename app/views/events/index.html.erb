@@ -2,9 +2,8 @@
 <% nav_add 'Eventos', '#' %>
 <%= nav_render %>
 
-<div class="row">
-  <%= link_to 'Nuevo evento', new_event_url, class: 'btn btn-primary pull-right' %>
-</div>
+<%= link_to 'Nuevo evento', new_event_url, class: 'btn btn-primary' %>
+<br><br>
 
 <% if @events.empty? %>
 
