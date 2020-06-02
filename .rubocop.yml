@@ -5,15 +5,9 @@ inherit_gem:
 require:
   - rubocop-performance
   - rubocop-rake
-  - rubocop-i18n
 
 AllCops:
   TargetRubyVersion: 2.4
 
 Style/FrozenStringLiteralComment:
-  Enabled: false
-
-RailsI18n:
-  Enabled: true
-GetText:
   Enabled: false

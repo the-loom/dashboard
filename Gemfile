@@ -14,8 +14,8 @@ gem "therubyracer", "~> 0.12", platforms: :ruby
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Templating
-gem "uglifier", "~> 4.2"
 gem "haml-rails", "~> 2.0"
+gem "uglifier", "~> 4.2"
 
 # Bug reporting
 gem "rollbar", "~> 2.25"
@@ -87,3 +87,6 @@ gem "zip-zip", "~> 0.3"
 
 # Syntax highlighting
 gem "rouge", "~> 3.19"
+
+# Voting
+gem "acts_as_votable", "~> 0.12"
