@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   root "pages#welcome"
 
+  def publishable
+    post :publish, on: :member
+    post :unpublish, on: :member
+  end
+
   match "/auth/:provider/callback", to: "sessions#create", via: [:get, :post]
   match "/auth/failure", to: "sessions#failure", via: :get
 
@@ -21,37 +26,12 @@ Rails.application.routes.draw do
       post :promote
     end
   end
+
+  resources :teams, except: :show
+
   resources :teachers, only: [:index, :destroy] do
     post :join, on: :collection
     post :demote, on: :member
-  end
-
-  resources :badges, only: [:index, :show, :new, :create, :edit, :update]
-  resources :occurrences, only: :destroy
-  resources :events, only: [:index, :show, :new, :create, :edit, :update]
-  resources :earnings, only: :destroy
-
-  resources :competence_tags, except: :show
-
-  resources :stats do
-    collection do
-      get :points
-    end
-  end
-
-  resources :lectures, except: :destroy do
-    collection do
-      get :overview
-    end
-  end
-
-  def publishable
-    post :publish, on: :member
-    post :unpublish, on: :member
-  end
-
-  resources :exercises do
-    publishable
   end
 
   resources :suggestions, only: [:index, :new, :create, :destroy] do
@@ -62,23 +42,19 @@ Rails.application.routes.draw do
     post :unvote, on: :member
   end
 
-  resources :partners, only: :index
+  resources :badges, only: [:index, :show, :new, :create, :edit, :update]
+  resources :occurrences, only: :destroy
 
-  resources :repos, only: [:index, :new, :create]
-  get "repos/:user/:name" => "repos#show", as: :repo, constraints: { user: /[0-z\.-]+/ }
-  get "repos/:user/:name/grade" => "repos#grade", as: :grade, constraints: { user: /[0-z\.-]+/ }
-  resources :test_runs, only: [:show]
+  resources :events, only: [:index, :show, :new, :create, :edit, :update]
+  resources :earnings, only: :destroy
 
-  namespace :api, defaults: { format: :json } do
-    namespace :v1 do
-      resources :repos do
-        match :pending, via: [:get], on: :collection
-        match :grade, via: [:post], on: :member
-      end
+  resources :competence_tags, except: :show
+
+  resources :stats do
+    collection do
+      get :points
     end
   end
-
-  resources :teams, except: :show
 
   get "/teams/:nickname" => "teams#show", as: :team_profile, constraints: { nickname: /[0-z\.-]+/ }
   # resources :articles, param: :slug
@@ -91,24 +67,23 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :dashboard, only: :index
+  resources :resource_categories, except: [:show]
+  resources :resources, except: [:show] do
+    publishable
+  end
 
-  namespace :admin do
-    resources :courses do
-      member do
-        get :toggle
-        post :restore
-      end
-    end
-    resources :users, only: [:index, :destroy, :edit, :update] do
-      member do
-        get :impersonate
-        post :restore
-      end
+  resources :dashboard, only: :index
+  resources :notifications, only: [:index, :new, :create]
+
+  resources :lectures, except: :destroy do
+    collection do
+      get :overview
     end
   end
 
-  resources :notifications, only: [:index, :new, :create]
+  resources :exercises do
+    publishable
+  end
 
   namespace :multiple_choices do
     resources :questionnaires do
@@ -159,8 +134,32 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :resource_categories, except: [:show]
-  resources :resources, except: [:show] do
-    publishable
+  resources :repos, only: [:index, :new, :create]
+  get "repos/:user/:name" => "repos#show", as: :repo, constraints: { user: /[0-z\.-]+/ }
+  get "repos/:user/:name/grade" => "repos#grade", as: :grade, constraints: { user: /[0-z\.-]+/ }
+  resources :test_runs, only: [:show]
+
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      resources :repos do
+        match :pending, via: [:get], on: :collection
+        match :grade, via: [:post], on: :member
+      end
+    end
+  end
+
+  namespace :admin do
+    resources :courses do
+      member do
+        get :toggle
+        post :restore
+      end
+    end
+    resources :users, only: [:index, :destroy, :edit, :update] do
+      member do
+        get :impersonate
+        post :restore
+      end
+    end
   end
 end
