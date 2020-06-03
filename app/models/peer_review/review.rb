@@ -22,4 +22,9 @@ class PeerReview::Review < ApplicationRecord
   def publish!
     self.status = :final
   end
+
+  def notify!
+    Notification.create(subject: "¡Hay una nueva revisión para '#{challenge.title}'!", author: "Loombot", receiver: solution.author,
+                        text: "Podés ver tu revisión <a href='/peer_review/challenges/#{challenge.id}'>aquí</a>")
+  end
 end
