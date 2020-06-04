@@ -123,10 +123,10 @@ Rails.application.routes.draw do
           get :review
           post :save_review
           post :remove_attachment
-          post :unpublish
           post :pick
           post :unpick
         end
+        publishable
       end
       resources :reviews, only: [:new, :update] do
         patch :assess, on: :member

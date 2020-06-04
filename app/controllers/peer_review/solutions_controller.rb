@@ -21,6 +21,7 @@ module PeerReview
       @challenge = PeerReview::Challenge.find(params[:challenge_id])
       authorize @challenge, :solve?
       @solution = ::SolutionFinder.new(@challenge, current_user).find_solution
+      @solution.save
       authorize @solution, :solve?
     end
 
@@ -38,21 +39,16 @@ module PeerReview
       @solution = ::SolutionFinder.new(@challenge, current_user).find_solution
       authorize @solution, :solve?
       @solution.update_attributes(solution_params)
-      @solution.update_attributes(author: current_user)
-
-      @solution.publish! if publishing?
+      @solution.update_attributes(author: current_user) # team challenges, steal authorship
 
       if @solution.valid?
         @solution.save
-        redirect_to(peer_review_challenge_path(@challenge)) && (return)
         flash[:info] = "Se guardó correctamente la solución"
       else
         @solution.solution_attachment.purge if @solution.errors.include?(:solution_attachment)
         flash[:alert] = "Ha ocurrido un error con tu solución. " + @solution.errors.full_messages.join(", ")
-        @solution.unpublish!
-        # TEMP FIX
-        redirect_to(peer_review_challenge_path(@challenge)) && (return)
       end
+      redirect_to(peer_review_challenge_path(@challenge)) && (return)
     end
 
     def pick
@@ -81,6 +77,23 @@ module PeerReview
       redirect_to peer_review_challenge_solution_path(@solution.challenge, @solution)
     end
 
+    # use automatic publishable?
+    def publish
+      @challenge = PeerReview::Challenge.find(params[:challenge_id])
+      @solution = ::SolutionFinder.new(@challenge, current_user).find_solution
+      authorize @solution, :solve?
+      @solution.publish!
+
+      if @solution.valid?
+        flash[:info] = "Se publicó correctamente la solución"
+      else
+        flash[:alert] = "Ha ocurrido un error con tu solución. " + @solution.errors.full_messages.join(", ")
+        @solution.unpublish!
+      end
+      redirect_to(peer_review_challenge_path(@challenge)) && (return)
+    end
+
+    # use automatic publishable?
     def unpublish
       @challenge = PeerReview::Challenge.find(params[:challenge_id])
 
@@ -107,10 +120,6 @@ module PeerReview
     private
       def solution_params
         params[:peer_review_solution].permit(:wording, :solution_attachment)
-      end
-
-      def publishing?
-        params[:status].to_sym == :final
       end
   end
 end
