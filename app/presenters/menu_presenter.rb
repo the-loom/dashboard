@@ -17,12 +17,12 @@ class MenuPresenter
       ])
     end
 
-    if Pundit.policy(@current_user, User).manage? && Pundit.policy(@current_user, Team).manage? && Pundit.policy(@current_user, Lecture).manage?
+    if manage?(User) && manage?(Team) && manage?(Lecture)
       node = MenuNode.new("Aula", [])
       node.leafs << MenuLeaf.new("Docentes", route.teachers_path)
       node.leafs << MenuLeaf.new("Estudiantes", route.students_path)
-      node.leafs << MenuLeaf.new("Equipos", route.teams_path) if Course.current.on?(:teams)
-      if Course.current.on?(:lectures)
+      node.leafs << MenuLeaf.new("Equipos", route.teams_path) if on?(:teams)
+      if on?(:lectures)
         node.leafs << MenuLeaf.new("Clases", route.lectures_path)
         node.leafs << MenuSeparator.new
         node.leafs << MenuLeaf.new("Resumen de Asistencia", route.overview_lectures_path)
@@ -30,29 +30,29 @@ class MenuPresenter
       menu << node
     end
 
-    if Course.current.on?(:events) || Course.current.on?(:badges) || Course.current.on?(:competences)
+    if on?(:events) || on?(:badges) || on?(:competences)
       node = MenuNode.new("Gamificación", [])
-      node.leafs << MenuLeaf.new("Eventos", route.events_path) if Course.current.on?(:events)
-      node.leafs << MenuLeaf.new("Competencias", route.competence_tags_path) if Course.current.on?(:competences)
-      node.leafs << MenuLeaf.new("Emblemas", route.badges_path) if Course.current.on?(:badges)
+      node.leafs << MenuLeaf.new("Eventos", route.events_path) if on?(:events)
+      node.leafs << MenuLeaf.new("Competencias", route.competence_tags_path) if on?(:competences)
+      node.leafs << MenuLeaf.new("Emblemas", route.badges_path) if on?(:badges)
       node.leafs << MenuSeparator.new
       node.leafs << MenuLeaf.new("Estadísticas", route.points_stats_path)
       menu << node
     end
 
     menu << MenuLeaf.new("Tablero", route.dashboard_index_path)
-    menu << MenuLeaf.new("Recursos", route.resources_path) if Course.current.on?(:resources)
+    menu << MenuLeaf.new("Recursos", route.resources_path) if on?(:resources)
 
-    if Course.current.on?(:multiple_choices) || Course.current.on?(:tiny_cards) || Course.current.on?(:automatic_correction_challenges) || Course.current.on?(:peer_review_challenges) || Course.current.on?(:exercises)
+    if on?(:multiple_choices) || on?(:tiny_cards) || on?(:automatic_correction_challenges) || on?(:peer_review_challenges) || on?(:exercises)
       node = MenuNode.new("Ejercitación", [])
-      node.leafs << MenuLeaf.new("Tarjetas", route.tiny_cards_decks_path) if Course.current.on?(:tiny_cards)
-      node.leafs << MenuLeaf.new("Preguntas de Opción Múltiple", route.multiple_choices_questionnaires_path) if Course.current.on?(:multiple_choices)
-      node.leafs << MenuLeaf.new("Desafíos de Corrección Automática", route.repos_path) if Course.current.on?(:automatic_correction_challenges)
-      node.leafs << MenuLeaf.new("Desafíos de Revisión", route.peer_review_challenges_path) if Course.current.on?(:peer_review_challenges)
-      node.leafs << MenuLeaf.new("Ejercicios", route.exercises_path) if Course.current.on?(:exercises)
+      node.leafs << MenuLeaf.new("Tarjetas", route.tiny_cards_decks_path) if on?(:tiny_cards)
+      node.leafs << MenuLeaf.new("Preguntas de Opción Múltiple", route.multiple_choices_questionnaires_path) if on?(:multiple_choices)
+      node.leafs << MenuLeaf.new("Desafíos de Corrección Automática", route.repos_path) if on?(:automatic_correction_challenges)
+      node.leafs << MenuLeaf.new("Desafíos de Revisión", route.peer_review_challenges_path) if on?(:peer_review_challenges)
+      node.leafs << MenuLeaf.new("Ejercicios", route.exercises_path) if on?(:exercises)
       menu << node
     end
-    menu << NotificationLeaf.new(@current_user, route.notifications_path)
+    menu << MenuNotification.new(@current_user, route.notifications_path)
 
     courses_node = MenuNode.new(Course.current.name, [])
     if @current_user.teacher?
@@ -76,6 +76,19 @@ class MenuPresenter
 
     menu
   end
+
+  private
+    def on?(feature)
+      Course.current.on?(feature)
+    end
+
+    def policy?(entity, policy)
+      Pundit.policy(@current_user, entity).send(policy)
+    end
+
+    def manage?(entity)
+      policy?(entity, :manage?)
+    end
 end
 
 class MenuNode
@@ -98,7 +111,7 @@ end
 class MenuSeparator
 end
 
-class NotificationLeaf
+class MenuNotification
   attr_reader :counter, :link
   def initialize(user, link)
     @counter = user.current_membership.unread_notifications
