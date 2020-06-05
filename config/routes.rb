@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   match "/auth/failure", to: "sessions#failure", via: :get
 
   get "/logout" => "sessions#destroy", as: :logout
+  post "/admin_login" => "sessions#admin", as: :admin_login
 
   get "/profile" => "users#show", as: :profile
   get "/u/:nickname" => "users#show", as: :user_details, constraints: { nickname: /[0-z\.-]+/ }

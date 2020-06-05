@@ -1,6 +1,7 @@
 module Admin
   class UsersController < ApplicationController
     def index
+      authorize User, :impersonate?
       @users = User.all.includes([:memberships, avatar_attachment: :blob, memberships: :course])
     end
 
