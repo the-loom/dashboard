@@ -1,5 +1,14 @@
 <div id="navbar" class="navbar-collapse collapse">
   <ul class="nav navbar-nav navbar-right">
+
+
+
+    <% @menu.present.each do |menu| %>
+      <%= render partial:'layouts/menu2', locals: { menu: menu } %>
+    <% end %>
+
+
+
     <% if current_user and current_user.current_membership %>
 
       <% if current_user.admin? %>

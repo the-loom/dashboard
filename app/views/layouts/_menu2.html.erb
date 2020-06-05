@@ -1,0 +1,20 @@
+<% if menu.node? %>
+
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle tour-exit" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+      <%= menu.title %>
+      <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+      <% menu.leafs.each do |leaf| %>
+        <%= render partial:'/layouts/menu2', locals: { menu: leaf } %>
+      <% end %>
+    </ul>
+  </li>
+<% elsif menu.separator? %>
+  <li role="separator" class="divider"></li>
+<% else %>
+  <li>
+    <%= link_to menu.title, menu.link %>
+  </li>
+<% end %>
