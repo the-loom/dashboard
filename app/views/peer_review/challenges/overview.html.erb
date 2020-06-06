@@ -35,6 +35,9 @@
   <thead>
   <tr>
     <th>Participantes</th>
+    <% unless @challenge.team_challenge %>
+      <th>Equipo</th>
+    <% end %>
     <th>Estado</th>
     <th>Progreso</th>
     <th>Revisado</th>
@@ -50,7 +53,7 @@
     <tr>
       <td>
         <% if @challenge.team_challenge %>
-          Grupo: <%= stats.solver.current_membership.team.name %>
+          Equipo: <%= stats.solver.current_membership.team.try(:name) %>
         <% else %>
           <%= stats.solver.full_name %>
         <% end %>
@@ -69,6 +72,11 @@
           <% end %>
       <% end %>
       </td>
+      <% unless @challenge.team_challenge %>
+        <td>
+          <%= stats.solver.current_membership.team.try(:name) %>
+        </td>
+      <% end %>
       <td>
         <% if stats.solution %>
           <%= stats.solution.final? ? 'Final' : 'Borrador' %><br/>
@@ -98,8 +106,8 @@
         <%= stats.solution.updated_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M") if stats.solution %>
       </td>
       <% if stats.solution %>
-        <td><%= stats.reviews_received %> (<%= stats.reviews_received(:draft) %>)</td>
-        <td><%= stats.reviews_made %> (<%= stats.reviews_made(:draft) %>)</td>
+        <td><%= stats.reviews_received %></td>
+        <td><%= stats.reviews_made %></td>
       <% else %>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
