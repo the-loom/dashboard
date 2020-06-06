@@ -8,13 +8,13 @@ class ApplicationController < ActionController::Base
 
   before_action :_set_current_session
   before_action :set_raven_context
+  before_action :menu
 
   protected
     def set_raven_context
       Raven.user_context(id: session[:user_id])
       Raven.extra_context(params: params.to_unsafe_h, url: request.url)
     end
-
 
     def _set_current_session
       accessor = instance_variable_get(:@_request)
@@ -29,6 +29,10 @@ class ApplicationController < ActionController::Base
     end
 
   private
+    def menu
+      @menu = MenuPresenter.new(current_user)
+    end
+
     def check_feature(feature)
       unless Course.current.on?(feature)
         flash[:alert] = "Esa característica no está habilitada para este curso"
