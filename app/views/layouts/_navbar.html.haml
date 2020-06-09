@@ -1,0 +1,11 @@
+%nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+  .container
+    = link_to root_path, class: 'navbar-brand' do
+      = image_tag "logo.svg", { width: 25, height: 25, alt: 'Loom', title: 'Loom', class: 'navbar-brand loom-logo'}
+      %strong
+        loom
+    %button.navbar-toggler{"aria-controls": "navbarNavDropdown", "aria-expanded": false, "aria-label": "Toggle navigation", "data-target": "#navbarNavDropdown", "data-toggle": "collapse", type: "button"}
+      %span.navbar-toggler-icon
+    #navbarNavDropdown.collapse.navbar-collapse.mr-auto
+      %ul.navbar-nav.ml-auto
+        = render partial: '/layouts/menub4', locals: { menu: menu }
