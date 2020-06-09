@@ -1,0 +1,33 @@
+- nav_add 'Sugerencias', suggestions_path
+- nav_add @suggestion.title, '#'
+= nav_render
+
+.row
+  .col-md-2{style: 'text-align: center'}
+    %h4
+      = @suggestion.weighted_score
+    %nobr
+      = link_to upvote_suggestion_path(@suggestion), method: :post, class: 'btn btn-default btn-sm', title: 'A favor', disabled: current_user.voted_as_when_voted_for(@suggestion) do
+        %i.far.fa-thumbs-up
+      = link_to downvote_suggestion_path(@suggestion), method: :post, class: 'btn btn-default btn-sm', title: 'En contra', disabled: false == current_user.voted_as_when_voted_for(@suggestion) do
+        %i.far.fa-thumbs-down
+      = link_to unvote_suggestion_path(@suggestion), method: :post, class: 'btn btn-default btn-sm', title: 'Retirar voto', disabled: current_user.voted_as_when_voted_for(@suggestion).nil? do
+        %i.fas.fa-times
+  .col-md-10
+    %span.label.label-primary
+      = t "suggestions.suggestion_type.#{@suggestion.suggestion_type}"
+    %blockquote
+      != @suggestion.body
+      %br
+      %p
+        Sugerido por
+        = @suggestion.author.short_name
+        &mdash;
+        = @suggestion.course.name
+      %em= @suggestion.created_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M")
+    %p
+      Secundado por
+      = @suggestion.get_upvotes.map(&:voter).map(&:short_name).to_sentence
+    %p
+      Opuesto por
+      = @suggestion.get_downvotes.map(&:voter).map(&:short_name).to_sentence

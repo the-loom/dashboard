@@ -1,4 +1,3 @@
-
 - if params[:action] == "dismissed"
   - nav_add 'Sugerencias', suggestions_path
   - nav_add 'Rechazadas', '#'
@@ -25,11 +24,7 @@
     %thead
       %tr
         %th Votos
-        %th Tipo
         %th Sugerencia
-        %th Sugerido por
-        - if current_user.admin?
-          %th Curso
         - if policy(Suggestion).manage?
           %th.no-sort  
     %tbody
@@ -46,18 +41,15 @@
               = link_to unvote_suggestion_path(suggestion), method: :post, class: 'btn btn-default btn-sm', title: 'Retirar voto', disabled: current_user.voted_as_when_voted_for(suggestion).nil? do
                 %i.fas.fa-times
           %td
-            = t "suggestions.suggestion_type.#{suggestion.suggestion_type}"
-          %td
             %p
-              %strong= suggestion.title
+              %span.label.label-primary
+                = t "suggestions.suggestion_type.#{suggestion.suggestion_type}"
+              &nbsp;
+              = link_to suggestion_path(suggestion) do
+                %strong= suggestion.title
             %p!= suggestion.body
             %p
               %em= suggestion.created_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M")
-          %td
-            = suggestion.author.short_name
-          - if current_user.admin?
-            %td
-              = suggestion.course.name
           - if policy(Suggestion).manage?
             %td
               - if suggestion.kept?

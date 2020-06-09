@@ -261,8 +261,8 @@ es:
         delimiter: ''
   support:
     array:
-      last_word_connector: ", and "
-      two_words_connector: " and "
+      last_word_connector: ", y "
+      two_words_connector: " y "
       words_connector: ", "
   time:
     am: am

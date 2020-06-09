@@ -8,6 +8,11 @@ class SuggestionsController < ApplicationController
     end
   end
 
+  def show
+    authorize Suggestion, :use?
+    @suggestion = Suggestion.find(params[:id])
+  end
+
   def dismissed
     authorize Suggestion, :manage?
     if current_user.admin?

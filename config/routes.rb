@@ -35,7 +35,7 @@ Rails.application.routes.draw do
     post :demote, on: :member
   end
 
-  resources :suggestions, only: [:index, :new, :create, :destroy] do
+  resources :suggestions, except: [:edit, :update] do
     get :dismissed, on: :collection
     post :restore, on: :member
     post :upvote, on: :member
