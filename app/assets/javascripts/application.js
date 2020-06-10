@@ -20,5 +20,6 @@
 //= require bootstrap3-typeahead/bootstrap3-typeahead
 //= require bootstrap-tour/build/js/bootstrap-tour
 //= require codemirror/lib/codemirror
+//= require codemirror/lib/autorefresh
 //= require codemirror/mode/clike/clike
 //= require_tree .
