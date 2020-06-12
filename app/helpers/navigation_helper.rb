@@ -7,13 +7,20 @@ module NavigationHelper
     nav_ensure << { title: title, url: url }
   end
 
+  # Bootstrap 3
   def nav_render
-    content_for(:title, ((nav_ensure.reverse.map { |nav| nav[:title] }).join(" < ")))
+    set_title
     render partial: "shared/navigation", locals: { nav: nav_ensure }
   end
 
+  # Bootstrap 4
   def nav_render4
-    content_for(:title, ((nav_ensure.reverse.map { |nav| nav[:title] }).join(" < ")))
+    set_title
     render partial: "shared/navigation4", locals: { nav: nav_ensure }
   end
+
+  private
+    def set_title
+      @title = nav_ensure.reverse.map { |nav| nav[:title] }
+    end
 end

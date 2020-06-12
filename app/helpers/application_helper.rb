@@ -1,7 +1,7 @@
 module ApplicationHelper
-  def page_title(separator = " < ")
+  def page_title(separator = " | ")
     title = content_for(:title) || @title || "LoomDashboard"
-    [title, "LoomDashboard"].compact.join(separator)
+    [title, "LoomDashboard"].flatten.compact.join(separator)
   end
 
   def entity_avatar(entity)
