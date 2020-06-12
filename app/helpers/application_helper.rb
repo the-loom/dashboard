@@ -1,4 +1,9 @@
 module ApplicationHelper
+  def page_title(separator = " < ")
+    title = content_for(:title) || @title || "LoomDashboard"
+    [title, "LoomDashboard"].compact.join(separator)
+  end
+
   def entity_avatar(entity)
     if entity.avatar.attached?
       entity.avatar.variant(auto_orient: true)
