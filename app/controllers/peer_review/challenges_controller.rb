@@ -26,6 +26,12 @@ module PeerReview
       @overview = PeerReview::OverviewPresenter.new(@challenge)
     end
 
+    def meta_overview
+      authorize PeerReview::Challenge, :manage?
+      @challenges = PeerReview::Challenge.all
+      @students = Course.current.memberships.includes({ user: :memberships }).student.collect(&:user)
+    end
+
     def bulk_download
       # TODO: use case
       @challenge = PeerReview::Challenge.find(params[:id])

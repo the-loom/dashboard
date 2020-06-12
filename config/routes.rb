@@ -126,6 +126,7 @@ Rails.application.routes.draw do
 
   namespace :peer_review do
     resources :challenges do
+      get :meta_overview, on: :collection
       publishable
       get :bulk_download, on: :member
       get :duplicate, on: :member
