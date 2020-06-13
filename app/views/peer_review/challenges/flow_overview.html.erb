@@ -1,17 +1,40 @@
+<% nav_add 'Desafíos', peer_review_challenges_path %>
+<% nav_add @challenge.title, '#' if @challenge.present? %>
+<% nav_add 'Flujo de revisiones', '#' %>
+<%= nav_render %>
+
 <div class="row">
   <legend>Distribución de Revisiones</legend>
   <div class="col-md-6">
-  <div id="teacher_reviews_chart"></div>
+    <% if @flow_overview.has_teacher_reviews? %>
+      <div id="teacher_reviews_chart"></div>
+    <% else %>
+      <div class="alert alert-info">
+        <p>No hay revisiones de docentes para este desafío</p>
+      </div>
+    <% end %>
   </div>
   <div class="col-md-6">
-    <div id="student_reviews_chart"></div>
+    <% if @flow_overview.has_student_reviews? %>
+      <div id="student_reviews_chart"></div>
+    <% else %>
+      <div class="alert alert-info">
+        <p>No hay revisiones de estudiantes para este desafío</p>
+      </div>
+    <% end %>
   </div>
 </div>
 
 <div class="row">
   <legend>Flujo de revisiones</legend>
   <div class="col-md-12">
-    <div id="flow_chart" style="text-align: center"></div>
+    <% if @flow_overview.has_flow? %>
+      <div id="flow_chart" style="text-align: center"></div>
+    <% else %>
+      <div class="alert alert-info">
+        <p>No hay flujo de revisiones para este desafío</p>
+      </div>
+    <% end %>
   </div>
 </div>
 

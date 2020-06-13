@@ -13,6 +13,18 @@ class PeerReview::FlowOverviewPresenter
     end
   end
 
+  def has_teacher_reviews?
+    !teacher_reviews.empty?
+  end
+
+  def has_student_reviews?
+    !student_reviews.empty?
+  end
+
+  def has_flow?
+    has_student_reviews?
+  end
+
   def reviewers
     @reviewers.map do |r|
       { name: r.full_name, color: r.teacher? ? "#FF0000" : "#" + ("%06x" % (rand * 0x00ffff)) }
@@ -20,16 +32,18 @@ class PeerReview::FlowOverviewPresenter
   end
 
   def teacher_reviews
-    @reviewers.select { |r| r.teacher? }.map do |teacher|
+    @teacher_reviews ||= @reviewers.select { |r| r.teacher? }.map do |teacher|
       [teacher.full_name, @relevant_data.select { |r| r[:reviewer] == teacher }.size ]
     end
   end
 
   def student_reviews
-    partial = @reviewers.select { |r| r.student? }.map do |teacher|
-      [teacher.full_name, @relevant_data.select { |r| r[:reviewer] == teacher }.size ]
+    @student_reviews ||= begin
+      partial = @reviewers.select { |r| r.student? }.map do |teacher|
+        [teacher.full_name, @relevant_data.select { |r| r[:reviewer] == teacher }.size ]
+      end
+      others = partial.empty? ? [] : [["Otros", (partial[9..-1].sum { |x| x[1] })]]
+      partial[0..9] + others
     end
-    others = [["Otros", (partial[9..-1].sum { |x| x[1] })]]
-    partial[0..9] + others
   end
 end
