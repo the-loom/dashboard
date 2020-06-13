@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   match "/auth/failure", to: "sessions#failure", via: :get
 
   get "/logout" => "sessions#destroy", as: :logout
+  post "/admin_login" => "sessions#admin", as: :admin_login
 
   get "/profile" => "users#show", as: :profile
   get "/u/:nickname" => "users#show", as: :user_details, constraints: { nickname: /[0-z\.-]+/ }
@@ -124,10 +125,10 @@ Rails.application.routes.draw do
           get :review
           post :save_review
           post :remove_attachment
-          post :unpublish
           post :pick
           post :unpick
         end
+        publishable
       end
       resources :reviews, only: [:new, :update] do
         patch :assess, on: :member

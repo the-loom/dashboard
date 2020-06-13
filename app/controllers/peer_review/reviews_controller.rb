@@ -32,7 +32,10 @@ module PeerReview
       @challenge = PeerReview::Challenge.find(params[:challenge_id])
       authorize @challenge, :review?
       @review = @challenge.reviews.find(params[:id])
-      @review.publish! if publishing?
+      if publishing?
+        @review.publish!
+        @review.notify!
+      end
       if @challenge.allows_quick_reviews?
         @review.wording = wording_params
       else

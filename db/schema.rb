@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_30_221702) do
+ActiveRecord::Schema.define(version: 2020_06_03_131757) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -234,7 +234,9 @@ ActiveRecord::Schema.define(version: 2020_05_30_221702) do
     t.integer "course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "receiver_id"
     t.index ["course_id"], name: "index_notifications_on_course_id"
+    t.index ["receiver_id"], name: "index_notifications_on_receiver_id"
   end
 
   create_table "occurrences", id: :serial, force: :cascade do |t|
@@ -376,4 +378,5 @@ ActiveRecord::Schema.define(version: 2020_05_30_221702) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "automatic_correction_repos", "automatic_correction_repos", column: "parent_id"
+  add_foreign_key "notifications", "users", column: "receiver_id"
 end
