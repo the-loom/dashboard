@@ -28,7 +28,7 @@ module PeerReview
 
     def meta_overview
       authorize PeerReview::Challenge, :manage?
-      @challenges = PeerReview::Challenge.all
+      @challenges = PeerReview::Challenge.where(published: :true)
       @students = Course.current.memberships.includes({ user: :memberships }).student.collect(&:user)
     end
 
