@@ -15,8 +15,8 @@
 
   <style>
 
-    body {
-      margin-top: 2em;
+    nav {
+      margin-bottom: 1em;
     }
 
     pre.highlight {
@@ -30,6 +30,9 @@
 
 </head>
 <body>
+
+<%= render partial: 'layouts/navbar', locals: {menu: @menu.present} %>
+
 <div class="container">
 
   <% if flash[:alert] %>
