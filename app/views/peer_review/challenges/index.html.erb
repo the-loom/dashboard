@@ -3,6 +3,7 @@
 
 <% if policy(PeerReview::Challenge).manage? %>
   <%= link_to 'Nuevo desafio', new_peer_review_challenge_path, class: 'btn btn-primary' %>
+  <%= link_to 'Panorama de flujo de revisiones', flow_overview_peer_review_challenges_path, class: 'btn btn-default' %>
 <% end %>
 
 <section class="forks">
@@ -89,6 +90,7 @@
                   <li><%= link_to challenge.enabled? ? "Finalizar" : "Reabrir", toggle_peer_review_challenge_path(challenge)%></li>
                   <li><%= link_to "Duplicar", duplicate_peer_review_challenge_path(challenge) %></li>
                   <li><%= link_to "Descargar todo", bulk_download_peer_review_challenge_path(challenge) %></li>
+                  <li><%= link_to "Flujo de revisiones", flow_peer_review_challenge_path(challenge) %></li>
                   <% if policy(PeerReview::Challenge).purge? %>
                     <% unless challenge.awarded %>
                       <li><%= link_to "Premiar", award_peer_review_challenge_path(challenge), method: :post %></li>

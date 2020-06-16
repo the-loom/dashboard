@@ -281,6 +281,7 @@ ActiveRecord::Schema.define(version: 2020_06_03_131757) do
     t.integer "teacher_assessment", default: 0
     t.integer "assessor_id"
     t.string "teacher_assessment_description"
+    t.integer "course_id"
   end
 
   create_table "peer_review_solutions", force: :cascade do |t|

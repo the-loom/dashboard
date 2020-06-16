@@ -19,11 +19,29 @@ module PeerReview
       end
     end
 
+    def flow
+      @challenge = PeerReview::Challenge.find_by(id: params[:id])
+
+      unless @challenge
+        flash[:alert] = "No pudimos encontrar el desafío que buscás... ¿es de este curso?"
+        redirect_to(peer_review_challenges_path) && return
+      end
+
+      authorize @challenge, :manage?
+      @flow_overview = PeerReview::FlowOverviewPresenter.new(PeerReview::Review.includes(:reviewer, :solution, solution: :author).where(peer_review_solutions: { peer_review_challenge_id: @challenge.id }))
+      render :flow_overview
+    end
+
     def overview
       authorize PeerReview::Challenge, :manage?
       @challenge = PeerReview::Challenge.find(params[:id])
       @solvers = @challenge.team_challenge? ? @challenge.solvers : Course.current.users
       @overview = PeerReview::OverviewPresenter.new(@challenge)
+    end
+
+    def flow_overview
+      authorize PeerReview::Challenge, :manage?
+      @flow_overview = PeerReview::FlowOverviewPresenter.new(PeerReview::Review.includes(:reviewer, :solution, solution: :author))
     end
 
     def bulk_download
