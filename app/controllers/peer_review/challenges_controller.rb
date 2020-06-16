@@ -41,8 +41,9 @@ module PeerReview
 
     def meta_overview
       authorize PeerReview::Challenge, :manage?
-      @challenges = PeerReview::Challenge.where(published: :true)
-      @students = Course.current.memberships.includes({ user: :memberships }).student.collect(&:user)
+      @challenges = PeerReview::Challenge.where(published: :true).order(title: :asc)
+      @students = Course.current.memberships.includes(:user).student.collect(&:user)
+      @overview = PeerReviewChallengesStats.new(@students, @challenges)
     end
 
     def flow_overview

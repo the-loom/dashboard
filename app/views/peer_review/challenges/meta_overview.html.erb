@@ -1,4 +1,3 @@
-
 <% nav_add 'Desafíos', peer_review_challenges_path %>
 <% nav_add 'Resumen de desafíos', '#' %>
 <%= nav_render %>
@@ -8,47 +7,53 @@
     <p>Aún no hay ningún desafío</p>
   </div>
 <% else %>
-  <% stats = PeerReviewChallengesStats.new(@students, @challenges) %>
-  <table class="table table-hover attendance">
+  <table class="table table-hover overview">
     <thead>
-      <tr>
-        <th>Estudiante</th>
-        <% @challenges.each do |challenge| %>
-          <th><%= challenge.title %></th>
-        <% end %>
-        <th>Desafíos realizados.</th>
-        <th><nobr>Desafíos realizados. %</nobr></th>
-      </tr>
+    <tr>
+      <th>Estudiante</th>
+      <th>Equipo</th>
+      <% @challenges.each do |challenge| %>
+        <th><%= challenge.title %></th>
+      <% end %>
+      <th>Desafíos realizados.</th>
+      <th>
+        <nobr>Desafíos realizados. %</nobr>
+      </th>
+    </tr>
     </thead>
     <tbody>
-        <% stats.solutions_to_challenges.each do |student, challenges| %>
-          <tr>
-            <td>
-              <% if student.current_membership.enabled? %>
-                <%= link_to student.full_name, user_details_url(student.nickname) %>
-              <% else %>
-                <s>
-                  <%= link_to student.full_name, user_details_url(student.nickname) %>
-                </s>
-              <% end %>
-             </td>
-            <% challenges.each do |challenge| %>
-              <td>
-                <%= checkmark challenge %>
-              </td>
-            <% end %>
-            <td>
-              <%= stats.challenges_made_by(student)%>
-            </td>
-            <td>
-              <%= stats.percentage_of_solutions_made_by(student) %>%
-            </td>
-          </tr>
+    <% @overview.solutions_to_challenges.each do |student, challenges| %>
+      <tr>
+        <td>
+          <% if student.current_membership.enabled? %>
+            <%= link_to student.full_name, user_details_url(student.nickname) %>
+          <% else %>
+            <s>
+              <%= link_to student.full_name, user_details_url(student.nickname) %>
+            </s>
+          <% end %>
+        </td>
+        <td>
+          <%= student.current_membership.team.try(:name) %>
+        </td>
+        <% challenges.each do |solved| %>
+          <td>
+            <%= checkmark solved %>
+          </td>
         <% end %>
+        <td>
+          <%= @overview.challenges_made_by(student) %>
+        </td>
+        <td>
+          <%= @overview.percentage_of_solutions_made_by(student) %>%
+        </td>
+      </tr>
+    <% end %>
     </tbody>
     <tfoot>
       <th>Totales</th>
-      <% stats.number_of_challenges_solved.each do |solution| %>
+      <th>&nbsp;</th>
+      <% @overview.number_of_challenges_solved.each do |solution| %>
         <th><%= solution %></th>
       <% end %>
       <th>Desafíos realizados.</th>
@@ -68,17 +73,18 @@
 
   <script type="application/javascript">
       $(function () {
-          $('.attendance').DataTable({
+          var indexLastColumn = $(".overview").find('tr')[0].cells.length - 1;
+          $('.overview').DataTable({
               fixedHeader: true,
-              order: [[ 0, "asc" ]],
+              order: [[indexLastColumn, "desc"]],
               paging: false,
               language: {
                   url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
               },
-              columnDefs: [ {
+              columnDefs: [{
                   targets: 'no-sort',
                   orderable: false
-              } ]
+              }]
           });
       });
   </script>
