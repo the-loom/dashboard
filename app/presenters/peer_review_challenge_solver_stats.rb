@@ -18,4 +18,17 @@ class PeerReviewChallengeSolverStats
     return 0 unless @sol
     solution.reviews.where(status: status).count
   end
+
+  def reviewed_by_teacher?
+    _teachers_who_reviewed.count > 0
+  end
+
+  def teachers_who_reviewed
+    _teachers_who_reviewed.map(&:reviewer).map(&:short_name).join(", ")
+  end
+
+  private
+    def _teachers_who_reviewed
+      @tr ||= solution.reviews.final.includes(:reviewer).select { |r| r.reviewer.teacher? }
+    end
 end

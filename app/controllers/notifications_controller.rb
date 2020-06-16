@@ -1,8 +1,8 @@
 class NotificationsController < ApplicationController
   def index
     authorize Notification
-    current_user.current_membership.read_notifications
-    @notifications = Notification.all
+    @notifications = Notification.where(receiver: [nil, current_user])
+    current_user.current_membership.read_notifications!
   end
 
   def new
@@ -17,6 +17,7 @@ class NotificationsController < ApplicationController
 
     if @notification.valid?
       @notification.save
+      # TODO: move to another thread!
       Course.current.memberships.each do |membership|
         membership.unread_notifications += 1
         membership.save!

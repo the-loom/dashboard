@@ -2,15 +2,66 @@
 <% nav_add @challenge.title, '#' %>
 <%= nav_render4 %>
 
-
 <% unless @challenge.reviews.where(reviewer: current_user, status: :draft).empty? %>
-
   <%= render partial: 'shared/alert', locals: {alert_type: 'danger', title: '¡Cuidado!', dismissable: true,
      message: "Tenés una revisión no publicada. Tomate tu tiempo, pero publicala para que otro participantes puedan verla."} %>
-
 <% end %>
 
 <div id="wording" class="show">
+
+  <div class="row">
+    <div class="col-md-6">
+      <dl class="row">
+
+        <dt class="col-sm-5">Vencimiento</dt>
+        <dd class="col-sm-7">
+          <%= display_date @challenge.due_date %>
+        </dd>
+
+        <dt class="col-sm-5">Estado</dt>
+        <dd class="col-sm-7">
+          <%= @challenge.enabled? ? "Vigente" : "Finalizado" %>
+        </dd>
+
+        <dt class="col-sm-5">Dificultad</dt>
+        <dd class="col-sm-7">
+          <%= difficulty @challenge.difficulty %>
+        </dd>
+
+        <dt class="col-sm-5">Opcional</dt>
+        <dd class="col-sm-7">
+          <%= yes_no @challenge.optional? %>
+        </dd>
+
+      </dl>
+    </div>
+    <div class="col-md-6">
+      <dl class="row">
+
+        <dt class="col-sm-5">Tipo de revisiones</dt>
+        <dd class="col-sm-7">
+          <%= t "challenges.challenge_modes.#{@challenge.challenge_mode}" %>
+        </dd>
+
+        <dt class="col-sm-5">Revisiones esperadas</dt>
+        <dd class="col-sm-7">
+          <%= @challenge.expected_reviews %>
+        </dd>
+
+        <dt class="col-sm-5">Permite adjuntos</dt>
+        <dd class="col-sm-7">
+          <%= yes_no @challenge.allows_attachment? %>
+        </dd>
+
+        <dt class="col-sm-5">Desafío grupal</dt>
+        <dd class="col-sm-7">
+          <%= yes_no @challenge.team_challenge? %>
+        </dd>
+
+      </dl>
+    </div>
+  </div>
+
   <h2>Consigna</h2>
   <%== @challenge.instructions %>
 </div>
@@ -40,17 +91,18 @@
         <strong><%= current_user.current_membership.team.members.map(&:short_name).join(", ") %></strong>
         para el equipo <strong><%= current_user.current_membership.team.name %></strong>.
       </p>
-      <p>La última edición la realizó <strong><%= @solution.author.short_name %></strong>
-        (<%= @solution.updated_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M") %>)</p>
+      <% unless @solution.new_record? %>
+        <p>La última edición la realizó <strong><%= @solution.author.short_name %></strong>
+          (<%= @solution.updated_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M") %>)</p>
+      <% end %>
     </div>
   <% end %>
 
   <p>
-    <%= link_to 'Resolver', new_peer_review_challenge_solution_path(@challenge.id), class: 'btn btn-large btn-primary', disabled: !@challenge.solvable_by?(current_user) %>
-    <%= link_to 'Revisar alguna solución', new_peer_review_challenge_review_path(@challenge.id), class: 'btn btn-large btn-primary', disabled: !@challenge.reviewable_by?(current_user) %>
-
-    <% if @solution && policy(@solution).unpublish? %>
-      <%= link_to 'Despublicar solución', unpublish_peer_review_challenge_solution_path(@challenge.id, @solution), method: :post, class: 'btn btn-large btn-warning', disabled: !@challenge.reviewable_by?(current_user) %>
+    <% unless @solution.final? %>
+      <%= link_to @solution.new_record? ? 'Resolver' : 'Continuar resolviendo', new_peer_review_challenge_solution_path(@challenge.id), class: 'btn btn-large btn-primary' %>
+    <% else %>
+      <%= link_to 'Revisar alguna solución', new_peer_review_challenge_review_path(@challenge.id), class: 'btn btn-large btn-primary' %>
     <% end %>
   </p>
 
@@ -67,9 +119,14 @@
 </nav>
 <div class="tab-content" id="nav-tabContent">
   <div class="tab-pane fade show active" id="nav-solution" role="tabpanel" aria-labelledby="nav-solution-tab">
-    <% unless @solution.present? %>
+    <% if @solution.new_record? %>
       <%= render partial: 'shared/alert', locals: { message: "Aún no resolviste este desafío." } %>
     <% else %>
+
+      <% if @solution.draft? %>
+        <%= render partial: 'shared/alert', locals: { message: "Cuando consideres que tu solución está presentable... ¡publicala! Así podrás recibir revisiones, y revisar las soluciones de otros participantes." } %>
+      <% end %>
+
       <%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: @solution.wording, language: @challenge.language} %>
 
       <% if @challenge.allows_attachment? %>
@@ -89,9 +146,14 @@
 
       <% if @solution.draft? %>
 
-        <%= render partial: 'shared/alert', locals: { message: "Cuando consideres que tu solución está presentable... ¡publicala! Así podrás recibir revisiones, y revisar las soluciones de otros participantes." } %>
+        <%= link_to 'Publicar', publish_peer_review_challenge_solution_path(@challenge, @solution), class: 'btn btn-large btn-success', method: :post %>
 
       <% else %>
+
+        <% if @solution && policy(@solution).unpublish? %>
+          <%= link_to 'Despublicar solución', unpublish_peer_review_challenge_solution_path(@challenge.id, @solution), method: :post, class: 'btn btn-large btn-warning', disabled: !@challenge.reviewable_by?(current_user) %>
+          <br><br>
+        <% end %>
 
         <h3>Revisiones Recibidas</h3>
         <% if @solution.reviews.final.empty? %>

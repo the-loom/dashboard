@@ -2,8 +2,7 @@
 <%= nav_render %>
 
 <% if policy(Exercise).create? %>
-  <%= link_to 'Nuevo ejercicio', new_exercise_path, class: 'btn btn-primary pull-right' %>
-
+  <%= link_to 'Nuevo ejercicio', new_exercise_path, class: 'btn btn-primary' %>
   <br><br>
 <% end %>
 

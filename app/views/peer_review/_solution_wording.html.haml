@@ -1,5 +1,19 @@
+- random_id = "_" + rand(36**6).to_s(36)
 - if source_code
-  != rouge(wording, language)
+  %textarea{id: random_id}
+    != wording
 - else
   .well
     != wording
+
+- if source_code
+  = content_for :javascript do
+    :javascript
+        var myTextArea = document.querySelector("##{random_id}");
+        CodeMirror.fromTextArea(myTextArea, {
+          lineNumbers: true,
+          matchBrackets: true,
+          mode: "text/x-java",
+          readOnly: true,
+          autoRefresh: true
+        });

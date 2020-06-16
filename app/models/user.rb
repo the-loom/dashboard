@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   include Discard::Model
+  acts_as_voter
 
   validates_uniqueness_of :uuid
 
@@ -113,7 +114,7 @@ class User < ApplicationRecord
   end
 
   def current_membership
-    @current_membership ||= self.all_memberships.includes([:course]).find { |m| m.course == Course.current }
+    @current_membership ||= self.all_memberships.includes([:course, :team]).find { |m| m.course == Course.current }
   end
 
   def teacher?

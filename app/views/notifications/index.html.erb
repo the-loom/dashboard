@@ -2,7 +2,8 @@
 <%= nav_render %>
 
 <% if policy(Notification).create? %>
-  <%= link_to 'Nueva notificacion', new_notification_path, class: 'btn btn-primary pull-right' %>
+  <%= link_to 'Nueva notificacion', new_notification_path, class: 'btn btn-primary' %>
+  <br><br>
 <% end %>
 
 <% if @notifications.empty? %>

@@ -63,6 +63,9 @@ logs:
 app_logs:
 	tail -f log/development.log
 
+clean_logs:
+	echo "" > log/development.log
+
 tests:
 	docker-compose run app rake db:test:prepare
 	docker-compose run app ./bin/rake

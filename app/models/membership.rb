@@ -20,7 +20,7 @@ class Membership < ApplicationRecord
     teacher: 2
   }
 
-  def read_notifications
+  def read_notifications!
     self.unread_notifications = 0
     self.save!
   end

@@ -3,7 +3,8 @@
 <%= nav_render %>
 
 <% if policy(MultipleChoices::Questionnaire).manage? %>
-  <%= link_to 'Nueva pregunta', new_multiple_choices_questionnaire_question_path(@questionnaire), class: 'btn btn-primary pull-right' %>
+  <%= link_to 'Nueva pregunta', new_multiple_choices_questionnaire_question_path(@questionnaire), class: 'btn btn-primary' %>
+  <br><br>
 <% end %>
 
 <br><br>

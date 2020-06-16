@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>LoomDashboard</title>
+  <title><%== page_title %></title>
   <%= csrf_meta_tags %>
 
   <meta charset="utf-8">
@@ -56,8 +56,14 @@
 </div> <!-- /container -->
 
 <%= javascript_include_tag 'application' %>
-<script src="https://use.fontawesome.com/0d95d7e55f.js" async="async"></script>
+<script src="https://kit.fontawesome.com/5acba6449b.js" crossorigin="anonymous"></script>
 <%= yield :javascript %>
+
+<% if current_user and current_user.current_membership %>
+  <%= link_to suggestions_path, class: 'btn btn-primary btn-suggestions' do %>
+    <i class="fas fa-lightbulb"></i> Sugerencias
+  <% end %>
+<% end %>
 
 </body>
 </html>
