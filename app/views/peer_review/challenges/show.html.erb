@@ -2,12 +2,9 @@
 <% nav_add @challenge.title, '#' %>
 <%= nav_render4 %>
 
-
 <% unless @challenge.reviews.where(reviewer: current_user, status: :draft).empty? %>
-
   <%= render partial: 'shared/alert', locals: {alert_type: 'danger', title: '¡Cuidado!', dismissable: true,
      message: "Tenés una revisión no publicada. Tomate tu tiempo, pero publicala para que otro participantes puedan verla."} %>
-
 <% end %>
 
 <div id="wording" class="show">
