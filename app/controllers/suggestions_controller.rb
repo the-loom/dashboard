@@ -28,7 +28,7 @@ class SuggestionsController < ApplicationController
     suggestion = Suggestion.find(params[:id])
     suggestion.vote_up current_user
     redirect_to suggestions_path
-    flash[:info] = "¡Gracias por tu voto!"
+    flash[:success] = "¡Gracias por tu voto!"
   end
 
   def downvote
@@ -36,7 +36,7 @@ class SuggestionsController < ApplicationController
     suggestion = Suggestion.find(params[:id])
     suggestion.vote_down current_user
     redirect_to suggestions_path
-    flash[:info] = "¡Gracias por tu voto!"
+    flash[:success] = "¡Gracias por tu voto!"
   end
 
   def unvote
@@ -62,7 +62,7 @@ class SuggestionsController < ApplicationController
     if @suggestion.valid?
       @suggestion.save
       redirect_to suggestions_path
-      flash[:info] = "Se creo correctamente el sugerencia"
+      flash[:success] = "Se creo correctamente el sugerencia"
     else
       @labels = OpenStruct.new(title: "Nueva sugerencia", button: "Guardar sugerencia")
       render :form

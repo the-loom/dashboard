@@ -21,7 +21,7 @@ class ResourceCategoriesController < ApplicationController
     if @resource_category.valid?
       @resource_category.save
       redirect_to resource_categories_path
-      flash[:info] = "Se creó correctamente la categoría"
+      flash[:success] = "Se creó correctamente la categoría"
     else
       @labels = OpenStruct.new(title: "Nueva categoría de recursos", button: "Guardar categoría")
       render :form
@@ -41,7 +41,7 @@ class ResourceCategoriesController < ApplicationController
 
     if @resource_category.update_attributes(resource_params)
       redirect_to resource_categories_path
-      flash[:info] = "Se editó correctamente la categoría"
+      flash[:success] = "Se editó correctamente la categoría"
     else
       @labels = OpenStruct.new(title: "Editar categoría de recursos", button: "Actualizar categoría")
       render :form

@@ -22,7 +22,7 @@ class LecturesController < ApplicationController
     if @lecture.valid?
       @lecture.save
       redirect_to lectures_path
-      flash[:info] = "Se creo correctamente la clase"
+      flash[:success] = "Se creo correctamente la clase"
     else
       @labels = OpenStruct.new(title: "Nueva clase", button: "Guardar clase")
       render :form
@@ -42,7 +42,7 @@ class LecturesController < ApplicationController
 
     if @lecture.update_attributes(lecture_params)
       redirect_to lectures_path
-      flash[:info] = "Se actualizó correctamente la clase"
+      flash[:success] = "Se actualizó correctamente la clase"
     else
       @labels = OpenStruct.new(title: "Editar clase", button: "Actualizar clase")
       render :form

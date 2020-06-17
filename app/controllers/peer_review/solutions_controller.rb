@@ -43,7 +43,7 @@ module PeerReview
 
       if @solution.valid?
         @solution.save
-        flash[:info] = "Se guardó correctamente la solución"
+        flash[:success] = "Se guardó correctamente la solución"
       else
         @solution.solution_attachment.purge if @solution.errors.include?(:solution_attachment)
         flash[:alert] = "Ha ocurrido un error con tu solución. " + @solution.errors.full_messages.join(", ")
@@ -57,7 +57,7 @@ module PeerReview
 
       @solution.picked = true
       if @solution.save
-        flash[:info] = "Se ha elegido esta solución como ejemplo para los estudiantes"
+        flash[:success] = "Se ha elegido esta solución como ejemplo para los estudiantes"
       else
         flash[:alert] = @solution.errors.full_messages
       end
@@ -70,7 +70,7 @@ module PeerReview
 
       @solution.picked = false
       if @solution.save
-        flash[:info] = "Se ha dejado de elegir esta solución como ejemplo"
+        flash[:success] = "Se ha dejado de elegir esta solución como ejemplo"
       else
         flash[:alert] = @solution.errors.full_messages
       end
@@ -85,7 +85,7 @@ module PeerReview
       @solution.publish!
 
       if @solution.valid?
-        flash[:info] = "Se publicó correctamente la solución"
+        flash[:success] = "Se publicó correctamente la solución"
       else
         flash[:alert] = "Ha ocurrido un error con tu solución. " + @solution.errors.full_messages.join(", ")
         @solution.unpublish!
@@ -105,7 +105,7 @@ module PeerReview
 
       if policy(@solution).unpublish?
         @solution.unpublish!
-        flash[:info] = "Se despublicó tu solución. Podés volver a trabajar en ella"
+        flash[:success] = "Se despublicó tu solución. Podés volver a trabajar en ella"
       else
         flash[:alert] = "Esta vez no ha podido despublicarse tu solución"
       end

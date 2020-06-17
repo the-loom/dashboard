@@ -51,6 +51,13 @@
     </div>
   <% end %>
 
+  <% if flash[:success] %>
+    <div class="alert alert-success" role="alert">
+      <strong>¡Bien hecho!</strong>
+      <%= flash[:success] %>
+    </div>
+  <% end %>
+
   <%= yield %>
 
 </div> <!-- /container -->

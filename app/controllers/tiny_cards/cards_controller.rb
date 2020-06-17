@@ -26,7 +26,7 @@ module TinyCards
       if @card.valid?
         @card.save
         redirect_to tiny_cards_deck_path(@deck)
-        flash[:info] = "Se creó correctamente la carta"
+        flash[:success] = "Se creó correctamente la carta"
       else
         @labels = OpenStruct.new(title: "Nueva carta", button: "Guardar carta")
         render :form
@@ -47,7 +47,7 @@ module TinyCards
 
       if @card.update_attributes(card_params)
         redirect_to tiny_cards_deck_path(@card.deck)
-        flash[:info] = "Se editó correctamente la carta"
+        flash[:success] = "Se editó correctamente la carta"
       else
         @deck = TinyCards::Deck.find(@card.deck.id)
         @labels = OpenStruct.new(title: "Editar carta", button: "Actualizar carta")
@@ -61,7 +61,7 @@ module TinyCards
       @card.destroy
 
       redirect_to tiny_cards_deck_path(@card.deck)
-      flash[:info] = "Se eliminó la carta"
+      flash[:success] = "Se eliminó la carta"
     end
 
     private

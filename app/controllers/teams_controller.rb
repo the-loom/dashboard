@@ -27,7 +27,7 @@ class TeamsController < ApplicationController
     if @team.valid?
       @team.save
       redirect_to team_profile_path(@team.nickname)
-      flash[:info] = "Se creo correctamente el equipo"
+      flash[:success] = "Se creo correctamente el equipo"
     else
       @labels = OpenStruct.new(title: "Nuevo equipo", button: "Guardar equipo")
       render :form
@@ -47,7 +47,7 @@ class TeamsController < ApplicationController
 
     if @team.update_attributes(team_params)
       redirect_to team_profile_path(@team.nickname)
-      flash[:info] = "Se actualizó correctamente el equipo"
+      flash[:success] = "Se actualizó correctamente el equipo"
     else
       if current_user.teacher?
         @labels = OpenStruct.new(title: "Editar equipo", button: "Actualizar equipo")
@@ -62,7 +62,7 @@ class TeamsController < ApplicationController
     @team = Course.current.teams.find(params[:id])
     if @team.enabled_members.size == 0
       @team.destroy
-      flash[:info] = "Se eliminó el equipo '#{@team.name}'"
+      flash[:success] = "Se eliminó el equipo '#{@team.name}'"
     end
     redirect_to teams_path
   end

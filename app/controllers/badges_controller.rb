@@ -29,7 +29,7 @@ class BadgesController < ApplicationController
     if @badge.valid?
       @badge.save
       redirect_to badges_path
-      flash[:info] = "Se creo correctamente el emblema"
+      flash[:success] = "Se creo correctamente el emblema"
     else
       @labels = OpenStruct.new(title: "Nuevo emblema", button: "Guardar emblema")
       render :form
@@ -49,7 +49,7 @@ class BadgesController < ApplicationController
 
     if @badge.update_attributes(badge_params)
       redirect_to badges_path
-      flash[:info] = "Se actualizó correctamente el emblema"
+      flash[:success] = "Se actualizó correctamente el emblema"
     else
       @labels = OpenStruct.new(title: "Editar emblema", button: "Actualizar emblema")
       render :form

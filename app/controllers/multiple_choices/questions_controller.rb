@@ -22,7 +22,7 @@ module MultipleChoices
       if @question.valid?
         @question.save
         redirect_to multiple_choices_questionnaire_path(@questionnaire)
-        flash[:info] = "Se creó correctamente la pregunta"
+        flash[:success] = "Se creó correctamente la pregunta"
       else
         @labels = OpenStruct.new(title: "Nueva pregunta", button: "Guardar pregunta")
         render :form
@@ -44,7 +44,7 @@ module MultipleChoices
 
       if @question.update_attributes(question_params)
         redirect_to multiple_choices_questionnaire_path(@questionnaire)
-        flash[:info] = "Se editó correctamente la pregunta"
+        flash[:success] = "Se editó correctamente la pregunta"
       else
         @labels = OpenStruct.new(title: "Editar pregunta", button: "Actualizar pregunta")
         render :form
@@ -57,7 +57,7 @@ module MultipleChoices
       @question.destroy
 
       redirect_to multiple_choices_questions_path
-      flash[:info] = "Se eliminó la pregunta"
+      flash[:success] = "Se eliminó la pregunta"
     end
 
     private
