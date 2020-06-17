@@ -82,7 +82,7 @@
 <% else %>
 
   <ul class="nav nav-tabs" id="myTabs" role="tablist">
-    <% @solution.reviews.final.sorted.where(status: :final).each_with_index do |review, index| %>
+    <% @solution.reviews.final.sorted.each_with_index do |_, index| %>
       <li role="presentation" class="<%= 'active' if index == 0 %>">
         <a href="#<%= "review_#{index}" %>" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
           <%= "Revisión ##{index + 1}" %>
@@ -91,7 +91,7 @@
     <% end %>
   </ul>
   <div class="tab-content" id="myTabContent">
-    <% @solution.reviews.final.sorted.where(status: :final).each_with_index do |review, index| %>
+    <% @solution.reviews.final.sorted.each_with_index do |review, index| %>
       <div class="tab-pane fade <%= 'active in' if index == 0 %>" role="tabpanel" id="<%= "review_#{index}" %>" aria-labelledby="home-tab">
         <h3>Revisión de <%= review.reviewer.full_name %> (<%= review.status %>)</h3>
 

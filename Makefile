@@ -110,3 +110,9 @@ emergency_deploy:
 sanitize_gemfile:
 	docker-compose run app bundle exec pessimize
 	docker-compose run app bundle exec ordinare
+
+detect_where_in_views:
+	grep -n -r -i --include \*.html.erb --include \*.html.haml .where . || true
+
+detect_where_in_controllers:
+	grep -n -r -i --include \*.rb .where ./app/controllers || true
