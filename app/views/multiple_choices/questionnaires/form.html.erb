@@ -1,5 +1,5 @@
 <% nav_add 'Cuestionario de Opción Múltiple', multiple_choices_questionnaires_path %>
-<% nav_add "##{@questionnaire.id}", multiple_choices_questionnaire_path(@questionnaire) unless @questionnaire.new_record? %>
+<% nav_add @questionnaire.name, multiple_choices_questionnaire_path(@questionnaire) unless @questionnaire.new_record? %>
 <% nav_add @labels.title, '#' %>
 <%= nav_render %>
 
@@ -7,8 +7,157 @@
 
   <%= render :partial => 'shared/errors', locals: { f: f } %>
 
-  <%= f.input :name, label: "Nombre" %>
+  <%= f.input :name, label: "Nombre del cuestionario" %>
+
+  <legend>Preguntas</legend>
+
+  <div id="app">
+
+    <template v-for="(question, qindex) in questions">
+
+      <input type="hidden" v-model="question.id" :name="'multiple_choices_questionnaire[questions_attributes][' + qindex + '][id]'">
+      <input type="hidden" v-model="question._destroy" :name="'multiple_choices_questionnaire[questions_attributes][' + qindex + '][_destroy]'">
+      <input class="form-control" type="text" v-model="question.wording" :name="'multiple_choices_questionnaire[questions_attributes][' + qindex + '][wording]'"/>
+
+      <table class="table-hover table-striped table">
+        <thead>
+        <tr>
+          <th>Respuesta</th>
+          <th>¿Correcta?</th>
+          <th>&nbsp;</th>
+        </tr>
+        <tbody>
+
+        <template v-for="(answer, index) in question.answers">
+
+          <template v-if="answer._destroy">
+            <tr>
+              <td colspan="2">
+                <em>Respuesta eliminada...</em>
+              </td>
+              <td>
+                <button type="button" class="btn btn-secondary" v-on:click="restoreEntry(answer)">
+                  Restaurar
+                </button>
+              </td>
+            </tr>
+          </template>
+
+
+          <template v-if="answer._destroy == null">
+            <tr>
+              <td>
+                <input type="hidden" v-model="answer.id" :name="'multiple_choices_questionnaire[questions_attributes][' + qindex + '][answers_attributes][' + index + '][id]'">
+                <input type="hidden" v-model="answer._destroy" :name="'multiple_choices_questionnaire[questions_attributes][' + qindex + '][answers_attributes][' + index + '][_destroy]'">
+
+                <input class="form-control" type="text" v-model="answer.text" :name="'multiple_choices_questionnaire[questions_attributes][' + qindex + '][answers_attributes][' + index + '][text]'"/>
+                <br>
+                <label>Explicación</label>
+                <textarea class="form-control" v-model="answer.explanation" :name="'multiple_choices_questionnaire[questions_attributes][' + qindex + '][answers_attributes][' + index + '][explanation]'">
+                </textarea>
+              </td>
+              <td>
+                <label>
+                  <input type="checkbox" v-model="answer.correct" :name="'multiple_choices_questionnaire[questions_attributes][' + qindex + '][answers_attributes][' + index + '][correct]'"/>
+                  Correcta
+                </label>
+              </td>
+              <td>
+                <button type="button" class="btn btn-danger" v-on:click="removeEntry(answer)">
+                  Remover esta respuesta
+                </button>
+              </td>
+            </tr>
+          </template>
+        </template>
+
+        </tbody>
+      </table>
+
+      <button type="button" @click="addAnswer(question)" class="btn btn-secondary">Agregar respuesta</button>
+      <button type="button" class="btn btn-danger" v-on:click="removeEntry(question)">
+        Remover pregunta
+      </button>
+
+      <hr>
+
+    </template>
+    <button type="button" @click="addQuestion()" class="btn btn-secondary">Agregar pregunta</button>
+  </div>
+
+
 
   <%= f.button :submit, @labels.button, class: "btn-primary" %>
+
+<% end %>
+
+
+<% content_for :javascript do %>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+  <script>
+
+      new Vue({
+          el: '#app',
+          data: {
+              questions:<%= raw @questionnaire.questions.map { | question |
+                {
+                  id: question.id,
+                  wording: question.wording,
+                  _destroy: nil,
+                  answers: question.answers.map { |ans|
+                    {
+                        id: ans.id,
+                        text: ans.text,
+                        explanation: ans.explanation,
+                        correct: ans.correct,
+                        _destroy: nil
+                    }
+                  }
+                }
+              }.to_json %>,
+          },
+          methods: {
+              addQuestion: function() {
+                  this.questions.push({
+                      id: null,
+                      wording: null,
+                      answers: [{
+                          id: null,
+                          text: null,
+                          explanation: null,
+                          correct: false,
+                          _destroy: null
+                      }, {
+                          id: null,
+                          text: null,
+                          explanation: null,
+                          correct: false,
+                          _destroy: null
+                      }],
+                      _destroy: null
+                  })
+              },
+              addAnswer: function (question) {
+                  question.answers.push({
+                      id: null,
+                      text: null,
+                      explanation: null,
+                      correct: false,
+                      _destroy: null
+                  });
+              },
+              removeEntry: function (deletable) {
+                  deletable._destroy = true;
+              },
+              restoreEntry: function (deletable) {
+                  deletable._destroy = null;
+              }
+          }
+      });
+
+  </script>
 
 <% end %>

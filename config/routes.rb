@@ -87,14 +87,13 @@ Rails.application.routes.draw do
   end
 
   namespace :multiple_choices do
-    resources :questionnaires do
+    resources :questionnaires, except: :show do
       publishable
       member do
         get :practice
         get :overview
         post :grade
       end
-      resources :questions, except: :index
     end
   end
 

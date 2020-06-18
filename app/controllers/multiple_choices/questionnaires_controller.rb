@@ -11,11 +11,6 @@ module MultipleChoices
       @questionnaires = MultipleChoices::Questionnaire.all
     end
 
-    def show
-      authorize MultipleChoices::Questionnaire, :manage?
-      @questionnaire = MultipleChoices::Questionnaire.find(params[:id])
-    end
-
     def new
       authorize MultipleChoices::Questionnaire, :manage?
       @questionnaire = MultipleChoices::Questionnaire.new
@@ -110,7 +105,9 @@ module MultipleChoices
 
     private
       def questionnaire_params
-        params[:multiple_choices_questionnaire].permit(:name)
+        params[:multiple_choices_questionnaire].permit(:name,
+                                                       questions_attributes: [:id, :wording, :_destroy, :deleted_at,
+                                                       answers_attributes: %i[id text explanation correct _destroy deleted_at]])
       end
   end
 end
