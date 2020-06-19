@@ -7,7 +7,7 @@ class PeerReviewChallengesStats
   def solutions_to_challenges
     @solutions = Hash.new { [] }
     @students.each do |student|
-      @solutions[student] = @challenges.map { |challenge| solved(student, challenge) }
+      @solutions[student] = @challenges.map { |challenge| challenge.solved(student) }
     end
     @solutions
   end
@@ -30,12 +30,5 @@ class PeerReviewChallengesStats
       number_of_solutions_challenges << number_of_solutions
     end
     number_of_solutions_challenges
-  end
-
-private
-  def solved(student, challenge)
-    challenge.already_solved_by?(student) ||
-    (challenge.team_challenge &&
-    challenge.already_solved_by_team?(student.current_membership.team))
   end
 end
