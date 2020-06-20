@@ -26,7 +26,7 @@ class ExercisesController < ApplicationController
     if @exercise.valid?
       @exercise.save
       redirect_to exercises_path
-      flash[:info] = "Se creó correctamente el ejercicio"
+      flash[:success] = "Se creó correctamente el ejercicio"
     else
       @labels = OpenStruct.new(title: "Nuevo ejercicio", button: "Guardar ejercicio")
       render :form
@@ -46,7 +46,7 @@ class ExercisesController < ApplicationController
 
     if @exercise.update_attributes(exercise_params)
       redirect_to exercises_path
-      flash[:info] = "Se editó correctamente el ejercicio"
+      flash[:success] = "Se editó correctamente el ejercicio"
     else
       @labels = OpenStruct.new(title: "Editar ejercicio", button: "Actualizar ejercicio")
       render :form

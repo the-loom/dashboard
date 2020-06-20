@@ -21,7 +21,7 @@ class ResourcesController < ApplicationController
     if @resource.valid?
       @resource.save
       redirect_to resources_path
-      flash[:info] = "Se creó correctamente el recurso"
+      flash[:success] = "Se creó correctamente el recurso"
     else
       render action: :new
     end
@@ -40,7 +40,7 @@ class ResourcesController < ApplicationController
 
     if @resource.update_attributes(resource_params)
       redirect_to resources_path
-      flash[:info] = "Se editó correctamente el recurso"
+      flash[:success] = "Se editó correctamente el recurso"
     else
       render action: :edit
     end

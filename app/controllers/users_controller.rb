@@ -102,7 +102,7 @@ class UsersController < ApplicationController
 
         authorize Badge, :register?
         if MassiveBadgeAssigner.new(students, badge).execute
-          flash[:info] = "Se asignaron correctamente #{students.size} emblemas del tipo #{badge.name}"
+          flash[:success] = "Se asignaron correctamente #{students.size} emblemas del tipo #{badge.name}"
         end
       end
 
@@ -113,14 +113,14 @@ class UsersController < ApplicationController
 
         lecture = params[:bulk_edit][:lecture_id].present? ? Lecture.find(params[:bulk_edit][:lecture_id]) : nil
         if MassiveEventRegister.new(students, event, multiplier, lecture).execute
-          flash[:info] = "Se registraron correctamente #{multiplier} eventos del tipo #{event.name} para #{students.size} estudiantes"
+          flash[:success] = "Se registraron correctamente #{multiplier} eventos del tipo #{event.name} para #{students.size} estudiantes"
         end
       end
 
       if params[:bulk_edit][:action] == "join_profiles"
         authorize User, :manage?
         if ProfileJoiner.new(students).execute
-          flash[:info] = "Se unieron correctamente #{students.size} perfiles"
+          flash[:success] = "Se unieron correctamente #{students.size} perfiles"
         end
       end
 
@@ -129,7 +129,7 @@ class UsersController < ApplicationController
 
         authorize Lecture, :register?
         if MassiveAttendanceRegister.new(students, lecture).execute
-          flash[:info] = "Se dio el presente a #{students.size} estudiantes en la clase #{lecture.summary}"
+          flash[:success] = "Se dio el presente a #{students.size} estudiantes en la clase #{lecture.summary}"
         end
       end
 
@@ -137,7 +137,7 @@ class UsersController < ApplicationController
 
         authorize current_user, :promote?
         if MassiveTeacherPromoter.new(students).execute
-          flash[:info] = "Se promovieron #{students.size} Estudiantes al rol Docente"
+          flash[:success] = "Se promovieron #{students.size} Estudiantes al rol Docente"
         end
       end
 
@@ -146,7 +146,7 @@ class UsersController < ApplicationController
 
         authorize Team, :add_member?
         if MassiveTeamRegister.new(students, team).execute
-          flash[:info] = "Se agregaron #{students.size} estudiantes en el equipo #{team.name}"
+          flash[:success] = "Se agregaron #{students.size} estudiantes en el equipo #{team.name}"
         end
       end
 

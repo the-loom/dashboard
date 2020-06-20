@@ -25,7 +25,7 @@ module MultipleChoices
       if @questionnaire.valid?
         @questionnaire.save
         redirect_to multiple_choices_questionnaires_path
-        flash[:info] = "Se creó correctamente el cuestionario"
+        flash[:success] = "Se creó correctamente el cuestionario"
       else
         @labels = OpenStruct.new(title: "Nuevo cuestionario", button: "Guardar cuestionario")
         render :form
@@ -45,7 +45,7 @@ module MultipleChoices
 
       if @questionnaire.update_attributes(questionnaire_params)
         redirect_to multiple_choices_questionnaires_path
-        flash[:info] = "Se editó correctamente el cuestionario"
+        flash[:success] = "Se editó correctamente el cuestionario"
       else
         @labels = OpenStruct.new(title: "Editar cuestionario", button: "Actualizar cuestionario")
         render :form
@@ -58,7 +58,7 @@ module MultipleChoices
       @questionnaire.destroy
 
       redirect_to multiple_choices_questionnaires_path
-      flash[:info] = "Se eliminó el cuestionario"
+      flash[:success] = "Se eliminó el cuestionario"
     end
 
     def overview
@@ -72,11 +72,11 @@ module MultipleChoices
       last_solution = @questionnaire.solutions.where(solver: current_user).order(:created_at).last
       if last_solution
         if last_solution.score == 100
-          flash[:alert] = "Ya no podés resolver este cuestionario... ¡Obtuviste calificación perfecta! ¡Buen trabajo!"
+          flash[:info] = "Ya no podés resolver este cuestionario... ¡Obtuviste calificación perfecta! ¡Buen trabajo!"
           redirect_to(multiple_choices_questionnaires_path) && return
         end
         if last_solution.created_at > (Time.current - 1.day)
-          flash[:alert] = "Debes esperar al menos un día para volver a intentarlo..."
+          flash[:info] = "Debes esperar al menos un día para volver a intentarlo..."
           redirect_to(multiple_choices_questionnaires_path) && return
         end
       end

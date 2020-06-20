@@ -29,7 +29,7 @@ class TeachersController < ApplicationController
     teachers = User.where(id: params[:teachers][:ids].map(&:to_i))
     authorize User, :join?
     if ProfileJoiner.new(teachers).execute
-      flash[:info] = "Se unieron correctamente #{teachers.size} perfiles"
+      flash[:success] = "Se unieron correctamente #{teachers.size} perfiles"
     end
     redirect_to teachers_path
   end

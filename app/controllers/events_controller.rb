@@ -29,7 +29,7 @@ class EventsController < ApplicationController
     if @event.valid?
       @event.save
       redirect_to events_path
-      flash[:info] = "Se creo correctamente el evento"
+      flash[:success] = "Se creo correctamente el evento"
     else
       @labels = OpenStruct.new(title: "Nuevo evento", button: "Guardar evento")
       render :form
@@ -49,7 +49,7 @@ class EventsController < ApplicationController
 
     if @event.update_attributes(event_params)
       redirect_to events_path
-      flash[:info] = "Se actualizó correctamente el evento"
+      flash[:success] = "Se actualizó correctamente el evento"
     else
       @labels = OpenStruct.new(title: "Editar evento", button: "Actualizar evento")
       render :form

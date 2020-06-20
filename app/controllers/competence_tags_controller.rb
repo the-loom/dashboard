@@ -22,7 +22,7 @@ class CompetenceTagsController < ApplicationController
     if @competence_tag.valid?
       @competence_tag.save
       redirect_to competence_tags_path
-      flash[:info] = "Se creo correctamente la competencia"
+      flash[:success] = "Se creo correctamente la competencia"
     else
       @labels = OpenStruct.new(title: "Nueva competencia", button: "Guardar competencia")
       render :form
@@ -42,7 +42,7 @@ class CompetenceTagsController < ApplicationController
 
     if @competence_tag.update_attributes(competence_tag_params)
       redirect_to competence_tags_path
-      flash[:info] = "Se actualizó correctamente la competencia"
+      flash[:success] = "Se actualizó correctamente la competencia"
     else
       @labels = OpenStruct.new(title: "Editar competencia", button: "Actualizar competencia")
       render :form

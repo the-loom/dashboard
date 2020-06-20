@@ -155,7 +155,7 @@ module PeerReview
       end
 
       redirect_to peer_review_challenges_path
-      flash[:info] = "Se premió correctamente el desafío"
+      flash[:success] = "Se premió correctamente el desafío"
     end
 
     def new
@@ -172,7 +172,7 @@ module PeerReview
       if @challenge.valid?
         @challenge.save
         redirect_to peer_review_challenges_path
-        flash[:info] = "Se creó correctamente el desafío"
+        flash[:success] = "Se creó correctamente el desafío"
       else
         @labels = OpenStruct.new(title: "Nuevo desafío", button: "Guardar desafío")
         render :form
@@ -199,7 +199,7 @@ module PeerReview
 
       if @challenge.update_attributes(challenge_params)
         redirect_to peer_review_challenges_path
-        flash[:info] = "Se editó correctamente el desafío"
+        flash[:success] = "Se editó correctamente el desafío"
       else
         @labels = OpenStruct.new(title: "Editar desafío", button: "Actualizar desafío")
         render :form
@@ -231,7 +231,7 @@ module PeerReview
 
       challenge.purge!
 
-      flash[:info] = "Se purgó correctamente el desafío"
+      flash[:success] = "Se purgó correctamente el desafío"
       redirect_to peer_review_challenges_path
     end
 
