@@ -17,6 +17,12 @@ module PeerReview
       else
         @challenges = PeerReview::Challenge.published
       end
+      respond_to do |format|
+        format.html
+        format.csv do
+          send_data Challenge.to_csv, filename: "challenge_sheet.csv"
+        end
+      end
     end
 
     def flow
