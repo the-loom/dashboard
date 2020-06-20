@@ -9,22 +9,42 @@
 
   <%= f.input :name, label: "Nombre del cuestionario" %>
 
-  <legend>Preguntas</legend>
-
   <div id="app">
 
-    <template v-for="(question, qindex) in questions">
+    <legend>Preguntas ({{ questions.length }})</legend>
 
+    <div v-for="(question, qindex) in questions" class="question">
       <input type="hidden" v-model="question.id" :name="'multiple_choices_questionnaire[questions_attributes][' + qindex + '][id]'">
       <input type="hidden" v-model="question._destroy" :name="'multiple_choices_questionnaire[questions_attributes][' + qindex + '][_destroy]'">
-      <input class="form-control" type="text" v-model="question.wording" :name="'multiple_choices_questionnaire[questions_attributes][' + qindex + '][wording]'"/>
+      <div class="row">
 
-      <table class="table-hover table-striped table">
+        <template v-if="question._destroy">
+          <div class="col-md-10">
+            <em>Pregunta eliminada...</em>
+          </div>
+          <div class="col-md-2">
+            <button type="button" class="btn btn-secondary" v-on:click="restoreEntry(question)">
+              Restaurar
+            </button>
+          </div>
+        </template>
+        <template v-if="question._destroy == null">
+          <div class="col-md-10">
+            <input class="form-control" type="text" v-model="question.wording" :name="'multiple_choices_questionnaire[questions_attributes][' + qindex + '][wording]'"/>
+          </div>
+          <div class="col-md-2">
+            <button type="button" class="btn btn-danger" v-on:click="removeEntry(question)">
+              Remover pregunta
+            </button>
+          </div>
+        </template>
+      </div>
+      <table class="table-hover table-striped table" v-if="!question._destroy">
         <thead>
         <tr>
-          <th>Respuesta</th>
+          <th>Opciones</th>
           <th>¿Correcta?</th>
-          <th>&nbsp;</th>
+          <th style="width: 100px;">&nbsp;</th>
         </tr>
         <tbody>
 
@@ -33,7 +53,7 @@
           <template v-if="answer._destroy">
             <tr>
               <td colspan="2">
-                <em>Respuesta eliminada...</em>
+                <em>Opción eliminada...</em>
               </td>
               <td>
                 <button type="button" class="btn btn-secondary" v-on:click="restoreEntry(answer)">
@@ -64,7 +84,7 @@
               </td>
               <td>
                 <button type="button" class="btn btn-danger" v-on:click="removeEntry(answer)">
-                  Remover esta respuesta
+                  Remover esta opción
                 </button>
               </td>
             </tr>
@@ -72,22 +92,35 @@
         </template>
 
         </tbody>
+        <tfoot>
+        <tr>
+          <td colspan="99">
+            <button type="button" @click="addAnswer(question)" class="btn btn-secondary">Agregar opción</button>
+          </td>
+        </tr>
+        </tfoot>
       </table>
-
-      <button type="button" @click="addAnswer(question)" class="btn btn-secondary">Agregar respuesta</button>
-      <button type="button" class="btn btn-danger" v-on:click="removeEntry(question)">
-        Remover pregunta
-      </button>
-
-      <hr>
-
-    </template>
+    </div>
+    <br>
     <button type="button" @click="addQuestion()" class="btn btn-secondary">Agregar pregunta</button>
   </div>
 
-
+  <hr>
 
   <%= f.button :submit, @labels.button, class: "btn-primary" %>
+
+<% end %>
+
+<% content_for :head do %>
+
+  <style>
+    #app .question {
+      border: 1px solid black;
+      border-radius: 5px;
+      padding: 1em 1em 0 1em;
+      margin-bottom: 1em;
+    }
+  </style>
 
 <% end %>
 
@@ -95,7 +128,6 @@
 <% content_for :javascript do %>
 
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-
 
   <script>
 
