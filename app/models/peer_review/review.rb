@@ -19,6 +19,7 @@ class PeerReview::Review < ApplicationRecord
   }
 
   scope :sorted, -> { order(id: :asc) }
+  scope :by, ->(user) { where(reviewer: user) }
 
   def publish!
     self.status = :final
