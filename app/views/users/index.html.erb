@@ -67,8 +67,8 @@
           </td>
           <% if Course.current.on?(:badges) %>
             <td>
-              <span class="badge golden-badge" title="Medallas de oro">&times;<%= student.badges.where(featured: true).count %></span>
-              <span class="badge" title="Medallas de plata">&times;<%= student.badges.where(featured: false).count %></span>
+              <span class="badge golden-badge" title="Medallas de oro">&times;<%= student.badges.featured.count %></span>
+              <span class="badge" title="Medallas de plata">&times;<%= student.badges.not_featured.count %></span>
             </td>
           <% end %>
           <td><%= mail_to student.email %></td>

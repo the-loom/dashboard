@@ -141,4 +141,22 @@ class PeerReview::Challenge < ApplicationRecord
     end
     false
   end
+
+  def self.to_csv
+    challenges = PeerReview::Challenge.where(published: :true).order(title: :asc)
+    students = Course.current.memberships.includes(:user).student.collect(&:user)
+    CSV.generate() do |csv|
+      csv << ["Apellido", "Nombre", "Grupo"] + challenges.map(&:title)
+      students.each do |student|
+        csv << [student.last_name, student.first_name, student.current_membership.team.try(:name)] +
+                challenges.map { |challenge| challenge.solved(student) ? "Si" : "No" }
+      end
+    end
+  end
+
+  def solved(student)
+    already_solved_by?(student) ||
+    (team_challenge &&
+    already_solved_by_team?(student.current_membership.team))
+  end
 end

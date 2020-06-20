@@ -17,6 +17,12 @@ module PeerReview
       else
         @challenges = PeerReview::Challenge.published
       end
+      respond_to do |format|
+        format.html
+        format.csv do
+          send_data Challenge.to_csv, filename: "challenge_sheet.csv"
+        end
+      end
     end
 
     def flow
@@ -37,6 +43,13 @@ module PeerReview
       @challenge = PeerReview::Challenge.find(params[:id])
       @solvers = @challenge.team_challenge? ? @challenge.solvers : Course.current.users
       @overview = PeerReview::OverviewPresenter.new(@challenge)
+    end
+
+    def meta_overview
+      authorize PeerReview::Challenge, :manage?
+      @challenges = PeerReview::Challenge.where(published: :true).order(title: :asc)
+      @students = Course.current.memberships.includes(:user).student.collect(&:user)
+      @overview = PeerReviewChallengesStats.new(@students, @challenges)
     end
 
     def flow_overview

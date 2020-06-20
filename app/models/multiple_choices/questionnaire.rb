@@ -6,4 +6,6 @@ class MultipleChoices::Questionnaire < ApplicationRecord
   has_many :solutions, foreign_key: :multiple_choices_questionnaire_id, dependent: :destroy
 
   validates_presence_of :name
+
+  accepts_nested_attributes_for :questions, allow_destroy: true
 end

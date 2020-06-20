@@ -87,14 +87,13 @@ Rails.application.routes.draw do
   end
 
   namespace :multiple_choices do
-    resources :questionnaires do
+    resources :questionnaires, except: :show do
       publishable
       member do
         get :practice
         get :overview
         post :grade
       end
-      resources :questions, except: :index
     end
   end
 
@@ -110,6 +109,7 @@ Rails.application.routes.draw do
 
   namespace :peer_review do
     resources :challenges do
+      get :meta_overview, on: :collection
       publishable
       get :flow, on: :member
       get :flow_overview, on: :collection

@@ -42,7 +42,7 @@
               <div class="btn-group display">
 
                 <%= link_to "Panorama", overview_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-primary btn-sm' %>
-                <%= link_to "Configurar", multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-default btn-sm' %>
+                <%= link_to "Editar", edit_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-default btn-sm' %>
                 <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">
                   <span class="caret"></span>
                 </button>
@@ -60,7 +60,6 @@
                       <% end %>
                     </li>
                   <% end %>
-                  <li><%= link_to "Editar", edit_multiple_choices_questionnaire_path(questionnaire) %></li>
                 </ul>
               </div>
             <% end %>

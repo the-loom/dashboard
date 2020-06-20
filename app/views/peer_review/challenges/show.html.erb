@@ -2,7 +2,7 @@
 <% nav_add @challenge.title, '#' %>
 <%= nav_render4 %>
 
-<% unless @challenge.reviews.where(reviewer: current_user, status: :draft).empty? %>
+<% unless @challenge.reviews.draft.by(current_user).empty? %>
   <%= render partial: 'shared/alert', locals: {alert_type: 'danger', title: '¡Cuidado!', dismissable: true,
      message: "Tenés una revisión no publicada. Tomate tu tiempo, pero publicala para que otro participantes puedan verla."} %>
 <% end %>
@@ -162,7 +162,7 @@
           <div class="row">
             <div class="col-2">
               <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <% @solution.reviews.where(status: :final).each_with_index do |review, index| %>
+                <% @solution.reviews.final.each_with_index do |review, index| %>
                   <a href="#<%= "review_#{index}" %>" id="#<%= "review_#{index}" %>" class="nav-link<%= ' active' if index == 0 %>"
                      aria-controls="#<%= "review_#{index}" %>" role="tab" data-toggle="pill" aria-selected="<%= index == 0 %>">
                     <%= "Revisión ##{index + 1}" %>
@@ -175,7 +175,7 @@
             </div>
             <div class="col-10">
               <div class="tab-content" id="v-pills-tabContent">
-                <% @solution.reviews.where(status: :final).each_with_index do |review, index| %>
+                <% @solution.reviews.final.each_with_index do |review, index| %>
                   <div class="tab-pane fade <%= 'show active' if index == 0 %>" id="<%= "review_#{index}" %>" role="tabpanel" aria-labelledby="<%= "review_#{index}" %>">
                     <% if review.reviewer.teacher? %>
                       <h4>Revisión realizada por <%= review.reviewer.full_name %></h4>
@@ -196,13 +196,13 @@
   </div>
 
   <div class="tab-pane fade" id="nav-reviews" role="tabpanel" aria-labelledby="nav-reviews-tab">
-    <% if @challenge.reviews.where(reviewer: current_user).empty? %>
+    <% if @challenge.reviews.by(current_user).empty? %>
       <%= render partial: 'shared/alert', locals: { message: "No realizaste revisiones." } %>
     <% else %>
       <div class="row">
         <div class="col-2">
           <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <% @challenge.reviews.where(reviewer: current_user).each_with_index do |review, index| %>
+            <% @challenge.reviews.by(current_user).each_with_index do |review, index| %>
               <a href="#<%= "rreview_#{index}" %>" id="#<%= "rreview_#{index}" %>" class="nav-link<%= ' active' if index == 0 %>"
                  aria-controls="#<%= "rreview_#{index}" %>" role="tab" data-toggle="pill" aria-selected="<%= index == 0 %>">
                 <%= "Revisión ##{index + 1}" %>
@@ -215,7 +215,7 @@
         </div>
         <div class="col-10">
           <div class="tab-content" id="v-pills-tabContent">
-            <% @challenge.reviews.where(reviewer: current_user).each_with_index do |review, index| %>
+            <% @challenge.reviews.by(current_user).each_with_index do |review, index| %>
               <div class="tab-pane fade <%= 'show active' if index == 0 %>" id="<%= "rreview_#{index}" %>" role="tabpanel" aria-labelledby="<%= "rreview_#{index}" %>">
 
                 <h3>Solución revisada</h3>

@@ -1,0 +1,96 @@
+<% nav_add 'Desafíos', peer_review_challenges_path %>
+<% nav_add 'Resumen de desafíos', '#' %>
+<%= nav_render %>
+
+<% if @challenges.empty? %>
+  <div class="alert alert-info">
+    <p>Aún no hay ningún desafío</p>
+  </div>
+<% else %>
+  <table class="table stripe row-border table-hover overview">
+    <thead>
+    <tr>
+      <th>Estudiante</th>
+      <th>Equipo</th>
+      <% @challenges.each do |challenge| %>
+        <th><%= challenge.title %></th>
+      <% end %>
+      <th>Desafíos realizados.</th>
+      <th>
+        <nobr>Desafíos realizados. %</nobr>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @overview.solutions_to_challenges.each do |student, challenges| %>
+      <tr>
+        <td>
+          <% if student.current_membership.enabled? %>
+            <%= link_to student.full_name, user_details_url(student.nickname) %>
+          <% else %>
+            <s>
+              <%= link_to student.full_name, user_details_url(student.nickname) %>
+            </s>
+          <% end %>
+        </td>
+        <td>
+          <%= student.current_membership.team.try(:name) %>
+        </td>
+        <% challenges.each do |solved| %>
+          <td>
+            <%= checkmark solved %>
+          </td>
+        <% end %>
+        <td>
+          <%= @overview.challenges_made_by(student) %>
+        </td>
+        <td>
+          <%= @overview.percentage_of_solutions_made_by(student) %>%
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+    <tfoot>
+      <th>Totales</th>
+      <th>&nbsp;</th>
+      <% @overview.number_of_challenges_solved.each do |solution| %>
+        <th><%= solution %></th>
+      <% end %>
+      <th>Desafíos realizados.</th>
+      <th>Desafíos realizados. %</th>
+    </tfoot>
+  </table>
+<% end %>
+
+<%= content_for :head do %>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css"/>
+  <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/3.3.1/css/fixedColumns.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/scroller/2.0.2/css/scroller.dataTables.min.css"/>
+<% end %>
+
+<%= content_for :javascript do %>
+  <script src="https://code.jquery.com/jquery-3.5.1.js" type="application/javascript"></script>
+  <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js" type="text/javascript"></script>
+  <script src="https://cdn.datatables.net/fixedcolumns/3.3.1/js/dataTables.fixedColumns.min.js" type="application/javascript"></script>
+  <script src="https://cdn.datatables.net/scroller/2.0.2/js/dataTables.scroller.min.js" type="text/javascript"></script>
+  <script type="application/javascript">
+      $(function () {
+          var indexLastColumn = $(".overview").find('tr')[0].cells.length - 1;
+          var table = $('.overview').DataTable({
+                        order: [[indexLastColumn, "desc"]],
+                        paging: false,
+                        deferRender: true,
+                        scrollY: 500,
+                        scrollX: true,
+                        language: {
+                          url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                        },
+                        columnDefs: [{
+                          targets: 'no-sort',
+                          orderable: false
+                        }]
+                      });
+          new $.fn.dataTable.FixedColumns( table );
+      });
+  </script>
+<% end %>
