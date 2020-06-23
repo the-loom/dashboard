@@ -25,9 +25,11 @@
         &mdash;
         = @suggestion.course.name
       %em= @suggestion.created_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M")
-    %p
-      Secundado por
-      = @suggestion.get_upvotes.map(&:voter).map(&:short_name).to_sentence
-    %p
-      Opuesto por
-      = @suggestion.get_downvotes.map(&:voter).map(&:short_name).to_sentence
+    - if @suggestion.get_upvotes.size > 0
+      %p
+        Apoyado por
+        = @suggestion.get_upvotes.map(&:voter).map(&:short_name).to_sentence
+    - if @suggestion.get_downvotes.size > 0
+      %p
+        Opuesto por
+        = @suggestion.get_downvotes.map(&:voter).map(&:short_name).to_sentence

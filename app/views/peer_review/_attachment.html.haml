@@ -1,0 +1,6 @@
+- if challenge.allows_attachment?
+  %div
+    - if document.attached?
+      = link_to rails_blob_path(document, disposition: 'preview') do
+        %i.fa.fa-paperclip
+        = document.filename

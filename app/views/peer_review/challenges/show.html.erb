@@ -128,19 +128,7 @@
       <% end %>
 
       <%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: @solution.wording, language: @challenge.language} %>
-
-      <% if @challenge.allows_attachment? %>
-        <div>
-          <% document = @solution.solution_attachment %>
-          <% if document.attached? %>
-            <p>Adjunto:</p>
-            <%= link_to rails_blob_path(document, disposition: 'preview') do %>
-              <i class="fa fa-paperclip"></i>
-              <%= document.filename %>
-            <% end %>
-          <% end %>
-        </div>
-      <% end %>
+      <%= render partial: '/peer_review/attachment', locals: {challenge: @challenge, document: @solution.solution_attachment} %>
 
       <br>
 
@@ -220,18 +208,9 @@
 
                 <h3>Solución revisada</h3>
                 <%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: review.solution.wording, language: @challenge.language} %>
-                <% if @challenge.allows_attachment? %>
-                  <div>
-                    <% document = review.solution.solution_attachment %>
-                    <% if document.attached? %>
-                      <p>Adjunto:</p>
-                      <%= link_to rails_blob_path(document, disposition: 'preview') do %>
-                        <i class="fa fa-paperclip"></i>
-                        <%= document.filename %>
-                      <% end %>
-                    <% end %>
-                  </div>
-                <% end %>
+                <%= render partial: '/peer_review/attachment', locals: {challenge: @challenge, document: review.solution.solution_attachment} %>
+
+                <br>
 
                 <h3>Mi revisión</h3>
 
@@ -267,21 +246,8 @@
           <div class="tab-content" id="v-pills-tabContent">
             <% @challenge.picked_solutions.each_with_index do |solution, index| %>
               <div class="tab-pane fade <%= 'show active' if index == 0 %>" id="<%= "ssolution_#{index}" %>" role="tabpanel" aria-labelledby="<%= "ssolution_#{index}" %>">
-                <% if @challenge.allows_attachment? %>
-                  <div>
-                    <% document = solution.solution_attachment %>
-                    <% if document.attached? %>
-                      <p>
-                        Adjunto:
-                        <%= link_to rails_blob_path(document, disposition: 'preview') do %>
-                          <i class="fa fa-paperclip"></i>
-                          <%= document.filename %>
-                        <% end %>
-                      </p>
-                    <% end %>
-                  </div>
-                <% end %>
                 <%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: solution.wording, language: @challenge.language} %>
+                <%= render partial: '/peer_review/attachment', locals: {challenge: @challenge, document: solution.solution_attachment} %>
               </div>
             <% end %>
           </div>
