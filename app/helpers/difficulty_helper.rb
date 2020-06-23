@@ -1,5 +1,5 @@
 module DifficultyHelper
-  def difficulty(value, max = 5)
-    render partial: "shared/difficulty", locals: { value: value, max: max }
+  def stars_for(has_difficulty, max = HasDifficulty::MAX)
+    render partial: "shared/difficulty", locals: { value: has_difficulty.difficulty, max: max }
   end
 end

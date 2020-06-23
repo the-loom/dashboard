@@ -29,7 +29,7 @@
           <%= link_to exercise.name, exercise_path(exercise.id) %>
         </td>
         <td>
-          <%= difficulty exercise.difficulty %>
+          <%= stars_for exercise %>
         </td>
         <td>
           <% if policy(Exercise).manage? %>
