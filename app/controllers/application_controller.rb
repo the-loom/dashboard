@@ -31,6 +31,8 @@ class ApplicationController < ActionController::Base
   private
     def menu
       @menu = MenuPresenter.new(current_user)
+      @menub4 = MenuB4Presenter.new(current_user)
+      @sidebar = SidebarPresenter.new(current_user)
     end
 
     def check_feature(feature)

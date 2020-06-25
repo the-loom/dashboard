@@ -32,20 +32,27 @@
 </head>
 <body>
 
-<%= render partial: 'layouts/navbar', locals: {menu: @menu.present} %>
+<%= render partial: 'layouts/navbar', locals: {menu: @menub4.present} %>
 
-<div class="container">
+<div class="container-fluid">
+  <div class="row">
 
-  <% if flash[:alert] %>
-    <%= render partial: 'shared/alert', locals: {alert_type: 'danger', title: '¡Oops!', dismissable: true, message: flash[:alert]} %>
-  <% end %>
+    <%= render partial: 'layouts/sidebar', locals: {menu: @sidebar.present} %>
 
-  <% if flash[:info] %>
-    <%= render partial: 'shared/alert', locals: {title: '¡Atención!', dismissable: true, message: flash[:info]} %>
-  <% end %>
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
 
-  <%= yield %>
+      <% if flash[:alert] %>
+        <%= render partial: 'shared/alert', locals: {alert_type: 'danger', title: '¡Oops!', dismissable: true, message: flash[:alert]} %>
+      <% end %>
 
+      <% if flash[:info] %>
+        <%= render partial: 'shared/alert', locals: {title: '¡Atención!', dismissable: true, message: flash[:info]} %>
+      <% end %>
+
+      <%= yield %>
+
+    </main>
+  </div>
 </div>
 
 <%= javascript_include_tag 'application2' %>
