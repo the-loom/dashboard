@@ -1,20 +1,17 @@
- /*
- *= require codemirror/lib/codemirror
- *= require_self
- */
+/*
+*= require codemirror/lib/codemirror
+*= require_self
+*/
 
- .trix-content{
-     min-height: 250px;
-     max-height: 500px;
-     overflow-y: auto;
- }
+.trix-content {
+  max-height: 500px;
+  min-height: 250px;
+  overflow-y: auto;
+}
 
- .btn-suggestions {
-     position: fixed;
-     right: 0;
-     bottom: 7em;
-     -webkit-transform: rotate(-90deg);
-     -moz-transform: rotate(-90deg);
-     -ms-transform: rotate(-90deg);
-     -o-transform: rotate(-90deg);
- }
+.btn-suggestions {
+  bottom: 7em;
+  position: fixed;
+  right: 0;
+  transform: rotate(-90deg);
+}
