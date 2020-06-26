@@ -1,4 +1,4 @@
 #navbar.navbar-collapse.collapse
   %ul.nav.navbar-nav.navbar-right
-    - @menu.present.each do |menu|
+    - @menu.each do |menu|
       = render partial:'layouts/menu2', locals: { menu: menu }
