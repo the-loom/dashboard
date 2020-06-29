@@ -1,4 +1,17 @@
- /*
- *= require codemirror/lib/codemirror
- *= require_self
- */
+/*
+*= require codemirror/lib/codemirror
+*= require_self
+*/
+
+.trix-content {
+  max-height: 500px;
+  min-height: 250px;
+  overflow-y: auto;
+}
+
+.btn-suggestions {
+  bottom: 7em;
+  position: fixed;
+  right: 0;
+  transform: rotate(-90deg);
+}
