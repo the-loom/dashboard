@@ -67,6 +67,27 @@ module MultipleChoices
     end
 
     def practice
+      @questionnaire = MultipleChoices::Questionnaire.includes(:questions, questions: :answers).find(params[:id])
+
+      last_solution = @questionnaire.solutions.where(solver: current_user).order(:created_at).last
+      if last_solution
+        if last_solution.score == 100
+          flash[:info] = "Ya no podés resolver este cuestionario... ¡Obtuviste calificación perfecta! ¡Buen trabajo!"
+          redirect_to(multiple_choices_questionnaires_path) && return
+        end
+        if last_solution.created_at > (Time.current - 1.day)
+          flash[:info] = "Debes esperar al menos un día para volver a intentarlo..."
+          redirect_to(multiple_choices_questionnaires_path) && return
+        end
+      end
+
+      authorize @questionnaire, :access?
+
+      set_random_seed
+      @questionnaire = MultipleChoices::PracticeQuestionnairePresenter.new(@questionnaire, Random.new(random_seed))
+    end
+
+    def grade
       @questionnaire = MultipleChoices::Questionnaire.find(params[:id])
 
       last_solution = @questionnaire.solutions.where(solver: current_user).order(:created_at).last
@@ -81,16 +102,7 @@ module MultipleChoices
         end
       end
 
-      # randomize all!
       authorize @questionnaire, :access?
-    end
-
-    def grade
-      # honor randomization!
-      @questionnaire = MultipleChoices::Questionnaire.find(params[:id])
-      authorize @questionnaire, :access?
-
-      # TODO: use case
 
       solution = MultipleChoices::Solution.create(solver: current_user, questionnaire: @questionnaire)
       answers = params[:question]
@@ -100,7 +112,7 @@ module MultipleChoices
       end
       solution.refresh_score!
 
-      @questionnaire = MultipleChoices::SolvedQuestionnairePresenter.new(@questionnaire, params[:question])
+      @questionnaire = MultipleChoices::SolvedQuestionnairePresenter.new(@questionnaire, params[:question], Random.new(random_seed))
     end
 
     private

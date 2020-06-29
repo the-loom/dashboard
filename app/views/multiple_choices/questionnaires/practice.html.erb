@@ -6,10 +6,10 @@
 <legend><%= @questionnaire.name %></legend>
 
 
-<%= form_tag grade_multiple_choices_questionnaire_path(@questionnaire) do %>
+<%= form_tag grade_multiple_choices_questionnaire_path(@questionnaire.questionnaire) do %>
 
   <ol class="questionnaire">
-    <% @questionnaire.questions.includes(:answers).each do |question| %>
+    <% @questionnaire.questions.each do |question| %>
       <li class="question">
         <%= question.wording %>
         <%= collection_radio_buttons(:questionnaire, :question_ids, question.answers, :id, :text, include_hidden: false) do |r| %>

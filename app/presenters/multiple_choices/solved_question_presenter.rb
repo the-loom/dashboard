@@ -3,9 +3,9 @@ class MultipleChoices::SolvedQuestionPresenter
 
   delegate :wording, to: :question
 
-  def initialize(question, answer)
+  def initialize(question, answer, randomizer)
     @question = question
-    @answers = question.answers.map { |a|
+    @answers = question.answers.shuffle(random: randomizer).map { |a|
       chosen = a.id == answer[:answer].to_i
       MultipleChoices::SolvedAnswerPresenter.new(a, chosen)
     }
