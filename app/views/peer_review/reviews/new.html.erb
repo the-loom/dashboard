@@ -10,20 +10,9 @@
 <% else %>
   <h2>Solución a revisar</h2>
 <% end %>
-<%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: @review.solution.wording, language: @challenge.language } %>
 
-<% if @challenge.allows_attachment? %>
-  <div>
-    <% document = @review.solution.solution_attachment %>
-    <% if document.attached? %>
-      <p>Adjunto:</p>
-      <%= link_to rails_blob_path(document, disposition: 'preview') do %>
-        <i class="fa fa-paperclip"></i>
-        <%= document.filename %>
-      <% end %>
-    <% end %>
-  </div>
-<% end %>
+<%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: @review.solution.wording, language: @challenge.language } %>
+<%= render partial: '/peer_review/attachment', locals: {challenge: @challenge, document: @review.solution.solution_attachment} %>
 
 <h2>Instrucciones para el revisor</h2>
 

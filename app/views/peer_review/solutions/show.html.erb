@@ -24,19 +24,9 @@
 </h2>
 
 <%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: @solution.wording, language: @challenge.language } %>
+<%= render partial: '/peer_review/attachment', locals: {challenge: @challenge, document: @solution.solution_attachment} %>
 
-<% if @challenge.allows_attachment? %>
-  <div>
-    <% document = @solution.solution_attachment %>
-    <% if document.attached? %>
-      <p>Adjunto:</p>
-      <%= link_to rails_blob_path(document, disposition: 'preview') do %>
-        <i class="fa fa-paperclip"></i>
-        <%= document.filename %>
-      <% end %>
-    <% end %>
-  </div>
-<% end %>
+<br>
 
 <% if @solution.final? %>
   <% my_review = @solution.review_by(current_user) %>
@@ -132,18 +122,7 @@
       <div class="tab-pane fade <%= 'active in' if index == 0 %>" role="tabpanel" id="<%= "rreview_#{index}" %>" aria-labelledby="home-tab">
         <h3>Solución de <%= review.solution.author.full_name %></h3>
         <%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: review.solution.wording, language: @challenge.language } %>
-        <% if @challenge.allows_attachment? %>
-          <div>
-            <% document = review.solution.solution_attachment %>
-            <% if document.attached? %>
-              <p>Adjunto:</p>
-              <%= link_to rails_blob_path(document, disposition: 'preview') do %>
-                <i class="fa fa-paperclip"></i>
-                <%= document.filename %>
-              <% end %>
-            <% end %>
-          </div>
-        <% end %>
+        <%= render partial: '/peer_review/attachment', locals: {challenge: @challenge, document: review.solution.solution_attachment} %>
 
         <h3>Revisión de <%= review.reviewer.full_name %></h3>
         <div class="well">
