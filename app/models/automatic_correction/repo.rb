@@ -1,6 +1,7 @@
 class AutomaticCorrection::Repo < ApplicationRecord
   include CourseLock
   include Publishable
+  include HasDifficulty
 
   has_many :forks, foreign_key: "parent_id", class_name: "AutomaticCorrection::Repo"
 
@@ -9,10 +10,8 @@ class AutomaticCorrection::Repo < ApplicationRecord
 
   has_many :test_runs, foreign_key: :automatic_correction_repo_id, class_name: "AutomaticCorrection::TestRun"
 
-  validates_presence_of :user, :name, :git_url, :description, :difficulty
+  validates_presence_of :user, :name, :git_url, :description
   validates :git_url, uniqueness: { scope: :course_id }
-  validates :difficulty, inclusion: { in: 1..5, message: "must be between 1 and 5" }
-
 
   def full_name
     "#{user}/#{name}"

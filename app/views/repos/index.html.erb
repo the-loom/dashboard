@@ -37,7 +37,7 @@
             <%= link_to repo.full_name, repo_path(user: repo.user, name: repo.name) %>
           </td>
           <td>
-            <%= difficulty repo.difficulty %>
+            <%= stars_for repo %>
           </td>
           <td><%= repo.forks.count %></td>
         </tr>

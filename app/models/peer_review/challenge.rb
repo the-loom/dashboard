@@ -1,12 +1,12 @@
 class PeerReview::Challenge < ApplicationRecord
   include CourseLock
   include Publishable
+  include HasDifficulty
 
-  validates_presence_of :title, :difficulty, :instructions,
+  validates_presence_of :title, :instructions,
                         :reviewer_instructions, :solution_type
   validates_presence_of :language, if: :source_code?
 
-  validates :difficulty, inclusion: { in: 1..5, message: "must be between 1 and 5" }
   validates_numericality_of :expected_reviews, greater_than_or_equal_to: 0, only_integer: true
 
   validate :prevent_inconsistencies

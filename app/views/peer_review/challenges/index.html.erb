@@ -55,7 +55,7 @@
             <%= challenge.enabled? ? "Vigente" : "Finalizado" %>
           </td>
           <td>
-            <%= difficulty challenge.difficulty %>
+            <%= stars_for challenge %>
           </td>
           <td>
             <%= yes_no challenge.optional? %>
