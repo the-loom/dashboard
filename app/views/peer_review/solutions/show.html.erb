@@ -8,13 +8,11 @@
 <% nav_add 'Desafíos', peer_review_challenges_path %>
 <% nav_add @challenge.title, peer_review_challenge_path(@challenge) %>
 <% nav_add title, '#' %>
-<%= nav_render %>
+<%= nav_render4 %>
 
-<h2>Consigna</h2>
+<%= render :partial => '/peer_review/info_box', locals: {challenge: @challenge} %>
 
-<%= raw @challenge.instructions %>
-
-<hr/>
+<br>
 
 <h2>
   <% if @solution.picked? %>
@@ -61,85 +59,100 @@
   </div>
 <% end %>
 
-<h2>Revisiones Recibidas</h2>
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link active" id="nav-solution-tab" data-toggle="tab" href="#nav-solution" role="tab" aria-controls="nav-solution" aria-selected="true">Revisiones recibidas</a>
+    <a class="nav-item nav-link" id="nav-reviews-tab" data-toggle="tab" href="#nav-reviews" role="tab" aria-controls="nav-reviews" aria-selected="false">Revisiones realizadas</a>
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-solution" role="tabpanel" aria-labelledby="nav-solution-tab">
 
-<% if @solution.reviews.empty? %>
 
-  <div class="alert alert-info">
-    <p>Aún no ha recibido revisiones.</p>
+        <% if @solution.reviews.final.empty? %>
+          <%= render partial: 'shared/alert', locals: { message: "Aún no ha recibido revisiones." } %>
+        <% else %>
+          <div class="row">
+            <div class="col-2">
+              <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <% @solution.reviews.final.each_with_index do |review, index| %>
+                  <a href="#<%= "review_#{index}" %>" id="#<%= "review_#{index}" %>" class="nav-link<%= ' active' if index == 0 %>"
+                     aria-controls="#<%= "review_#{index}" %>" role="tab" data-toggle="pill" aria-selected="<%= index == 0 %>">
+                    Revisión de <%= review.reviewer.full_name %>
+                    <% if review.reviewer.teacher? %>
+                      (docente)
+                    <% end %>
+                  </a>
+                <% end %>
+              </div>
+            </div>
+            <div class="col-10">
+              <div class="tab-content" id="v-pills-tabContent">
+                <% @solution.reviews.final.each_with_index do |review, index| %>
+                  <div class="tab-pane fade <%= 'show active' if index == 0 %>" id="<%= "review_#{index}" %>" role="tabpanel" aria-labelledby="<%= "review_#{index}" %>">
+                    <% if review.reviewer.teacher? %>
+                      <h4>Revisión realizada por <%= review.reviewer.full_name %></h4>
+                    <% end %>
+                    <div class="well">
+                      <%= render partial: '/peer_review/review_wording', locals: {quick_review: @challenge.allows_quick_reviews?, wording: review.wording} %>
+                    </div>
+                    <%= render partial: '/peer_review/challenges/assessment', locals: {review: review} %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <br>
   </div>
 
-<% else %>
-
-  <ul class="nav nav-tabs" id="myTabs" role="tablist">
-    <% @solution.reviews.final.sorted.each_with_index do |_, index| %>
-      <li role="presentation" class="<%= 'active' if index == 0 %>">
-        <a href="#<%= "review_#{index}" %>" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
-          <%= "Revisión ##{index + 1}" %>
-        </a>
-      </li>
-    <% end %>
-  </ul>
-  <div class="tab-content" id="myTabContent">
-    <% @solution.reviews.final.sorted.each_with_index do |review, index| %>
-      <div class="tab-pane fade <%= 'active in' if index == 0 %>" role="tabpanel" id="<%= "review_#{index}" %>" aria-labelledby="home-tab">
-        <h3>Revisión de <%= review.reviewer.full_name %> (<%= review.status %>)</h3>
-
-        <div class="well">
-          <%= render partial: '/peer_review/review_wording', locals: { quick_review: @challenge.allows_quick_reviews?, wording: review.wording } %>
+  <div class="tab-pane fade" id="nav-reviews" role="tabpanel" aria-labelledby="nav-reviews-tab">
+    <% if @reviews.final.empty? %>
+      <%= render partial: 'shared/alert', locals: { message: "No ha realizado revisiones aún." } %>
+    <% else %>
+      <div class="row">
+        <div class="col-2">
+          <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <% @reviews.each_with_index do |review, index| %>
+              <a href="#<%= "rreview_#{index}" %>" id="#<%= "rreview_#{index}" %>" class="nav-link<%= ' active' if index == 0 %>"
+                 aria-controls="#<%= "rreview_#{index}" %>" role="tab" data-toggle="pill" aria-selected="<%= index == 0 %>">
+                Revisión para <%= review.solution.author.full_name %>
+                <% if review.reviewer.teacher? %>
+                  (docente)
+                <% end %>
+              </a>
+            <% end %>
+          </div>
         </div>
+        <div class="col-10">
+          <div class="tab-content" id="v-pills-tabContent">
+            <% @reviews.each_with_index do |review, index| %>
+              <div class="tab-pane fade <%= 'show active' if index == 0 %>" id="<%= "rreview_#{index}" %>" role="tabpanel" aria-labelledby="<%= "rreview_#{index}" %>">
 
-        <%= render partial: 'teacher_assessment', locals: { challenge: @challenge, solution: @solution, review: review } %>
+                <h3>Solución revisada</h3>
+                <%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: review.solution.wording, language: @challenge.language} %>
+                <%= render partial: '/peer_review/attachment', locals: {challenge: @challenge, document: review.solution.solution_attachment} %>
 
+                <br>
+
+                <h3>Revisión de <%= review.reviewer.full_name %></h3>
+
+                <div class="well">
+                  <%= render partial: '/peer_review/review_wording', locals: {quick_review: @challenge.allows_quick_reviews?, wording: review.wording} %>
+                </div>
+
+                <%= render partial: '/peer_review/challenges/assessment', locals: {review: review} %>
+              </div>
+            <% end %>
+          </div>
+        </div>
       </div>
     <% end %>
   </div>
-
-<% end %>
-
-
-<h2>Revisiones Realizadas</h2>
-
-<% if @reviews.final.empty? %>
-
-  <div class="alert alert-info">
-    <p>No ha realizado revisiones aún.</p>
-  </div>
-
-<% else %>
-
-  <ul class="nav nav-tabs" id="myTabs2" role="tablist">
-    <% @reviews.final.sorted.each_with_index do |_, index| %>
-      <li role="presentation" class="<%= 'active' if index == 0 %>">
-        <a href="#<%= "rreview_#{index}" %>" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
-          <%= "Revisión ##{index + 1}" %>
-        </a>
-      </li>
-    <% end %>
-  </ul>
-  <div class="tab-content" id="myTabContent">
-    <% @reviews.final.sorted.each_with_index do |review, index| %>
-      <div class="tab-pane fade <%= 'active in' if index == 0 %>" role="tabpanel" id="<%= "rreview_#{index}" %>" aria-labelledby="home-tab">
-        <h3>Solución de <%= review.solution.author.full_name %></h3>
-        <%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: review.solution.wording, language: @challenge.language } %>
-        <%= render partial: '/peer_review/attachment', locals: {challenge: @challenge, document: review.solution.solution_attachment} %>
-
-        <h3>Revisión de <%= review.reviewer.full_name %></h3>
-        <div class="well">
-          <%= render partial: '/peer_review/review_wording', locals: { quick_review: @challenge.allows_quick_reviews?, wording: review.wording } %>
-        </div>
-
-        <%= render partial: 'teacher_assessment', locals: { challenge: @challenge, solution: @solution, review: review } %>
-
-      </div>
-    <% end %>
-  </div>
-
-<% end %>
+</div>
 
 <% content_for :head do %>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.0/trix.css" rel="stylesheet">
-  <style><%= ::Rouge::Themes::Base16.mode(:dark).render(scope: '.highlight' ) %></style>
 <% end %>
 
 <% content_for :javascript do %>
