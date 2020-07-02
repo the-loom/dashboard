@@ -1,0 +1,7 @@
+<% if policy(entity_class).manage? %>
+  <%= link_to({ controller: controller, action: :edit, id: entity }, { class: 'btn btn-secondary btn-sm' }) do %>
+    <i class="fa fa-pencil"></i> Editar
+  <% end %>
+<% end %>
+
+<%= yield %>
