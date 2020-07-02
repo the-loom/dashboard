@@ -1,0 +1,23 @@
+- nav_add 'Cursos', '#'
+= nav_render4
+
+- if @courses.empty?
+  .alert.alert-info
+    %p Aún no hay cursos abiertos para la inscripción
+- else
+  %table.table.table-hover
+    %tbody
+      - @courses.each do |course|
+        %tr
+          %td
+            = course.name
+          %td
+            - if current_user.courses.include?(course)
+              = link_to switch_course_path(course), class: 'btn btn-primary' do
+                Ir al aula virtual
+            - else
+              = simple_form_for :enrollment, url: enroll_course_path(course), html: { class: 'form-inline' } do |f|
+                .input-group
+                  = f.input :password, label: false, input_html: {placeholder: 'Contraseña', autocomplete: "new-password"}
+                  .input-group-append
+                    = f.button :submit, 'Inscribirse', class: "btn-primary"
