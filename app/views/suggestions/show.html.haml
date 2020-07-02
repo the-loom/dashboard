@@ -1,30 +1,31 @@
 - nav_add 'Sugerencias', suggestions_path
 - nav_add @suggestion.title, '#'
-= nav_render
+= nav_render4
 
 .row
   .col-md-2{style: 'text-align: center'}
     %h4
       = @suggestion.weighted_score
     %nobr
-      = link_to upvote_suggestion_path(@suggestion), method: :post, class: 'btn btn-default btn-sm', title: 'A favor', disabled: current_user.voted_as_when_voted_for(@suggestion) do
+      = link_to upvote_suggestion_path(@suggestion), method: :post, class: 'btn btn-outline-secondary btn-sm' + (current_user.voted_as_when_voted_for(@suggestion) ? ' disabled' : ''), title: 'A favor' do
         %i.far.fa-thumbs-up
-      = link_to downvote_suggestion_path(@suggestion), method: :post, class: 'btn btn-default btn-sm', title: 'En contra', disabled: false == current_user.voted_as_when_voted_for(@suggestion) do
+      = link_to downvote_suggestion_path(@suggestion), method: :post, class: 'btn btn-outline-secondary btn-sm' + (current_user.voted_as_when_voted_for(@suggestion) == false ? ' disabled' : ''), title: 'En contra' do
         %i.far.fa-thumbs-down
-      = link_to unvote_suggestion_path(@suggestion), method: :post, class: 'btn btn-default btn-sm', title: 'Retirar voto', disabled: current_user.voted_as_when_voted_for(@suggestion).nil? do
+      = link_to unvote_suggestion_path(@suggestion), method: :post, class: 'btn btn-outline-secondary btn-sm' + (current_user.voted_as_when_voted_for(@suggestion).nil? ? ' disabled' : ''), title: 'Retirar voto' do
         %i.fas.fa-times
   .col-md-10
-    %span.label.label-primary
+    %span.badge.badge-primary
       = t "suggestions.suggestion_type.#{@suggestion.suggestion_type}"
-    %blockquote
+    %blockquote.blockquote
       != @suggestion.body
       %br
-      %p
+      %footer.blockquote-footer
         Sugerido por
         = @suggestion.author.short_name
         &mdash;
         = @suggestion.course.name
-      %em= @suggestion.created_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M")
+        &mdash;
+        = @suggestion.created_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M")
     - if @suggestion.get_upvotes.size > 0
       %p
         Apoyado por

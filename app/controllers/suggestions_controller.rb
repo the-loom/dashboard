@@ -1,4 +1,6 @@
 class SuggestionsController < ApplicationController
+  layout "application2"
+
   def index
     authorize Suggestion, :use?
     if current_user.admin?

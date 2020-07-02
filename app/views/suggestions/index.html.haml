@@ -3,7 +3,7 @@
   - nav_add 'Rechazadas', '#'
 - else
   - nav_add 'Sugerencias', '#'
-= nav_render
+= nav_render4
 
 - if policy(Suggestion).manage?
   - if params[:action] == "index"
@@ -34,15 +34,15 @@
             %h4
               = suggestion.weighted_score
             %nobr
-              = link_to upvote_suggestion_path(suggestion), method: :post, class: 'btn btn-default btn-sm', title: 'A favor', disabled: current_user.voted_as_when_voted_for(suggestion) do
+              = link_to upvote_suggestion_path(suggestion), method: :post, class: 'btn btn-outline-secondary btn-sm' + (current_user.voted_as_when_voted_for(suggestion) ? ' disabled' : ''), title: 'A favor' do
                 %i.far.fa-thumbs-up
-              = link_to downvote_suggestion_path(suggestion), method: :post, class: 'btn btn-default btn-sm', title: 'En contra', disabled: false == current_user.voted_as_when_voted_for(suggestion) do
+              = link_to downvote_suggestion_path(suggestion), method: :post, class: 'btn btn-outline-secondary btn-sm' + (current_user.voted_as_when_voted_for(suggestion) == false ? ' disabled' : ''), title: 'En contra' do
                 %i.far.fa-thumbs-down
-              = link_to unvote_suggestion_path(suggestion), method: :post, class: 'btn btn-default btn-sm', title: 'Retirar voto', disabled: current_user.voted_as_when_voted_for(suggestion).nil? do
+              = link_to unvote_suggestion_path(suggestion), method: :post, class: 'btn btn-outline-secondary btn-sm' + (current_user.voted_as_when_voted_for(suggestion).nil? ? ' disabled' : ''), title: 'Retirar voto' do
                 %i.fas.fa-times
           %td
             %p
-              %span.label.label-primary
+              %span.badge.badge-primary
                 = t "suggestions.suggestion_type.#{suggestion.suggestion_type}"
               &nbsp;
               = link_to suggestion_path(suggestion) do
@@ -58,10 +58,10 @@
                 = link_to "Restaurar", restore_suggestion_path(suggestion), method: :post, class: 'btn btn-success btn-sm'
 
 = content_for :head do
-  %link{href: "https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css", rel: "stylesheet"}
+  %link{href: "https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css", rel: "stylesheet"}
 
 = content_for :javascript do
-  %script{src: "https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js", type: "application/javascript"}
+  %script{src: "https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js", type: "application/javascript"}
   :javascript
     $(function () {
       $('.suggestions').DataTable({
