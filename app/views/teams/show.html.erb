@@ -1,63 +1,62 @@
 <% nav_add 'Aula', '#' %>
 <% nav_add 'Equipos', teams_path %>
-<% nav_add @team.name, '#' %>
-<%= nav_render %>
+<% nav_add "#{@team.name} (#{@team.nickname})", '#' %>
+<%= nav_render4 %>
 
-<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-<div class="fb-profile">
-  <div class="fb-image-lg"></div>
-  <%= image_tag entity_avatar(@team), {class: "fb-image-profile thumbnail", alt: @team.name } %>
-  <div class="fb-profile-text">
-    <h1>
-      <%= @team.name %>
-      <small><%= @team.nickname %></small>
-    </h1>
-    <div class="student dashboard">
-
-      <div class="col-md-3">
-        <%= simple_form_for @team do |f| %>
-
-          <%= render :partial => 'shared/errors', locals: { f: f } %>
-
-          <%= f.hidden_field :name %>
-
-          <%= f.input :avatar, label: 'Imagen de perfil' %>
-
-          <%= f.button :submit, 'Actualizar emblema', class: "btn-primary" %>
-
-        <% end %>
-      </div>
-
-      <div class="col-md-3">
-        <div id="chart" data-score="<%= @team.score %>" data-xp="<%= @team.points %>"></div>
-      </div>
+<div class="row">
+  <div class="col-md-3">
+    <div class="profile">
+      <%= image_tag entity_avatar(@team), {class: "avatar", alt: @team.name} %>
     </div>
+  </div>
+  <div class="col-md-9">
+    <div id="chart" data-score="<%= @team.score %>" data-xp="<%= @team.points %>"></div>
   </div>
 </div>
 
-<div class="clearfix"></div>
 
-<div class="students mosaic">
+<%= simple_form_for @team do |f| %>
+
+  <%= render :partial => 'shared/errors', locals: { f: f } %>
+
+  <%= f.hidden_field :name %>
+
+  <%= f.input :avatar, label: 'Imagen de perfil' %>
+
+  <%= f.button :submit, 'Actualizar emblema', class: "btn-primary" %>
+
+<% end %>
+
+<br>
+
+<hr>
+
+<div class="students">
+  <legend>Integrantes</legend>
   <div class="row">
-    <div class="col-md-12">
-      <legend>Integrantes</legend>
-      <% @team.members.each do |student| %>
-        <div class="col-md-2 col-xs-6 student-box">
-          <%= link_to user_details_url(student.nickname) do %>
-            <%= image_tag entity_avatar(student), {class: "avatar#{ ' disabled' unless student.enabled? }", alt: student.full_name } %>
-            <p class="data">
-              <%= student.nickname %><br/>
-              <small><%= student.full_name %></small><br/>
-            </p>
-          <% end %>
-          <p><%= student.points %> XP</p>
+    <% @team.members.each do |student| %>
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><%= student.full_name %>
+              <small><%= student.nickname %></small>
+            </h5>
+            <%= link_to user_details_url(student.nickname) do %>
+              <%= image_tag entity_avatar(student), {class: "avatar#{ ' disabled' unless student.enabled? }", alt: student.full_name} %>
+            <% end %>
+            <p class="card-text"><%= student.points %> XP</p>
+          </div>
         </div>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
 </div>
 
-<div class="col-md-12">
+<br>
+
+<% if Course.current.on?(:badges) %>
+
+  <div class="col-md-12">
   <legend>Emblemas del grupo
     <small>(<%= @team.badges.uniq.size %> / <%= Badge.count %>)</small>
   </legend>
@@ -106,6 +105,11 @@
   <% end %>
 </div>
 
+<% end %>
+
+<% content_for :head do %>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css" rel="stylesheet">
+<% end %>
 
 <% content_for :javascript do %>
 
