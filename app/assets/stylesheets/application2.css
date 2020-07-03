@@ -15,3 +15,23 @@
   right: 0;
   transform: rotate(-90deg);
 }
+
+.profile {
+    width: 10em;
+    position: relative;
+}
+
+img.avatar {
+    border-radius: 50%;
+    width: 100%;
+    border: 2px solid darkslategray;
+}
+
+img.team {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 30%;
+    border: 2px solid darkslategray;
+    background: white;
+}
