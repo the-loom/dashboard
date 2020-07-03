@@ -49,8 +49,7 @@ module Admin
     def impersonate
       @user = User.find(params[:id])
       authorize @user, :impersonate?
-      session[:user_id] = @user.id
-      redirect_to profile_url
+      login_user(@user)
     end
   end
 end

@@ -36,6 +36,24 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    def login_user(user)
+      memberships = user.memberships
+
+      session[:user_id] = user.id
+      if memberships.count >= 1
+
+        if user.last_visited_course_id > 0
+          session[:course_id] = user.last_visited_course_id
+        else
+          session[:course_id] = memberships.first.course_id
+        end
+
+        redirect_to profile_url, notice: "Signed in!"
+      elsif memberships.count == 0
+        redirect_to courses_url
+      end
+    end
+
   private
     def menu
       @menu = MenuPresenter.new(current_user)
