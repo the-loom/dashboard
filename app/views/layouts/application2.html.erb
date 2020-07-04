@@ -27,25 +27,36 @@
     .tab-pane {
       padding: 1em;
     }
+
+      .navbar .badge {
+        transition: none;
+      }
   </style>
 
 </head>
 <body>
 
-<%= render partial: 'layouts/navbar', locals: {menu: @menu.present} %>
+<%= render partial: 'layouts/navbar', locals: {submenu: @sidebar, menu: @menub4} %>
 
-<div class="container">
+<div class="container-fluid">
+  <div class="row">
 
-  <% if flash[:alert] %>
-    <%= render partial: 'shared/alert', locals: {alert_type: 'danger', title: '¡Oops!', dismissable: true, message: flash[:alert]} %>
-  <% end %>
+    <%= render partial: 'layouts/sidebar', locals: {menu: @sidebar} %>
 
-  <% if flash[:info] %>
-    <%= render partial: 'shared/alert', locals: {title: '¡Atención!', dismissable: true, message: flash[:info]} %>
-  <% end %>
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
 
-  <%= yield %>
+      <% if flash[:alert] %>
+        <%= render partial: 'shared/alert', locals: {alert_type: 'danger', title: '¡Oops!', dismissable: true, message: flash[:alert]} %>
+      <% end %>
 
+      <% if flash[:info] %>
+        <%= render partial: 'shared/alert', locals: {title: '¡Atención!', dismissable: true, message: flash[:info]} %>
+      <% end %>
+
+      <%= yield %>
+
+    </main>
+  </div>
 </div>
 
 <% if current_user and current_user.current_membership %>

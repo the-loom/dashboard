@@ -1,4 +1,4 @@
-class MenuPresenter
+class Layout::MenuPresenter
   include Pundit
 
   def initialize(current_user)
@@ -9,7 +9,7 @@ class MenuPresenter
     @route ||= Rails.application.routes.url_helpers
   end
 
-  def present
+  def menu
     return [] unless @current_user && @current_user.current_membership
 
     [
@@ -25,7 +25,29 @@ class MenuPresenter
     ].compact
   end
 
-  private
+  def menu_b4
+    return [] unless @current_user && @current_user.current_membership
+    [
+        dashboard_menu,
+        notifications_menu,
+        courses_menu,
+        profile_menu
+    ].compact
+  end
+
+  def sidebar
+    return [] unless @current_user && @current_user.current_membership
+
+    [
+        admin_menu,
+        teacher_menu,
+        gamification_menu,
+        resources_menu,
+        exercises_menu
+    ].compact
+  end
+
+  protected
     def profile_menu
       MenuNode.new(@current_user.short_name, [
           MenuLeaf.new("Perfil", route.profile_path),
@@ -67,7 +89,12 @@ class MenuPresenter
     end
 
     def resources_menu
-      MenuLeaf.new("Recursos", route.resources_path) if on?(:resources)
+      MenuLeaf.new("Recursos", route.resources_path)
+      if on?(:resources)
+        resources_node = MenuNode.new("Material")
+        resources_node << MenuLeaf.new("Recursos", route.resources_path)
+        resources_node
+      end
     end
 
     def dashboard_menu

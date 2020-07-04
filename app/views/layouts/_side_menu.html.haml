@@ -1,0 +1,13 @@
+- if menu.class == Array
+  %ul.nav.flex-column
+    - menu.each do |option|
+      = render partial:'layouts/side_menu', locals: { menu: option }
+- elsif menu.class == MenuNode
+  %h6.sidebar-heading.d-flex.justify-content-between.align-items-center.px-3.mb-1.mt-3.text-muted
+    = menu.title
+  = render partial:'layouts/side_menu', locals: { menu: menu.leafs }
+- elsif menu.class == MenuSeparator
+- elsif menu.class == MenuNotification
+- else
+  %li.nav-item
+    = link_to menu.title, menu.link, { style: menu.style, class: 'nav-link' }
