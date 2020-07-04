@@ -1,17 +1,17 @@
 <% nav_add 'Desafíos', '#' %>
-<%= nav_render %>
+<%= nav_render4 %>
 
 <% if policy(PeerReview::Challenge).manage? %>
-  <div class="btn-group display">
-    <%= link_to 'Nuevo desafio', new_peer_review_challenge_path, class: 'btn btn-primary' %>
-    <%= link_to 'Panorama de resoluciones', meta_overview_peer_review_challenges_path, class: 'btn btn-default' %>
-    <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">
+  <div class="btn-group">
+    <%= link_to 'Nuevo desafio', new_peer_review_challenge_path, class: 'btn btn-primary', role: "button" %>
+    <%= link_to 'Panorama de resoluciones', meta_overview_peer_review_challenges_path, class: 'btn btn-outline-primary', role: "button" %>
+    <button type="button" class="btn btn-outline-primary dropdown-toggle btn-sm" data-toggle="dropdown">
       <span class="caret"></span>
     </button>
-      <ul class="dropdown-menu" role="menu">
-        <li><%= link_to 'Panorama de flujo de revisiones', flow_overview_peer_review_challenges_path %></li>
-        <li><%= link_to 'Descargar panorama', peer_review_challenges_path(format: :csv) %></li>
-      </ul>
+      <div class="dropdown-menu">
+        <%= link_to 'Panorama de flujo de revisiones', flow_overview_peer_review_challenges_path, class: "dropdown-item" %>
+        <%= link_to 'Descargar panorama', peer_review_challenges_path(format: :csv), class: "dropdown-item" %>
+      </div>
   </div>
 <% end %>
 
@@ -75,38 +75,35 @@
             </td>
           <% end %>
           <td>
-            <div class="btn-group display">
+
+            <div class="btn-group" role="group">
               <% if policy(PeerReview::Challenge).manage? %>
-                <%= link_to "Panorama", overview_peer_review_challenge_path(challenge), class: 'btn btn-primary btn-sm' %>  
-                <%= link_to "Editar", edit_peer_review_challenge_path(challenge), class: 'btn btn-default btn-sm' %>
-                <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">
+                <%= link_to "Panorama", overview_peer_review_challenge_path(challenge), class: 'btn btn-primary btn-sm', role: "button" %>
+                <%= link_to "Editar", edit_peer_review_challenge_path(challenge), class: 'btn btn-outline-primary btn-sm', role: "button" %>
+                <button type="button" type="button" class="btn btn-outline-primary dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" role="menu">
+                <div class="dropdown-menu">
                   <% if challenge.published? %>
-                    <li>
-                      <%= link_to unpublish_peer_review_challenge_path(challenge), method: :post  do %>
-                        Despublicar
-                      <% end %>
-                    </li>
+                    <%= link_to unpublish_peer_review_challenge_path(challenge), class: "dropdown-item", method: :post do %>
+                      Despublicar
+                    <% end %>
                   <% else %>
-                    <li>
-                      <%= link_to publish_peer_review_challenge_path(challenge), method: :post do %>
-                        Publicar
-                      <% end %>
-                    </li>
+                    <%= link_to publish_peer_review_challenge_path(challenge), class: "dropdown-item", method: :post do %>
+                      Publicar
+                    <% end %>
                   <% end %>
-                  <li><%= link_to challenge.enabled? ? "Finalizar" : "Reabrir", toggle_peer_review_challenge_path(challenge)%></li>
-                  <li><%= link_to "Duplicar", duplicate_peer_review_challenge_path(challenge) %></li>
-                  <li><%= link_to "Descargar todo", bulk_download_peer_review_challenge_path(challenge) %></li>
-                  <li><%= link_to "Flujo de revisiones", flow_peer_review_challenge_path(challenge) %></li>
+                  <%= link_to challenge.enabled? ? "Finalizar" : "Reabrir", toggle_peer_review_challenge_path(challenge), class: "dropdown-item" %>
+                  <%= link_to "Duplicar", duplicate_peer_review_challenge_path(challenge), class: "dropdown-item" %>
+                  <%= link_to "Descargar todo", bulk_download_peer_review_challenge_path(challenge), class: "dropdown-item" %>
+                  <%= link_to "Flujo de revisiones", flow_peer_review_challenge_path(challenge), class: "dropdown-item" %>
                   <% if policy(PeerReview::Challenge).purge? %>
                     <% unless challenge.awarded %>
-                      <li><%= link_to "Premiar", award_peer_review_challenge_path(challenge), method: :post %></li>
+                      <%= link_to "Premiar", award_peer_review_challenge_path(challenge), class: "dropdown-item", method: :post %>
                     <% end %>
-                    <li><%= link_to "Purgar", purge_peer_review_challenge_path(challenge), style:"color: red;" %></li>
+                    <%= link_to "Purgar", purge_peer_review_challenge_path(challenge), class: "dropdown-item", style: "color: red;" %>
                   <% end %>
-                </ul>
+                </div>
               <% end %>
             </div>
           </td>
@@ -118,18 +115,11 @@
 </section>
 
 <%= content_for :head do %>
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
-
-  <style>
-    div.display {
-      display: flex;
-    }
-  </style>
-
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css"/>
 <% end %>
 
 <%= content_for :javascript do %>
-  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="application/javascript"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js"></script>
 
   <script type="application/javascript">
       $(function () {
