@@ -1,4 +1,6 @@
 class ResourcesController < ApplicationController
+  layout "application2"
+
   before_action do
     check_feature(:resources)
   end
@@ -23,7 +25,8 @@ class ResourcesController < ApplicationController
       redirect_to resources_path
       flash[:success] = "Se creó correctamente el recurso"
     else
-      render action: :new
+      @labels = OpenStruct.new(title: "Nuevo recurso", button: "Guardar recurso")
+      render :form
     end
   end
 

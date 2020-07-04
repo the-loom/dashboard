@@ -1,43 +1,30 @@
 <% nav_add 'Aula', '#' %>
 <% nav_add 'Perfil', '#' %>
-<% nav_add @user.full_name, '#' %>
-<%= nav_render %>
+<% nav_add "#{@user.full_name} - #{@user.nickname} (#{@user.uuid})", '#' %>
+<%= nav_render4 %>
 
-<% content_for :head do %>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.5/c3.min.css" rel="stylesheet">
-<% end %>
-
-
-<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-<div class="fb-profile">
-  <div class="fb-image-lg"></div>
-  <%= image_tag entity_avatar(@user), {class: 'fb-image-profile thumbnail', alt: @user.full_name, align: 'left' } %>
-  <div class="fb-profile-text">
-    <h1>
-      <%= @user.full_name %>
-      <small><%= @user.nickname %> (<%= @user.uuid %>)</small>
-    </h1>
-    <div class="student dashboard">
-      <div class="col-md-3">
-        <div id="chart" data-score="<%= @user.score %>" data-xp="<%= @user.points %>"></div>
-      </div>
-      <div class="col-md-5">
-        <% if Course.current.on?(:teams) %>
-          <% team = @user.current_membership.team %>
-          <% if team.present? %>
-            <%= link_to team_profile_url(team.nickname) do %>
-              <%= image_tag entity_avatar(team), {class: "team avatar", alt: team.name } %>
-            <% end %>
+<div class="row">
+  <div class="col-md-3">
+    <div class="profile">
+      <%= image_tag entity_avatar(@user), {class: "avatar", alt: @user.full_name} %>
+      <% if Course.current.on?(:teams) %>
+        <% team = @user.current_membership.team %>
+        <% if team.present? %>
+          <%= link_to team_profile_url(team.nickname) do %>
+            <%= image_tag entity_avatar(team), {class: "team avatar", alt: team.name} %>
           <% end %>
         <% end %>
-      </div>
+      <% end %>
     </div>
+  </div>
+  <div class="col-md-9">
+    <div id="chart" data-score="<%= @user.score %>" data-xp="<%= @user.points %>"></div>
   </div>
 </div>
 
-<div class="clearfix"></div>
+<br><br>
 
-<div class="student dashboard">
+<div class="row student dashboard">
   <div class="col-md-6">
 
     <% if Course.current.on?(:lectures) %>
@@ -88,7 +75,7 @@
             <tr>
               <td><%= occurrence.updated_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y") %></td>
               <td>
-                <label class="badge"><%= occurrence.multiplier %>&times;</label>
+                <label class="badge badge-dark"><%= occurrence.multiplier %>&times;</label>
                 <%= occurrence.event.name %>
               </td>
             </tr>
@@ -146,7 +133,7 @@
               <div class="panel-body">
                 <%= image_tag earning.badge.image, {class: "loom-badge", alt: earning.badge.name,
                                                     "data-toggle": "tooltip", "data-placement": "bottom",
-                                                    title: earning.badge.description } %>
+                                                    title: earning.badge.description} %>
               </div>
               <div class="panel-footer">
                 <%= earning.created_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y") %>
@@ -162,8 +149,8 @@
               </div>
               <div class="panel-body">
                 <%= image_tag "incognito.png", {class: "loom-badge", alt: badge.name,
-                                            "data-toggle": "tooltip", "data-placement": "bottom",
-                                            title: badge.description } %>
+                                                "data-toggle": "tooltip", "data-placement": "bottom",
+                                                title: badge.description} %>
               </div>
               <div class="panel-footer">
                 Aún no...
@@ -177,74 +164,62 @@
 
 </div>
 
-<div class="clearfix"></div>
 <br/>
-
-
 
 <% if policy(User).manage? %>
 
+  <h2>Datos que solamente ve el profesor</h2>
   <div class="row">
+    <div class="col-md-6">
+      <legend>Comentarios</legend>
 
-    <h2>Datos que solamente ve el profesor</h2>
+      <%= simple_form_for :comment, url: comment_user_url(@user.nickname) do |f| %>
 
-    <div class="data">
+        <%= f.input :body, label: 'Texto', as: :text, required: false %>
 
-      <div class="col-md-6">
-        <div class="alert alert-info">
-          <p>Espacio reservado para futuros usos.</p>
-        </div>
-      </div>
+        <%= f.input :mood, label: 'Humor', collection: Comment.moods, include_blank: false, required: false %>
 
-      <div class="col-md-6">
-        <legend>Comentarios</legend>
+        <%= f.button :submit, 'Comentar', class: "btn-primary" %>
 
-        <%= simple_form_for :comment, url: comment_user_url(@user.nickname) do |f| %>
-          
-          <%= f.input :body, label: 'Texto', as: :text, required: false %>
+      <% end %>
 
-          <%= f.input :mood, label: 'Humor',  collection: Comment.moods, include_blank: false, required: false %>
+      <hr/>
 
-          <%= f.button :submit, 'Comentar', class: "btn-primary" %>
-        
-        <% end %>
-        
-        <hr/>
-
-        <% @user.comments.each do |comment| %>
-          <div class="comment-box">
-            <div class="col-sm-2">
-              <div class="thumbnail">
-                <%= image_tag entity_avatar(comment.commenter), {class: 'img-responsive user-photo', alt: comment.commenter.full_name } %>
-              </div>
+      <% @user.comments.each do |comment| %>
+        <div class="comment-box">
+          <div class="col-sm-2">
+            <div class="thumbnail">
+              <%= image_tag entity_avatar(comment.commenter), {class: 'img-responsive user-photo', alt: comment.commenter.full_name} %>
             </div>
+          </div>
 
-            <div class="col-sm-10">
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <strong><%= comment.commenter.nickname %> (<%= comment.mood %>)</strong>
-                  <span class="text-muted"><%= l comment.created_at.in_time_zone('Buenos Aires') %></span>
-                </div>
-                <div class="panel-body">
-                  <%= simple_format comment.body %>
-                </div>
+          <div class="col-sm-10">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <strong><%= comment.commenter.nickname %> (<%= comment.mood %>)</strong>
+                <span class="text-muted"><%= l comment.created_at.in_time_zone('Buenos Aires') %></span>
+              </div>
+              <div class="panel-body">
+                <%= simple_format comment.body %>
               </div>
             </div>
           </div>
-        <% end %>
-      </div>
-
+        </div>
+      <% end %>
     </div>
-
-
   </div>
 
 <% end %>
 
+<% content_for :head do %>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css" rel="stylesheet">
+<% end %>
+
+
 <% content_for :javascript do %>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js" charset="utf-8"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.5/c3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
 
   <script>
       $(function () {
@@ -297,6 +272,8 @@
 
   <% if @user.points > 0 && Course.current.on?(:competences) %>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js" charset="utf-8"></script>
+
     <script>
 
         var data = [
@@ -307,7 +284,7 @@
             <%== @user.stats %>
         ];
 
-        var color = d3.scale.ordinal().range(["#00A0B0","#EDC951","#CC333F"]),
+        var color = d3.scale.ordinal().range(["#00A0B0", "#EDC951", "#CC333F"]),
             margin = {top: 75, right: 75, bottom: 75, left: 75};
 
         var radarChartOptions = {
@@ -321,7 +298,8 @@
             bgColor: '#6e6485',
             lineColor: '#6e6485',
             //format: d3.format('d')
-            format: function(){}
+            format: function () {
+            }
         };
         RadarChart(".radarChart", data, radarChartOptions);
 

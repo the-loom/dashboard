@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  layout "application2", only: [:edit, :show]
+
   before_action :set_user, only: [:edit, :update, :change_identity]
   before_action :verify_name, only: :show
 

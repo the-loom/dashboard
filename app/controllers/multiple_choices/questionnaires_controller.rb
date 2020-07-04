@@ -1,5 +1,7 @@
 module MultipleChoices
   class QuestionnairesController < ApplicationController
+    layout "application2", only: [:practice, :grade]
+
     include Publisher.new(MultipleChoices::Questionnaire, :multiple_choices_questionnaires)
 
     before_action do

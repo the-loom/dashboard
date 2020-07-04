@@ -1,0 +1,23 @@
+- nav_add 'Notificaciones', '#'
+= nav_render4
+
+- if policy(Notification).create?
+  = link_to 'Nueva notificacion', new_notification_path, class: 'btn btn-primary'
+  %br/
+  %br/
+- if @notifications.empty?
+  .alert.alert-info
+    %p Aún no hay ninguna notificación
+- else
+  %section.notifications
+    - @notifications.each do |notification|
+      %article.notification
+        %blockquote.blockquote
+          %p
+            %strong= notification.subject
+          %p= raw notification.text
+          %footer.blockquote-footer
+            = notification.author
+            ,
+            = notification.created_at.strftime("%d/%m/%Y")
+        %hr/

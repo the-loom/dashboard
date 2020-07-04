@@ -1,4 +1,6 @@
 class ResourceCategoriesController < ApplicationController
+  layout "application2"
+
   before_action do
     check_feature(:resources)
   end

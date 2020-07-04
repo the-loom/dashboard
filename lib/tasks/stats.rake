@@ -7,8 +7,8 @@ namespace :stats do
       puts "Precalculating for Course #{course.name}"
 
       puts "Students for Course #{course.name}"
-      course.users.each do |student|
-        next unless student.current_membership
+      course.students.each do |student|
+        next unless student.current_membership || student.team.nil?
         puts "-> Precalculating for Member #{student.full_name}"
         student.current_membership.stats = StudentCompetenceTagsStats.new(student).normalized.to_json
         student.current_membership.save!

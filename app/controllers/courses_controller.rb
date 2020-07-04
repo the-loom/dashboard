@@ -1,4 +1,6 @@
 class CoursesController < ApplicationController
+  layout "application2"
+
   def index
     @courses = Course.kept.enabled
   end
