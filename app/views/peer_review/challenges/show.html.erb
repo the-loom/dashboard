@@ -7,74 +7,7 @@
      message: "Tenés una revisión no publicada. Tomate tu tiempo, pero publicala para que otro participantes puedan verla."} %>
 <% end %>
 
-<div id="wording" class="show">
-
-  <div class="row">
-    <div class="col-md-6">
-      <dl class="row">
-
-        <dt class="col-sm-5">Vencimiento</dt>
-        <dd class="col-sm-7">
-          <%= display_date @challenge.due_date %>
-        </dd>
-
-        <dt class="col-sm-5">Estado</dt>
-        <dd class="col-sm-7">
-          <%= @challenge.enabled? ? "Vigente" : "Finalizado" %>
-        </dd>
-
-        <dt class="col-sm-5">Dificultad</dt>
-        <dd class="col-sm-7">
-          <%= stars_for @challenge %>
-        </dd>
-
-        <dt class="col-sm-5">Opcional</dt>
-        <dd class="col-sm-7">
-          <%= yes_no @challenge.optional? %>
-        </dd>
-
-      </dl>
-    </div>
-    <div class="col-md-6">
-      <dl class="row">
-
-        <dt class="col-sm-5">Tipo de revisiones</dt>
-        <dd class="col-sm-7">
-          <%= t "challenges.challenge_modes.#{@challenge.challenge_mode}" %>
-        </dd>
-
-        <dt class="col-sm-5">Revisiones esperadas</dt>
-        <dd class="col-sm-7">
-          <%= @challenge.expected_reviews %>
-        </dd>
-
-        <dt class="col-sm-5">Permite adjuntos</dt>
-        <dd class="col-sm-7">
-          <%= yes_no @challenge.allows_attachment? %>
-        </dd>
-
-        <dt class="col-sm-5">Desafío grupal</dt>
-        <dd class="col-sm-7">
-          <%= yes_no @challenge.team_challenge? %>
-        </dd>
-
-      </dl>
-    </div>
-  </div>
-
-  <h2>Consigna</h2>
-  <%== @challenge.instructions %>
-</div>
-
-<br>
-
-<div style="text-align: right;">
-  <a data-toggle="collapse" href="#wording" role="button" aria-expanded="false" aria-controls="wording">
-    Ocultar/mostrar consigna
-  </a>
-</div>
-
-<br>
+<%= render :partial => '/peer_review/info_box', locals: {challenge: @challenge} %>
 
 <% if @challenge.team_challenge && !current_user.current_membership.team %>
   <%= render partial: 'shared/alert', locals: {alert_type: 'danger', title: '¡Oops!',
@@ -260,5 +193,4 @@
 
 <% content_for :head do %>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.0/trix.css" rel="stylesheet">
-  <style><%= ::Rouge::Themes::Base16.mode(:dark).render(scope: '.highlight') %></style>
 <% end %>
