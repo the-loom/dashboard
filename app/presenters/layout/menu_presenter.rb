@@ -104,9 +104,9 @@ class Layout::MenuPresenter
     def gamification_menu
       if on?(:events) || on?(:badges) || on?(:competences)
         gamification_node = MenuNode.new("Gamificación")
-        gamification_node << MenuLeaf.new("Eventos", route.events_path) if on?(:events)
-        gamification_node << MenuLeaf.new("Competencias", route.competence_tags_path) if on?(:competences)
-        gamification_node << MenuLeaf.new("Emblemas", route.badges_path) if on?(:badges)
+        gamification_node << MenuLeaf.new("Eventos", route.events_path) if on?(:events) && manage?(Event)
+        gamification_node << MenuLeaf.new("Competencias", route.competence_tags_path) if on?(:competences) && manage?(CompetenceTag)
+        gamification_node << MenuLeaf.new("Emblemas", route.badges_path) if on?(:badges) && manage?(Badge)
         gamification_node << MenuSeparator.new
         gamification_node << MenuLeaf.new("Estadísticas", route.points_stats_path)
         gamification_node

@@ -1,5 +1,5 @@
 <% nav_add 'Cuestionarios de Opción Múltiple', '#' %>
-<%= nav_render %>
+<%= nav_render4 %>
 
 <% if policy(MultipleChoices::Questionnaire).manage? %>
   <%= link_to 'Nuevo cuestionario', new_multiple_choices_questionnaire_path, class: 'btn btn-primary' %>
@@ -39,31 +39,25 @@
             <%= link_to "Practicar", practice_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-primary btn-sm' %>
 
             <% if policy(MultipleChoices::Questionnaire).manage? %>
-              <div class="btn-group display">
-
-                <%= link_to "Panorama", overview_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-primary btn-sm' %>
-                <%= link_to "Editar", edit_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-default btn-sm' %>
-                <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">
+              <div class="btn-group">
+                <%= link_to "Panorama", overview_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-primary btn-sm', role: "button" %>
+                <%= link_to "Editar", edit_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-outline-primary btn-sm', role: "button" %>
+                <button type="button" class="btn btn-outline-primary dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" role="menu">
+                <div class="dropdown-menu">
                   <% if questionnaire.published? %>
-                    <li>
-                      <%= link_to unpublish_multiple_choices_questionnaire_path(questionnaire), method: :post do %>
-                        Despublicar
-                      <% end %>
-                    </li>
+                    <%= link_to unpublish_multiple_choices_questionnaire_path(questionnaire), class: "dropdown-item", method: :post do %>
+                      Despublicar
+                    <% end %>
                   <% else %>
-                    <li>
-                      <%= link_to publish_multiple_choices_questionnaire_path(questionnaire), method: :post do %>
-                        Publicar
-                      <% end %>
-                    </li>
+                    <%= link_to publish_multiple_choices_questionnaire_path(questionnaire), class: "dropdown-item", method: :post do %>
+                      Publicar
+                    <% end %>
                   <% end %>
-                </ul>
+                </div>
               </div>
             <% end %>
-
           </td>
         </tr>
       <% end %>
@@ -76,8 +70,12 @@
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
 <% end %>
 
+<%= content_for :head do %>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css"/>
+<% end %>
+
 <%= content_for :javascript do %>
-  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="application/javascript"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js"></script>
 
   <script type="application/javascript">
       $(function () {
