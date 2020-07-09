@@ -31,7 +31,7 @@ group :development, :test do
   gem "byebug", "~> 11.1", platform: :mri
 
   # Testing
-  gem "factory_bot_rails", "~> 5.2"
+  gem "factory_bot_rails", "~> 6.1"
   gem "rspec-rails", "~> 4.0"
   gem "shoulda-matchers", "~> 4.3"
 end
