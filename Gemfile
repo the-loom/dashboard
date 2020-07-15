@@ -86,7 +86,7 @@ gem "rubyzip", "~> 2.3"
 gem "zip-zip", "~> 0.3"
 
 # Syntax highlighting
-gem "rouge", "~> 3.20"
+gem "rouge", "~> 3.21"
 
 # Voting
 gem "acts_as_votable", "~> 0.12"
