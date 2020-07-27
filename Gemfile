@@ -18,7 +18,7 @@ gem "haml-rails", "~> 2.0"
 gem "uglifier", "~> 4.2"
 
 # Bug reporting
-gem "rollbar", "~> 2.26"
+gem "rollbar", "~> 2.27"
 gem "sentry-raven", "~> 3.0"
 
 gem "request_store", "~> 1.5"
