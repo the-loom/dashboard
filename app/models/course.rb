@@ -19,39 +19,39 @@ class Course < ApplicationRecord
   scope :enabled, -> { where(enabled: true) }
 
   def fully_duplicate!
-    copy = self.dup
-    copy.name = "Copia de " + self.name
+    new_course = self.dup
+    new_course.name = "Copia de " + self.name
 
     Event.unscoped.where(course: self).each do |event|
-      e2 = event.dup
-      e2.course = copy
-      e2.enabled = false
-      e2.save
+      new_event = event.dup
+      new_event.course = new_course
+      new_event.enabled = false
+      new_event.save
     end
 
     # categories!
-    Resource.unscoped.where(course: self).each do |res|
-      r2 = res.dup
-      r2.course = copy
-      r2.resource_category = ResourceCategory.unscoped.find_or_create_by(course: copy, name: res.resource_category.name)
-      r2.save
+    Resource.unscoped.where(course: self).each do |resource|
+      new_resource = resource.dup
+      new_resource.course = new_course
+      new_resource.resource_category = ResourceCategory.unscoped.find_or_create_by(course: new_course, name: resource.resource_category.name)
+      new_resource.save
     end
 
-    offset = nil
-    PeerReview::Challenge.unscoped.where(course: self).order(due_date: :asc).each do |ch|
-      ch2 = ch.dup
-      ch2.course = copy
-      ch2.enabled = false
-      offset = (Time.zone.now.to_date - ch.due_date).to_i + 30 unless offset
-      ch2.due_date = ch.due_date + offset
-      ch2.save
+    due_date_offset = nil
+    PeerReview::Challenge.unscoped.where(course: self).order(due_date: :asc).each do |challenge|
+      due_date_offset = (Time.zone.now.to_date - challenge.due_date).to_i + 30 unless due_date_offset
+      new_challenge = challenge.dup
+      new_challenge.course = new_course
+      new_challenge.enabled = false
+      new_challenge.due_date = challenge.due_date + due_date_offset
+      new_challenge.save
     end
 
-    Exercise.unscoped.where(course: self).each do |exer|
-      e2 = exer.dup
-      e2.course = copy
-      e2.published = false
-      e2.save
+    Exercise.unscoped.where(course: self).each do |exercise|
+      new_exercise = exercise.dup
+      new_exercise.course = new_course
+      new_exercise.published = false
+      new_exercise.save
     end
 
     # TODO(delucas): left for the next iteration
@@ -62,8 +62,8 @@ class Course < ApplicationRecord
     # copy lectures
     # copy multiple choices
 
-    copy.save!
-    copy
+    new_course.save!
+    new_course
   end
 
   def self.all_features
