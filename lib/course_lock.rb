@@ -19,7 +19,7 @@ module CourseLock
   end
 
   def verify_current_course
-    if self.course != Course.current
+    if self.course != Course.current && !User.current.admin?
       raise WrongCourseException
     end
   end

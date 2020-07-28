@@ -18,6 +18,54 @@ class Course < ApplicationRecord
 
   scope :enabled, -> { where(enabled: true) }
 
+  def fully_duplicate!
+    copy = self.dup
+    copy.name = "Copia de " + self.name
+
+    Event.unscoped.where(course: self).each do |event|
+      e2 = event.dup
+      e2.course = copy
+      e2.enabled = false
+      e2.save
+    end
+
+    # categories!
+    Resource.unscoped.where(course: self).each do |res|
+      r2 = res.dup
+      r2.course = copy
+      r2.resource_category = ResourceCategory.unscoped.find_or_create_by(course: copy, name: res.resource_category.name)
+      r2.save
+    end
+
+    offset = nil
+    PeerReview::Challenge.unscoped.where(course: self).order(due_date: :asc).each do |ch|
+      ch2 = ch.dup
+      ch2.course = copy
+      ch2.enabled = false
+      offset = (Time.zone.now.to_date - ch.due_date).to_i + 30 unless offset
+      ch2.due_date = ch.due_date + offset
+      ch2.save
+    end
+
+    Exercise.unscoped.where(course: self).each do |exer|
+      e2 = exer.dup
+      e2.course = copy
+      e2.published = false
+      e2.save
+    end
+
+    # TODO(delucas): left for the next iteration
+    # copy automatic correction challenges
+    # copy badges
+    # copy competences
+    # copy cards
+    # copy lectures
+    # copy multiple choices
+
+    copy.save!
+    copy
+  end
+
   def self.all_features
     {
         badges: 1,

@@ -46,6 +46,14 @@ class User < ApplicationRecord
     current_membership.points
   end
 
+  def self.current
+    RequestStore.store[:current_user]
+  end
+
+  def self.current=(user)
+    RequestStore.store[:current_user] = user
+  end
+
   def refresh_points_cache!
     cm = current_membership
     return unless cm

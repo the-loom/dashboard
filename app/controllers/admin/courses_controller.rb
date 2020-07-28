@@ -4,6 +4,16 @@ module Admin
       @courses = Course.all
     end
 
+    def duplicate
+      authorize Course, :admin?
+      base_course = Course.find(params[:id])
+
+      @course = base_course.fully_duplicate!
+
+      @labels = OpenStruct.new(title: "Editar curso", button: "Actualizar curso")
+      render :form
+    end
+
     def new
       authorize Course, :admin?
       @course = Course.new

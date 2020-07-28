@@ -35,6 +35,9 @@
               <%= link_to edit_admin_course_path(course), class: 'btn btn-default btn-sm' do %>
                 <i class="fa fa-pencil"></i> Editar
               <% end %>
+              <%= link_to duplicate_admin_course_path(course), method: :post, class: 'btn btn-default btn-sm' do %>
+                <i class="fa fa-copy"></i> Duplicar
+              <% end %>
               <%= link_to toggle_admin_course_path(course), class: 'btn btn-default btn-sm' do %>
 
                 <% if course.enabled? %>

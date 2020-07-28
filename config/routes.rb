@@ -156,6 +156,7 @@ Rails.application.routes.draw do
       member do
         get :toggle
         post :restore
+        post :duplicate
       end
     end
     resources :users, only: [:index, :destroy, :edit, :update] do
