@@ -39,7 +39,7 @@ class Course < ApplicationRecord
 
     due_date_offset = nil
     PeerReview::Challenge.unscoped.where(course: self).order(due_date: :asc).each do |challenge|
-      due_date_offset = (Time.zone.now.to_date - challenge.due_date).to_i + 30 unless due_date_offset
+      due_date_offset ||= (Time.zone.now.to_date - challenge.due_date).to_i + 30
       new_challenge = challenge.dup
       new_challenge.course = new_course
       new_challenge.enabled = false
