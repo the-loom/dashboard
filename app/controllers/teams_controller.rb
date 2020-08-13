@@ -24,6 +24,7 @@ class TeamsController < ApplicationController
   def create
     authorize Team, :create?
     @team = Team.new(team_params)
+    @team.nickname = Time.new.to_i.to_s26
 
     if @team.valid?
       @team.save
@@ -70,6 +71,6 @@ class TeamsController < ApplicationController
 
   private
     def team_params
-      params[:team].permit(:name, :nickname, :avatar)
+      params[:team].permit(:name, :avatar)
     end
 end
