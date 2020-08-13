@@ -152,6 +152,16 @@ class UsersController < ApplicationController
         end
       end
 
+      if params[:bulk_edit][:action] == "new_team"
+        rnd = Time.new.to_i.to_s26.upcase
+        team = Course.current.teams.create(name: rnd, nickname: rnd.downcase)
+
+        authorize Team, :add_member?
+        if MassiveTeamRegister.new(students, team).execute
+          flash[:success] = "Se agregaron #{students.size} estudiantes en el equipo #{team.name}"
+        end
+      end
+
       redirect_to students_url
       nil
     end

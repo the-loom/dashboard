@@ -186,6 +186,9 @@
               <% end %>
             </div>
             <div class="tab-pane fade" role="tabpanel" id="teams-tab" aria-labelledby="home-tab">
+              <%= button_tag type: 'button', class: 'btn btn-primary do-bulk-edit', data: { action: 'new_team' } do %>
+                Crear nuevo equipo
+              <% end %>
               <% @teams.each do |team| %>
                 <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit', data: { action: 'team', id: team.id} do %>
                   <%= team.name %>
