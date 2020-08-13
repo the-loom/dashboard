@@ -24,7 +24,7 @@ class TeamsController < ApplicationController
   def create
     authorize Team, :create?
     @team = Team.new(team_params)
-    @team.nickname = Time.new.to_i.to_s26
+    @team.nickname = Team.generate_nickname
 
     if @team.valid?
       @team.save

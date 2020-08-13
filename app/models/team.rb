@@ -39,4 +39,8 @@ class Team < ApplicationRecord
   def score
     ScoreCalculator.new.score_for(points)
   end
+
+  def self.generate_nickname
+    Time.new.to_i.to_s26
+  end
 end

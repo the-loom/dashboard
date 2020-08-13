@@ -153,7 +153,7 @@ class UsersController < ApplicationController
       end
 
       if params[:bulk_edit][:action] == "new_team"
-        rnd = Time.new.to_i.to_s26.upcase
+        rnd = Team.generate_nickname.upcase
         team = Course.current.teams.create(name: rnd, nickname: rnd.downcase)
 
         authorize Team, :add_member?
