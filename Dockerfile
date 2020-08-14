@@ -1,4 +1,4 @@
-FROM ruby:2.6.1
+FROM ruby:2.6.6
 
 RUN useradd -u 1000 --create-home --home-dir /xyz --shell /bin/bash loom
 
