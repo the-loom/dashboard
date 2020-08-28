@@ -28,7 +28,8 @@ class ApplicationController < ActionController::Base
       accessor = instance_variable_get(:@_request)
       ActiveRecord::Base.send(:define_method, "session", proc { accessor.session })
       Course.current = Course.find_by(id: session[:course_id]) if session[:course_id].present?
-      end
+      User.current = current_user
+    end
 
     def verify_name
       if !current_user.first_name.present? || current_user.first_name.strip.empty?
