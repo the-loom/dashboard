@@ -181,7 +181,8 @@ GEM
       bundler
       trollop
     pg (1.2.3)
-    puma (3.12.6)
+    puma (4.3.5)
+      nio4r (~> 2.0)
     pundit (1.1.0)
       activesupport (>= 3.0.0)
     rack (2.2.3)
@@ -364,7 +365,7 @@ DEPENDENCIES
   ordinare (~> 0.4)
   pessimize (~> 0.4)
   pg (~> 1.2)
-  puma (~> 3.12)
+  puma (~> 4.3)
   pundit (~> 1.1)
   rack-mini-profiler (~> 2.0)
   rails (~> 5.2)
