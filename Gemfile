@@ -63,7 +63,7 @@ group :development do
   gem "web-console", "~> 3.7"
 
   # Creating dev data
-  gem "ffaker", "~> 2.15"
+  gem "ffaker", "~> 2.17"
 
   # Best practices
   gem "rails_best_practices", "~> 1.20"
