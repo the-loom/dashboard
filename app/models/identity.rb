@@ -19,7 +19,7 @@ class Identity < ApplicationRecord
   private
     def self.create_with_omniauth(auth)
       create! do |identity|
-        name_parts = (auth["info"]["name"] || FFaker::NameMX.full_name_no_prefix).rpartition(" ")
+        name_parts = (auth["info"]["name"] || "Nomen Nescio").rpartition(" ")
         identity.provider = auth["provider"]
         identity.uid = auth["uid"]
         identity.first_name = name_parts.first
