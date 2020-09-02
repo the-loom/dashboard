@@ -13,6 +13,8 @@ class PeerReview::Challenge < ApplicationRecord
 
   before_validation :expire_if_in_the_past
 
+  serialize :rubrics, JSON
+
   def expire_if_in_the_past
     if due?
       disable!

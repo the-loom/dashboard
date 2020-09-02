@@ -118,6 +118,50 @@
       <%= f.input :wording, label: 'Desarrollo', as: :trix_editor %>
     <% end %>
 
+    <% if @challenge.rubrics %>
+
+      <hr>
+
+      <h2>Rúbricas</h2>
+      <p>Aquí podés puntuar del 1 al 5 los siguientes aspectos de la solución revisada.</p>
+
+      <table class="table table-hover table-striped">
+        <thead>
+        <tr>
+          <th rowspan="2">Rúbrica</th>
+          <th colspan="5">Calificación</th>
+        </tr>
+        <tr>
+          <th>1</th>
+          <th>2</th>
+          <th>3</th>
+          <th>4</th>
+          <th>5</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @challenge.rubrics.each do |rubric| %>
+          <tr>
+            <td>
+              <p>
+                <%= rubric["title"] %>
+              </p>
+              <small>
+                <%= rubric["criteria"] %>
+              </small>
+            </td>
+            <% 5.times do |i| %>
+              <td>
+                <%= radio_button_tag "rubrics[#{rubric["title"]}]", i + 1, @review.rubrics && @review.rubrics[rubric["title"]] == (i + 1), required: "required" %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+
+    <% end %>
+
     <%= f.button :button, 'Guardar borrador', type: 'submit', name: :status, value: :draft, class: "btn-primary" %>
     <%= f.button :button, 'Publicar', type: 'submit', name: :status, value: :final, class: "btn-success" %>
 

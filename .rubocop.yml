@@ -11,3 +11,6 @@ AllCops:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Style/HashTransformValues:
+  Enabled: false

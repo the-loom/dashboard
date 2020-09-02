@@ -95,6 +95,7 @@
                     <% end %>
                     <div class="well">
                       <%= render partial: '/peer_review/review_wording', locals: {quick_review: @challenge.allows_quick_reviews?, wording: review.wording} %>
+                      <%= render partial: '/peer_review/review_rubrics', locals: { rubrics: review.rubrics } %>
                     </div>
                     <%= render partial: '/peer_review/challenges/assessment', locals: {review: review} %>
                   </div>

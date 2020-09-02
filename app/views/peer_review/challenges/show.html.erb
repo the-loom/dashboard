@@ -102,7 +102,8 @@
                       <h4>Revisión realizada por <%= review.reviewer.full_name %></h4>
                     <% end %>
                     <div class="well">
-                      <%= render partial: '/peer_review/review_wording', locals: {quick_review: @challenge.allows_quick_reviews?, wording: review.wording} %>
+                      <%= render partial: '/peer_review/review_wording', locals: { quick_review: @challenge.allows_quick_reviews?, wording: review.wording } %>
+                      <%= render partial: '/peer_review/review_rubrics', locals: { rubrics: review.rubrics } %>
                     </div>
                     <%= render partial: 'assessment', locals: {review: review} %>
                   </div>
@@ -149,6 +150,7 @@
 
                 <div class="well">
                   <%= render partial: '/peer_review/review_wording', locals: {quick_review: @challenge.allows_quick_reviews?, wording: review.wording} %>
+                  <%= render partial: '/peer_review/review_rubrics', locals: { rubrics: review.rubrics } %>
                 </div>
 
                 <%= render partial: 'assessment', locals: {review: review} %>

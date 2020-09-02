@@ -33,6 +33,46 @@
 
   <%= f.input :reviewer_instructions, label: 'Instrucciones para el revisor', as: :trix_editor %>
 
+  <div id="app">
+    <h2>Rúbrica de corrección</h2>
+
+    <p>Los criterios permitirán al revisor puntuar con calificaciones del 1 al 5.</p>
+
+    <table class="table table-stripped table-hover">
+      <thead>
+      <tr>
+        <th>Título</th>
+        <th>Criterios</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-for="(rubric, index) in rubrics">
+        <td>
+          <input class="form-control required" type="text" v-model="rubric.title" required="required"
+                 :name="'challenge[rubrics][' + rubric.id + '][title]'">
+        </td>
+        <td>
+          <input class="form-control required" type="text" v-model="rubric.criteria" required="required"
+                 :name="'challenge[rubrics][' + rubric.id + '][criteria]'">
+        </td>
+        <td>
+          <button type="button" class="btn btn-danger" v-on:click="removeEntry(rubric)"
+                  style="vertical-align: bottom">
+            <i class="fa fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <button type="button" @click="addRubric()" class="btn btn-secondary">
+      <i class="fa fa-plus"></i>
+    </button>
+  </div>
+
+  <br>
+
   <%= f.button :submit, @labels.button, class: 'btn-primary' %>
 
 <% end %>
@@ -43,4 +83,37 @@
 
 <% content_for :javascript do %>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/0.12.0/trix.js" type="application/javascript"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <script>
+
+      var app = new Vue({
+          el: '#app',
+          data: {
+              rubrics: <%= raw (@challenge.rubrics || []).each_with_index.map { | rubric, index |
+                  {
+                      id: index,
+                      title: rubric["title"],
+                      criteria: rubric["criteria"]
+                  }
+              }.to_json %>
+          },
+          methods: {
+              addRubric: function () {
+                  this.rubrics.push({
+                      id: new Date().getTime(),
+                      title: null,
+                      criteria: null
+                  });
+              },
+              removeEntry: function (deletable) {
+                  x = this.rubrics.indexOf(deletable);
+                  this.rubrics.splice(x, 1);
+              }
+          }
+      });
+
+  </script>
+
 <% end %>

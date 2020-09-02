@@ -1,0 +1,16 @@
+- if rubrics
+  %br
+  %table.table.table-hover.table-striped
+    %thead
+      %tr
+        %th
+          Rúbrica
+        %th
+          Calificación
+    %tbody
+      - rubrics.each do |rubric, score|
+        %tr
+          %td
+            = rubric
+          %td
+            = score
