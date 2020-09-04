@@ -18,6 +18,8 @@ class PeerReview::Review < ApplicationRecord
       bad: 2
   }
 
+  serialize :rubrics, JSON
+
   scope :sorted, -> { order(id: :asc) }
   scope :by, ->(user) { where(reviewer: user) }
 

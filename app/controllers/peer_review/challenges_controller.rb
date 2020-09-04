@@ -168,6 +168,7 @@ module PeerReview
     def create
       authorize PeerReview::Challenge, :manage?
       @challenge = PeerReview::Challenge.new(challenge_params)
+      @challenge.rubrics = build_rubrics
 
       if @challenge.valid?
         @challenge.save
@@ -197,6 +198,7 @@ module PeerReview
       authorize PeerReview::Challenge, :manage?
       @challenge = PeerReview::Challenge.find(params[:id])
 
+      @challenge.rubrics = build_rubrics
       if @challenge.update_attributes(challenge_params)
         redirect_to peer_review_challenges_path
         flash[:success] = "Se editó correctamente el desafío"
@@ -236,6 +238,10 @@ module PeerReview
     end
 
     private
+      def build_rubrics
+        params[:challenge][:rubrics].to_unsafe_h.map { |_, y| y }
+      end
+
       def challenge_params
         params[:peer_review_challenge].permit(:title, :instructions, :reviewer_instructions,
                                               :difficulty, :challenge_mode, :due_date,

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_03_131757) do
+ActiveRecord::Schema.define(version: 2020_09_02_220953) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -269,6 +269,7 @@ ActiveRecord::Schema.define(version: 2020_06_03_131757) do
     t.boolean "allows_quick_reviews", default: false
     t.boolean "awarded", default: false
     t.boolean "optional", default: false
+    t.string "rubrics"
   end
 
   create_table "peer_review_reviews", force: :cascade do |t|
@@ -282,6 +283,7 @@ ActiveRecord::Schema.define(version: 2020_06_03_131757) do
     t.integer "assessor_id"
     t.string "teacher_assessment_description"
     t.integer "course_id"
+    t.string "rubrics"
   end
 
   create_table "peer_review_solutions", force: :cascade do |t|

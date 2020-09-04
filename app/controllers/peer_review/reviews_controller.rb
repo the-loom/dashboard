@@ -43,6 +43,7 @@ module PeerReview
       else
         @review.update_attributes(solution_params)
       end
+      @review.rubrics = build_rubrics
 
       if @review.valid?
         @review.save
@@ -58,6 +59,10 @@ module PeerReview
     end
 
     private
+      def build_rubrics
+        Hash[ params[:rubrics].to_unsafe_h.map { |x, y| [x, y.to_i] } ]
+      end
+
       def wording_params
         params[:peer_review_review_items].to_s
       end
