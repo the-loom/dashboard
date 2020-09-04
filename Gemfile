@@ -33,7 +33,7 @@ group :development, :test do
   # Testing
   gem "factory_bot_rails", "~> 6.1"
   gem "rspec-rails", "~> 4.0"
-  gem "shoulda-matchers", "~> 4.3"
+  gem "shoulda-matchers", "~> 4.4"
 end
 
 gem "discard", "~> 1.2"
