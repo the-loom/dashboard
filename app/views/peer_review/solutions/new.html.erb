@@ -3,7 +3,9 @@
 <% nav_add 'Resolver', '#' %>
 <%= nav_render4 %>
 
-<%= raw @challenge.instructions %>
+<div id="wording">
+  <%= raw @challenge.instructions %>
+</div>
 
 <hr/>
 
@@ -68,7 +70,7 @@
         CodeMirror.fromTextArea(myTextArea, {
             lineNumbers: true,
             matchBrackets: true,
-            mode: "text/x-java"
+            mode: "<%= @challenge.code_mirror_mode %>"
         });
       <% end %>
 

@@ -36,3 +36,9 @@ img.team {
     border: 2px solid darkslategray;
     background: white;
 }
+
+#wording pre {
+    background-color: #e9ecef;
+    padding: 1em;
+    border-radius: 5px;
+}

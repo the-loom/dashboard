@@ -23,6 +23,9 @@
       <tr>
         <th>Nombre</th>
         <th>Preguntas</th>
+        <% if policy(PeerReview::Challenge).manage? %>
+          <th><i class="fa fa-eye" title="Publicado"></i></th>
+        <% end %>
         <th class="no-sort">&nbsp;</th>
       </tr>
       </thead>
@@ -35,6 +38,11 @@
           <td>
             <%= questionnaire.questions.count %>
           </td>
+          <% if policy(MultipleChoices::Questionnaire).manage? %>
+            <td>
+              <%= yes_no questionnaire.published? %>
+            </td>
+          <% end %>
           <td>
             <%= link_to "Practicar", practice_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-primary btn-sm' %>
 

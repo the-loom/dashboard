@@ -33,6 +33,20 @@
         %td
           = yes_no challenge.has_picked_solutions?
 
+%hr
+
+%legend Cuestionarios
+
+%table.questionnaires.table.table-striped.table-hover
+  %thead
+    %tr
+      %th Título
+  %tbody
+    - @questionnaires.each do |questionnaire|
+      %tr
+        %td
+          = link_to questionnaire.name, multiple_choices_questionnaires_path(questionnaire)
+
 = content_for :head do
   %link{href: "https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css", rel: "stylesheet"}
   :css
@@ -63,6 +77,17 @@
     $(function () {
       $('.challenges').DataTable({
         order: [[1, "asc"]],
+        paging: false,
+        language: {
+          url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+        },
+        columnDefs: [{
+          targets: 'no-sort',
+          orderable: false
+        }]
+      });
+      $('.questionnaires').DataTable({
+        order: [[0, "asc"]],
         paging: false,
         language: {
           url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
