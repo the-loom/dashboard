@@ -239,6 +239,7 @@ module PeerReview
 
     private
       def build_rubrics
+        return {} unless params[:challenge] && params[:challenge][:rubrics]
         params[:challenge][:rubrics].to_unsafe_h.map { |_, y| y }
       end
 

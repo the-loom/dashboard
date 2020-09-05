@@ -113,12 +113,12 @@
             <input type="hidden" name="peer_review_review_items[]" v-bind:value="item.text"/>
           </template>
         </ul>
-      </div>
+      </div>Rúbrica
     <% else %>
       <%= f.input :wording, label: 'Desarrollo', as: :trix_editor %>
     <% end %>
 
-    <% if @challenge.rubrics %>
+    <% if @challenge.rubrics.size > 0 %>
 
       <hr>
 

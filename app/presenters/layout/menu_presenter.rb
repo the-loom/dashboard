@@ -80,7 +80,7 @@ class Layout::MenuPresenter
       if on?(:multiple_choices) || on?(:tiny_cards) || on?(:automatic_correction_challenges) || on?(:peer_review_challenges) || on?(:exercises)
         exercises_node = MenuNode.new("Ejercitación")
         exercises_node << MenuLeaf.new("Tarjetas", route.tiny_cards_decks_path) if on?(:tiny_cards)
-        exercises_node << MenuLeaf.new("Preguntas de Opción Múltiple", route.multiple_choices_questionnaires_path) if on?(:multiple_choices)
+        exercises_node << MenuLeaf.new("Cuestionarios de Opción Múltiple", route.multiple_choices_questionnaires_path) if on?(:multiple_choices)
         exercises_node << MenuLeaf.new("Desafíos de Corrección Automática", route.repos_path) if on?(:automatic_correction_challenges)
         exercises_node << MenuLeaf.new("Desafíos de Revisión", route.peer_review_challenges_path) if on?(:peer_review_challenges)
         exercises_node << MenuLeaf.new("Ejercicios", route.exercises_path) if on?(:exercises)

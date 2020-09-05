@@ -60,6 +60,7 @@ module PeerReview
 
     private
       def build_rubrics
+        return {} unless params[:rubrics]
         Hash[ params[:rubrics].to_unsafe_h.map { |x, y| [x, y.to_i] } ]
       end
 

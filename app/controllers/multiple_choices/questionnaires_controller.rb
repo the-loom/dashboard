@@ -10,7 +10,11 @@ module MultipleChoices
 
     def index
       authorize MultipleChoices::Questionnaire, :access?
-      @questionnaires = MultipleChoices::Questionnaire.all
+      if current_user.teacher?
+        @questionnaires = MultipleChoices::Questionnaire.all
+      else
+        @questionnaires = MultipleChoices::Questionnaire.published
+      end
     end
 
     def new
@@ -23,6 +27,7 @@ module MultipleChoices
     def create
       authorize MultipleChoices::Questionnaire, :manage?
       @questionnaire = MultipleChoices::Questionnaire.new(questionnaire_params)
+      @questionnaire.published = false
 
       if @questionnaire.valid?
         @questionnaire.save

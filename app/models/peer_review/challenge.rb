@@ -69,6 +69,12 @@ class PeerReview::Challenge < ApplicationRecord
 
   scope :enabled, -> { where(enabled: true) }
 
+  def code_mirror_mode
+    return "text/x-java" if language == "java"
+    return "text/x-c++src" if language == "cpp"
+    language
+  end
+
   def has_picked_solutions?
     !enabled? && picked_solutions.size > 0
   end

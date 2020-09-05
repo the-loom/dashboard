@@ -3,5 +3,6 @@ class DashboardController < ApplicationController
 
   def index
     @challenges = PeerReview::Challenge.published
+    @questionnaires = MultipleChoices::Questionnaire.published
   end
 end
