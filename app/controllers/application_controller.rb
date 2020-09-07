@@ -38,12 +38,12 @@ class ApplicationController < ActionController::Base
     end
 
     def login_user(user)
-      memberships = user.memberships
+      memberships = user.enabled_memberships
 
       session[:user_id] = user.id
       if memberships.count >= 1
 
-        if user.last_visited_course_id > 0
+        if user.last_visited_course_id > 0 && memberships.map(&:id).include?(user.last_visited_course_id)
           session[:course_id] = user.last_visited_course_id
         else
           session[:course_id] = memberships.first.course_id
