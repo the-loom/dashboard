@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
     def _set_current_session
       accessor = instance_variable_get(:@_request)
       ActiveRecord::Base.send(:define_method, "session", proc { accessor.session })
-      Course.current = Course.find_by(id: session[:course_id]) if session[:course_id].present?
+      Course.current = Course.find_by(id: session[:course_id]) if session[:course_id].present? && Course.enabled.map(&:id).include?(session[:course_id])
       User.current = current_user
     end
 

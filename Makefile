@@ -75,9 +75,9 @@ use_production_db:
 	heroku pg:backups capture --app the-loom
 	heroku pg:backups download --app the-loom
 	mv latest.dump tmp/latest.dump
-	docker-compose run app bundle exec rake db:drop db:create
-	docker cp tmp/latest.dump loom-dashboard_db_1:/latest.dump
-	! docker exec loom-dashboard_db_1 pg_restore --verbose --clean --no-acl --no-owner -h localhost -d loom_development -U loom /latest.dump
+	docker-compose run -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 app bundle exec rake db:drop db:create
+	docker cp tmp/latest.dump dashboard_db_1:/latest.dump
+	! docker exec dashboard_db_1 pg_restore --verbose --clean --no-acl --no-owner -h localhost -d loom_development -U loom /latest.dump
 	$(MAKE) migrate
 
 cleanup_download:
@@ -116,3 +116,6 @@ detect_where_in_views:
 
 detect_where_in_controllers:
 	grep -n -r -i --include \*.rb .where ./app/controllers || true
+
+add_production_repo:
+	git remote add production https://git.heroku.com/the-loom.git
