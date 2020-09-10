@@ -6,7 +6,7 @@ module ApplicationHelper
 
   def entity_avatar(entity)
     if entity.avatar.attached?
-      entity.avatar.variant(auto_orient: true)
+      entity.avatar.variant(auto_orient: true, size: "500x500", thumbnail: "500x500^", gravity: :center, extent: "500x500")
     elsif entity.respond_to?(:image) && entity.image.present?
       entity.image
     else # fallback
