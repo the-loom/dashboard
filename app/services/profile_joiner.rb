@@ -4,8 +4,6 @@ class ProfileJoiner
   end
 
   def execute
-    5/0 # temporarily disabled on purpose
-
     User.transaction do
       keepable_student = @students.first
 
@@ -14,7 +12,7 @@ class ProfileJoiner
       keepable_student.identities << identities
 
       # 1.b joins memberships under the first user
-      courses = @students.map(&:courses).uniq
+      courses = @students.map(&:courses).flatten.uniq
       courses.each do |course|
         if keepable_student.memberships.where(course: course).empty?
           keepable_student.memberships << Membership.create(course: course, role: :student)

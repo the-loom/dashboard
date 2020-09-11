@@ -167,7 +167,7 @@
               <% end %>
             </div>
             <div class="tab-pane fade" role="tabpanel" id="misc-tab" aria-labelledby="home-tab">
-              <% if current_user.current_membership.admin? && false %>
+              <% if current_user.current_membership.admin? %>
                 <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit', data: { action: 'join_profiles', id: nil} do %>
                   Unir perfiles
                 <% end %>

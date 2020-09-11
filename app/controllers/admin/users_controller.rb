@@ -30,22 +30,6 @@ module Admin
 =end
     end
 
-    def destroy
-      course = Course.find(params[:id])
-      authorize course, :admin?
-      course.discard
-
-      redirect_to admin_courses_path
-    end
-
-    def restore
-      course = Course.find(params[:id])
-      authorize course, :admin?
-      course.undiscard
-
-      redirect_to admin_courses_path
-    end
-
     def impersonate
       @user = User.find(params[:id])
       authorize @user, :impersonate?
