@@ -17,6 +17,24 @@ module PeerReview
       @quick_reviews = QuickReviewGenerator.generate(@challenge, @review) if current_user.teacher? && @challenge.allows_quick_reviews?
     end
 
+    def add_message
+      # permisos? sólo comenta el que lo ve?
+      review = PeerReview::Review.find(params[:message][:review_id])
+      challenge = review.challenge
+      message = Message.new(message_params)
+      message.user = current_user
+
+      if message.valid?
+        message.save
+        message.notify!
+        redirect_to peer_review_challenge_path(challenge)
+        flash[:success] = "Se creó correctamente el comentario"
+      else
+        redirect_to peer_review_challenge_path(challenge)
+        flash[:error] = "No hemos podido publicar tu comentario"
+      end
+    end
+
     def assess
       challenge = PeerReview::Challenge.find(params[:challenge_id])
       review = challenge.reviews.find(params[:id])
@@ -74,6 +92,10 @@ module PeerReview
 
       def solution_params
         params[:peer_review_review].permit(:wording)
+      end
+
+      def message_params
+        params[:message].permit(:content, :peer_review_review_id)
       end
 
       def publishing?
