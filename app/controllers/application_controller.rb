@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
       ActiveRecord::Base.send(:define_method, "session", proc { accessor.session })
       Course.current = Course.find_by(id: session[:course_id]) if session[:course_id].present? && Course.enabled.map(&:id).include?(session[:course_id])
       User.current = current_user
-      redirect_to courses_url if User.current && !Course.current
+      redirect_to courses_url if User.current && !Course.current && controller_path != "courses"
     end
 
     def verify_name
