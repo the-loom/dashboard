@@ -1,0 +1,32 @@
+<% if policy(review).message? %>
+  <legend>Comentarios (<%= review.messages.count %>)</legend>
+
+  <% review.messages.each do |message| %>
+    <article class="notification">
+      <blockquote class="blockquote">
+        <p>
+          <%= message.content %>
+        </p>
+        <footer class="blockquote-footer">
+          <% if message.user.teacher? %>
+            <%= message.user.full_name %> (docente),
+          <% elsif current_user.teacher? %>
+            <%= message.user.full_name %>
+          <% else %>
+            <%= message.user == review.reviewer ? 'El revisor' : 'El autor' %>,
+          <% end %>
+          <%= message.created_at.strftime("%d/%m/%Y %H:%M") %>
+        </footer>
+      </blockquote>
+      <hr/>
+    </article>
+  <% end %>
+
+  <%= simple_form_for :message, url: add_message_peer_review_challenge_review_path(challenge, review) do |f| %>
+
+    <%= f.input :content, label: 'Mensaje', as: :text, required: true %>
+
+    <%= f.button :submit, 'Enviar', class: "btn-primary" %>
+
+  <% end %>
+<% end %>

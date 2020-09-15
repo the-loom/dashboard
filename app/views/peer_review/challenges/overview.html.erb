@@ -44,6 +44,7 @@
     <th>Profesor</th>
     <th class="no-sort">Fecha de Resolución</th>
     <th>Revisiones recibidas</th>
+    <th>Mensajes en revisiones recibidas</th>
     <th>Revisiones realizadas</th>
   </tr>
   </thead>
@@ -107,8 +108,10 @@
       </td>
       <% if stats.solution %>
         <td><%= stats.reviews_received %></td>
+        <td><%= stats.messages_on_received_reviews %></td>
         <td><%= stats.reviews_made %></td>
       <% else %>
+        <td>&nbsp;</td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
       <% end %>

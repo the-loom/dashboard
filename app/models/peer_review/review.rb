@@ -5,6 +5,9 @@ class PeerReview::Review < ApplicationRecord
   belongs_to :reviewer, foreign_key: :reviewer_id, class_name: "User"
   belongs_to :assessor, foreign_key: :assessor_id, class_name: "User", optional: true
 
+  has_many :messages, foreign_key: :peer_review_review_id, dependent: :delete_all
+
+
   validates :solution, uniqueness: { scope: :reviewer, message: "should review only once per solution" }
 
   enum status: {

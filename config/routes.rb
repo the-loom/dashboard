@@ -133,6 +133,7 @@ Rails.application.routes.draw do
       end
       resources :reviews, only: [:new, :update] do
         patch :assess, on: :member
+        post :add_message, on: :member
       end
     end
   end

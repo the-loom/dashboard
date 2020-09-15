@@ -18,10 +18,11 @@ module PeerReview
     end
 
     def add_message
-      # permisos? sólo comenta el que lo ve?
-      review = PeerReview::Review.find(params[:message][:review_id])
+      review = PeerReview::Review.find(params[:id])
+      authorize review, :message?
+
       challenge = review.challenge
-      message = Message.new(message_params)
+      message = review.messages.new(message_params)
       message.user = current_user
 
       if message.valid?
@@ -95,7 +96,7 @@ module PeerReview
       end
 
       def message_params
-        params[:message].permit(:content, :peer_review_review_id)
+        params[:message].permit(:content)
       end
 
       def publishing?
