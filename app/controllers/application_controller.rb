@@ -27,9 +27,17 @@ class ApplicationController < ActionController::Base
     def _set_current_session
       accessor = instance_variable_get(:@_request)
       ActiveRecord::Base.send(:define_method, "session", proc { accessor.session })
-      Course.current = Course.find_by(id: session[:course_id]) if session[:course_id].present? && Course.enabled.map(&:id).include?(session[:course_id])
       User.current = current_user
-      redirect_to courses_url if User.current && !Course.current && controller_path != "courses"
+      if User.current
+        if session[:course_id].present? && Course.enabled.map(&:id).include?(session[:course_id])
+          Course.current = Course.find_by(id: session[:course_id])
+        else
+          Course.current = current_user.enabled_memberships.first.course_id
+        end
+        if !Course.current && controller_path != "courses"
+          redirect_to courses_url
+        end
+      end
     end
 
     def verify_name
@@ -44,7 +52,7 @@ class ApplicationController < ActionController::Base
       session[:user_id] = user.id
       if memberships.count >= 1
 
-        if user.last_visited_course_id > 0 && memberships.map(&:id).include?(user.last_visited_course_id)
+        if user.last_visited_course_id > 0 && memberships.map { |m| m.course_id }.include?(user.last_visited_course_id)
           session[:course_id] = user.last_visited_course_id
         else
           session[:course_id] = memberships.first.course_id
