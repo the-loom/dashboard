@@ -109,6 +109,7 @@ Rails.application.routes.draw do
 
   namespace :peer_review do
     resources :challenges do
+      get :messages, on: :collection
       get :meta_overview, on: :collection
       publishable
       get :flow, on: :member

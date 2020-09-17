@@ -13,7 +13,7 @@
           <% elsif current_user.teacher? %>
             <%= message.user.full_name %>
           <% else %>
-            <%= message.user == review.reviewer ? 'El revisor' : 'El autor' %>,
+            <%= message.user == review.reviewer ? 'El revisor' : 'El autor' %><%= message.user == current_user ? " (vos)" : "" %>,
           <% end %>
           <%= message.created_at.strftime("%d/%m/%Y %H:%M") %>
         </footer>

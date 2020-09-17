@@ -1,6 +1,6 @@
 module PeerReview
   class ChallengesController < ApplicationController
-    layout "application2", only: [:show, :index]
+    layout "application2", only: [:show, :index, :messages]
 
     include Publisher.new(PeerReview::Challenge, :peer_review_challenges)
 
@@ -23,6 +23,11 @@ module PeerReview
           send_data Challenge.to_csv, filename: "challenge_sheet.csv"
         end
       end
+    end
+
+    def messages
+      authorize PeerReview::Challenge, :manage?
+      @messages = PeerReview::Message.all.map { |m| PeerReview::MessagePresenter.new(m) }
     end
 
     def flow
