@@ -36,19 +36,6 @@ module PeerReview
       end
     end
 
-    def assess
-      challenge = PeerReview::Challenge.find(params[:challenge_id])
-      review = challenge.reviews.find(params[:id])
-      authorize review, :assess?
-
-      review.teacher_assessment = params[:teacher_assessment].to_sym
-      review.assessor = current_user
-      review.update_attributes(assessment_params)
-      review.save
-
-      redirect_to peer_review_challenge_solution_path(review.challenge, params[:peer_review_review][:current_solution_id])
-    end
-
     def update
       @challenge = PeerReview::Challenge.find(params[:challenge_id])
       authorize @challenge, :review?
@@ -85,10 +72,6 @@ module PeerReview
 
       def wording_params
         params[:peer_review_review_items].to_s
-      end
-
-      def assessment_params
-        params[:peer_review_review].permit(:teacher_assessment_description)
       end
 
       def solution_params

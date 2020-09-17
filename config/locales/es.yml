@@ -16,12 +16,6 @@ es:
       student_reviews_only: 'Pares'
       teacher_reviews_only: 'Docentes'
 
-  reviews:
-    assessments:
-      pending: 'pendiente'
-      good: 'buena'
-      bad: 'mala'
-
   suggestions:
     suggestion_type:
       course: 'Sobre el curso'

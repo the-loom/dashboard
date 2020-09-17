@@ -98,7 +98,6 @@
                       <%= render partial: '/peer_review/review_rubrics', locals: { rubrics: review.rubrics } %>
                       <%= render partial: '/peer_review/messages', locals: { challenge: @challenge, review: review } %>
                     </div>
-                    <%= render partial: '/peer_review/challenges/assessment', locals: {review: review} %>
                   </div>
                 <% end %>
               </div>
@@ -144,8 +143,6 @@
                   <%= render partial: '/peer_review/review_rubrics', locals: { rubrics: review.rubrics } %>
                   <%= render partial: '/peer_review/messages', locals: { challenge: @challenge, review: review } %>
                 </div>
-
-                <%= render partial: '/peer_review/challenges/assessment', locals: {review: review} %>
               </div>
             <% end %>
           </div>
