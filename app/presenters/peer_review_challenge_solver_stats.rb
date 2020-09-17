@@ -19,6 +19,10 @@ class PeerReviewChallengeSolverStats
     solution.reviews.where(status: status).count
   end
 
+  def messages_on_received_reviews
+    solution.reviews.map { |r| r.messages.count }.sum
+  end
+
   def reviewed_by_teacher?
     _teachers_who_reviewed.count > 0
   end

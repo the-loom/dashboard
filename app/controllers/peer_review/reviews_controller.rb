@@ -17,17 +17,23 @@ module PeerReview
       @quick_reviews = QuickReviewGenerator.generate(@challenge, @review) if current_user.teacher? && @challenge.allows_quick_reviews?
     end
 
-    def assess
-      challenge = PeerReview::Challenge.find(params[:challenge_id])
-      review = challenge.reviews.find(params[:id])
-      authorize review, :assess?
+    def add_message
+      review = PeerReview::Review.find(params[:id])
+      authorize review, :message?
 
-      review.teacher_assessment = params[:teacher_assessment].to_sym
-      review.assessor = current_user
-      review.update_attributes(assessment_params)
-      review.save
+      challenge = review.challenge
+      message = review.messages.new(message_params)
+      message.user = current_user
 
-      redirect_to peer_review_challenge_solution_path(review.challenge, params[:peer_review_review][:current_solution_id])
+      if message.valid?
+        message.save
+        message.notify!
+        redirect_to peer_review_challenge_path(challenge)
+        flash[:success] = "Se creó correctamente el comentario"
+      else
+        redirect_to peer_review_challenge_path(challenge)
+        flash[:error] = "No hemos podido publicar tu comentario"
+      end
     end
 
     def update
@@ -68,12 +74,12 @@ module PeerReview
         params[:peer_review_review_items].to_s
       end
 
-      def assessment_params
-        params[:peer_review_review].permit(:teacher_assessment_description)
-      end
-
       def solution_params
         params[:peer_review_review].permit(:wording)
+      end
+
+      def message_params
+        params[:message].permit(:content)
       end
 
       def publishing?

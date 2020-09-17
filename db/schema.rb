@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_02_220953) do
+ActiveRecord::Schema.define(version: 2020_09_17_124929) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -272,6 +272,15 @@ ActiveRecord::Schema.define(version: 2020_09_02_220953) do
     t.string "rubrics"
   end
 
+  create_table "peer_review_messages", force: :cascade do |t|
+    t.text "content"
+    t.integer "peer_review_review_id"
+    t.integer "user_id"
+    t.integer "course_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "peer_review_reviews", force: :cascade do |t|
     t.string "wording"
     t.integer "status", default: 0
@@ -279,9 +288,6 @@ ActiveRecord::Schema.define(version: 2020_09_02_220953) do
     t.integer "reviewer_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "teacher_assessment", default: 0
-    t.integer "assessor_id"
-    t.string "teacher_assessment_description"
     t.integer "course_id"
     t.string "rubrics"
   end

@@ -1,0 +1,55 @@
+<% nav_add 'Desafíos', peer_review_challenges_path %>
+<% nav_add 'Mensajería interna', '#' %>
+<%= nav_render4 %>
+
+<table class="table table-hover table-striped messages">
+  <thead>
+  <tr>
+    <th>Fecha</th>
+    <th>Desafío</th>
+    <th>Revisado</th>
+    <th>Revisor</th>
+    <th>Mensaje por...</th>
+    <th>Mensaje</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @messages.each do |message| %>
+    <tr>
+      <td><%= message.created_at.strftime("%d/%m/%Y %H:%M") %></td>
+      <td><%= link_to message.challenge.title, peer_review_challenge_solution_path(message.challenge_id, message.solution) %></td>
+      <td><%= message.reviewee %></td>
+      <td><%= message.reviewer %></td>
+      <td><%= message.sender %></td>
+      <td>
+        <blockquote class="blockquote">
+          <%= message.content %>
+        </blockquote>
+      </td>
+      <td></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= content_for :head do %>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css"/>
+<% end %>
+
+<%= content_for :javascript do %>
+  <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js"></script>
+
+  <script type="application/javascript">
+      $(function () {
+          $('.messages').DataTable({
+              order: [[0, "asc"]],
+              paging: false,
+              columnDefs: [{
+                  targets: 'no-sort',
+                  orderable: false
+              }]
+          });
+      });
+  </script>
+<% end %>
