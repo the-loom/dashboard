@@ -34,7 +34,6 @@
         <% if Course.current.on?(:badges) %>
           <th>Medallero</th>
         <% end %>
-        <th>Correo electrónico</th>
         <th class="no-sort">Acciones</th>
       </tr>
       </thead>
@@ -71,7 +70,6 @@
               <span class="badge" title="Medallas de plata">&times;<%= student.badges.not_featured.count %></span>
             </td>
           <% end %>
-          <td><%= mail_to student.email %></td>
           <td>
             <% if policy(student).manage? %>
               <%= link_to student.enabled? ? 'Deshabilitar' : 'Habilitar', toggle_user_path(student),
