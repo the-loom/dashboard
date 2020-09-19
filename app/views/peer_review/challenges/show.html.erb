@@ -7,7 +7,9 @@
      message: "Tenés una revisión no publicada. Tomate tu tiempo, pero publicala para que otro participantes puedan verla."} %>
 <% end %>
 
-<%= render :partial => '/peer_review/info_box', locals: {challenge: @challenge} %>
+<%= render partial: 'buttons', locals: { challenge: @challenge } %>
+
+<%= render partial: '/peer_review/info_box', locals: { challenge: @challenge } %>
 
 <% if @challenge.team_challenge && !current_user.current_membership.team %>
   <%= render partial: 'shared/alert', locals: {alert_type: 'danger', title: '¡Oops!',

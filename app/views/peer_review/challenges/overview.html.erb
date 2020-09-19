@@ -3,6 +3,10 @@
 <% nav_add 'Panorama', '#' %>
 <%= nav_render %>
 
+<%= render partial: 'buttons', locals: { challenge: @challenge } %>
+
+<%= render partial: '/peer_review/info_box', locals: { challenge: @challenge } %>
+
 <h2>Consigna</h2>
 
 <%= raw @challenge.instructions %>
