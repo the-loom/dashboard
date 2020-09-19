@@ -20,6 +20,7 @@
         <th class="no-sort">Foto</th>
         <th>Nombre</th>
         <th>XP</th>
+        <th># Int</th>
         <th>Integrantes</th>
         <th class="no-sort">&nbsp;</th>
       </tr>
@@ -34,7 +35,19 @@
           </td>
           <td><%= team.name %></td>
           <td><%= team.points %></td>
-          <td><%= team.enabled_members.size %></td>
+          <td>
+            <%= team.enabled_members.count %>
+          </td>
+          <td>
+            <ul>
+              <% team.enabled_members.each do |member| %>
+                <li>
+                  <%= member.full_name %>
+
+                </li>
+              <% end %>
+            </ul>
+          </td>
           <td>
             <%= link_to "Editar", edit_team_path(team), class: 'btn btn-default' %>
             <% if team.enabled_members.size == 0 %>
