@@ -10,6 +10,7 @@
     <thead>
     <tr>
       <th>Nombre</th>
+      <th>Funcionalidades habilitadas</th>
       <th class="no-sort">&nbsp;</th>
     </tr>
     </thead>
@@ -18,6 +19,17 @@
       <tr class="fork">
         <td>
           <%= course.name %>
+        </td>
+        <td>
+          <ul>
+            <% Course.all_features.each do |feature, value| %>
+              <% if course.on? feature.to_sym %>
+                <li>
+                  <%= t "course.features.#{feature}" %>
+                </li>
+              <% end %>
+            <% end %>
+          </ul>
         </td>
         <td>
           <% if policy(Course).admin? %>
