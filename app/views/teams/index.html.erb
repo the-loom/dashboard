@@ -49,7 +49,6 @@
             </ul>
           </td>
           <td>
-            <%= link_to "Editar", edit_team_path(team), class: 'btn btn-default' %>
             <% if team.enabled_members.size == 0 %>
               <br/>
               <%= link_to "Eliminar", team_path(team), class: 'btn btn-danger', method: :delete %>
