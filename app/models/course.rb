@@ -17,6 +17,7 @@ class Course < ApplicationRecord
   validates :password, presence: true
 
   scope :enabled, -> { where(enabled: true) }
+  scope :disabled, -> { where(enabled: false) }
 
   def fully_duplicate!
     new_course = nil

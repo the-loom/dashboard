@@ -7,64 +7,23 @@
   <br><br>
 <% end %>
 
-<section class="forks">
+<section>
 
-  <% if @courses.empty? %>
+  <legend>Cursos habilitados</legend>
 
-    <div class="alert alert-info">
-      <p>Aún no hay ningún curso</p>
-    </div>
+  <%= render partial: 'courses_table', locals: { courses: @enabled_courses } %>
 
-  <% else %>
+</section>
 
-    <table class="courses table table-striped">
-      <thead>
-      <tr>
-        <th>Nombre</th>
-        <th class="no-sort">&nbsp;</th>
-      </tr>
-      </thead>
-      <tbody>
-      <% @courses.each do |course| %>
-        <tr class="fork">
-          <td>
-            <%= course.name %>
-          </td>
-          <td>
-            <% if policy(Course).admin? %>
-              <%= link_to edit_admin_course_path(course), class: 'btn btn-default btn-sm' do %>
-                <i class="fa fa-pencil"></i> Editar
-              <% end %>
-              <%= link_to duplicate_admin_course_path(course), method: :post, class: 'btn btn-default btn-sm' do %>
-                <i class="fa fa-copy"></i> Duplicar
-              <% end %>
-              <%= link_to toggle_admin_course_path(course), class: 'btn btn-default btn-sm' do %>
+<br>
+<br>
 
-                <% if course.enabled? %>
-                  <i class="fa fa-eye-slash"></i> Deshabilitar
-                <% else %>
-                  <i class="fa fa-eye"></i> Habilitar
-                <% end %>
+<section>
 
-              <% end %>
+  <legend>Cursos deshabilitados</legend>
 
-              <% if course.discarded? %>
-                <%= button_to restore_admin_course_path(course), class: 'btn btn-success btn-sm', method: :post do %>
-                  <i class="fa fa-undo"></i> Restaurar
-                <% end %>
-              <% else %>
-                <%= button_to admin_course_path(course), class: 'btn btn-danger btn-sm', method: :delete do %>
-                  <i class="fa fa-trash"></i> Borrar
-                <% end %>
-              <% end %>
+  <%= render partial: 'courses_table', locals: { courses: @disabled_courses } %>
 
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
-      </tbody>
-    </table>
-  <% end %>
 </section>
 
 <%= content_for :head do %>

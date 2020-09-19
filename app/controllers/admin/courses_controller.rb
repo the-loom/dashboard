@@ -1,7 +1,8 @@
 module Admin
   class CoursesController < ApplicationController
     def index
-      @courses = Course.all
+      @enabled_courses = Course.enabled
+      @disabled_courses = Course.disabled
     end
 
     def duplicate

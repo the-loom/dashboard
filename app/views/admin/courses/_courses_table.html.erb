@@ -1,0 +1,56 @@
+<% if courses.empty? %>
+
+  <div class="alert alert-info">
+    <p>Aún no hay ningún curso habilitado</p>
+  </div>
+
+<% else %>
+
+  <table class="courses table table-striped">
+    <thead>
+    <tr>
+      <th>Nombre</th>
+      <th class="no-sort">&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% courses.each do |course| %>
+      <tr class="fork">
+        <td>
+          <%= course.name %>
+        </td>
+        <td>
+          <% if policy(Course).admin? %>
+            <%= link_to edit_admin_course_path(course), class: 'btn btn-default btn-sm' do %>
+              <i class="fa fa-pencil"></i> Editar
+            <% end %>
+            <%= link_to duplicate_admin_course_path(course), method: :post, class: 'btn btn-default btn-sm' do %>
+              <i class="fa fa-copy"></i> Duplicar
+            <% end %>
+            <%= link_to toggle_admin_course_path(course), class: 'btn btn-default btn-sm' do %>
+
+              <% if course.enabled? %>
+                <i class="fa fa-eye-slash"></i> Deshabilitar
+              <% else %>
+                <i class="fa fa-eye"></i> Habilitar
+              <% end %>
+
+            <% end %>
+
+            <% if course.discarded? %>
+              <%= button_to restore_admin_course_path(course), class: 'btn btn-success btn-sm', method: :post do %>
+                <i class="fa fa-undo"></i> Restaurar
+              <% end %>
+            <% else %>
+              <%= button_to admin_course_path(course), class: 'btn btn-danger btn-sm', method: :delete do %>
+                <i class="fa fa-trash"></i> Borrar
+              <% end %>
+            <% end %>
+
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>
