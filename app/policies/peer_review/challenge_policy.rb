@@ -3,7 +3,7 @@ class PeerReview::ChallengePolicy < ApplicationPolicy
     user.teacher? || user.student?
   end
   def show?
-    user.teacher? || user.student?
+    user.teacher? || user.student? && record.published?
   end
   def solve?
     record.enabled?
