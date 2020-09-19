@@ -7,7 +7,9 @@
      message: "Tenés una revisión no publicada. Tomate tu tiempo, pero publicala para que otro participantes puedan verla."} %>
 <% end %>
 
-<%= render :partial => '/peer_review/info_box', locals: {challenge: @challenge} %>
+<%= render partial: 'buttons', locals: { challenge: @challenge } %>
+
+<%= render partial: '/peer_review/info_box', locals: { challenge: @challenge } %>
 
 <% if @challenge.team_challenge && !current_user.current_membership.team %>
   <%= render partial: 'shared/alert', locals: {alert_type: 'danger', title: '¡Oops!',
@@ -35,7 +37,9 @@
     <% unless @solution.final? %>
       <%= link_to @solution.new_record? ? 'Resolver' : 'Continuar resolviendo', new_peer_review_challenge_solution_path(@challenge.id), class: 'btn btn-large btn-primary' %>
     <% else %>
-      <%= link_to 'Revisar alguna solución', new_peer_review_challenge_review_path(@challenge.id), class: 'btn btn-large btn-primary' %>
+      <% unless @challenge.challenge_mode.to_sym == :teacher_reviews_only %>
+        <%= link_to 'Revisar alguna solución', new_peer_review_challenge_review_path(@challenge.id), class: 'btn btn-large btn-primary' %>
+      <% end %>
     <% end %>
   </p>
 

@@ -17,6 +17,7 @@ class Course < ApplicationRecord
   validates :password, presence: true
 
   scope :enabled, -> { where(enabled: true) }
+  scope :disabled, -> { where(enabled: false) }
 
   def fully_duplicate!
     new_course = nil
@@ -52,6 +53,7 @@ class Course < ApplicationRecord
         new_challenge.course = new_course
         new_challenge.enabled = true
         new_challenge.published = false
+        new_challenge.awarded = false
         new_challenge.due_date = challenge.due_date + due_date_offset if challenge.due_date
         new_challenge.save!
       end
