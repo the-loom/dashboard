@@ -1,0 +1,57 @@
+- nav_add 'Recursos', '#'
+= nav_render
+- if policy(Resource).manage?
+  = link_to 'Nuevo recurso', new_resource_path, class: 'btn btn-primary'
+  = link_to 'Categorías',resource_categories_path, class: 'btn btn-primary'
+  %br/
+  %br/
+- if @resources.empty?
+  .alert.alert-info
+    %p Aún no hay ningún recurso
+- else
+  %table.resources.table.table-hover
+    %thead
+      %tr
+        %th Votos
+        %th Categoría
+        %th Recurso
+        %th.no-sort
+    %tbody
+      - @resources.each do |resource|
+        %tr
+          %td{style: 'text-align: center'}
+            %h4
+              = resource.weighted_score
+            %nobr
+              = link_to upvote_resource_path(resource), method: :post, class: 'btn btn-outline-secondary btn-sm' + (current_user.voted_as_when_voted_for(resource) ? ' disabled' : ''), title: 'A favor' do
+                %i.far.fa-thumbs-up
+              = link_to downvote_resource_path(resource), method: :post, class: 'btn btn-outline-secondary btn-sm' + (current_user.voted_as_when_voted_for(resource) == false ? ' disabled' : ''), title: 'En contra' do
+                %i.far.fa-thumbs-down
+              = link_to unvote_resource_path(resource), method: :post, class: 'btn btn-outline-secondary btn-sm' + (current_user.voted_as_when_voted_for(resource).nil? ? ' disabled' : ''), title: 'Retirar voto' do
+                %i.fas.fa-times
+          %td
+            = resource.resource_category.name
+          %td
+            %p
+              = link_to resource.title, resource.url, target: "blank"
+            %p= resource.description
+          %td
+            = render partial: 'shared/actions4', locals: { entity_class: Resource, entity: resource, controller: :resources }
+= content_for :head do
+  %link{href: "https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css", rel: "stylesheet", type: "text/css"}/
+= content_for :javascript do
+  %script{src: "https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js", type: "application/javascript"}
+  :javascript
+    $(function () {
+      $('.resources').DataTable({
+        order: [[0, "desc"]],
+        paging: false,
+        language: {
+          url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+        },
+        columnDefs: [{
+          targets: 'no-sort',
+          orderable: false
+        }]
+      });
+    });

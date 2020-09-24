@@ -49,6 +49,30 @@ class ResourcesController < ApplicationController
     end
   end
 
+  def upvote
+    authorize Resource, :use?
+    resource = Resource.find(params[:id])
+    resource.vote_up current_user
+    redirect_to resources_path
+    flash[:success] = "¡Gracias por tu voto!"
+  end
+
+  def downvote
+    authorize Resource, :use?
+    resource = Resource.find(params[:id])
+    resource.vote_down current_user
+    redirect_to resources_path
+    flash[:success] = "¡Gracias por tu voto!"
+  end
+
+  def unvote
+    authorize Resource, :use?
+    resource = Resource.find(params[:id])
+    resource.unvote_up current_user
+    resource.unvote_down current_user
+    redirect_to resources_path
+  end
+
   private
     def resource_params
       params[:resource].permit(:title, :description, :url, :resource_category_id)

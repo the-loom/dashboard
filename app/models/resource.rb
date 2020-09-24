@@ -1,5 +1,6 @@
 class Resource < ApplicationRecord
   include CourseLock
+  acts_as_votable
 
   validates_presence_of :title, :description, :url
   validates :title, uniqueness: { scope: :course_id }

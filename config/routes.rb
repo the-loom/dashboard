@@ -6,6 +6,12 @@ Rails.application.routes.draw do
     post :unpublish, on: :member
   end
 
+  def votable
+    post :upvote, on: :member
+    post :downvote, on: :member
+    post :unvote, on: :member
+  end
+
   match "/auth/:provider/callback", to: "sessions#create", via: [:get, :post]
   match "/auth/failure", to: "sessions#failure", via: :get
 
@@ -38,9 +44,7 @@ Rails.application.routes.draw do
   resources :suggestions, except: [:edit, :update] do
     get :dismissed, on: :collection
     post :restore, on: :member
-    post :upvote, on: :member
-    post :downvote, on: :member
-    post :unvote, on: :member
+    votable
   end
 
   resources :badges, only: [:index, :show, :new, :create, :edit, :update]
@@ -71,6 +75,7 @@ Rails.application.routes.draw do
   resources :resource_categories, except: [:show]
   resources :resources, except: [:show] do
     publishable
+    votable
   end
 
   resources :dashboard, only: :index
