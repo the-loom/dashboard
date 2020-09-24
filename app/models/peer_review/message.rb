@@ -10,11 +10,21 @@ class PeerReview::Message < ApplicationRecord
 
   def notify!
     challenge = review.challenge
-    author = review.solution.author
-    return if author == user
-    Notification.create(subject: "¡Hay un nuevo comentario para '#{challenge.title}'!", author: "Loombot", receiver: author,
-                        text: "Podés verlo aquí <a href='/peer_review/challenges/#{challenge.id}'>aquí</a>")
-    author.current_membership.unread_notifications += 1
-    author.current_membership.save!
+    solution = review.solution
+    author = solution.author
+
+    stakeholders = ([author] + review.messages.map(&:user)).uniq - [user]
+
+    stakeholders.each do |stakeholder|
+      if stakeholder.teacher?
+        Notification.create(subject: "¡Hay un nuevo comentario de #{user.full_name} para '#{challenge.title}' / #{author.full_name}!", author: "Loombot", receiver: stakeholder,
+                            text: "Podés verlo aquí <a href='/peer_review/challenges/#{challenge.id}/solutions/#{solution.id}'>aquí</a>")
+      else
+        Notification.create(subject: "¡Hay un nuevo comentario para '#{challenge.title}'!", author: "Loombot", receiver: stakeholder,
+                            text: "Podés verlo aquí <a href='/peer_review/challenges/#{challenge.id}'>aquí</a>")
+      end
+      stakeholder.current_membership.unread_notifications += 1
+      stakeholder.current_membership.save!
+    end
   end
 end
