@@ -29,10 +29,10 @@ class ApplicationController < ActionController::Base
       ActiveRecord::Base.send(:define_method, "session", proc { accessor.session })
       User.current = current_user
       if User.current
-        if session[:course_id].present? && Course.enabled.map(&:id).include?(session[:course_id])
+        if session[:course_id].present? && (Course.enabled.map(&:id).include?(session[:course_id]) || current_user.teacher?)
           Course.current = Course.find_by(id: session[:course_id])
         else
-          Course.current = current_user.enabled_memberships.first.try(:course_id)
+          Course.current = Course.find(current_user.enabled_memberships.first.try(:course_id))
         end
         if !Course.current && controller_path != "courses"
           redirect_to courses_url
