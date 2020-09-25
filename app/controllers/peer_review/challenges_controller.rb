@@ -69,7 +69,7 @@ module PeerReview
       layout = "../peer_review/challenges/export/layout"
 
       begin
-        Zip::OutputStream.open(temp_file) { |zos| }
+        # Zip::OutputStream.open(temp_file) { |zos| }
 
         Zip::File.open(temp_file.path, Zip::File::CREATE) do |zipfile|
           instructions_file = Tempfile.new(%w(instructions html))
@@ -86,8 +86,23 @@ module PeerReview
             temp_files.last.write(render_to_string "peer_review/challenges/export/solution", layout: layout)
             temp_files.last.close
 
-            folder_name = "#{solution.author.last_name.downcase}-#{solution.author.first_name.downcase}-#{solution.author.uuid}"
+            # See String#encode documentation
+            encoding_options = {
+                invalid: :replace,  # Replace invalid byte sequences
+                undef: :replace,  # Replace anything not defined in ASCII
+                replace: "",        # Use a blank for those replacements
+                universal_newline: true       # Always break lines with \n
+            }
+
+            folder_name = "#{solution.author.last_name}-#{solution.author.first_name}-#{solution.author.uuid}".gsub(" ", "").downcase.encode(Encoding.find("ASCII"), encoding_options)
             zipfile.add("soluciones/#{folder_name}/solucion.html", temp_files.last.path)
+
+            if @challenge.source_code?
+              temp_files << Tempfile.new(["solution", @challenge.code_extension])
+              temp_files.last.write(render_to_string "peer_review/challenges/export/code_solution", layout: nil)
+              temp_files.last.close
+              zipfile.add("soluciones/#{folder_name}/solucion.#{@challenge.code_extension}", temp_files.last.path)
+            end
 
             solution.reviews.each_with_index do |review, index|
               temp_files << Tempfile.new(%w(review html))

@@ -69,6 +69,11 @@ class PeerReview::Challenge < ApplicationRecord
 
   scope :enabled, -> { where(enabled: true) }
 
+  def code_extension
+    return "py" if language == "python"
+    language
+  end
+
   def code_mirror_mode
     return "text/x-java" if language == "java"
     return "text/x-c++src" if language == "cpp"
