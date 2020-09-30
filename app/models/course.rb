@@ -60,6 +60,7 @@ class Course < ApplicationRecord
 
       Exercise.unscoped.where(course: self).each do |exercise|
         new_exercise = exercise.dup
+        new_exercise.notes = exercise.notes
         new_exercise.course = new_course
         new_exercise.published = false
         new_exercise.save!
