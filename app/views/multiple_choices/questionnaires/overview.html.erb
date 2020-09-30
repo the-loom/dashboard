@@ -55,10 +55,13 @@
           </td>
           <% @questionnaire.questions.each do |question| %>
             <td>
-              <% correct = solution.correct_answer_for?(question) %>
-              <label class="label label-<%= correct ? 'success' : 'danger' %>">
-                <%= checkmark correct %>
-              </label>
+              <% response = solution.answer_for?(question)
+                 correct = response.try(:correct?) %>
+              <% if response %>
+                <label class="label label-<%= correct ? 'success' : 'danger' %>" title="<%= response.answer.text %>">
+                  <%= checkmark correct %>
+                </label>
+              <% end %>
             </td>
           <% end %>
           <td>

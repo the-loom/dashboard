@@ -15,6 +15,10 @@ class MultipleChoices::Solution < ApplicationRecord
     responses.where(correct: true).count
   end
 
+  def answer_for?(question)
+    responses.find_by(question: question)
+  end
+
   def correct_answer_for?(question)
     responses.find_by(question: question).correct?
   end

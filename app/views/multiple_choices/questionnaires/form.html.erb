@@ -29,12 +29,24 @@
           </div>
         </template>
         <template v-if="question._destroy == null">
-          <div class="col-md-10">
+          <div class="qindex">
+            {{ qindex + 1 }}
+          </div>
+          <div class="col-md-8">
             <input class="form-control" type="text" v-model="question.wording" :name="'multiple_choices_questionnaire[questions_attributes][' + qindex + '][wording]'"/>
+          </div>
+          <div class="col-md-2">
+            <label>
+              <input type="checkbox" v-model="question.hidden" :name="'multiple_choices_questionnaire[questions_attributes][' + qindex + '][hidden]'"/>
+              Esconder
+            </label>
           </div>
           <div class="col-md-2">
             <button type="button" class="btn btn-danger" v-on:click="removeEntry(question)">
               Remover pregunta
+            </button>
+            <button type="button" class="btn btn-warning" v-on:click="dupQuestion(question)">
+              Duplicar pregunta
             </button>
           </div>
         </template>
@@ -42,6 +54,7 @@
       <table class="table-hover table-striped table" v-if="!question._destroy">
         <thead>
         <tr>
+          <th>#</th>
           <th>Opciones</th>
           <th>¿Correcta?</th>
           <th style="width: 100px;">&nbsp;</th>
@@ -52,7 +65,7 @@
 
           <template v-if="answer._destroy">
             <tr>
-              <td colspan="2">
+              <td colspan="3">
                 <em>Opción eliminada...</em>
               </td>
               <td>
@@ -66,6 +79,9 @@
 
           <template v-if="answer._destroy == null">
             <tr>
+              <td>
+                {{ index + 1 }}
+              </td>
               <td>
                 <input type="hidden" v-model="answer.id" :name="'multiple_choices_questionnaire[questions_attributes][' + qindex + '][answers_attributes][' + index + '][id]'">
                 <input type="hidden" v-model="answer._destroy" :name="'multiple_choices_questionnaire[questions_attributes][' + qindex + '][answers_attributes][' + index + '][_destroy]'">
@@ -85,6 +101,9 @@
               <td>
                 <button type="button" class="btn btn-danger" v-on:click="removeEntry(answer)">
                   Remover esta opción
+                </button>
+                <button type="button" class="btn btn-warning" v-on:click="dupAnswer(question, answer)">
+                  Duplicar esta opción
                 </button>
               </td>
             </tr>
@@ -114,12 +133,23 @@
 <% content_for :head do %>
 
   <style>
-    #app .question {
-      border: 1px solid black;
-      border-radius: 5px;
-      padding: 1em 1em 0 1em;
-      margin-bottom: 1em;
-    }
+      #app .question {
+          border: 1px solid black;
+          border-radius: 5px;
+          padding: 1em 1em 0 1em;
+          margin-bottom: 1em;
+      }
+
+      #app .qindex {
+          background-color: #41367c;
+          color: white;
+          font-weight: bold;
+          position: absolute;
+          padding: 0.5em 1em;
+          z-index: 999;
+          margin-left: -2em;
+          box-shadow: 1px 1px 1px black;
+      }
   </style>
 
 <% end %>
@@ -128,6 +158,7 @@
 <% content_for :javascript do %>
 
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js" integrity="sha512-90vH1Z83AJY9DmlWa8WkjkV79yfS2n2Oxhsi2dZbIv0nC4E6m5AbH8Nh156kkM7JePmqD6tcZsfad1ueoaovww==" crossorigin="anonymous"></script>
 
   <script>
 
@@ -138,6 +169,7 @@
                 {
                   id: question.id,
                   wording: question.wording,
+                  hidden: question.hidden,
                   _destroy: nil,
                   answers: question.answers.map { |ans|
                     {
@@ -156,6 +188,7 @@
                   this.questions.push({
                       id: null,
                       wording: null,
+                      hidden: false,
                       answers: [{
                           id: null,
                           text: null,
@@ -180,6 +213,19 @@
                       correct: false,
                       _destroy: null
                   });
+              },
+              dupQuestion: function (question) {
+                  cloned = _.cloneDeep(question);
+                  cloned.id = null;
+                  cloned.answers.forEach(function(el) {
+                      el.id = null;
+                  })
+                  this.questions.push(cloned);
+              },
+              dupAnswer: function (question, answer) {
+                  cloned = { ...answer };
+                  cloned.id = null;
+                  question.answers.push(cloned);
               },
               removeEntry: function (deletable) {
                   deletable._destroy = true;
