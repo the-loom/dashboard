@@ -3,11 +3,7 @@ class SuggestionsController < ApplicationController
 
   def index
     authorize Suggestion, :use?
-    if current_user.admin?
-      @suggestions = Suggestion.unscoped.kept
-    else
-      @suggestions = Suggestion.kept
-    end
+    @suggestions = Suggestion.kept
   end
 
   def show
