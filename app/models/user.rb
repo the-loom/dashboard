@@ -126,7 +126,7 @@ class User < ApplicationRecord
   end
 
   def teacher?
-    admin? || current_membership.teacher?
+    admin? || current_membership&.teacher?
   end
 
   def student?
