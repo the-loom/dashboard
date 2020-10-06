@@ -122,11 +122,11 @@ class User < ApplicationRecord
   end
 
   def current_membership
-    @current_membership ||= self.all_memberships.includes([:course, :team]).find { |m| m.course == Course.current }
+    @current_membership ||= Course.current ? self.all_memberships.includes([:course, :team]).find { |m| m.course == Course.current } : NullMembership.new
   end
 
   def teacher?
-    admin? || current_membership&.teacher?
+    admin? || current_membership.teacher?
   end
 
   def student?
@@ -149,7 +149,7 @@ class User < ApplicationRecord
   end
 
   def register(event, times = 1)
-    return unless current_membership && current_membership.enabled? # TODO: preventive fix, needs re-do
+    return unless current_membership.enabled? # TODO: preventive fix, needs re-do
     occurrence = occurrences.find_or_initialize_by(event: event)
     occurrence.multiplier = occurrence.new_record? ? times : occurrence.multiplier + times
     occurrence.save
@@ -182,6 +182,6 @@ class User < ApplicationRecord
   end
 
   def enabled?
-    current_membership && current_membership.enabled?
+    current_membership.enabled?
   end
 end

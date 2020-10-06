@@ -99,7 +99,7 @@ class Course < ApplicationRecord
   end
 
   def self.current
-    RequestStore.store[:current_course]
+    RequestStore.store[:current_course] || NullCourse.new
   end
 
   def self.current=(course)
