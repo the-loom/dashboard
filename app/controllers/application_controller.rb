@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
         if session[:course_id].present? && (Course.enabled.map(&:id).include?(session[:course_id]) || current_user.teacher?)
           Course.current = Course.find_by(id: session[:course_id])
         else
-          Course.current = Course.find(current_user.enabled_memberships.first.try(:course_id))
+          Course.current = Course.find_by(id: current_user.enabled_memberships.first.try(:course_id))
         end
         if !Course.current && controller_path != "courses"
           redirect_to courses_url
@@ -52,7 +52,7 @@ class ApplicationController < ActionController::Base
       session[:user_id] = user.id
       if memberships.count >= 1
 
-        if user.last_visited_course_id > 0 && memberships.map { |m| m.course_id }.include?(user.last_visited_course_id)
+        if user.last_visited_course_id > 0 && memberships.map(&:course_id).include?(user.last_visited_course_id)
           session[:course_id] = user.last_visited_course_id
         else
           session[:course_id] = memberships.first.course_id
