@@ -113,7 +113,7 @@ module MultipleChoices
 
       solution = MultipleChoices::Solution.create(solver: current_user, questionnaire: @questionnaire)
       answers = params[:question]
-      @questionnaire.questions.includes(:answers).each do |q|
+      @questionnaire.questions.visible.includes(:answers).each do |q|
         this_answer = answers[q.id.to_s][:answer]
         solution.responses << MultipleChoices::Response.create(question: q, multiple_choices_answer_id: this_answer, correct: q.correct_answer.id == this_answer.to_i)
       end
@@ -125,7 +125,7 @@ module MultipleChoices
     private
       def questionnaire_params
         params[:multiple_choices_questionnaire].permit(:name,
-                                                       questions_attributes: [:id, :wording, :_destroy, :deleted_at,
+                                                       questions_attributes: [:id, :wording, :hidden, :_destroy, :deleted_at,
                                                        answers_attributes: %i[id text explanation correct _destroy deleted_at]])
       end
   end

@@ -6,6 +6,6 @@ class MultipleChoices::PracticeQuestionnairePresenter
 
   def initialize(questionnaire, randomizer)
     @questionnaire = questionnaire
-    @questions = questionnaire.questions.shuffle(random: randomizer).map { |q| MultipleChoices::PracticeQuestionPresenter.new(q, randomizer) }
+    @questions = questionnaire.questions.visible.shuffle(random: randomizer).map { |q| MultipleChoices::PracticeQuestionPresenter.new(q, randomizer) }
   end
 end
