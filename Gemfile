@@ -19,7 +19,7 @@ gem "uglifier", "~> 4.2"
 
 # Bug reporting
 gem "rollbar", "~> 3.0"
-gem "sentry-raven", "~> 3.0"
+gem "sentry-raven", "~> 3.1"
 
 gem "request_store", "~> 1.5"
 
