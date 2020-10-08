@@ -113,7 +113,7 @@ module MultipleChoices
 
       solution = MultipleChoices::Solution.create(solver: current_user, questionnaire: @questionnaire)
       answers = params[:question]
-      @questionnaire.questions.where(hidden: false).includes(:answers).each do |q|
+      @questionnaire.questions.visible.includes(:answers).each do |q|
         this_answer = answers[q.id.to_s][:answer]
         solution.responses << MultipleChoices::Response.create(question: q, multiple_choices_answer_id: this_answer, correct: q.correct_answer.id == this_answer.to_i)
       end

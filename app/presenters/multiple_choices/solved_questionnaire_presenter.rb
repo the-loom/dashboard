@@ -5,7 +5,7 @@ class MultipleChoices::SolvedQuestionnairePresenter
 
   def initialize(questionnaire, answers, randomizer)
     @questionnaire = questionnaire
-    @questions = questionnaire.questions.where(hidden: false).shuffle(random: randomizer).map { |q| MultipleChoices::SolvedQuestionPresenter.new(q, answers[q.id.to_s], randomizer) }
+    @questions = questionnaire.questions.visible.shuffle(random: randomizer).map { |q| MultipleChoices::SolvedQuestionPresenter.new(q, answers[q.id.to_s], randomizer) }
   end
 
   def points
