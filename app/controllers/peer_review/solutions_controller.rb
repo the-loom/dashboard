@@ -30,6 +30,10 @@ module PeerReview
     def remove_attachment
       @challenge = PeerReview::Challenge.find(params[:challenge_id])
       @solution = PeerReview::Solution.find_by(challenge: @challenge, author: current_user)
+      unless @challenge && @solution
+        redirect_to(peer_review_challenge_path(@challenge)) && (return)
+      end
+
       authorize @solution, :solve?
       @solution.solution_attachment.purge
 

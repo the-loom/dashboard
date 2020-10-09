@@ -5,10 +5,10 @@ module CourseLock
 
       return if ENV["RAILS_ENV"] == "test"
       default_scope {
-        if Course.current
-          where(course_id: Course.current.id)
-        else
+        if Course.current.nil?
           raise NoCourseAvailable
+        else
+          where(course_id: Course.current.id)
         end
       }
       # HELP: http://stackoverflow.com/questions/12667036/default-scope-ignoring-dynamic-value-in-condition/12667077#12667077
