@@ -45,6 +45,13 @@ class SuggestionsController < ApplicationController
     redirect_to suggestions_path
   end
 
+  def mark_as_done
+    authorize Suggestion, :manage?
+    suggestion = Suggestion.find(params[:id])
+    suggestion.update(done: true)
+    redirect_to suggestions_path
+  end
+
   def new
     authorize Suggestion, :use?
     @suggestion = Suggestion.new

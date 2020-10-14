@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   resources :suggestions, except: [:edit, :update] do
     get :dismissed, on: :collection
     post :restore, on: :member
+    post :mark_as_done, on: :member
     votable
   end
 
