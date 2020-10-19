@@ -94,7 +94,8 @@ module PeerReview
                 universal_newline: true       # Always break lines with \n
             }
 
-            folder_name = "#{solution.author.last_name}-#{solution.author.first_name}-#{solution.author.uuid}".gsub(" ", "").downcase.encode(Encoding.find("ASCII"), encoding_options)
+            author_name = @challenge.team_challenge ? solution.author.current_membership.team.name : "#{solution.author.last_name}-#{solution.author.first_name}-#{solution.author.uuid}"
+            folder_name = author_name.gsub(" ", "").downcase.encode(Encoding.find("ASCII"), encoding_options)
             zipfile.add("soluciones/#{folder_name}/solucion.html", temp_files.last.path)
 
             if @challenge.source_code?
