@@ -37,8 +37,10 @@
           </td>
           <td>
             <%= questionnaire.questions.visible.count %> visibles
-            <br>
-            <%= questionnaire.questions.hidden.count %> ocultas
+            <% if policy(MultipleChoices::Questionnaire).manage? %>
+              <br>
+              <%= questionnaire.questions.hidden.count %> ocultas
+            <% end %>
           </td>
           <% if policy(MultipleChoices::Questionnaire).manage? %>
             <td>
