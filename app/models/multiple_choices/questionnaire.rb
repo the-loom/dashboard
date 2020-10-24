@@ -11,6 +11,6 @@ class MultipleChoices::Questionnaire < ApplicationRecord
 
   def progress_by?(user)
     solution = solutions.where(solver: user).order(created_at: :desc).first || MultipleChoices::NullSolution.new
-    solution.score / 100
+    solution.score.to_f / 100
   end
 end
