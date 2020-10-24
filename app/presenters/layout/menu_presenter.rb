@@ -15,6 +15,7 @@ class Layout::MenuPresenter
     [
         admin_menu,
         teacher_menu,
+        classroom_menu,
         gamification_menu,
         dashboard_menu,
         resources_menu,
@@ -41,6 +42,7 @@ class Layout::MenuPresenter
     [
         admin_menu,
         teacher_menu,
+        classroom_menu,
         gamification_menu,
         resources_menu,
         exercises_menu
@@ -126,6 +128,15 @@ class Layout::MenuPresenter
         end
         classroom_node
       end
+    end
+
+    def classroom_menu
+      classroom_node = MenuNode.new("Mi Aula")
+      classroom_node << MenuLeaf.new("Mi perfil", route.profile_path)
+      if on?(:teams) && @current_user.current_membership.team
+        classroom_node << MenuLeaf.new("Mi equipo", route.team_path(@current_user.current_membership.team.nickname))
+      end
+      classroom_node
     end
 
     def admin_menu
