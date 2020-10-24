@@ -6,7 +6,7 @@
 <%= raw @challenge.instructions %>
 
 <% if current_user.teacher? %>
-  <h2>Solución de <%= @review.solution.author.full_name %></h2>
+  <h2>Solución de <%= @challenge.team_challenge ? @review.solution.author.current_membership.team.name : @review.solution.author.full_name %></h2>
 <% else %>
   <h2>Solución a revisar</h2>
 <% end %>
