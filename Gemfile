@@ -68,7 +68,7 @@ group :development do
   # Best practices
   gem "rails_best_practices", "~> 1.20"
   gem "rubocop-performance", "~> 1.8", require: false
-  gem "rubocop-rails_config", "~> 0.13"
+  gem "rubocop-rails_config", "~> 0.14"
   gem "rubocop-rake", "~> 0.5", require: false
 
   gem "annotate", "~> 3.1"
