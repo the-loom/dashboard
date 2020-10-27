@@ -94,6 +94,7 @@
               </td>
               <td>
                 <label>
+                  <input type="hidden" value="" :name="'multiple_choices_questionnaire[questions_attributes][' + qindex + '][answers_attributes][' + index + '][correct]'"/>
                   <input type="checkbox" v-model="answer.correct" :name="'multiple_choices_questionnaire[questions_attributes][' + qindex + '][answers_attributes][' + index + '][correct]'"/>
                   Correcta
                 </label>
