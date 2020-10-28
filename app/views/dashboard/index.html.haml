@@ -42,6 +42,7 @@
     %tr
       %th Progreso
       %th Título
+      %th &nbsp;
   %tbody
     - @questionnaires.each do |questionnaire|
       - progress = questionnaire.progress_by? current_user
@@ -53,7 +54,11 @@
           = percentage
           \%
         %td
-          = link_to questionnaire.name, practice_multiple_choices_questionnaire_path(questionnaire)
+          = questionnaire.name
+        %td
+          = link_to "Practicar", practice_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-primary btn-sm'
+          - if questionnaire.solved_by? current_user
+            = link_to "Revisar", last_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-secondary btn-sm'
 
 = content_for :head do
   %link{href: "https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css", rel: "stylesheet"}

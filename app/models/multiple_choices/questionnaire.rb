@@ -9,6 +9,10 @@ class MultipleChoices::Questionnaire < ApplicationRecord
 
   accepts_nested_attributes_for :questions, allow_destroy: true
 
+  def solved_by?(user)
+    solutions.where(solver: user).exists?
+  end
+
   def progress_by?(user)
     solution = solutions.where(solver: user).order(created_at: :desc).first || MultipleChoices::NullSolution.new
     solution.score.to_f / 100

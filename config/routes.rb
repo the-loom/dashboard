@@ -99,6 +99,7 @@ Rails.application.routes.draw do
         get :practice
         get :overview
         post :grade
+        get :last
       end
     end
   end

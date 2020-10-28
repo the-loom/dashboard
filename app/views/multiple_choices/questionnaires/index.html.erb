@@ -49,6 +49,9 @@
           <% end %>
           <td>
             <%= link_to "Practicar", practice_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-primary btn-sm' %>
+            <% if questionnaire.solved_by? current_user %>
+              <%= link_to "Revisar", last_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-secondary btn-sm' %>
+            <% end %>
 
             <% if policy(MultipleChoices::Questionnaire).manage? %>
               <div class="btn-group">

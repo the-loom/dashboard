@@ -1,6 +1,6 @@
 module MultipleChoices
   class QuestionnairesController < ApplicationController
-    layout "application2", only: [:practice, :grade, :index]
+    layout "application2", only: [:practice, :grade, :index, :last]
 
     include Publisher.new(MultipleChoices::Questionnaire, :multiple_choices_questionnaires)
 
@@ -119,7 +119,21 @@ module MultipleChoices
       end
       solution.refresh_score!
 
-      @questionnaire = MultipleChoices::SolvedQuestionnairePresenter.new(@questionnaire, params[:question], Random.new(random_seed))
+      @questionnaire = MultipleChoices::SolvedQuestionnairePresenter.new(@questionnaire, Random.new(random_seed), solution)
+    end
+
+    def last
+      @questionnaire = MultipleChoices::Questionnaire.find(params[:id])
+      authorize @questionnaire, :access?
+
+      @last_solution = @questionnaire.solutions.where(solver: current_user).order(:created_at).last
+      unless @last_solution
+        flash[:alert] = "Aún no resolviste este cuestionario"
+        redirect_to(multiple_choices_questionnaires_path) && return
+      end
+
+
+      @questionnaire = MultipleChoices::SolvedQuestionnairePresenter.new(@questionnaire, Random.new(random_seed || 0), @last_solution)
     end
 
     private

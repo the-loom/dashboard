@@ -3,9 +3,12 @@ class MultipleChoices::SolvedQuestionnairePresenter
 
   delegate :name, to: :questionnaire
 
-  def initialize(questionnaire, answers, randomizer)
+  def initialize(questionnaire, randomizer, solution)
     @questionnaire = questionnaire
-    @questions = questionnaire.questions.visible.shuffle(random: randomizer).map { |q| MultipleChoices::SolvedQuestionPresenter.new(q, answers[q.id.to_s], randomizer) }
+    @questions = questionnaire.questions.visible.shuffle(random: randomizer).map { |q|
+      response = solution.responses.find_by(question: q)
+      MultipleChoices::SolvedQuestionPresenter.new(q, randomizer, response)
+    }
   end
 
   def points
