@@ -51,7 +51,7 @@
           </div>
         </template>
       </div>
-      <table class="table-hover table-striped table" v-if="!question._destroy">
+      <table class="question table-hover table-striped table" v-if="!question._destroy">
         <thead>
         <tr>
           <th>#</th>
@@ -95,7 +95,8 @@
               <td>
                 <label>
                   <input type="hidden" value="" :name="'multiple_choices_questionnaire[questions_attributes][' + qindex + '][answers_attributes][' + index + '][correct]'"/>
-                  <input type="checkbox" v-model="answer.correct" :name="'multiple_choices_questionnaire[questions_attributes][' + qindex + '][answers_attributes][' + index + '][correct]'"/>
+                  <input type="checkbox" v-model="answer.correct" :name="'multiple_choices_questionnaire[questions_attributes][' + qindex + '][answers_attributes][' + index + '][correct]'"
+                    class="multiple_choices_questionnaire_question"/>
                   Correcta
                 </label>
               </td>
@@ -235,6 +236,21 @@
                   deletable._destroy = null;
               }
           }
+      });
+
+      $(function () {
+          $("body").on("click", ".multiple_choices_questionnaire_question", function () {
+              if (this.checked)
+                  $(this).parents("table").find(".multiple_choices_questionnaire_question").not(this).each(function () {
+                      this.checked = false;
+                  });
+          });
+          $("form").on("submit", function() {
+              var isValid = $("table.question").length == $(".multiple_choices_questionnaire_question:checked").length;
+              if (!isValid)
+                  alert("Cada pregunta debe tener una respuesta correcta. ¡Revisa tu cuestionario por favor!");
+              return isValid;
+          });
       });
 
   </script>
