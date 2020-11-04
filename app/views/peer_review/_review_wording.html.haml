@@ -1,4 +1,4 @@
-- if quick_review
+- if quick_review && !wording.empty?
   != "<ul><li>" + JSON.parse(wording).join("</li><li>") + "</li></ul>"
 - else
   != wording
