@@ -122,7 +122,7 @@ class User < ApplicationRecord
   end
 
   def current_membership
-    @current_membership ||= Course.current ? self.all_memberships.includes([:course, :team]).find { |m| m.course == Course.current } : NullMembership.new
+    self.all_memberships.includes([:course, :team]).find_by(course: Course.current) || NullMembership.new
   end
 
   def teacher?
