@@ -22,7 +22,7 @@ class QuickReviewGenerator
 
   private
     def self.to_list(review)
-      if review.wording
+      if review.wording && !review.wording.empty?
         JSON.parse(review.wording)
       else
         []
