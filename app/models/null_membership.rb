@@ -1,4 +1,12 @@
 class NullMembership
+  def unread_notifications
+    0
+  end
+
+  def team
+    nil
+  end
+
   def enabled?
     false
   end
@@ -13,5 +21,9 @@ class NullMembership
 
   def present_at_lecture_ids
     []
+  end
+
+  def nil?
+    true
   end
 end

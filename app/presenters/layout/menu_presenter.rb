@@ -10,7 +10,7 @@ class Layout::MenuPresenter
   end
 
   def menu
-    return [] unless @current_user && @current_user.current_membership
+    return [] unless @current_user && @current_user.current_membership && !@current_user.current_membership.nil?
 
     [
         admin_menu,
@@ -27,7 +27,7 @@ class Layout::MenuPresenter
   end
 
   def menu_b4
-    return [] unless @current_user && @current_user.current_membership
+    return [] unless @current_user && @current_user.current_membership && !@current_user.current_membership.nil?
     [
         dashboard_menu,
         notifications_menu,
@@ -37,7 +37,7 @@ class Layout::MenuPresenter
   end
 
   def sidebar
-    return [] unless @current_user && @current_user.current_membership
+    return [] unless @current_user && @current_user.current_membership && !@current_user.current_membership.nil?
 
     [
         admin_menu,
