@@ -9,6 +9,8 @@ class MultipleChoices::Questionnaire < ApplicationRecord
 
   accepts_nested_attributes_for :questions, allow_destroy: true
 
+  scope :enabled, -> { where(enabled: true) }
+
   def solved_by?(user)
     solutions.where(solver: user).exists?
   end

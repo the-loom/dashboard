@@ -68,6 +68,13 @@ module MultipleChoices
       flash[:success] = "Se eliminó el cuestionario"
     end
 
+    def toggle
+      authorize MultipleChoices::Questionnaire, :manage?
+      questionnaire = MultipleChoices::Questionnaire.find(params[:id])
+      questionnaire.update_attributes(enabled: !questionnaire.enabled?)
+      redirect_to multiple_choices_questionnaires_path
+    end
+
     def overview
       @questionnaire = MultipleChoices::Questionnaire.find(params[:id])
       @solutions = @questionnaire.solutions
@@ -75,6 +82,11 @@ module MultipleChoices
 
     def practice
       @questionnaire = MultipleChoices::Questionnaire.includes(:questions, questions: :answers).find(params[:id])
+
+      unless @questionnaire.enabled?
+        flash[:info] = "Este cuestionario ya ha finalizado..."
+        redirect_to(multiple_choices_questionnaires_path) && return
+      end
 
       last_solution = @questionnaire.solutions.where(solver: current_user).order(:created_at).last
       if last_solution

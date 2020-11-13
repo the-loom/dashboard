@@ -22,6 +22,7 @@
       <thead>
       <tr>
         <th>Nombre</th>
+        <th>Estado</th>
         <th>Preguntas</th>
         <% if policy(PeerReview::Challenge).manage? %>
           <th><i class="fa fa-eye" title="Publicado"></i></th>
@@ -36,6 +37,9 @@
             <%= questionnaire.name %>
           </td>
           <td>
+            <%= questionnaire.enabled? ? "Vigente" : "Finalizado" %>
+          </td>
+          <td>
             <%= questionnaire.questions.visible.count %> visibles
             <% if policy(MultipleChoices::Questionnaire).manage? %>
               <br>
@@ -48,7 +52,9 @@
             </td>
           <% end %>
           <td>
-            <%= link_to "Practicar", practice_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-primary btn-sm' %>
+            <% if questionnaire.enabled? %>
+              <%= link_to "Practicar", practice_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-primary btn-sm' %>
+            <% end %>
             <% if questionnaire.solved_by? current_user %>
               <%= link_to "Revisar", last_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-secondary btn-sm' %>
             <% end %>
@@ -61,6 +67,7 @@
                   <span class="caret"></span>
                 </button>
                 <div class="dropdown-menu">
+                  <%= link_to questionnaire.enabled? ? "Finalizar" : "Reabrir", toggle_multiple_choices_questionnaire_path(questionnaire), class: "dropdown-item", method: :post %>
                   <% if questionnaire.published? %>
                     <%= link_to unpublish_multiple_choices_questionnaire_path(questionnaire), class: "dropdown-item", method: :post do %>
                       Despublicar

@@ -100,6 +100,7 @@ Rails.application.routes.draw do
         get :overview
         post :grade
         get :last
+        post :toggle
       end
     end
   end
