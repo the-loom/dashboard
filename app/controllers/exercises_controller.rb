@@ -1,6 +1,8 @@
 class ExercisesController < ApplicationController
   include Publisher.new(Exercise)
 
+  layout "application2"
+
   before_action do
     check_feature(:exercises)
   end

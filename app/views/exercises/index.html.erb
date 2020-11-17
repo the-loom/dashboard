@@ -32,14 +32,16 @@
           <%= stars_for exercise %>
         </td>
         <td>
-          <% if policy(Exercise).manage? %>
-            <% if exercise.published? %>
-              <%= button_to "Despublicar", unpublish_exercise_path(exercise), method: :post, class: 'btn btn-default btn-sm' %>
-            <% else %>
-              <%= link_to "Publicar", publish_exercise_path(exercise), method: :post, class: 'btn btn-default btn-sm' %>
+          <div class="btn-group">
+            <% if policy(Exercise).manage? %>
+              <%= link_to "Editar", edit_exercise_path(exercise), role: 'button', class: 'btn btn-primary btn-sm' %>
+              <% if exercise.published? %>
+                <%= link_to "Despublicar", unpublish_exercise_path(exercise), method: :post, role: 'button', class: 'btn btn-outline-primary btn-sm' %>
+              <% else %>
+                <%= link_to "Publicar", publish_exercise_path(exercise), method: :post, role: 'button', class: 'btn btn-outline-primary btn-sm' %>
+              <% end %>
             <% end %>
-            <%= link_to "Editar", edit_exercise_path(exercise), class: 'btn btn-default btn-sm' %>
-          <% end %>
+          </div>
         </td>
       </tr>
     <% end %>
