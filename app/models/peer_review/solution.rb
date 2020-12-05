@@ -5,7 +5,7 @@ class PeerReview::Solution < ApplicationRecord
   has_many :reviews, foreign_key: :peer_review_solution_id, dependent: :delete_all
 
   has_one_attached :solution_attachment
-  validates :solution_attachment, size: { less_than: 250.kilobyte }, content_type: [:zip, :rar, "text/x-java", "text/plain", :jpg, :png]
+  validates :solution_attachment, size: { less_than: 500.kilobyte }, content_type: [:zip, :rar, "text/x-java", "text/plain", :jpg, :png]
 
   validates :wording, presence: true, if: :final?
   validate :no_more_than_three_are_picked
