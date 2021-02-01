@@ -59,7 +59,7 @@ group :development do
   gem "rack-mini-profiler", "~> 2.3"
 
   # Debugging
-  gem "better_errors", "~> 2.8"
+  gem "better_errors", "~> 2.9"
   gem "web-console", "~> 3.7"
 
   # Creating dev data
