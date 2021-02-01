@@ -21,7 +21,7 @@ class PeerReviewChallengesStats
   end
 
   def number_of_challenges_solved
-    number_of_solutions_challenges=[]
+    number_of_solutions_challenges = []
     @challenges.each_with_index do |_, index|
       number_of_solutions = 0
       @solutions.each do |_, challenge|
