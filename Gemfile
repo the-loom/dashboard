@@ -70,6 +70,7 @@ group :development do
   gem "rubocop-performance", "~> 1.8", require: false
   gem "rubocop-rails_config", "~> 1.2"
   gem "rubocop-rake", "~> 0.5", require: false
+  gem "rubocop-rspec", "~> 2.1", require: false
 
   gem "annotate", "~> 3.1"
   gem "binding_of_caller", "~> 0.8"
