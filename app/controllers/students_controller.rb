@@ -1,69 +1,25 @@
-class UsersController < ApplicationController
-  layout "application2", only: [:edit, :show]
+class StudentsController < ApplicationController
+  layout "application2" # , only: [:edit, :show]
 
-  before_action :set_user, only: [:edit, :update, :change_identity]
-  before_action :verify_name, only: :show
+  def index
+    authorize User
+    @students = User.kept.includes(:memberships).includes(avatar_attachment: :blob).where(memberships: { course: Course.current, role: :student })
 
-  def show
-    if params[:nickname]
-      unless @user = Course.current.memberships.includes(:user).find_by(users: { nickname: params[:nickname] }).try(:user)
-        flash[:alert] = "No existe el usuario"
-        return redirect_to "/"
+    # Just for massive actions
+    @lectures = Lecture.all.order(date: :asc)
+    @teams = Team.all.order(name: :asc)
+    @badges = Badge.all
+    @events = Event.all.order(name: :asc) - [Course.current.attendance_event]
+    @score_calculator = ScoreCalculator.new
+
+    respond_to do |format|
+      format.html
+      format.csv do
+        send_data User.to_csv, filename: "attendance_sheet.csv"
       end
-    else
-      @user = current_user
-    end
-    @missing_badges = Badge.all - @user.badges
-    authorize @user
-  end
-
-  def comment
-    unless @user = Course.current.memberships.includes(:user).find_by(users: { nickname: params[:nickname] }).try(:user)
-      flash[:alert] = "No existe el usuario"
-      return redirect_to "/"
-    end
-    authorize @user, :comment?
-    @user.comments.create(body: params[:comment][:body], commenter: current_user, mood: params[:comment][:mood].to_i)
-    redirect_to user_details_url(@user.nickname)
-  end
-
-  def toggle
-    user = User.find(params[:id])
-    authorize user, :manage?
-    current_membership = user.current_membership
-    current_membership.enabled = !current_membership.enabled?
-    current_membership.save
-    redirect_to students_path
-  end
-
-  def destroy
-    # TODO: migrate to membership#destroy ? students#destroy ?
-    user = User.find(params[:id])
-    authorize user, :manage?
-    user.current_membership.discard
-
-    redirect_to students_path
-  end
-
-  def edit
-    authorize @user, :update?
-  end
-
-  def update
-    authorize @user, :update?
-    if @user.update(user_params)
-      redirect_to profile_url
-    else
-      render :edit
     end
   end
 
-  def change_identity
-    authorize @user, :update?
-    identity = @user.identities.find_by(id: params[:identity_id])
-    @user.update_with(identity)
-    redirect_to profile_url
-  end
 
   def bulk_edit
     if !params[:students].present? || !params[:students][:ids].present?
@@ -149,10 +105,6 @@ class UsersController < ApplicationController
   end
 
   private
-    def set_user
-      @user ||= current_user
-    end
-
     def user_params
       params[:user].permit(:first_name, :last_name, :avatar)
     end
