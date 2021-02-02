@@ -74,7 +74,7 @@ group :development do
 
   gem "annotate", "~> 3.1"
   gem "binding_of_caller", "~> 0.8"
-  gem "listen", "~> 3.2"
+  gem "listen", "~> 3.4"
   gem "spring", "~> 2.1"
   gem "spring-watcher-listen", "~> 2.0"
 end
