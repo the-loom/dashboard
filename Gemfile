@@ -47,7 +47,7 @@ gem "omniauth-rails_csrf_protection", "~> 0.1"
 
 # Forms
 gem "simple_form", "~> 5.0"
-gem "trix-rails", "~> 2.2", require: "trix"
+gem "trix-rails", "~> 2.3", require: "trix"
 
 group :development do
   # Gemfile health
