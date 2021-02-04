@@ -73,7 +73,7 @@ group :development do
   gem "rubocop-rspec", "~> 2.2", require: false
 
   gem "annotate", "~> 3.1"
-  gem "binding_of_caller", "~> 0.8"
+  gem "binding_of_caller", "~> 1.0"
   gem "listen", "~> 3.4"
   gem "spring", "~> 2.1"
   gem "spring-watcher-listen", "~> 2.0"
