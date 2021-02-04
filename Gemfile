@@ -43,7 +43,7 @@ gem "dotenv-rails", "~> 2.7", groups: [:development, :test]
 # Omniauth
 gem "omniauth-github", "~> 2.0"
 gem "omniauth-google-oauth2", "~> 0.8"
-gem "omniauth-rails_csrf_protection", "~> 0.1"
+gem "omniauth-rails_csrf_protection", "~> 1.0"
 
 # Forms
 gem "simple_form", "~> 5.0"
