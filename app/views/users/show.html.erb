@@ -1,5 +1,5 @@
 <% nav_add 'Aula', '#' %>
-<% nav_add 'Perfil', '#' %>
+<% nav_add 'Estudiantes', students_path %>
 <% nav_add "#{@user.full_name} - #{@user.nickname} (#{@user.uuid})", '#' %>
 <%= nav_render4 %>
 
@@ -173,7 +173,7 @@
     <div class="col-md-6">
       <legend>Comentarios</legend>
 
-      <%= simple_form_for :comment, url: comment_user_url(@user.nickname) do |f| %>
+      <%= simple_form_for :comment, url: comment_student_path(@user) do |f| %>
 
         <%= f.input :body, label: 'Texto', as: :text, required: false %>
 
@@ -186,13 +186,12 @@
       <hr/>
 
       <% @user.comments.each do |comment| %>
-        <div class="comment-box">
+        <div class="row" style="margin-bottom: 1em">
           <div class="col-sm-2">
             <div class="thumbnail">
-              <%= image_tag entity_avatar(comment.commenter), {class: 'img-responsive user-photo', alt: comment.commenter.full_name} %>
+              <%= image_tag entity_avatar(comment.commenter), {class: 'avatar', alt: comment.commenter.full_name} %>
             </div>
           </div>
-
           <div class="col-sm-10">
             <div class="panel panel-default">
               <div class="panel-heading">

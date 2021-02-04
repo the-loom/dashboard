@@ -20,6 +20,33 @@ class StudentsController < ApplicationController
     end
   end
 
+  def comment
+    unless @user = Course.current.memberships.includes(:user).find_by(users: { id: params[:id] }).try(:user)
+      flash[:alert] = "No existe el usuario"
+      return redirect_to "/"
+    end
+    authorize @user, :comment?
+    @user.comments.create(body: params[:comment][:body], commenter: current_user, mood: params[:comment][:mood].to_i)
+    redirect_to user_details_url(@user.nickname)
+  end
+
+  def toggle
+    user = User.find(params[:id])
+    authorize user, :manage?
+    current_membership = user.current_membership
+    current_membership.enabled = !current_membership.enabled?
+    current_membership.save
+    redirect_to students_path
+  end
+
+  def destroy
+    # TODO: migrate to membership#destroy ? students#destroy ?
+    user = User.find(params[:id])
+    authorize user, :manage?
+    user.current_membership.discard
+
+    redirect_to students_path
+  end
 
   def bulk_edit
     if !params[:students].present? || !params[:students][:ids].present?

@@ -19,7 +19,7 @@
   </ul>
 </div>
 
-<%= form_tag bulk_edit_users_path do %>
+<%= form_tag bulk_edit_students_path do %>
 
   <div class="table-responsive">
     <table class="members table table-hover">
@@ -77,10 +77,10 @@
           <% end %>
           <td>
             <% if policy(student).manage? %>
-              <%= link_to student.enabled? ? 'Deshabilitar' : 'Habilitar', toggle_user_path(student),
+              <%= link_to student.enabled? ? 'Deshabilitar' : 'Habilitar', toggle_student_path(student),
                           method: :post, class: 'btn btn-secondary btn-sm' %>
               <br/>
-              <%= link_to 'Borrar perfil', user_path(student), method: :delete, class: 'btn btn-danger btn-sm' %>
+              <%= link_to 'Borrar perfil', student_path(student), method: :delete, class: 'btn btn-danger btn-sm' %>
             <% end %>
           </td>
         </tr>

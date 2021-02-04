@@ -23,17 +23,17 @@ Rails.application.routes.draw do
   get "/profile/edit" => "users#edit", as: :edit_profile
   patch "/profile/edit" => "users#update", as: :update_user
   get "/profile/change_identity/:identity_id" => "users#change_identity", as: :change_identity
-  post "/u/bulk_edit" => "users#bulk_edit", as: :bulk_edit_users
-  post "/u/:nickname/comment" => "users#comment", as: :comment_user, constraints: { nickname: /[0-z\.-]+/ }
 
-  resources :users, only: :destroy do
-    member do
-      post :toggle
-      post :promote
-    end
+  resources :students, only: [:index, :destroy] do
+      member do
+        post :toggle
+        post :promote
+        post :comment
+      end
+      collection do
+        post :bulk_edit
+      end
   end
-
-  resources :students, only: :index
 
   resources :teams, except: :show
 
