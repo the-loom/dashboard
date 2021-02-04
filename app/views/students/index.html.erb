@@ -1,23 +1,25 @@
 <% nav_add 'Aula', '#' %>
 <% nav_add 'Estudiantes', '#' %>
-<%= nav_render %>
+<%= nav_render4 %>
 
 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#actions">Acciones masivas</button>
 <%= link_to 'Hoja de asistencia', students_path(format: :csv), class: 'btn btn-primary btn-sm'%>
 
+<br><br>
+
 <div class="dropdown">
-  <button class="btn btn-default dropdown-toggle" type="button" id="teamSelector" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="teamSelector" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
     Seleccionar equipo
     <span class="caret"></span>
   </button>
   <ul class="dropdown-menu">
     <% @teams.each do |team| %>
-      <li><a href="#" class="do-select-team" data-team-id="<%= team.id %>"><%= team.name %></a></li>
+      <a href="#" class="do-select-team dropdown-item" data-team-id="<%= team.id %>"><%= team.name %></a>
     <% end %>
   </ul>
 </div>
 
-<%= form_tag bulk_edit_users_path do %>
+<%= form_tag bulk_edit_students_path do %>
 
   <div class="table-responsive">
     <table class="members table table-hover">
@@ -46,7 +48,9 @@
                               disabled: !student.enabled? %>
           </td>
           <td>
-            <%= image_tag entity_avatar(student), {class: "avatar#{ ' disabled' unless student.enabled? }", alt: student.full_name, "data-id": student.id } %>
+            <div class="profile">
+              <%= image_tag entity_avatar(student), {class: "avatar#{ ' disabled' unless student.enabled? }", alt: student.full_name, "data-id": student.id } %>
+            </div>
           </td>
           <% if Course.current.on?(:teams) %>
             <td>
@@ -73,10 +77,12 @@
           <% end %>
           <td>
             <% if policy(student).manage? %>
-              <%= link_to student.enabled? ? 'Deshabilitar' : 'Habilitar', toggle_user_path(student),
-                          method: :post, class: 'btn btn-default btn-sm' %>
+              <%= link_to student.enabled? ? 'Deshabilitar' : 'Habilitar', toggle_student_path(student),
+                          method: :post, class: 'btn btn-secondary btn-sm' %>
               <br/>
-              <%= link_to 'Borrar perfil', user_path(student), method: :delete, class: 'btn btn-danger btn-sm' %>
+              <%= link_to 'Borrar perfil', student_path(student), method: :delete, class: 'btn btn-danger btn-sm' %>
+
+              <%= link_to 'Editar perfil', edit_student_path(student), class: 'btn btn-primary btn-sm' %>
             <% end %>
           </td>
         </tr>
@@ -88,44 +94,46 @@
   <%= hidden_field(:bulk_edit, :action) %>
   <%= hidden_field(:bulk_edit, :auxiliary_id) %>
 
-  <div class="modal fade" tabindex="-1" role="dialog" id="actions">
-    <div class="modal-dialog" role="document">
+  <div class="modal fade" tabindex="-1" id="actions">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Acciones masivas</h4>
+          <h5 class="modal-title">Acciones masivas</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
         <div class="modal-body">
 
           <ul class="nav nav-tabs" id="myTabs" role="tablist">
-            <li role="presentation" class="active">
-              <a href="#badges-tab" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
+            <li role="presentation" class="nav-item">
+              <a class="nav-link active" href="#badges-tab" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
                 Asignar emblema
               </a>
             </li>
-            <li role="presentation">
-              <a href="#events-tab" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
+            <li role="presentation" class="nav-item">
+              <a class="nav-link" href="#events-tab" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
                 Registrar evento
               </a>
             </li>
-            <li role="presentation">
-              <a href="#misc-tab" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
+            <li role="presentation" class="nav-item">
+              <a class="nav-link" href="#misc-tab" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
                 Acciones varias
               </a>
             </li>
-            <li role="presentation">
-              <a href="#attendance-tab" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
+            <li role="presentation" class="nav-item">
+              <a class="nav-link" href="#attendance-tab" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
                 Dar presente
               </a>
             </li>
-            <li role="presentation">
-              <a href="#teams-tab" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
+            <li role="presentation" class="nav-item">
+              <a class="nav-link" href="#teams-tab" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
                 Asignar a equipo
               </a>
             </li>
           </ul>
           <div class="tab-content" id="massive-actions">
-            <div class="tab-pane fade active in" role="tabpanel" id="badges-tab" aria-labelledby="home-tab">
+            <div class="tab-pane fade active in show" role="tabpanel" id="badges-tab" aria-labelledby="home-tab">
               <% if @badges.empty? %>
                 <div class="alert alert-info">
                   <p>Aún no hay ningún emblema</p>
@@ -133,7 +141,7 @@
               <% else %>
                 <% @badges.each do |badge| %>
                   <div class="col-xs-4">
-                    <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit',
+                    <%= button_tag type: 'button', class: 'btn btn-secondary do-bulk-edit',
                                    data: {action: 'assign_badge', id: badge.id} do %>
                       <%= image_tag badge.image, {class: "loom-badge", alt: badge.name,
                                                   "data-toggle": "tooltip", "data-placement": "bottom",
@@ -158,7 +166,7 @@
                 <%= collection_select(:bulk_edit, :lecture_id, @lectures, :id, :summary, { prompt: 'No era necesario estar presente' }, { class: 'form-control' } ) %>
                 <p>El siguiente evento:</p>
                 <% @events.each do |event| %>
-                  <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit', data: { action: 'register_event', id: event.id} do %>
+                  <%= button_tag type: 'button', class: 'btn btn-secondary do-bulk-edit', data: { action: 'register_event', id: event.id} do %>
                     <%= "Registrar evento: #{event.name}" %>
                   <% end %>
                 <% end %>
@@ -167,19 +175,19 @@
             </div>
             <div class="tab-pane fade" role="tabpanel" id="misc-tab" aria-labelledby="home-tab">
               <% if current_user.current_membership.admin? %>
-                <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit', data: { action: 'join_profiles', id: nil} do %>
+                <%= button_tag type: 'button', class: 'btn btn-secondary do-bulk-edit', data: { action: 'join_profiles', id: nil} do %>
                   Unir perfiles
                 <% end %>
               <% end %>
               <% if policy(User).promote? %>
-                <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit', data: { action: 'promote', id: nil} do %>
+                <%= button_tag type: 'button', class: 'btn btn-secondary do-bulk-edit', data: { action: 'promote', id: nil} do %>
                   Nombrar docentes
                 <% end %>
               <% end %>
             </div>
             <div class="tab-pane fade" role="tabpanel" id="attendance-tab" aria-labelledby="home-tab">
               <% @lectures.each do |lecture| %>
-                <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit', data: { action: 'attendance', id: lecture.id} do %>
+                <%= button_tag type: 'button', class: 'btn btn-secondary do-bulk-edit', data: { action: 'attendance', id: lecture.id} do %>
                   <%= l lecture.date %>: <%= lecture.summary %>
                 <% end %>
               <% end %>
@@ -189,7 +197,7 @@
                 Crear nuevo equipo
               <% end %>
               <% @teams.each do |team| %>
-                <%= button_tag type: 'button', class: 'btn btn-default do-bulk-edit', data: { action: 'team', id: team.id} do %>
+                <%= button_tag type: 'button', class: 'btn btn-secondary do-bulk-edit', data: { action: 'team', id: team.id} do %>
                   <%= team.name %>
                 <% end %>
               <% end %>
@@ -198,7 +206,7 @@
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
         </div>
       </div>
     </div>

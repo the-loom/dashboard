@@ -28,6 +28,12 @@ img.avatar {
     border: 2px solid darkslategray;
 }
 
+.avatar.disabled {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+    opacity: 0.2;
+}
+
 img.team {
     position: absolute;
     right: 0;
