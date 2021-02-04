@@ -81,6 +81,8 @@
                           method: :post, class: 'btn btn-secondary btn-sm' %>
               <br/>
               <%= link_to 'Borrar perfil', student_path(student), method: :delete, class: 'btn btn-danger btn-sm' %>
+
+              <%= link_to 'Editar perfil', edit_student_path(student), class: 'btn btn-primary btn-sm' %>
             <% end %>
           </td>
         </tr>

@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   patch "/profile/edit" => "users#update", as: :update_user
   get "/profile/change_identity/:identity_id" => "users#change_identity", as: :change_identity
 
-  resources :students, only: [:index, :destroy] do
+  resources :students, only: [:index, :edit, :update, :destroy] do
       member do
         post :toggle
         post :promote

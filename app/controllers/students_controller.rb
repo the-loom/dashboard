@@ -20,14 +20,29 @@ class StudentsController < ApplicationController
     end
   end
 
+  def edit
+    @student = User.find(params[:id])
+    authorize @student, :update?
+  end
+
+  def update
+    @student = User.find(params[:id])
+    authorize @student, :update?
+    if @student.update(user_params)
+      redirect_to students_path
+    else
+      render :edit
+    end
+  end
+
   def comment
-    unless @user = Course.current.memberships.includes(:user).find_by(users: { id: params[:id] }).try(:user)
+    unless @student = Course.current.memberships.includes(:user).find_by(users: { id: params[:id] }).try(:user)
       flash[:alert] = "No existe el usuario"
       return redirect_to "/"
     end
-    authorize @user, :comment?
-    @user.comments.create(body: params[:comment][:body], commenter: current_user, mood: params[:comment][:mood].to_i)
-    redirect_to user_details_url(@user.nickname)
+    authorize @student, :comment?
+    @student.comments.create(body: params[:comment][:body], commenter: current_user, mood: params[:comment][:mood].to_i)
+    redirect_to user_details_url(@student.nickname)
   end
 
   def toggle
@@ -133,6 +148,6 @@ class StudentsController < ApplicationController
 
   private
     def user_params
-      params[:user].permit(:first_name, :last_name, :avatar)
+      params[:user].permit(:first_name, :last_name)
     end
 end
