@@ -42,7 +42,7 @@ class PeerReview::FlowOverviewPresenter
       partial = @reviewers.select { |r| r.student? }.map do |teacher|
         [teacher.full_name, @relevant_data.select { |r| r[:reviewer] == teacher }.size ]
       end
-      others = partial.empty? ? [] : [["Otros", (partial[9..-1].sum { |x| x[1] })]]
+      others = partial.empty? || partial.size < 10 ? [] : [["Otros", (partial[9..-1].sum { |x| x[1] })]]
       partial[0..9] + others
     end
   end
