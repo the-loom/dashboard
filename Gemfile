@@ -46,7 +46,7 @@ gem "omniauth-google-oauth2", "~> 0.8"
 gem "omniauth-rails_csrf_protection", "~> 1.0"
 
 # Forms
-gem "simple_form", "~> 5.0"
+gem "simple_form", "~> 5.1"
 gem "trix-rails", "~> 2.3", require: "trix"
 
 group :development do
