@@ -188,7 +188,7 @@ GEM
       trollop
     pg (1.2.3)
     puma (3.12.6)
-    pundit (1.1.0)
+    pundit (2.1.0)
       activesupport (>= 3.0.0)
     racc (1.5.2)
     rack (2.2.3)
@@ -383,7 +383,7 @@ DEPENDENCIES
   pessimize (~> 0.4)
   pg (~> 1.2)
   puma (~> 3.12)
-  pundit (~> 1.1)
+  pundit (~> 2.1)
   rack-mini-profiler (~> 2.3)
   rails (= 5.2.4.5)
   rails_best_practices (~> 1.20)
