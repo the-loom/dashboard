@@ -3,6 +3,8 @@ class NullMembership
     0
   end
 
+  def unread_notifications= ; end
+
   def team
     nil
   end
