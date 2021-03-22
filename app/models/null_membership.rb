@@ -1,4 +1,6 @@
 class NullMembership
+  def save! ; end
+
   def unread_notifications
     0
   end
