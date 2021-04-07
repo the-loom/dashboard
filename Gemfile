@@ -89,5 +89,8 @@ gem "zip-zip", "~> 0.3"
 # Syntax highlighting
 gem "rouge", "~> 3.26"
 
+# Tagging
+gem "acts-as-taggable-on", "~> 7.0"
+
 # Voting
 gem "acts_as_votable", "~> 0.13"

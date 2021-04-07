@@ -54,7 +54,15 @@
           </td>
           <% if Course.current.on?(:teams) %>
             <td>
-              <%= link_to student.current_membership.team.try(:name), team_profile_url(student.current_membership.team.nickname) if student.current_membership.team.present? %>
+              <% team = student.current_membership.team %>
+              <% if team %>
+                <%= link_to team.name, team_profile_url(team.nickname) %>
+
+                <br>
+                <% (team.tags).each do |tag| %>
+                  <span class="badge badge-info"><%= tag %></span>
+                <% end %>
+              <% end %>
             </td>
           <% end %>
           <td>

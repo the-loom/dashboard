@@ -75,7 +75,14 @@
       </td>
       <% unless @challenge.team_challenge %>
         <td>
-          <%= stats.solver.current_membership.team.try(:name) %>
+          <% team = stats.solver.current_membership.team %>
+          <% if team %>
+            <%= team.name %>
+            <br>
+            <% (team.tags).each do |tag| %>
+              <span class="badge badge-info"><%= tag %></span>
+            <% end %>
+          <% end %>
         </td>
       <% end %>
       <td>

@@ -33,7 +33,13 @@
               <%= image_tag entity_avatar(team), {class: "avatar", alt: team.name, "data-id": team.id } %>
             <% end %>
           </td>
-          <td><%= team.name %></td>
+          <td>
+            <%= team.name %>
+            <br>
+            <% team.tags.each do |tag| %>
+              <span class="badge badge-info"><%= tag %></span>
+            <% end %>
+          </td>
           <td><%= team.points %></td>
           <td>
             <%= team.enabled_members.count %>
@@ -53,6 +59,7 @@
               <br/>
               <%= link_to "Eliminar", team_path(team), class: 'btn btn-danger', method: :delete %>
             <% end %>
+            <%= link_to "Editar", edit_team_path(team), class: 'btn btn-primary' %>
           </td>
         </tr>
       <% end %>

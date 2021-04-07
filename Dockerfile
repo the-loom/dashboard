@@ -6,6 +6,8 @@ RUN apt-get update -yqq \
   && apt-get install -yqq --no-install-recommends postgresql-client \
   && rm -rf /var/lib/apt/lists
 
+USER loom
+
 WORKDIR /usr/src/app
 COPY Gemfile* ./
 RUN bundle install

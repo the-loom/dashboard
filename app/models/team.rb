@@ -15,6 +15,8 @@ class Team < ApplicationRecord
   has_many :memberships
   has_many :members, through: :memberships, source: :user, class_name: "User"
 
+  acts_as_taggable_on :tags
+
   def self.sorted
     self.order(:name)
   end
