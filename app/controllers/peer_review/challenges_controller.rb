@@ -53,7 +53,8 @@ module PeerReview
     def meta_overview
       authorize PeerReview::Challenge, :manage?
       @challenges = PeerReview::Challenge.where(published: :true).order(title: :asc)
-      @students = Course.current.memberships.includes(:user).student.collect(&:user)
+      @students = Course.current.memberships.includes(:user).student.collect(&:user).compact
+      # TODO: fix this .compact, should not be empty memberships
       @overview = PeerReviewChallengesStats.new(@students, @challenges)
     end
 
