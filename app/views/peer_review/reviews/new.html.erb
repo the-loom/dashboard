@@ -58,8 +58,10 @@
           <%= f.input :wording, label: 'Desarrollo', as: :trix_editor %>
         <% end %>
 
-        <%= f.button :button, 'Guardar borrador', type: 'submit', name: :status, value: :draft, class: "btn-primary" %>
-        <%= f.button :button, 'Publicar', type: 'submit', name: :status, value: :final, class: "btn-success" %>
+        <template v-if="selectedItems.length > 0">
+          <%= f.button :button, 'Guardar borrador', type: 'submit', name: :status, value: :draft, class: "btn-primary" %>
+          <%= f.button :button, 'Publicar', type: 'submit', name: :status, value: :final, class: "btn-success" %>
+        </template>
 
       <% end %>
     </div>
