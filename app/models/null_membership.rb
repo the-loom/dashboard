@@ -15,6 +15,10 @@ class NullMembership
     false
   end
 
+  def admin?
+    false
+  end
+
   def teacher?
     false
   end
