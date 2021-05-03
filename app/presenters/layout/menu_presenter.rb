@@ -79,15 +79,15 @@ class Layout::MenuPresenter
     end
 
     def exercises_menu
-      if on?(:multiple_choices) || on?(:tiny_cards) || on?(:automatic_correction_challenges) || on?(:peer_review_challenges) || on?(:exercises)
-        exercises_node = MenuNode.new("Ejercitación")
-        exercises_node << MenuLeaf.new("Tarjetas", route.tiny_cards_decks_path) if on?(:tiny_cards)
+      exercises_node = MenuNode.new("Ejercitación")
+      exercises_node << MenuLeaf.new("Tarjetas", route.tiny_cards_decks_path) if on?(:tiny_cards)
+      exercises_node << MenuLeaf.new("Ejercicios", route.exercises_path) if on?(:exercises)
+      if @current_user.teacher?
         exercises_node << MenuLeaf.new("Cuestionarios de Opción Múltiple", route.multiple_choices_questionnaires_path) if on?(:multiple_choices)
         exercises_node << MenuLeaf.new("Desafíos de Corrección Automática", route.repos_path) if on?(:automatic_correction_challenges)
         exercises_node << MenuLeaf.new("Desafíos de Revisión", route.peer_review_challenges_path) if on?(:peer_review_challenges)
-        exercises_node << MenuLeaf.new("Ejercicios", route.exercises_path) if on?(:exercises)
-        exercises_node
       end
+      exercises_node unless exercises_node.empty?
     end
 
     def resources_menu
@@ -169,6 +169,9 @@ class MenuNode
   end
   def <<(leaf)
     @leafs << leaf
+  end
+  def empty?
+    @leafs.empty?
   end
 end
 

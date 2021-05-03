@@ -59,7 +59,7 @@ class ApplicationController < ActionController::Base
           session[:course_id] = memberships.first.course_id
         end
 
-        redirect_to profile_url, notice: "Signed in!"
+        redirect_to dashboard_index_path, notice: "Signed in!"
       elsif memberships.count == 0
         redirect_to courses_url
       end
