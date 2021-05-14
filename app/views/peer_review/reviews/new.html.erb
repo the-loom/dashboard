@@ -120,7 +120,7 @@
       <%= f.input :wording, label: 'Desarrollo', as: :trix_editor %>
     <% end %>
 
-    <% if @challenge.rubrics.size > 0 %>
+    <% if @challenge.rubrics && @challenge.rubrics.size > 0 %>
 
       <hr>
 
