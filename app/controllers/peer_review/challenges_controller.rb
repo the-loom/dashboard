@@ -146,34 +146,39 @@ module PeerReview
         redirect_to(peer_review_challenges_path) && return
       end
 
-      ActiveRecord::Base.transaction do
-        solve = "Resolver '#{challenge.title}'"
-        solve_event = Event.create(name: solve, description: solve, points: 8, min_points: 8, max_points: 8)
+      challenge.update(awarded: true)
+      begin
+        ActiveRecord::Base.transaction do
+          solve = "Resolver '#{challenge.title}'"
+          solve_event = Event.create(name: solve, description: solve, points: 8, min_points: 8, max_points: 8)
 
-        review = "Revisar '#{challenge.title}'"
-        review_event = Event.create(name: review, description: review, points: 6, min_points: 6, max_points: 12)
+          review = "Revisar '#{challenge.title}'"
+          review_event = Event.create(name: review, description: review, points: 6, min_points: 6, max_points: 12)
 
-        extra_review = "Revisión extra sobre '#{challenge.title}'"
-        extra_review_event = Event.create(name: extra_review, description: extra_review, points: 4, min_points: 0, max_points: 0)
+          extra_review = "Revisión extra sobre '#{challenge.title}'"
+          extra_review_event = Event.create(name: extra_review, description: extra_review, points: 4, min_points: 0, max_points: 0)
 
+          challenge.solutions.final.each do |s|
+            next unless s.author
+            s.author.register(solve_event)
+          end
 
-        challenge.solutions.final.each { |s|
-          next unless s.author
-          s.author.register(solve_event)
-        }
+          reviews_by_reviewer = challenge.reviews.group_by { |r| r.reviewer }
+          reviews_by_reviewer.each do |reviewer, reviews|
+            next unless reviewer
+            total_reviews = reviews.size
+            base_reviews = [total_reviews, challenge.expected_reviews].min
+            extra_reviews = [total_reviews - base_reviews, MAX_EXTRA_REVIEWS].min
 
-        reviews_by_reviewer = challenge.reviews.group_by { |r| r.reviewer }
-        reviews_by_reviewer.each { |reviewer, reviews|
-          next unless reviewer
-          total_reviews = reviews.size
-          base_reviews = [total_reviews, challenge.expected_reviews].min
-          extra_reviews = [total_reviews - base_reviews, MAX_EXTRA_REVIEWS].min
+            reviewer.register(review_event, base_reviews)
 
-          reviewer.register(review_event, base_reviews)
-
-          reviewer.register(extra_review_event, extra_reviews)
-        }
-        challenge.update(awarded: true)
+            reviewer.register(extra_review_event, extra_reviews)
+          end
+        end
+      rescue ActiveRecord::RecordInvalid
+        challenge.update(awarded: false)
+        redirect_to peer_review_challenges_path
+        flash[:alert] = "Hubo un error al premiar el desafío"
       end
 
       redirect_to peer_review_challenges_path
