@@ -73,6 +73,7 @@
           <div class="checkbox" v-for="(item, index) in items">
             <label v-bind:class="{ deletable: item.deletable && !item.checked }">
               <input type="checkbox" :name="'quick_review_items' + index" v-model="item.checked"> <span v-html="item.text"></span>
+              ({{ item.percentage }} %)
             </label>
           </div>
         </div>
@@ -205,7 +206,7 @@
             },
             methods: {
                 addItem: function () {
-                    this.items.push({ text: this.newField, checked: true, deletable: true });
+                    this.items.push({ text: this.newField, percentage: 0, checked: true, deletable: true });
                     this.newField = "";
                 },
                 updateEditorContent(value) {

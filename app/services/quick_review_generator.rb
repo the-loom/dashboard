@@ -9,14 +9,14 @@ class QuickReviewGenerator
       [repetitions.size, line]
     end.sort do |x, y|
       y[0] <=> x[0]
-    end.map do |repetitions_and_line|
-      repetitions_and_line[1]
     end
 
     my_reviews = to_list(current_review)
 
-    lines.map do |x|
-      { text: x, checked: current_review.wording && my_reviews.include?(x) }
+    lines.map do |repetitions_and_line|
+      line = repetitions_and_line[1]
+      repetitions = repetitions_and_line[0]
+      { text: line, checked: current_review.wording && my_reviews.include?(line), percentage: ((repetitions.to_f / notable_reviews.size) * 100).round(2) }
     end
   end
 
