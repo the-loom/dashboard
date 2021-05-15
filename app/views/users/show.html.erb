@@ -78,6 +78,13 @@
                 <label class="badge badge-dark"><%= occurrence.multiplier %>&times;</label>
                 <%= occurrence.event.name %>
               </td>
+              <% if Course.current.on?(:competences) && occurrence.event.competence_tag %>
+                <td>
+                  <label class="badge badge-dark">
+                    <%= occurrence.event.competence_tag.name %>
+                  </label>
+                </td>
+              <% end %>
             </tr>
           <% end %>
           </tbody>
