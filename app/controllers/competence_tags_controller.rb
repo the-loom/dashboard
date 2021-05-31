@@ -51,6 +51,6 @@ class CompetenceTagsController < ApplicationController
 
   private
     def competence_tag_params
-      params[:competence_tag].permit(:name)
+      params[:competence_tag].permit(:name, :description)
     end
 end

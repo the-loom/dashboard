@@ -24,7 +24,9 @@
     <% @competence_tags.each do |competence| %>
       <tr>
         <td>
-          <%= competence.name %>
+          <strong><%= competence.name %></strong>
+          <br>
+          <%= competence.description %>
         </td>
         <td>
           <%= link_to "Editar", edit_competence_tag_path(competence), class: 'btn btn-default' %>
