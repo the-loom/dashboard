@@ -37,7 +37,6 @@
           <% team = student.current_membership.team %>
           <% if team %>
             <%= link_to team.name, team_profile_url(team.nickname) %>
-
             <br>
             <% (team.tags).each do |tag| %>
               <span class="badge badge-info"><%= tag %></span>

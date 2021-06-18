@@ -12,12 +12,32 @@ class Course < ApplicationRecord
   serialize :stats, JSON
 
   belongs_to :attendance_event, class_name: "Event", foreign_key: "attendance_event_id", optional: true
+  belongs_to :parent_course, class_name: "Course", foreign_key: "parent_course_id", optional: true
+  has_many :replicas, class_name: "Course", foreign_key: "parent_course_id"
 
   validates :name, presence: true, uniqueness: true
   validates :password, presence: true
 
   scope :enabled, -> { where(enabled: true) }
   scope :disabled, -> { where(enabled: false) }
+
+  def template?
+    replicas.size > 0
+  end
+
+  def editable?
+    !replica
+  end
+
+  def replicate!
+    new_course = nil
+    Course.transaction do
+      new_course = self.dup
+      new_course.name = self.name + " " + ("0" + (self.replicas.size + 1).to_s)[-2..-1]
+      new_course.save!
+    end
+    new_course
+  end
 
   def fully_duplicate!
     new_course = nil

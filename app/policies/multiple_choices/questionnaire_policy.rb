@@ -1,6 +1,9 @@
 class MultipleChoices::QuestionnairePolicy < ApplicationPolicy
-  def manage?
+  def monitor?
     user.teacher?
+  end
+  def manage?
+    user.teacher? && Course.current.editable?
   end
   def access?
     user.student? || user.teacher?

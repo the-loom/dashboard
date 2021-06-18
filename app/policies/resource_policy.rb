@@ -1,6 +1,6 @@
 class ResourcePolicy < ApplicationPolicy
   def manage?
-    user.teacher?
+    user.teacher? && Course.current.editable?
   end
 
   def use?

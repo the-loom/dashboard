@@ -5,4 +5,7 @@ class NullCourse
   def on?(_requested_feature)
     false
   end
+  def template?
+    false
+  end
 end

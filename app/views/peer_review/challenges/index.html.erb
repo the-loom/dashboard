@@ -3,7 +3,9 @@
 
 <% if policy(PeerReview::Challenge).manage? %>
   <div class="btn-group">
-    <%= link_to 'Nuevo desafio', new_peer_review_challenge_path, class: 'btn btn-primary', role: "button" %>
+    <% if policy(PeerReview::Challenge).edit? %>
+      <%= link_to 'Nuevo desafio', new_peer_review_challenge_path, class: 'btn btn-primary', role: "button" %>
+    <% end %>
     <%= link_to 'Panorama de resoluciones', meta_overview_peer_review_challenges_path, class: 'btn btn-outline-primary', role: "button" %>
     <button type="button" class="btn btn-outline-primary dropdown-toggle btn-sm" data-toggle="dropdown">
       <span class="caret"></span>
@@ -78,24 +80,30 @@
           <td>
 
             <div class="btn-group" role="group">
-              <% if policy(PeerReview::Challenge).manage? %>
+              <% if policy(PeerReview::Challenge).monitor? %>
                 <%= link_to "Panorama", overview_peer_review_challenge_path(challenge), class: 'btn btn-primary btn-sm', role: "button" %>
-                <%= link_to "Editar", edit_peer_review_challenge_path(challenge), class: 'btn btn-outline-primary btn-sm', role: "button" %>
+                <% if policy(PeerReview::Challenge).manage? %>
+                  <%= link_to "Editar", edit_peer_review_challenge_path(challenge), class: 'btn btn-outline-primary btn-sm', role: "button" %>
+                <% end %>
                 <button type="button" type="button" class="btn btn-outline-primary dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <span class="caret"></span>
                 </button>
                 <div class="dropdown-menu">
-                  <% if challenge.published? %>
-                    <%= link_to unpublish_peer_review_challenge_path(challenge), class: "dropdown-item", method: :post do %>
-                      Despublicar
+                  <% if policy(PeerReview::Challenge).manage? %>
+                    <% if challenge.published? %>
+                      <%= link_to unpublish_peer_review_challenge_path(challenge), class: "dropdown-item", method: :post do %>
+                        Despublicar
+                      <% end %>
+                    <% else %>
+                      <%= link_to publish_peer_review_challenge_path(challenge), class: "dropdown-item", method: :post do %>
+                        Publicar
+                      <% end %>
                     <% end %>
-                  <% else %>
-                    <%= link_to publish_peer_review_challenge_path(challenge), class: "dropdown-item", method: :post do %>
-                      Publicar
+                    <%= link_to challenge.enabled? ? "Finalizar" : "Reabrir", toggle_peer_review_challenge_path(challenge), class: "dropdown-item" %>
+                    <% if policy(PeerReview::Challenge).edit? %>
+                      <%= link_to "Duplicar", duplicate_peer_review_challenge_path(challenge), class: "dropdown-item" %>
                     <% end %>
                   <% end %>
-                  <%= link_to challenge.enabled? ? "Finalizar" : "Reabrir", toggle_peer_review_challenge_path(challenge), class: "dropdown-item" %>
-                  <%= link_to "Duplicar", duplicate_peer_review_challenge_path(challenge), class: "dropdown-item" %>
                   <%= link_to "Descargar todo", bulk_download_peer_review_challenge_path(challenge), class: "dropdown-item" %>
                   <%= link_to "Flujo de revisiones", flow_peer_review_challenge_path(challenge), class: "dropdown-item" %>
                   <% if policy(PeerReview::Challenge).purge? %>

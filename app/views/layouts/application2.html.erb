@@ -39,6 +39,9 @@
 <%= render partial: 'layouts/navbar', locals: {submenu: @sidebar, menu: @menub4} %>
 
 <div class="container-fluid">
+  <% if Course.current.template? %>
+    <%= render partial: 'shared/alert', locals: {alert_type: 'danger', title: '¡Cuidado!', dismissable: false, message: "Estás en la plantilla de curso, los cambios que realices afectarán a todas réplicas"} %>
+  <% end %>
   <div class="row">
 
     <%= render partial: 'layouts/sidebar', locals: {menu: @sidebar} %>

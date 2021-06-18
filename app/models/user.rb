@@ -57,7 +57,9 @@ class User < ApplicationRecord
   def refresh_points_cache!
     cm = current_membership
     return unless cm
-    cm.points = occurrences.inject(0) { | total, occurrence | total + (occurrence.event.enabled ? occurrence.total_points : 0) }
+    cm.points = occurrences.inject(0) do | total, occurrence |
+      total + (occurrence.event.enabled ? occurrence.total_points : 0)
+    end
     cm.save
 
     cm.team.refresh_points_cache! if cm.team
@@ -136,9 +138,10 @@ class User < ApplicationRecord
   def register_attendance(lecture)
     membership = current_membership
     return unless current_membership # TODO: preventive fix, needs re-do
-    return unless Course.current.attendance_event # TODO: preventive fix, needs to be handled in a better way
+    attendance_event = Course.current.attendance_event || Course.current.parent_course.attendance_event
+    return unless attendance_event # TODO: preventive fix, needs to be handled in a better way
     return if present_at(lecture)
-    register(Course.current.attendance_event, 1)
+    register(attendance_event, 1)
 
     if membership.present_at_lecture_ids != nil
       membership.present_at_lecture_ids << lecture.id

@@ -8,7 +8,13 @@ module CourseLock
         if Course.current.nil?
           raise NoCourseAvailable
         else
-          where(course_id: Course.current.id)
+          if Course.current.replica && [Exercise, PeerReview::Challenge, MultipleChoices::Questionnaire, Resource, ResourceCategory, Event].include?(base)
+            where(course_id: Course.current.parent_course_id)
+          elsif Course.current.replicas.size > 0
+            where(course_id: Course.current.replicas.map(&:id) + [Course.current.id])
+          else
+            where(course_id: Course.current.id)
+          end
         end
       }
       # HELP: http://stackoverflow.com/questions/12667036/default-scope-ignoring-dynamic-value-in-condition/12667077#12667077

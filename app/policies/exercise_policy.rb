@@ -1,6 +1,6 @@
 class ExercisePolicy < ApplicationPolicy
   def manage?
-    user.teacher?
+    user.teacher? && Course.current.editable?
   end
 
   def index?
@@ -8,18 +8,6 @@ class ExercisePolicy < ApplicationPolicy
   end
 
   def show?
-    user.teacher? || user.student?
-  end
-
-  def new?
-    user.teacher?
-  end
-
-  def create?
-    user.teacher?
-  end
-
-  def start?
     user.teacher? || user.student?
   end
 end

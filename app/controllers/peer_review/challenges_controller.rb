@@ -26,7 +26,7 @@ module PeerReview
     end
 
     def messages
-      authorize PeerReview::Challenge, :manage?
+      authorize PeerReview::Challenge, :monitor?
       @messages = PeerReview::Message.all.map { |m| PeerReview::MessagePresenter.new(m) }
     end
 
@@ -38,20 +38,20 @@ module PeerReview
         redirect_to(peer_review_challenges_path) && return
       end
 
-      authorize @challenge, :manage?
+      authorize @challenge, :monitor?
       @flow_overview = PeerReview::FlowOverviewPresenter.new(PeerReview::Review.includes(:reviewer, :solution, solution: :author).where(peer_review_solutions: { peer_review_challenge_id: @challenge.id }))
       render :flow_overview
     end
 
     def overview
-      authorize PeerReview::Challenge, :manage?
+      authorize PeerReview::Challenge, :monitor?
       @challenge = PeerReview::Challenge.find(params[:id])
       @solvers = @challenge.team_challenge? ? @challenge.solvers : Course.current.users
       @overview = PeerReview::OverviewPresenter.new(@challenge)
     end
 
     def meta_overview
-      authorize PeerReview::Challenge, :manage?
+      authorize PeerReview::Challenge, :monitor?
       @challenges = PeerReview::Challenge.where(published: :true).order(title: :asc)
       @students = Course.current.memberships.includes(:user).student.collect(&:user).compact
       # TODO: fix this .compact, should not be empty memberships
@@ -59,7 +59,7 @@ module PeerReview
     end
 
     def flow_overview
-      authorize PeerReview::Challenge, :manage?
+      authorize PeerReview::Challenge, :monitor?
       @flow_overview = PeerReview::FlowOverviewPresenter.new(PeerReview::Review.includes(:reviewer, :solution, solution: :author))
     end
 
@@ -138,7 +138,7 @@ module PeerReview
 
     def award
       # TODO: use case
-      authorize PeerReview::Challenge, :manage?
+      authorize PeerReview::Challenge, :monitor?
       challenge = PeerReview::Challenge.find(params[:id])
 
       if challenge.awarded

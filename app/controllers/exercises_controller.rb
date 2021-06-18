@@ -16,7 +16,7 @@ class ExercisesController < ApplicationController
   end
 
   def new
-    authorize Exercise, :new?
+    authorize Exercise, :create?
     @exercise = Exercise.new
     @labels = OpenStruct.new(title: "Nuevo ejercicio", button: "Guardar ejercicio")
     render :form
