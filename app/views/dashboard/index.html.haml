@@ -1,68 +1,122 @@
 - nav_add 'Tablero', '#'
 = nav_render4
 
-%legend Desafíos de revisión
+.row
+  .col-sm-12.col-md-5
+    %legend Anuncios
 
-%table.challenges.table.table-striped.table-hover
-  %thead
-    %tr
-      %th Progreso
-      %th Título
-      %th Vencimiento
-      %th Estado
-      %th Opcional
-      %th Ejemplo de resolución
-  %tbody
-    - @challenges.each do |challenge|
-      - progress = challenge.progress_by? current_user
-      - percentage = (progress * 100).to_i
-      %tr{class: "#{'finished' if percentage == 100} #{'missed' if percentage < 100 && !challenge.enabled}"}
-        %td
-          .progress{style: "height: 10px;"}
-            .progress-bar.bg-success{"aria-valuemax" => "100", "aria-valuemin" => "0", role: "progressbar", style: "width: #{percentage}%;"}
-          = percentage
-          \%
-        %td
-          = link_to challenge.title, peer_review_challenge_path(challenge)
-        %td
-          = display_date challenge.due_date
-        %td
-          = challenge.enabled? ? "Vigente" : "Finalizado"
-        %td
-          = yes_no challenge.optional?
-        %td
-          = yes_no challenge.has_picked_solutions?
+    - if policy(Post).manage?
+      .new-post.p-3
+        = simple_form_for @post do |f|
+          = render partial: 'shared/errors', locals: { f: f }
+          = f.trix_editor :text, class: "mb-3", placeholder: "¿Qué desea comunicar al curso \"" + Course.current.name + "\"?"
+          %div{ style: "text-align: right;" }
+            = f.button :submit, 'Crear anuncio', class: "btn-primary", data: { disable_with: false }
 
-%hr
+    .container-fluid.post-list
+      - @posts.each do |post|
+        .row.post{ class: post.pinned ? "pinned" : "", data: {id: post.id} }
+          .col-12.p-3
+            .row.mb-2.no-gutters
+              .col-auto.pr-2
+                = image_tag entity_avatar(post.author), style: "border-radius: 999px; width: 50px; border: 1px solid #333;"
+              .col
+                %div{ style: "font-size: 1.1em" }
+                  = post.author.full_name
+                %div{ style: "font-size: 0.9em" }
+                  - if post.pinned
+                    %i.fa.fa-thumbtack
+                  %span{ style: "color: #555;" }
+                    = post.created_at.strftime("%Y-%m-%d %H:%M")
+                  = human_date_time(post.created_at)
+              - if policy(Post).manage?
+                .col-auto.pl-2
+                  .btn-group
+                    = link_to post_path(post), class: 'btn btn-sm btn-danger', method: :delete, onclick: 'if (confirm("¿Está seguro de eliminar la notificación?")) return true; else {event.preventDefault(); event.stopPropagation(); }' do
+                      %i.fa.fa-fw.fa-trash
+                    - if post.pinned
+                      = link_to unpin_post_path(post), method: :post, class: 'btn btn-sm btn-secondary' do
+                        %span.fa-stack{ style: "font-size: 0.5em" }
+                          %i.fa.fa-fw.fa-thumbtack.fa-stack-2x
+                          %i.fa.fa-fw.fa-slash.fa-stack-2x
+                    - else
+                      = link_to pin_post_path(post), method: :post, class: 'btn btn-sm btn-secondary' do
+                        %i.fa.fa-fw.fa-thumbtack
+            .row
+              .col-12
+                != post.text
 
-%legend Cuestionarios
 
-%table.questionnaires.table.table-striped.table-hover
-  %thead
-    %tr
-      %th Progreso
-      %th Título
-      %th &nbsp;
-  %tbody
-    - @questionnaires.each do |questionnaire|
-      - progress = questionnaire.progress_by? current_user
-      - percentage = (progress * 100).to_i
-      %tr{class: "#{'finished' if percentage == 100}"}
-        %td
-          .progress{style: "height: 10px;"}
-            .progress-bar.bg-success{"aria-valuemax" => "100", "aria-valuemin" => "0", role: "progressbar", style: "width: #{percentage}%;"}
-          = percentage
-          \%
-        %td
-          = questionnaire.name
-        %td
-          - if questionnaire.enabled?
-            = link_to "Practicar", practice_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-primary btn-sm'
-          - if questionnaire.solved_by? current_user
-            = link_to "Revisar", last_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-secondary btn-sm'
+
+
+  %div.col-sm-12.col-md-7
+    %legend Desafíos de revisión
+
+    .table-responsive
+      %table.challenges.table.table-striped.table-hover
+        %thead
+          %tr
+            %th Progreso
+            %th Título
+            %th Vencimiento
+            %th Estado
+            %th Opcional
+            %th Ejemplo de resolución
+        %tbody
+          - @challenges.each do |challenge|
+            - progress = challenge.progress_by? current_user
+            - percentage = (progress * 100).to_i
+            %tr{ class: "#{'finished' if percentage == 100} #{'missed' if percentage < 100 && !challenge.enabled}" }
+              %td
+                .progress{style: "height: 10px;"}
+                  .progress-bar.bg-success{ "aria-valuemax" => "100", "aria-valuemin" => "0", role: "progressbar", style: "width: #{percentage}%;" }
+                = percentage
+                \%
+              %td
+                = link_to challenge.title, peer_review_challenge_path(challenge)
+              %td
+                = display_date challenge.due_date
+              %td
+                = challenge.enabled? ? "Vigente" : "Finalizado"
+              %td
+                = yes_no challenge.optional?
+              %td
+                = yes_no challenge.has_picked_solutions?
+
+    %hr
+
+    %legend Cuestionarios
+
+    .table-responsive
+      %table.questionnaires.table.table-striped.table-hover
+        %thead
+          %tr
+            %th Progreso
+            %th Título
+            %th &nbsp;
+        %tbody
+          - @questionnaires.each do |questionnaire|
+            - progress = questionnaire.progress_by? current_user
+            - percentage = (progress * 100).to_i
+            %tr{ class: "#{'finished' if percentage == 100}" }
+              %td
+                .progress{ style: "height: 10px;" }
+                  .progress-bar.bg-success{ "aria-valuemax" => "100", "aria-valuemin" => "0", role: "progressbar", style: "width: #{percentage}%;" }
+                = percentage
+                \%
+              %td
+                = questionnaire.name
+              %td
+                - if questionnaire.enabled?
+                  = link_to "Practicar", practice_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-primary btn-sm'
+                - if questionnaire.solved_by? current_user
+                  = link_to "Revisar", last_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-secondary btn-sm'
+
+
 
 = content_for :head do
   %link{href: "https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css", rel: "stylesheet"}
+  %link{href: "https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.css", rel: "stylesheet"}
   :css
     form.button_to {
       display: inline-block;
@@ -85,8 +139,38 @@
       background-color: #d9c5c5 !important;
     }
 
+    span.trix-button-group.trix-button-group--file-tools,
+    span.trix-button-group.trix-button-group--history-tools {
+      display: none;
+    }
+
+    trix-editor.trix-content {
+      background-color: #FFF;
+      min-height: 75px;
+      max-height: 150px;
+      font-size: 1.2em;
+    }
+
+    trix-toolbar .trix-button {
+      background-color: #FFF;
+    }
+
+    .new-post,
+    .post {
+      background-color: #EEE;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+      border-radius: 8px;
+      margin-top: 15px;
+      margin-bottom: 15px;
+    }
+
+    .pinned {
+      background-color: #DFE8F8;
+    }
+
 = content_for :javascript do
   %script{src: "https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js", type: "application/javascript"}
+  %script{src: "https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.js", type: "application/javascript"}
   :javascript
     $(function () {
       $('.challenges').DataTable({
@@ -111,4 +195,32 @@
           orderable: false
         }]
       });
+
+      var search_id_post = new URLSearchParams(window.location.search).get("post")
+      if (search_id_post) {
+        var $post = $(".post[data-id='" + search_id_post + "']");
+        if ($post.length) {
+          $post.css("background-color", "#FFA");
+          setTimeout(() => $('html, body').scrollTop($post.offset().top - 50), 100);
+          setTimeout(() => {
+            $post.css("transition", "background-color 2s ease-in-out");
+            $post.css("background-color", "");
+          }, 2000);
+        }
+      }
+
+      var $form_new_post = $("#new_post");
+      $form_new_post.on("submit", e => {
+        if (!$form_new_post.find("trix-editor.trix-content").val()) {
+          e.preventDefault();
+          alert("Advertencia: El post no puede estar vacío");
+        }
+      });
+
     });
+
+    document.addEventListener("trix-file-accept", function(event) {
+      event.preventDefault();
+    });
+
+

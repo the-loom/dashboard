@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root "pages#welcome"
+  root "pages#root"
 
   def publishable
     post :publish, on: :member
@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   get "/logout" => "sessions#destroy", as: :logout
   post "/admin_login" => "sessions#admin", as: :admin_login
 
+  get "/welcome" => "pages#welcome", as: :welcome
   get "/profile" => "users#show", as: :profile
   get "/u/:nickname" => "users#show", as: :user_details, constraints: { nickname: /[0-z\.-]+/ }
   get "/profile/edit" => "users#edit", as: :edit_profile
@@ -81,6 +82,12 @@ Rails.application.routes.draw do
   end
 
   resources :dashboard, only: :index
+  resources :posts, only: [:create, :destroy] do
+    member do
+      post :pin
+      post :unpin
+    end
+  end
   resources :notifications, only: [:index, :new, :create]
 
   resources :lectures, except: :destroy do
