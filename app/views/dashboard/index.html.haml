@@ -1,6 +1,20 @@
 - nav_add 'Tablero', '#'
 = nav_render4
 
+%legend Ejercicios
+
+%table.exercises.table.table-striped.table-hover
+  %thead
+    %tr
+      %th Título
+  %tbody
+    - @exercises.each do |exercise|
+      %tr
+        %td
+          = link_to exercise.name, exercise_path(exercise)
+
+%hr
+
 %legend Desafíos de revisión
 
 %table.challenges.table.table-striped.table-hover
@@ -89,6 +103,17 @@
   %script{src: "https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js", type: "application/javascript"}
   :javascript
     $(function () {
+      $('.exercises').DataTable({
+        order: [[0, "asc"]],
+        paging: false,
+        language: {
+          url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+        },
+        columnDefs: [{
+          targets: 'no-sort',
+          orderable: false
+        }]
+      });
       $('.challenges').DataTable({
         order: [[1, "asc"]],
         paging: false,
