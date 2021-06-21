@@ -1,4 +1,6 @@
 class PeerReview::Solution < ApplicationRecord
+  include CourseLock
+
   belongs_to :challenge, foreign_key: :peer_review_challenge_id
   belongs_to :author, foreign_key: :author_id, class_name: "User"
 
