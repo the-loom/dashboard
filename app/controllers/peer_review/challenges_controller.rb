@@ -150,17 +150,17 @@ module PeerReview
       begin
         ActiveRecord::Base.transaction do
           solve = "Resolver '#{challenge.title}'"
-          solve_event = Event.create(name: solve, description: solve, points: 8, min_points: 8, max_points: 8)
+          solve_event = Event.create(name: solve, description: solve, points: 8, min_points: 8, max_points: 8, course: Course.current)
 
           review = "Revisar '#{challenge.title}'"
-          review_event = Event.create(name: review, description: review, points: 6, min_points: 6, max_points: 12)
+          review_event = Event.create(name: review, description: review, points: 6, min_points: 6, max_points: 12, course: Course.current)
 
           extra_review = "Revisión extra sobre '#{challenge.title}'"
-          extra_review_event = Event.create(name: extra_review, description: extra_review, points: 4, min_points: 0, max_points: 0)
+          extra_review_event = Event.create(name: extra_review, description: extra_review, points: 4, min_points: 0, max_points: 0, course: Course.current)
 
           challenge.solutions.final.each do |s|
             next unless s.author
-            s.author.register(solve_event)
+            s.author.register(solve_event, 1, s.course)
           end
 
           reviews_by_reviewer = challenge.reviews.group_by { |r| r.reviewer }
@@ -170,9 +170,9 @@ module PeerReview
             base_reviews = [total_reviews, challenge.expected_reviews].min
             extra_reviews = [total_reviews - base_reviews, MAX_EXTRA_REVIEWS].min
 
-            reviewer.register(review_event, base_reviews)
+            reviewer.register(review_event, base_reviews, s.course)
 
-            reviewer.register(extra_review_event, extra_reviews)
+            reviewer.register(extra_review_event, extra_reviews, s.course)
           end
         end
       rescue ActiveRecord::RecordInvalid

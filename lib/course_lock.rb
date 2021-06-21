@@ -10,7 +10,7 @@ module CourseLock
         else
           if Course.current.replica && [Exercise, PeerReview::Challenge, MultipleChoices::Questionnaire, Resource, ResourceCategory, Event].include?(base)
             where(course_id: Course.current.parent_course_id)
-          elsif Course.current.replicas.size > 0
+          elsif Course.current.replicas.size > 0 && ![Lecture].include?(base)
             where(course_id: Course.current.replicas.map(&:id) + [Course.current.id])
           else
             where(course_id: Course.current.id)

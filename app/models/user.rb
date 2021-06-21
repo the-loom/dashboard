@@ -54,8 +54,8 @@ class User < ApplicationRecord
     RequestStore.store[:current_user] = user
   end
 
-  def refresh_points_cache!
-    cm = current_membership
+  def refresh_points_cache!(course = Course.current)
+    cm = current_membership(course)
     return unless cm
     cm.points = occurrences.inject(0) do | total, occurrence |
       total + (occurrence.event.enabled ? occurrence.total_points : 0)
@@ -123,8 +123,8 @@ class User < ApplicationRecord
     self
   end
 
-  def current_membership
-    self.all_memberships.includes([:course, :team]).find_by(course: Course.current) || NullMembership.new
+  def current_membership(course = Course.current)
+    self.all_memberships.includes([:course, :team]).find_by(course: course) || NullMembership.new
   end
 
   def teacher?
@@ -136,7 +136,7 @@ class User < ApplicationRecord
   end
 
   def register_attendance(lecture)
-    membership = current_membership
+    membership = current_membership(Course.current)
     return unless current_membership # TODO: preventive fix, needs re-do
     attendance_event = Course.current.attendance_event || Course.current.parent_course.attendance_event
     return unless attendance_event # TODO: preventive fix, needs to be handled in a better way
@@ -151,13 +151,13 @@ class User < ApplicationRecord
     membership.save
   end
 
-  def register(event, times = 1)
-    return unless current_membership.enabled? # TODO: preventive fix, needs re-do
-    occurrence = occurrences.find_or_initialize_by(event: event)
+  def register(event, times = 1, course = Course.current)
+    return unless current_membership(course).enabled? # TODO: preventive fix, needs re-do
+    occurrence = occurrences.find_or_initialize_by(event: event, course: course)
     occurrence.multiplier = occurrence.new_record? ? times : occurrence.multiplier + times
     occurrence.save
 
-    refresh_points_cache!
+    refresh_points_cache!(course)
   end
 
   def earn(badge)
