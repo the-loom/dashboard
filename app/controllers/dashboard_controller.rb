@@ -7,6 +7,7 @@ class DashboardController < ApplicationController
     @posts = Post.all
 
 
+    @exercises = Exercise.published
     @challenges = PeerReview::Challenge.published
     @questionnaires = MultipleChoices::Questionnaire.published
   end
