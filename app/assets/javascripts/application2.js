@@ -6,3 +6,5 @@
 //= require radarChart
 //= require moment/moment
 //= require moment/locale/es
+//= require helpers
+

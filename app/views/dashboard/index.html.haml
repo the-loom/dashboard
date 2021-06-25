@@ -2,7 +2,7 @@
 = nav_render4
 
 .row
-  .col-12.col-md-5.order-2.order-md-1
+  .col-12.col-md-5.order-2.order-md-1.mt-5.mt-md-0
     %legend Anuncios
 
     - if policy(Post).manage?
@@ -26,9 +26,8 @@
                 %div{ style: "font-size: 0.9em" }
                   - if post.pinned
                     %i.fa.fa-thumbtack
-                  %span{ style: "color: #555;" }
+                  %a.moment-datetime{ href: "?post=" + post.id.to_s, style: "color: #555;", "data-datetime": post.created_at.to_i * 1000 }
                     = post.created_at.strftime("%Y-%m-%d %H:%M")
-                  = human_date_time(post.created_at)
               - if policy(Post).manage?
                 .col-auto.pl-2
                   .btn-group
@@ -62,29 +61,31 @@
         #event-calendar
           %script{type: "text/template", id: "event-calendar-template"}
             :plain
-              <div class="clndr-controls">
-                <div class="clndr-previous-button">&lt;</div>
-                <div class="current-month"><%= month.toUpperCase() %> <%= year %></div>
-                <div class="clndr-next-button">&gt;</div>
-              </div>
-              <div class="clndr-grid">
-                <div class="days-of-the-week">
-                  <% _.each(daysOfTheWeek, function(day) { %>
-                  <div class="header-day"><%= day.toUpperCase() %></div>
-                  <% }); %>
+              <div class="clndr-calendar">
+                <div class="clndr-controls">
+                  <div class="clndr-previous-button">&lt;</div>
+                  <div class="current-month"><%= month.toUpperCase() %> <%= year %></div>
+                  <div class="clndr-next-button">&gt;</div>
                 </div>
-                <div class="days">
-                  <% _.each(days, function(day) { %>
-                  <div class="<%= day.classes %>" id="<%= day.id %>"><span class="day-number"><%= day.day %></span></div>
-                  <% }); %>
+                <div class="clndr-grid">
+                  <div class="days-of-the-week">
+                    <% _.each(daysOfTheWeek, function(day) { %>
+                    <div class="header-day"><%= day.toUpperCase() %></div>
+                    <% }); %>
+                  </div>
+                  <div class="days">
+                    <% _.each(days, function(day) { %>
+                    <div class="<%= day.classes %>" id="<%= day.id %>"><span class="day-number"><%= day.day %></span></div>
+                    <% }); %>
+                  </div>
                 </div>
               </div>
               <div class="event-listing">
-                <div class="event-listing-title">EVENTOS</div>
+                <div class="event-listing-title">DESAFIOS DEL MES</div>
                 <% _.each(eventsThisMonth, function(event) { %>
                 <div class="event-item <%= event.status %>">
                   <div class="progress d-inline-block" style="height: 12px; width: 50px; border: 1px solid #888;">
-                    <div class="progress-bar bg-success" "aria-valuemax"="100" "aria-valuemin"="0" role="progressbar" style="width: <%= event.percentage %>%;"></div>
+                    <div class="progress-bar bg-success" "aria-valuemax"="100" "aria-valuemin"="0" role="progressbar" style="width: <%= event.percentage %>%; height: 100%;"></div>
                   </div>
                   <%= event.percentage %>%
                   <a href="<%= event.url %>">
@@ -132,10 +133,13 @@
     %table.exercises.table.table-striped.table-hover
       %thead
         %tr
+          %th Dificultad
           %th Título
       %tbody
         - @exercises.each do |exercise|
           %tr
+            %td
+              = stars_for exercise
             %td
               = link_to exercise.name, exercise_path(exercise)
 
@@ -194,6 +198,8 @@
       background-color: #d9c5c5 !important;
     }
 
+
+    /* POST */
     span.trix-button-group.trix-button-group--file-tools,
     span.trix-button-group.trix-button-group--history-tools {
       display: none;
@@ -225,18 +231,26 @@
 
     /**/
 
-
+    /* CALENDAR */
     #event-calendar {
       margin: 0 auto;
       font-size: 14px;
       color: #212121;
 
-      width: 300px;
       background-color: #ebebeb;
       font-weight: 700;
-      box-shadow: 0px 4px 0 #343434;
+      box-shadow: 0 4px 0 #343434;
     }
 
+    #event-calendar .clndr {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    #event-calendar .clndr-calendar {
+      min-width: 250px;
+      flex: 1;
+    }
 
     #event-calendar .clndr-controls {
       padding: 10px;
@@ -312,14 +326,19 @@
       background-image: none;
     }
 
-
-
+    #event-calendar .event-listing {
+      flex: 1;
+      min-width: 180px;
+    }
     #event-calendar .event-listing .event-listing-title {
-      padding: 14px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 86px;
+
+      padding: 0 10px;
       background-color: #343a40;
-      text-align: center;
       color: white;
-      letter-spacing: 1px;
     }
     #event-calendar .event-listing .event-item {
       padding: 8px;
@@ -337,6 +356,8 @@
       $('.challenges').DataTable({
         order: [[1, "asc"]],
         paging: false,
+        info: false,
+        searching: false,
         language: {
           url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
         },
@@ -346,8 +367,10 @@
         }]
       });
       $('.exercises').DataTable({
-        order: [[0, "asc"]],
+        order: [[1, "asc"]],
         paging: false,
+        info: false,
+        searching: false,
         language: {
           url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
         },
@@ -359,6 +382,8 @@
       $('.questionnaires').DataTable({
         order: [[1, "asc"]],
         paging: false,
+        info: false,
+        searching: false,
         language: {
           url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
         },
@@ -424,7 +449,6 @@
             "has_picked_solutions: #{challenge.has_picked_solutions?}" +
           "});"
         }.join('\n  ').html_safe
-
       }
 
       $('#event-calendar').clndr({
@@ -432,6 +456,12 @@
         events: challenges,
         forceSixRows: true
       });
-    });
 
+      var adjust_title_height = function() {
+        var $title = $(".event-listing-title");
+        $title.css("height", $title.position().top === $(".clndr-calendar").position().top ? "86px" : "40px");
+      }
+      $(window).on("resize", adjust_title_height);
+      adjust_title_height();
+    });
 

@@ -3,7 +3,6 @@ class DashboardController < ApplicationController
 
   def index
     @post = policy(Post).manage? ? Post.new : nil
-
     @posts = Post.all
 
     @exercises = Exercise.published
