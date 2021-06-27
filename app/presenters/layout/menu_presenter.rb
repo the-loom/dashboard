@@ -133,10 +133,10 @@ class Layout::MenuPresenter
     def classroom_menu
       classroom_node = MenuNode.new("Mi Aula")
       classroom_node << MenuLeaf.new("Mi perfil", route.profile_path)
-      classroom_node << MenuLeaf.new("Mis docentes", route.teachers_path)
       if on?(:teams) && @current_user.current_membership.team
         classroom_node << MenuLeaf.new("Mi equipo", route.team_path(@current_user.current_membership.team.nickname))
       end
+      classroom_node << MenuLeaf.new("Mis docentes", route.teachers_path)
       classroom_node
     end
 
