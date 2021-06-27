@@ -117,8 +117,8 @@ class Layout::MenuPresenter
 
     def teacher_menu
       if manage?(User) && manage?(Team) && manage?(Lecture)
-        classroom_node = MenuNode.new("Aula")
-        classroom_node << MenuLeaf.new("Docentes", route.teachers_path)
+        classroom_node = MenuNode.new("Administración de Aula")
+        classroom_node << MenuLeaf.new("Docentes", route.admin_teachers_path)
         classroom_node << MenuLeaf.new("Estudiantes", route.students_path)
         classroom_node << MenuLeaf.new("Equipos", route.teams_path) if on?(:teams)
         if on?(:lectures)

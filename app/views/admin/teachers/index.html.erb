@@ -2,7 +2,7 @@
 <% nav_add 'Docentes', '#' %>
 <%= nav_render %>
 
-<%= form_tag join_teachers_path do %>
+<%= form_tag join_admin_teachers_path do %>
 
   <% if policy(User).join? %>
     <%= submit_tag 'Unir perfiles seleccionados', class: 'btn btn-warning' %>
@@ -34,10 +34,10 @@
           <td><%= mail_to teacher.email %></td>
           <td>
             <% if policy(:teacher).destroy? %>
-              <%= link_to 'Borrar perfil', teacher_path(teacher), method: :delete, class: 'btn btn-danger btn-sm' %>
+              <%= link_to 'Borrar perfil', admin_teacher_path(teacher), method: :delete, class: 'btn btn-danger btn-sm' %>
             <% end %>
             <% if policy(teacher).promote? %>
-              <%= link_to 'Degradar', demote_teacher_path(teacher), method: :post, class: 'btn btn-warning btn-sm' %>
+              <%= link_to 'Degradar', demote_admin_teacher_path(teacher), method: :post, class: 'btn btn-warning btn-sm' %>
             <% end %>
           </td>
         </tr>
