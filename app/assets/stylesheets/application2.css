@@ -48,3 +48,11 @@ img.team {
     padding: 1em;
     border-radius: 5px;
 }
+
+.sidebar .nav-item.active {
+    background-color: #e9ecef;
+}
+
+.teachers .card {
+    margin: 1em;
+}

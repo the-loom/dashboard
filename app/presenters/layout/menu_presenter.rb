@@ -182,6 +182,10 @@ class MenuLeaf
     @title = title
     @link = link
     @style = style
+    @active = active
+  end
+  def current_for?(current_path)
+    @link == current_path
   end
 end
 
