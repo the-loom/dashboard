@@ -35,6 +35,7 @@ Rails.application.routes.draw do
       end
   end
 
+  resources :teachers, only: :index
   resources :teams, except: :show
 
   resources :suggestions, except: [:edit, :update] do

@@ -126,6 +126,10 @@ class Course < ApplicationRecord
     users.joins(:memberships).where(memberships: { role: :student, course: Course.current }).distinct
   end
 
+  def teachers
+    users.includes(:memberships).where(memberships: { course: Course.current, role: :teacher })
+  end
+
   def on?(requested_feature)
     features & Course.all_features[requested_feature] == Course.all_features[requested_feature]
   end

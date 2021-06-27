@@ -1,0 +1,26 @@
+<% nav_add 'Aula', '#' %>
+<% nav_add 'Docentes', '#' %>
+<%= nav_render4 %>
+
+<div class="students">
+  <legend>Docentes</legend>
+  <div class="row">
+    <% @teachers.each do |teacher| %>
+      <div class="col-lg-4 col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><%= teacher.full_name %></h5>
+            <div class="row">
+              <div class="col-md-6">
+                <%= image_tag entity_avatar(teacher), {class: "avatar", alt: teacher.full_name} %>
+              </div>
+              <div class="col-md-6">
+                <%= teacher.bios %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
