@@ -24,6 +24,6 @@ class CoursesController < ApplicationController
     course = Course.find(params[:id])
     current_user.update(last_visited_course_id: course.id)
     session[:course_id] = course.id
-    redirect_to profile_path
+    redirect_to root_path
   end
 end

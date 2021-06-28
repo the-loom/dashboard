@@ -433,7 +433,6 @@ ActiveRecord::Schema.define(version: 2021_06_27_184809) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "automatic_correction_repos", "automatic_correction_repos", column: "parent_id"
   add_foreign_key "notifications", "users", column: "receiver_id"
-  add_foreign_key "posts", "notifications", on_delete: :cascade
   add_foreign_key "posts", "users", column: "author_id"
   add_foreign_key "taggings", "tags"
 end
