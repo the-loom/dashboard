@@ -6,17 +6,15 @@
   <legend>Docentes</legend>
   <div class="row">
     <% @teachers.each do |teacher| %>
-      <div class="col-lg-4 col-md-6">
+      <div class="col-lg-6 col-md-6 col-xs-12">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title"><%= teacher.full_name %></h5>
-            <div class="row">
-              <div class="col-md-6">
-                <%= image_tag entity_avatar(teacher), {class: "avatar", alt: teacher.full_name} %>
-              </div>
-              <div class="col-md-6">
-                <%= teacher.bios %>
-              </div>
+            <div class="left">
+              <%= image_tag entity_avatar(teacher), { class: "teacher avatar", alt: teacher.full_name } %>
+            </div>
+            <div class="right">
+              <h5 class="card-title"><%= teacher.full_name %></h5>
+              <%= teacher.bios %>
             </div>
           </div>
         </div>
@@ -24,3 +22,11 @@
     <% end %>
   </div>
 </div>
+
+<%= content_for :javascript do %>
+<script type="text/javascript" charset="utf-8">
+  $(window).on('resize', function() {
+      equalizeHeights(".card");
+  }).resize();
+</script>
+<% end %>
