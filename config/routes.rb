@@ -36,12 +36,8 @@ Rails.application.routes.draw do
       end
   end
 
+  resources :teachers, only: :index
   resources :teams, except: :show
-
-  resources :teachers, only: [:index, :destroy] do
-    post :join, on: :collection
-    post :demote, on: :member
-  end
 
   resources :suggestions, except: [:edit, :update] do
     get :dismissed, on: :collection
@@ -181,6 +177,10 @@ Rails.application.routes.draw do
         get :impersonate
         post :restore
       end
+    end
+    resources :teachers, only: [:index, :destroy] do
+      post :join, on: :collection
+      post :demote, on: :member
     end
   end
 end

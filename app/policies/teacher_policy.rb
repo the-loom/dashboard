@@ -5,4 +5,7 @@ class TeacherPolicy < Struct.new(:user, :teacher)
   def destroy?
     user.teacher? || user.admin?
   end
+  def show?
+    user.student? || user.teacher?
+  end
 end

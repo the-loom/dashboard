@@ -1,84 +1,32 @@
 <% nav_add 'Aula', '#' %>
 <% nav_add 'Docentes', '#' %>
-<%= nav_render %>
+<%= nav_render4 %>
 
-<%= form_tag join_teachers_path do %>
-
-  <% if policy(User).join? %>
-    <%= submit_tag 'Unir perfiles seleccionados', class: 'btn btn-warning' %>
-  <% end %>
-
-  <div class="table-responsive">
-    <table class="members table table-hover">
-      <thead>
-      <tr>
-        <th>&nbsp;</th>
-        <th class="no-sort">Foto</th>
-        <th>Nombre</th>
-        <th>Correo electrónico</th>
-        <th class="no-sort">Acciones</th>
-      </tr>
-      </thead>
-      <tbody>
-      <% @teachers.each do |teacher| %>
-        <tr>
-          <td>
-            <%= check_box_tag "teachers[ids][]", teacher.id, false %>
-          </td>
-          <td>
-            <%= image_tag entity_avatar(teacher), {class: "avatar#{ ' disabled' unless teacher.enabled? }", alt: teacher.full_name, "data-id": teacher.id} %>
-          </td>
-          <td>
-            <%= link_to teacher.full_name, user_details_url(teacher.nickname) %>
-          </td>
-          <td><%= mail_to teacher.email %></td>
-          <td>
-            <% if policy(:teacher).destroy? %>
-              <%= link_to 'Borrar perfil', teacher_path(teacher), method: :delete, class: 'btn btn-danger btn-sm' %>
-            <% end %>
-            <% if policy(teacher).promote? %>
-              <%= link_to 'Degradar', demote_teacher_path(teacher), method: :post, class: 'btn btn-warning btn-sm' %>
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
-      </tbody>
-    </table>
+<div class="teachers">
+  <legend>Docentes</legend>
+  <div class="row">
+    <% @teachers.each do |teacher| %>
+      <div class="col-lg-6 col-md-6 col-xs-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="left">
+              <%= image_tag entity_avatar(teacher), { class: "teacher avatar", alt: teacher.full_name } %>
+            </div>
+            <div class="right">
+              <h5 class="card-title"><%= teacher.full_name %></h5>
+              <%= teacher.bios %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </div>
-
-
-
-<% end %>
-<%= content_for :head do %>
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
-<% end %>
+</div>
 
 <%= content_for :javascript do %>
-  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="application/javascript"></script>
-
-  <script type="application/javascript">
-      $(function () {
-          $('.members').DataTable({
-              order: [[3, "asc"]],
-              paging: false,
-              language: {
-                  url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
-              },
-              columnDefs: [{
-                  targets: 'no-sort',
-                  orderable: false
-              }]
-          });
-      });
-
-      $(function () {
-          $('.avatar').on('click', function () {
-              var userId = $(this).data('id');
-              var checkbox = $('input[value=' + userId + ']').not(":disabled");
-              checkbox.prop('checked', !checkbox.prop('checked'));
-          });
-      });
-  </script>
-
-
+<script type="text/javascript" charset="utf-8">
+  $(window).on('resize', function() {
+      equalizeHeights(".card");
+  }).resize();
+</script>
 <% end %>

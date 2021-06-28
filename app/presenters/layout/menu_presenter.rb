@@ -129,8 +129,8 @@ class Layout::MenuPresenter
 
     def teacher_menu
       if manage?(User) && manage?(Team) && manage?(Lecture)
-        classroom_node = MenuNode.new("Aula")
-        classroom_node << MenuLeaf.new("Docentes", route.teachers_path)
+        classroom_node = MenuNode.new("Administración de Aula")
+        classroom_node << MenuLeaf.new("Docentes", route.admin_teachers_path)
         classroom_node << MenuLeaf.new("Estudiantes", route.students_path)
         classroom_node << MenuLeaf.new("Equipos", route.teams_path) if on?(:teams)
         if on?(:lectures)
@@ -148,6 +148,7 @@ class Layout::MenuPresenter
       if on?(:teams) && @current_user.current_membership.team
         classroom_node << MenuLeaf.new("Mi equipo", route.team_path(@current_user.current_membership.team.nickname))
       end
+      classroom_node << MenuLeaf.new("Mis docentes", route.teachers_path)
       classroom_node
     end
 
@@ -193,6 +194,9 @@ class MenuLeaf
     @title = title
     @link = link
     @style = style
+  end
+  def current_for?(current_path)
+    @link == current_path
   end
 end
 
