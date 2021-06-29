@@ -51,6 +51,15 @@ class LecturesController < ApplicationController
     end
   end
 
+  def register_attendance
+    authorize Lecture, :self_register?
+    lecture = Lecture.find(params[:id])
+    if lecture.current? && !current_user.present_at(lecture)
+      current_user.register_attendance(lecture)
+    end
+    redirect_to root_path
+  end
+
   def overview
     authorize Lecture
     @lectures = Lecture.all

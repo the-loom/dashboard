@@ -5,6 +5,9 @@ class LecturePolicy < ApplicationPolicy
   def overview?
     user.teacher?
   end
+  def self_register?
+    user.student?
+  end
   def register?
     user.teacher?
   end
