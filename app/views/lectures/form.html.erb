@@ -2,7 +2,7 @@
 <% nav_add 'Clases', lectures_path %>
 <% nav_add @lecture.summary, lectures_path(@lecture) unless @lecture.new_record? %>
 <% nav_add @labels.title, '#' %>
-<%= nav_render %>
+<%= nav_render4 %>
 
 <%= simple_form_for @lecture do |f| %>
 
@@ -10,7 +10,7 @@
  
   <%= f.input :summary, label: 'Resumen' %>
 
-  <%= f.input :date, label: 'Fecha' %>
+  <%= f.input :date, label: 'Fecha', as: :date, html5: true %>
 
   <%= f.input :required, label: 'Asistencia requerida', as: :boolean %>
 

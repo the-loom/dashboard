@@ -1,4 +1,6 @@
 class LecturesController < ApplicationController
+  layout "application2", except: [:overview]
+
   before_action do
     check_feature(:lectures)
   end
