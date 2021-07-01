@@ -85,6 +85,9 @@
               </div>
               <div class="event-listing">
                 <div class="event-listing-title">DESAFIOS DEL MES</div>
+                <% if (!eventsThisMonth.length) { %>
+                  &nbsp;
+                <% } %>
                 <% _.each(eventsThisMonth, function(event) { %>
                 <div class="event-item <%= event.status %>">
                   <div class="progress d-inline-block" style="height: 12px; width: 50px; border: 1px solid #888;">
@@ -252,7 +255,6 @@
 
     #event-calendar .clndr-calendar {
       min-width: 250px;
-      max-width: 300px;
       flex: 1;
     }
 
