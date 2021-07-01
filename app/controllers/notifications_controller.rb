@@ -7,11 +7,7 @@ class NotificationsController < ApplicationController
     current_user.current_membership.read_notifications!
   end
 
-  def new
-    authorize Notification
-    @notification = Notification.new
-  end
-
+  # XXX still in use?
   def create
     authorize Notification
     @notification = Notification.new(notification_params)

@@ -306,6 +306,19 @@ ActiveRecord::Schema.define(version: 2021_06_27_184809) do
     t.integer "course_id"
   end
 
+  create_table "posts", force: :cascade do |t|
+    t.text "text"
+    t.boolean "pinned", default: false
+    t.bigint "author_id"
+    t.bigint "notification_id"
+    t.bigint "course_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_posts_on_author_id"
+    t.index ["course_id"], name: "index_posts_on_course_id"
+    t.index ["notification_id"], name: "index_posts_on_notification_id"
+  end
+
   create_table "resource_categories", force: :cascade do |t|
     t.string "name"
     t.integer "course_id"
@@ -420,5 +433,6 @@ ActiveRecord::Schema.define(version: 2021_06_27_184809) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "automatic_correction_repos", "automatic_correction_repos", column: "parent_id"
   add_foreign_key "notifications", "users", column: "receiver_id"
+  add_foreign_key "posts", "users", column: "author_id"
   add_foreign_key "taggings", "tags"
 end

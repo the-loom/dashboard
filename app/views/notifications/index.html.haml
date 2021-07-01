@@ -1,10 +1,6 @@
 - nav_add 'Notificaciones', '#'
 = nav_render4
 
-- if policy(Notification).create?
-  = link_to 'Nueva notificacion', new_notification_path, class: 'btn btn-primary'
-  %br/
-  %br/
 - if @notifications.empty?
   .alert.alert-info
     %p Aún no hay ninguna notificación

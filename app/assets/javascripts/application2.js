@@ -4,6 +4,9 @@
 //= require codemirror/mode/clike/clike
 //= require codemirror/mode/python/python
 //= require radarChart
+//= require moment/moment
+//= require moment/locale/es
+//= require helpers
 
 function equalizeHeights(selector) {
     var maxHeight = 0;
