@@ -30,11 +30,9 @@
     <% if Course.current.on?(:lectures) %>
 
       <% current_lecture = Lecture.current %>
-      <% if current_lecture && !current_user.present_at(current_lecture) %>
-        <%= link_to 'Dar presente', register_attendance_lecture_path(current_lecture), class: 'btn btn-lg btn-block btn-success', method: :post %>
+      <% if current_lecture && current_lecture.current? && !current_user.present_at(current_lecture) %>
+        <%= link_to 'Dar presente', register_attendance_lecture_path(current_lecture), class: 'btn btn-lg btn-block btn-success mb-4', method: :post %>
       <% end %>
-
-      <br><br>
 
       <legend>Asistencia
         <small>

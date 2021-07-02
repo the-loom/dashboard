@@ -12,7 +12,8 @@ class LecturesController < ApplicationController
 
   def new
     authorize Lecture, :create?
-    @lecture = Lecture.new
+    latest_lecture = Lecture.order(id: :asc).last
+    @lecture = Lecture.new(time_from: latest_lecture.time_from, time_to: latest_lecture.time_to)
     @labels = OpenStruct.new(title: "Nueva clase", button: "Guardar clase")
     render :form
   end
@@ -68,6 +69,6 @@ class LecturesController < ApplicationController
 
   private
     def lecture_params
-      params[:lecture].permit(:summary, :date, :required)
+      params[:lecture].permit(:summary, :date, :time_from, :time_to, :required)
     end
 end

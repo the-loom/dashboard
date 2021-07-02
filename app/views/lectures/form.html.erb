@@ -12,6 +12,9 @@
 
   <%= f.input :date, label: 'Fecha', as: :date, html5: true %>
 
+  <%= f.input :time_from, label: 'Hora desde', as: :time, html5: true %>
+  <%= f.input :time_to, label: 'Hora hasta', as: :time, html5: true %>
+
   <%= f.input :required, label: 'Asistencia requerida', as: :boolean %>
 
   <%= f.button :submit, @labels.button, class: "btn-primary" %>
