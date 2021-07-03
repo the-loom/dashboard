@@ -82,7 +82,17 @@ module MultipleChoices
     end
 
     def practice
-      @questionnaire = MultipleChoices::Questionnaire.includes(:questions, questions: :answers).find(params[:id])
+      @questionnaire = MultipleChoices::Questionnaire.includes(:questions, questions: :answers).find_by(id: params[:id])
+
+      # we try to find the exercise in other courses
+      @questionnaire ||= load_exercise(MultipleChoices::Questionnaire.unscoped.includes(:questions, questions: :answers).find_by(id: params[:id]))
+
+      unless @questionnaire
+        flash[:alert] = "No pudimos encontrar el cuestionario que buscás..."
+        redirect_to(dashboard_index_path) && return
+      end
+
+      authorize @questionnaire, :access?
 
       unless @questionnaire.enabled?
         flash[:info] = "Este cuestionario ya ha finalizado..."
@@ -100,8 +110,6 @@ module MultipleChoices
           redirect_to(multiple_choices_questionnaires_path) && return
         end
       end
-
-      authorize @questionnaire, :access?
 
       set_random_seed
       @questionnaire = MultipleChoices::PracticeQuestionnairePresenter.new(@questionnaire, Random.new(random_seed))

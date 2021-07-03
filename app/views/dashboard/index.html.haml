@@ -1,75 +1,194 @@
 - nav_add 'Tablero', '#'
 = nav_render4
 
-%legend Desafíos de revisión
+.row
+  .col-12.col-md-5.order-2.order-md-1.mt-5.mt-md-0
+    %legend Anuncios
 
-%table.challenges.table.table-striped.table-hover
-  %thead
-    %tr
-      %th Progreso
-      %th Título
-      %th Vencimiento
-      %th Estado
-      %th Opcional
-      %th Ejemplo de resolución
-  %tbody
-    - @challenges.each do |challenge|
-      - progress = challenge.progress_by? current_user
-      - percentage = (progress * 100).to_i
-      %tr{class: "#{'finished' if percentage == 100} #{'missed' if percentage < 100 && !challenge.enabled}"}
-        %td
-          .progress{style: "height: 10px;"}
-            .progress-bar.bg-success{"aria-valuemax" => "100", "aria-valuemin" => "0", role: "progressbar", style: "width: #{percentage}%;"}
-          = percentage
-          \%
-        %td
-          = link_to challenge.title, peer_review_challenge_path(challenge)
-        %td
-          = display_date challenge.due_date
-        %td
-          = challenge.enabled? ? "Vigente" : "Finalizado"
-        %td
-          = yes_no challenge.optional?
-        %td
-          = yes_no challenge.has_picked_solutions?
+    - if policy(Post).manage?
+      .new-post.p-3
+        = simple_form_for @post do |f|
+          = render partial: 'shared/errors', locals: { f: f }
+          = f.trix_editor :text, class: "mb-3", placeholder: "¿Qué desea comunicar al curso \"" + Course.current.name + "\"?"
+          %div{ style: "text-align: right;" }
+            = f.button :submit, 'Crear anuncio', class: "btn-primary", data: { disable_with: false }
 
-%hr
+    .container-fluid.post-list
+      - if @posts.empty?
+        .alert.alert-info
+          %p Aún no hay anuncios
+      - @posts.each do |post|
+        .row.post{ class: post.pinned ? "pinned" : "", data: {id: post.id} }
+          .col-12.p-3
+            .row.mb-2.no-gutters
+              .col-auto.pr-2
+                = image_tag entity_avatar(post.author), style: "border-radius: 999px; width: 50px; border: 1px solid #333;"
+              .col
+                %div{ style: "font-size: 1.1em" }
+                  = post.author.full_name
+                %div{ style: "font-size: 0.9em" }
+                  - if post.pinned
+                    %i.fa.fa-thumbtack
+                  %a.moment-datetime{ href: "?post=" + post.id.to_s, style: "color: #555;", "data-datetime": post.created_at.to_i * 1000 }
+                    = post.created_at.strftime("%Y-%m-%d %H:%M")
+              - if policy(Post).manage?
+                .col-auto.pl-2
+                  .btn-group
+                    = link_to post_path(post), class: 'btn btn-sm btn-danger', method: :delete, onclick: 'if (confirm("¿Está seguro de eliminar la notificación?")) return true; else {event.preventDefault(); event.stopPropagation(); }' do
+                      %i.fa.fa-fw.fa-trash
+                    - if post.pinned
+                      = link_to unpin_post_path(post), method: :post, class: 'btn btn-sm btn-secondary' do
+                        %span.fa-stack{ style: "font-size: 0.5em" }
+                          %i.fa.fa-fw.fa-thumbtack.fa-stack-2x
+                          %i.fa.fa-fw.fa-slash.fa-stack-2x
+                    - else
+                      = link_to pin_post_path(post), method: :post, class: 'btn btn-sm btn-secondary' do
+                        %i.fa.fa-fw.fa-thumbtack
+            .row
+              .col-12
+                != post.text
 
-%legend Cuestionarios
 
-%table.questionnaires.table.table-striped.table-hover
-  %thead
-    %tr
-      %th Progreso
-      %th Título
-      %th &nbsp;
-  %tbody
-    - @questionnaires.each do |questionnaire|
-      - progress = questionnaire.progress_by? current_user
-      - percentage = (progress * 100).to_i
-      %tr{class: "#{'finished' if percentage == 100}"}
-        %td
-          .progress{style: "height: 10px;"}
-            .progress-bar.bg-success{"aria-valuemax" => "100", "aria-valuemin" => "0", role: "progressbar", style: "width: #{percentage}%;"}
-          = percentage
-          \%
-        %td
-          = questionnaire.name
-        %td
-          - if questionnaire.enabled?
-            = link_to "Practicar", practice_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-primary btn-sm'
-          - if questionnaire.solved_by? current_user
-            = link_to "Revisar", last_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-secondary btn-sm'
+
+
+  .col-12.col-md-7.order-1.order-md-2
+    %legend Desafíos de revisión
+
+    %ul#challenge.nav.nav-tabs{role: "tablist"}
+      %li.nav-item
+        %a#challenge-calendar-tab.nav-link.active{"aria-controls": "challenge-calendar", "aria-selected": "true", "data-toggle": "tab", href: "#challenge-calendar", role: "tab"} Calendario
+      %li.nav-item
+        %a#challenge-table-tab.nav-link{"aria-controls": "challenge-table", "aria-selected": "false", "data-toggle": "tab", href: "#challenge-table", role: "tab"} Tabla
+    #challengeContent.tab-content
+      #challenge-calendar.tab-pane.fade.show.active{"aria-labelledby": "challenge-calendar-tab", role: "tabpanel"}
+        #event-calendar
+          %script{type: "text/template", id: "event-calendar-template"}
+            :plain
+              <div class="clndr-calendar">
+                <div class="clndr-controls">
+                  <div class="clndr-previous-button">&lt;</div>
+                  <div class="current-month"><%= month.toUpperCase() %> <%= year %></div>
+                  <div class="clndr-next-button">&gt;</div>
+                </div>
+                <div class="clndr-grid">
+                  <div class="days-of-the-week">
+                    <% _.each(daysOfTheWeek, function(day) { %>
+                    <div class="header-day"><%= day.toUpperCase() %></div>
+                    <% }); %>
+                  </div>
+                  <div class="days">
+                    <% _.each(days, function(day) { %>
+                    <div class="<%= day.classes %>" id="<%= day.id %>"><span class="day-number"><%= day.day %></span></div>
+                    <% }); %>
+                  </div>
+                </div>
+              </div>
+              <div class="event-listing">
+                <div class="event-listing-title">DESAFIOS DEL MES</div>
+                <% if (!eventsThisMonth.length) { %>
+                  &nbsp;
+                <% } %>
+                <% _.each(eventsThisMonth, function(event) { %>
+                <div class="event-item <%= event.status %>">
+                  <div class="progress d-inline-block" style="height: 12px; width: 50px; border: 1px solid #888;">
+                    <div class="progress-bar bg-success" "aria-valuemax"="100" "aria-valuemin"="0" role="progressbar" style="width: <%= event.percentage %>%; height: 100%;"></div>
+                  </div>
+                  <%= event.percentage %>%
+                  <a href="<%= event.url %>">
+                    <%= moment(event.date).format('DD/MM') %>: <%= event.title %>
+                  </a>
+                </div>
+                <% }); %>
+              </div>
+
+      #challenge-table.tab-pane.fade{"aria-labelledby": "challenge-table-tab", role: "tabpanel"}
+        .table-responsive
+          %table.challenges.table.table-striped.table-hover
+            %thead
+              %tr
+                %th Progreso
+                %th Título
+                %th Vencimiento
+                %th Estado
+                %th Opcional
+                %th Ejemplo de resolución
+            %tbody
+              - @challenges.each do |challenge|
+                - progress = challenge.progress_by? current_user
+                - percentage = (progress * 100).to_i
+                %tr{ class: "#{'finished' if percentage == 100} #{'missed' if percentage < 100 && !challenge.enabled}" }
+                  %td
+                    .progress{style: "height: 10px;"}
+                      .progress-bar.bg-success{ "aria-valuemax" => "100", "aria-valuemin" => "0", role: "progressbar", style: "width: #{percentage}%;" }
+                    = percentage
+                    \%
+                  %td
+                    = link_to challenge.title, peer_review_challenge_path(challenge)
+                  %td
+                    = display_date challenge.due_date
+                  %td
+                    = challenge.enabled? ? "Vigente" : "Finalizado"
+                  %td
+                    = yes_no challenge.optional?
+                  %td
+                    = yes_no challenge.has_picked_solutions?
+
+    %hr
+    %legend Ejercicios
+
+    %table.exercises.table.table-striped.table-hover
+      %thead
+        %tr
+          %th Dificultad
+          %th Título
+      %tbody
+        - @exercises.each do |exercise|
+          %tr
+            %td
+              = stars_for exercise
+            %td
+              = link_to exercise.name, exercise_path(exercise)
+
+    %hr
+    %legend Cuestionarios
+
+    .table-responsive
+      %table.questionnaires.table.table-striped.table-hover
+        %thead
+          %tr
+            %th Progreso
+            %th Título
+            %th &nbsp;
+        %tbody
+          - @questionnaires.each do |questionnaire|
+            - progress = questionnaire.progress_by? current_user
+            - percentage = (progress * 100).to_i
+            %tr{ class: "#{'finished' if percentage == 100}" }
+              %td
+                .progress{ style: "height: 10px;" }
+                  .progress-bar.bg-success{ "aria-valuemax" => "100", "aria-valuemin" => "0", role: "progressbar", style: "width: #{percentage}%;" }
+                = percentage
+                \%
+              %td
+                = questionnaire.name
+              %td
+                - if questionnaire.enabled?
+                  = link_to "Practicar", practice_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-primary btn-sm'
+                - if questionnaire.solved_by? current_user
+                  = link_to "Revisar", last_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-secondary btn-sm'
+
+
 
 = content_for :head do
   %link{href: "https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css", rel: "stylesheet"}
+  %link{href: "https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.css", rel: "stylesheet"}
   :css
     form.button_to {
       display: inline-block;
       margin: 0 0.1em;
     }
 
-    tr.finished {
+    .finished {
       background-color: #dff0d8 !important;
     }
 
@@ -77,7 +196,7 @@
       background-color: #c6d7bf !important;
     }
 
-    tr.missed {
+    .missed {
       background-color: #f2dede !important;
     }
 
@@ -85,13 +204,179 @@
       background-color: #d9c5c5 !important;
     }
 
+
+    /* POST */
+    span.trix-button-group.trix-button-group--file-tools,
+    span.trix-button-group.trix-button-group--history-tools {
+      display: none;
+    }
+
+    trix-editor.trix-content {
+      background-color: #FFF;
+      min-height: 75px;
+      max-height: 150px;
+      font-size: 1.2em;
+    }
+
+    trix-toolbar .trix-button {
+      background-color: #FFF;
+    }
+
+    .new-post,
+    .post {
+      background-color: #EEE;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+      border-radius: 8px;
+      margin-top: 15px;
+      margin-bottom: 15px;
+    }
+
+    .pinned {
+      background-color: #DFE8F8;
+    }
+
+    /**/
+
+    /* CALENDAR */
+    #event-calendar {
+      margin: 0 auto;
+      font-size: 14px;
+      color: #212121;
+
+      background-color: #ebebeb;
+      font-weight: 700;
+      box-shadow: 0 4px 0 #343434;
+    }
+
+    #event-calendar .clndr {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    #event-calendar .clndr-calendar {
+      min-width: 250px;
+      flex: 1;
+    }
+
+    #event-calendar .clndr-controls {
+      padding: 10px;
+      background-color: hsl(0, 0%, 25%);
+      color: white;
+      text-align: center;
+      display: flex;
+      justify-content: space-between;
+    }
+    #event-calendar .clndr-controls .clndr-previous-button,
+    #event-calendar .clndr-controls .clndr-next-button {
+      width: 30px;
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+    }
+    #event-calendar .clndr-controls .clndr-previous-button:hover,
+    #event-calendar .clndr-controls .clndr-next-button:hover {
+      opacity: 0.5;
+    }
+
+
+    #event-calendar .clndr-grid .days-of-the-week {
+      background-color: #343a40;
+      display: flex;
+    }
+    #event-calendar .clndr-grid .days-of-the-week .header-day {
+      flex: 1 14%;
+      padding: 12px 0;
+      text-align: center;
+      color: white;
+    }
+
+    #event-calendar .clndr-grid .days {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    #event-calendar .clndr-grid .days .day,
+    #event-calendar .clndr-grid .days .empty {
+      float: left;
+      width: 14.2857%;
+      padding: 12px 0;
+      text-align: center;
+      color: #4f4f4f;
+      background-color: #ebebeb;
+      border-bottom: 2px solid white;
+      /*background-image: url('http://kylestetz.github.io/CLNDR/css/./triangle.svg');*/
+      background-size: cover;
+      background-position: center;
+    }
+    #event-calendar .clndr-grid .days .day.event {
+      background-color: #C1C7CD;
+    }
+    #event-calendar .clndr-grid .days .day.event .day-number,
+    #event-calendar .clndr-grid .days .empty.event .day-number {
+      padding-bottom: 2px;
+      border-bottom: 2px solid #343a40;
+    }
+    #event-calendar .clndr-grid .days .day.adjacent-month .day-number,
+    #event-calendar .clndr-grid .days .empty.adjacent-month .day-number {
+      opacity: 0.6;
+    }
+    #event-calendar .clndr-grid .days .day.past .day-number,
+    #event-calendar .clndr-grid .days .empty.past .day-number {
+      opacity: 0.3;
+    }
+    #event-calendar .clndr-grid .days .today,
+    #event-calendar .clndr-grid .days .today.event {
+      background-color: white;
+      background-image: none;
+    }
+
+    #event-calendar .event-listing {
+      flex: 1;
+      min-width: 180px;
+    }
+    #event-calendar .event-listing .event-listing-title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 86px;
+
+      padding: 0 10px;
+      background-color: #343a40;
+      color: white;
+    }
+    #event-calendar .event-listing .event-item {
+      padding: 8px;
+      font-weight: normal;
+    }
+
+
 = content_for :javascript do
   %script{src: "https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js", type: "application/javascript"}
+  %script{src: "https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.js", type: "application/javascript"}
+  %script{src: "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js", type: "application/javascript"}
+  %script{src: "https://cdnjs.cloudflare.com/ajax/libs/clndr/1.5.1/clndr.min.js", type: "application/javascript"}
   :javascript
     $(function () {
       $('.challenges').DataTable({
         order: [[1, "asc"]],
         paging: false,
+        info: false,
+        searching: false,
+        language: {
+          url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+        },
+        columnDefs: [{
+          targets: 'no-sort',
+          orderable: false
+        }]
+      });
+      $('.exercises').DataTable({
+        order: [[1, "asc"]],
+        paging: false,
+        info: false,
+        searching: false,
         language: {
           url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
         },
@@ -103,6 +388,8 @@
       $('.questionnaires').DataTable({
         order: [[1, "asc"]],
         paging: false,
+        info: false,
+        searching: false,
         language: {
           url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
         },
@@ -111,4 +398,76 @@
           orderable: false
         }]
       });
+
+      var search_id_post = new URLSearchParams(window.location.search).get("post")
+      if (search_id_post) {
+        var $post = $(".post[data-id='" + search_id_post + "']");
+        if ($post.length) {
+          $post.css("background-color", "#FFA");
+          setTimeout(() => $('html, body').scrollTop($post.offset().top - 50), 100);
+          setTimeout(() => {
+            $post.css("transition", "background-color 2s ease-in-out");
+            $post.css("background-color", "");
+          }, 2000);
+        }
+      }
+
+      var $form_new_post = $("#new_post");
+      $form_new_post.on("submit", e => {
+        if (!$form_new_post.find("trix-editor.trix-content").val()) {
+          e.preventDefault();
+          alert("Advertencia: El post no puede estar vacío");
+        }
+      });
+
     });
+
+    document.addEventListener("trix-file-accept", function(event) {
+      event.preventDefault();
+    });
+
+
+    // Calendar
+    moment.updateLocale('es', {
+      week: {
+        dow: 0
+      }
+    });
+
+    moment.locale("es");
+    $(function () {
+
+      var currentMonth = moment().format('YYYY-MM');
+      var nextMonth = moment().add(1, 'month').format('YYYY-MM');
+
+      var challenges = [];
+      #{
+        @challenges.map { |challenge|
+          "challenges.push({" +
+            "progress: #{challenge.progress_by?(current_user)}, " +
+            "percentage: #{(challenge.progress_by?(current_user) * 100).to_i}, " +
+            "status: \"#{(challenge.progress_by?(current_user) * 100).to_i == 100 ? 'finished' : ((challenge.progress_by?(current_user) * 100).to_i < 100 && !challenge.enabled ? 'missed' : 'available')}\", " +
+            "title: \"#{challenge.title}\", " +
+            "url: \"#{peer_review_challenge_path(challenge)}\", " +
+            "date: \"#{challenge.due_date}\", " +
+            "enabled: #{challenge.enabled}, " +
+            "optional: #{challenge.optional?}, " +
+            "has_picked_solutions: #{challenge.has_picked_solutions?}" +
+          "});"
+        }.join('\n  ').html_safe
+      }
+
+      $('#event-calendar').clndr({
+        template: $('#event-calendar-template').html(),
+        events: challenges,
+        forceSixRows: true
+      });
+
+      var adjust_title_height = function() {
+        var $title = $(".event-listing-title");
+        $title.css("height", $title.position().top === $(".clndr-calendar").position().top ? "86px" : "40px");
+      }
+      $(window).on("resize", adjust_title_height);
+      adjust_title_height();
+    });
+

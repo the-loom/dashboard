@@ -22,6 +22,7 @@ module LoomDashboard
     Rails.application.config.autoload_paths += %W(#{config.root}/lib)
     Rails.application.config.active_record.sqlite3.represent_boolean_as_integer = true
 
+    config.time_zone = "Buenos Aires"
     config.assets.paths << Rails.root.join("vendor", "assets", "components")
     config.after_initialize do |app|
       app.config.paths.add "app/presenters", eager_load: true

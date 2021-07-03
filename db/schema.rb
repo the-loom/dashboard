@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_21_201935) do
+ActiveRecord::Schema.define(version: 2021_07_02_220908) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -172,6 +172,8 @@ ActiveRecord::Schema.define(version: 2021_06_21_201935) do
     t.string "summary"
     t.integer "course_id"
     t.boolean "required", default: true
+    t.time "time_from"
+    t.time "time_to"
   end
 
   create_table "memberships", id: :serial, force: :cascade do |t|
@@ -308,6 +310,19 @@ ActiveRecord::Schema.define(version: 2021_06_21_201935) do
     t.integer "course_id"
   end
 
+  create_table "posts", force: :cascade do |t|
+    t.text "text"
+    t.boolean "pinned", default: false
+    t.bigint "author_id"
+    t.bigint "notification_id"
+    t.bigint "course_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_posts_on_author_id"
+    t.index ["course_id"], name: "index_posts_on_course_id"
+    t.index ["notification_id"], name: "index_posts_on_notification_id"
+  end
+
   create_table "resource_categories", force: :cascade do |t|
     t.string "name"
     t.integer "course_id"
@@ -401,6 +416,7 @@ ActiveRecord::Schema.define(version: 2021_06_21_201935) do
     t.boolean "admin", default: false
     t.datetime "discarded_at"
     t.integer "last_visited_course_id", default: 0
+    t.string "bios"
     t.index ["discarded_at"], name: "index_users_on_discarded_at"
   end
 
@@ -422,5 +438,6 @@ ActiveRecord::Schema.define(version: 2021_06_21_201935) do
   add_foreign_key "automatic_correction_repos", "automatic_correction_repos", column: "parent_id"
   add_foreign_key "courses", "courses", column: "parent_course_id"
   add_foreign_key "notifications", "users", column: "receiver_id"
+  add_foreign_key "posts", "users", column: "author_id"
   add_foreign_key "taggings", "tags"
 end

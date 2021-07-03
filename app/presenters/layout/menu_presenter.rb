@@ -17,7 +17,6 @@ class Layout::MenuPresenter
         teacher_menu,
         classroom_menu,
         gamification_menu,
-        dashboard_menu,
         resources_menu,
         exercises_menu,
         notifications_menu,
@@ -27,19 +26,26 @@ class Layout::MenuPresenter
   end
 
   def menu_b4
-    return [] unless @current_user && @current_user.current_membership && !@current_user.current_membership.nil?
-    [
-        dashboard_menu,
-        notifications_menu,
-        courses_menu,
-        profile_menu
-    ].compact
+    if @current_user
+      if @current_user.current_membership && !@current_user.current_membership.nil?
+        [
+          notifications_menu,
+          courses_menu,
+          profile_menu
+        ].compact
+      else
+        # Expand to profile when permissions there got improved
+        [exit_only_menu].compact
+      end
+    else
+      []
+    end
   end
 
   def sidebar
     return [] unless @current_user && @current_user.current_membership && !@current_user.current_membership.nil?
-
     [
+        dashboard_menu,
         admin_menu,
         teacher_menu,
         classroom_menu,
@@ -50,6 +56,10 @@ class Layout::MenuPresenter
   end
 
   protected
+    def exit_only_menu
+      MenuLeaf.new("Salir", route.logout_path)
+    end
+
     def profile_menu
       MenuNode.new(@current_user.short_name, [
           MenuLeaf.new("Perfil", route.profile_path),
@@ -100,7 +110,9 @@ class Layout::MenuPresenter
     end
 
     def dashboard_menu
-      MenuLeaf.new("Tablero", route.dashboard_index_path)
+      MenuNode.new("", [
+        MenuLeaf.new("Tablero", route.dashboard_index_path)
+      ])
     end
 
     def gamification_menu
@@ -117,8 +129,8 @@ class Layout::MenuPresenter
 
     def teacher_menu
       if manage?(User) && manage?(Team) && manage?(Lecture)
-        classroom_node = MenuNode.new("Aula")
-        classroom_node << MenuLeaf.new("Docentes", route.teachers_path)
+        classroom_node = MenuNode.new("Administración de Aula")
+        classroom_node << MenuLeaf.new("Docentes", route.admin_teachers_path)
         classroom_node << MenuLeaf.new("Estudiantes", route.students_path)
         classroom_node << MenuLeaf.new("Equipos", route.teams_path) if on?(:teams)
         if on?(:lectures)
@@ -136,6 +148,7 @@ class Layout::MenuPresenter
       if on?(:teams) && @current_user.current_membership.team
         classroom_node << MenuLeaf.new("Mi equipo", route.team_path(@current_user.current_membership.team.nickname))
       end
+      classroom_node << MenuLeaf.new("Mis docentes", route.teachers_path)
       classroom_node
     end
 
@@ -181,6 +194,9 @@ class MenuLeaf
     @title = title
     @link = link
     @style = style
+  end
+  def current_for?(current_path)
+    @link == current_path
   end
 end
 

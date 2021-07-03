@@ -134,6 +134,12 @@ class Course < ApplicationRecord
     }
   end
 
+  def switch(user, session)
+    user.update(last_visited_course_id: self.id)
+    session[:course_id] = self.id
+    Course.current = self
+  end
+
   def self.current
     RequestStore.store[:current_course] || NullCourse.new
   end
@@ -144,6 +150,10 @@ class Course < ApplicationRecord
 
   def students
     users.joins(:memberships).where(memberships: { role: :student, course: Course.current }).distinct
+  end
+
+  def teachers
+    users.includes(:memberships).where(memberships: { course: Course.current, role: :teacher })
   end
 
   def on?(requested_feature)

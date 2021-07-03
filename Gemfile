@@ -47,7 +47,7 @@ gem "omniauth-rails_csrf_protection", "~> 1.0"
 
 # Forms
 gem "simple_form", "~> 5.1"
-gem "trix-rails", "~> 2.3", require: "trix"
+gem "trix-rails", "~> 2.3", require: "trix" # remove?
 
 group :development do
   # Gemfile health
@@ -67,21 +67,21 @@ group :development do
 
   # Best practices
   gem "rails_best_practices", "~> 1.20"
-  gem "rubocop-performance", "~> 1.9", require: false
-  gem "rubocop-rails_config", "~> 1.3"
+  gem "rubocop-performance", "~> 1.11", require: false
+  gem "rubocop-rails_config", "~> 1.5.5"
   gem "rubocop-rake", "~> 0.5", require: false
   gem "rubocop-rspec", "~> 2.2", require: false
 
   gem "annotate", "~> 3.1"
   gem "binding_of_caller", "~> 1.0"
-  gem "listen", "~> 3.4"
+  gem "listen", "~> 3.5"
   gem "spring", "~> 2.1"
   gem "spring-watcher-listen", "~> 2.0"
 end
 
 # File management
 gem "active_storage_validations", "~> 0.9"
-gem "aws-sdk-s3", "~> 1.91"
+gem "aws-sdk-s3", "~> 1.96"
 gem "mini_magick", "~> 4.11"
 gem "rubyzip", "~> 2.3"
 gem "zip-zip", "~> 0.3"

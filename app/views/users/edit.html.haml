@@ -11,6 +11,7 @@
       = f.input :first_name, label: 'Nombres'
       = f.input :last_name, label: 'Apellidos'
       = f.input :avatar, label: 'Imagen de perfil'
+      = f.input :bios, label: 'Bio', as: :text, input_html: { maxlength: 200 }
       = f.button :submit, 'Actualizar', class: "btn-primary"
 %hr/
 .row

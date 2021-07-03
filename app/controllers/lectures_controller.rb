@@ -1,4 +1,6 @@
 class LecturesController < ApplicationController
+  layout "application2", except: [:overview]
+
   before_action do
     check_feature(:lectures)
   end
@@ -10,7 +12,8 @@ class LecturesController < ApplicationController
 
   def new
     authorize Lecture, :create?
-    @lecture = Lecture.new
+    latest_lecture = Lecture.order(id: :asc).last
+    @lecture = Lecture.new(time_from: latest_lecture.time_from, time_to: latest_lecture.time_to)
     @labels = OpenStruct.new(title: "Nueva clase", button: "Guardar clase")
     render :form
   end
@@ -49,6 +52,15 @@ class LecturesController < ApplicationController
     end
   end
 
+  def register_attendance
+    authorize Lecture, :self_register?
+    lecture = Lecture.find(params[:id])
+    if lecture.current? && !current_user.present_at(lecture)
+      current_user.register_attendance(lecture)
+    end
+    redirect_to root_path
+  end
+
   def overview
     authorize Lecture
     @lectures = Lecture.all
@@ -57,6 +69,6 @@ class LecturesController < ApplicationController
 
   private
     def lecture_params
-      params[:lecture].permit(:summary, :date, :required)
+      params[:lecture].permit(:summary, :date, :time_from, :time_to, :required)
     end
 end

@@ -1,14 +1,13 @@
 inherit_gem:
   rubocop-rails_config:
     - config/rails.yml
-
 require:
   - rubocop-performance
   - rubocop-rake
   - rubocop-rspec
 
 AllCops:
-  TargetRubyVersion: 2.4
+  TargetRubyVersion: 2.6
 
 Style/FrozenStringLiteralComment:
   Enabled: false
