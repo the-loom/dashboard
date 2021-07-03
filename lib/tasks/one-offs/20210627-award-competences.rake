@@ -15,7 +15,7 @@ namespace :dev do
     ActiveRecord::Base.transaction do
       Course.current = Course.find(28)
       # [307, 340, 341, 343]
-      challenges = PeerReview::Challenge.where(id: ENV['id'].to_i)
+      challenges = PeerReview::Challenge.where(id: ENV["id"].to_i)
       challenges.each do |ch|
         puts "Premiando #{ch.title}"
 

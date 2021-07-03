@@ -18,7 +18,7 @@ def get_avatar_file
     end
     puts "retrying #{i}/#{MAX_RETRIES}"
     sleep(1)
-    i+=1
+    i += 1
     retry
   end
   file
@@ -78,7 +78,7 @@ puts "Done fetching avatars"
       Identity.create(
         user: user,
         provider: "github",
-        uid: rand(10 ** 8),
+        uid: rand(10**8),
         first_name: user.first_name,
         last_name: user.last_name,
         nickname: user.nickname,

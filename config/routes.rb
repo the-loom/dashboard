@@ -20,20 +20,20 @@ Rails.application.routes.draw do
 
   get "/welcome" => "pages#welcome", as: :welcome
   get "/profile" => "users#show", as: :profile
-  get "/u/:nickname" => "users#show", as: :user_details, constraints: { nickname: /[0-z\.-]+/ }
+  get "/u/:nickname" => "users#show", as: :user_details, constraints: { nickname: /[0-z.-]+/ }
   get "/profile/edit" => "users#edit", as: :edit_profile
   patch "/profile/edit" => "users#update", as: :update_user
   get "/profile/change_identity/:identity_id" => "users#change_identity", as: :change_identity
 
   resources :students, only: [:index, :edit, :update, :destroy] do
-      member do
-        post :toggle
-        post :promote
-        post :comment
-      end
-      collection do
-        post :bulk_edit
-      end
+    member do
+      post :toggle
+      post :promote
+      post :comment
+    end
+    collection do
+      post :bulk_edit
+    end
   end
 
   resources :teachers, only: :index
@@ -60,7 +60,7 @@ Rails.application.routes.draw do
     end
   end
 
-  get "/teams/:nickname" => "teams#show", as: :team_profile, constraints: { nickname: /[0-z\.-]+/ }
+  get "/teams/:nickname" => "teams#show", as: :team_profile, constraints: { nickname: /[0-z.-]+/ }
   # resources :articles, param: :slug
   # https://stackoverflow.com/a/31060067/2661448
 
@@ -150,8 +150,8 @@ Rails.application.routes.draw do
   end
 
   resources :repos, only: [:index, :new, :create]
-  get "repos/:user/:name" => "repos#show", as: :repo, constraints: { user: /[0-z\.-]+/ }
-  get "repos/:user/:name/grade" => "repos#grade", as: :grade, constraints: { user: /[0-z\.-]+/ }
+  get "repos/:user/:name" => "repos#show", as: :repo, constraints: { user: /[0-z.-]+/ }
+  get "repos/:user/:name/grade" => "repos#grade", as: :grade, constraints: { user: /[0-z.-]+/ }
   resources :test_runs, only: [:show]
 
   namespace :api, defaults: { format: :json } do
