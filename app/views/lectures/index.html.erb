@@ -38,7 +38,7 @@
           <%= display_date lecture.date %>
         </td>
         <td>
-          <%= display_time lecture.time_from %> a <%= display_time lecture.time_to %>
+          <%= display_time_range lecture.time_from, lecture.time_to %>
         </td>
         <td>
           <%= yes_no(lecture.required) %>
