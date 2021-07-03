@@ -81,7 +81,26 @@ module MultipleChoices
     end
 
     def practice
-      @questionnaire = MultipleChoices::Questionnaire.includes(:questions, questions: :answers).find(params[:id])
+      @questionnaire = MultipleChoices::Questionnaire.includes(:questions, questions: :answers).find_by(id: params[:id])
+
+      unless @questionnaire
+        # we try to find the questionnaire in other courses
+        @questionnaire = MultipleChoices::Questionnaire.unscoped.includes(:questions, questions: :answers).find_by(id: params[:id])
+        if @questionnaire
+          course = @questionnaire.course
+          unless current_user.current_membership(course).nil?
+            course.switch(current_user, session)
+            menu # rebuilds the menu
+          end
+        end
+      end
+
+      unless @questionnaire
+        flash[:alert] = "No pudimos encontrar el cuestionario que buscás..."
+        redirect_to(dashboard_index_path) && return
+      end
+
+      authorize @questionnaire, :access?
 
       unless @questionnaire.enabled?
         flash[:info] = "Este cuestionario ya ha finalizado..."
@@ -99,8 +118,6 @@ module MultipleChoices
           redirect_to(multiple_choices_questionnaires_path) && return
         end
       end
-
-      authorize @questionnaire, :access?
 
       set_random_seed
       @questionnaire = MultipleChoices::PracticeQuestionnairePresenter.new(@questionnaire, Random.new(random_seed))

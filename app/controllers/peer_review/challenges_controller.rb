@@ -245,7 +245,7 @@ module PeerReview
           course = @challenge.course
           unless current_user.current_membership(course).nil?
             course.switch(current_user, session)
-            menu() # rebuilds the menu
+            menu # rebuilds the menu
           end
         end
       end

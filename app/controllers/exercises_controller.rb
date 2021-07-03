@@ -59,7 +59,7 @@ class ExercisesController < ApplicationController
     @exercise = Exercise.find_by(id: params[:id])
 
     unless @exercise
-      # we try to find the challenge in other courses
+      # we try to find the exercise in other courses
       @exercise = Exercise.unscoped.find_by(id: params[:id])
       if @exercise
         course = @exercise.course
