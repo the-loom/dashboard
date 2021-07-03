@@ -239,8 +239,20 @@ module PeerReview
       @challenge = PeerReview::Challenge.find_by(id: params[:id])
 
       unless @challenge
-        flash[:alert] = "No pudimos encontrar el desafío que buscás... ¿es de este curso?"
-        redirect_to(peer_review_challenges_path) && return
+        # we try to find the challenge in other courses
+        @challenge = PeerReview::Challenge.unscoped.find_by(id: params[:id])
+        if @challenge
+          course = @challenge.course
+          unless current_user.current_membership(course).nil?
+            course.switch(current_user, session)
+            menu() # rebuilds the menu
+          end
+        end
+      end
+
+      unless @challenge
+        flash[:alert] = "No pudimos encontrar el desafío que buscás..."
+        redirect_to(dashboard_index_path) && return
       end
 
       authorize @challenge, :show?

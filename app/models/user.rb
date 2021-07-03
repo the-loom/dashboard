@@ -121,8 +121,8 @@ class User < ApplicationRecord
     self
   end
 
-  def current_membership
-    self.all_memberships.includes([:course, :team]).find_by(course: Course.current) || NullMembership.new
+  def current_membership(course = Course.current)
+    self.all_memberships.includes([:course, :team]).find_by(course: course) || NullMembership.new
   end
 
   def teacher?

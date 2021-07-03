@@ -56,8 +56,26 @@ class ExercisesController < ApplicationController
   end
 
   def show
-    @exercise = Exercise.find(params[:id])
-    authorize @exercise
+    @exercise = Exercise.find_by(id: params[:id])
+
+    unless @exercise
+      # we try to find the challenge in other courses
+      @exercise = Exercise.unscoped.find_by(id: params[:id])
+      if @exercise
+        course = @exercise.course
+        unless current_user.current_membership(course).nil?
+          course.switch(current_user, session)
+          menu # rebuilds the menu
+        end
+      end
+    end
+
+    unless @exercise
+      flash[:alert] = "No pudimos encontrar el ejercicio que buscás..."
+      redirect_to(dashboard_index_path) && return
+    end
+
+    authorize @exercise, :show?
   end
 
   private

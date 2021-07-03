@@ -66,8 +66,8 @@ class ApplicationController < ActionController::Base
     end
 
   private
-    def menu
-      menu = Layout::MenuPresenter.new(current_user)
+    def menu(user = current_user)
+      menu = Layout::MenuPresenter.new(user)
 
       @menu = menu.menu
       @menub4 = menu.menu_b4
