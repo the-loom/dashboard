@@ -24,7 +24,7 @@ gem "sentry-raven", "~> 3.1"
 gem "request_store", "~> 1.5"
 
 # Auithorization
-gem "pundit", "~> 1.1"
+gem "pundit", "~> 2.1"
 
 group :development, :test do
   # Debugging
