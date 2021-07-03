@@ -87,9 +87,8 @@ Rails.application.routes.draw do
   resources :notifications, only: [:index, :new, :create]
 
   resources :lectures, except: :destroy do
-    collection do
-      get :overview
-    end
+    get :overview, on: :collection
+    post :register_attendance, on: :member
   end
 
   resources :exercises do
