@@ -238,17 +238,8 @@ module PeerReview
     def show
       @challenge = PeerReview::Challenge.find_by(id: params[:id])
 
-      unless @challenge
-        # we try to find the challenge in other courses
-        @challenge = PeerReview::Challenge.unscoped.find_by(id: params[:id])
-        if @challenge
-          course = @challenge.course
-          unless current_user.current_membership(course).nil?
-            course.switch(current_user, session)
-            menu # rebuilds the menu
-          end
-        end
-      end
+      # we try to find the exercise in other courses
+      @challenge ||= load_exercise(PeerReview::Challenge.unscoped.find_by(id: params[:id]))
 
       unless @challenge
         flash[:alert] = "No pudimos encontrar el desafío que buscás..."

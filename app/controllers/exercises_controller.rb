@@ -58,17 +58,8 @@ class ExercisesController < ApplicationController
   def show
     @exercise = Exercise.find_by(id: params[:id])
 
-    unless @exercise
-      # we try to find the exercise in other courses
-      @exercise = Exercise.unscoped.find_by(id: params[:id])
-      if @exercise
-        course = @exercise.course
-        unless current_user.current_membership(course).nil?
-          course.switch(current_user, session)
-          menu # rebuilds the menu
-        end
-      end
-    end
+    # we try to find the exercise in other courses
+    @exercise ||= load_exercise(Exercise.unscoped.find_by(id: params[:id]))
 
     unless @exercise
       flash[:alert] = "No pudimos encontrar el ejercicio que buscás..."
