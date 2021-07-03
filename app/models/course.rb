@@ -114,6 +114,12 @@ class Course < ApplicationRecord
     }
   end
 
+  def switch(user, session)
+    user.update(last_visited_course_id: self.id)
+    session[:course_id] = self.id
+    Course.current = self
+  end
+
   def self.current
     RequestStore.store[:current_course] || NullCourse.new
   end

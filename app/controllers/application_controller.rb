@@ -11,6 +11,17 @@ class ApplicationController < ActionController::Base
   before_action :menu
 
   protected
+    def load_exercise(exercise)
+      if exercise
+        course = exercise.course
+        unless current_user.current_membership(course).nil?
+          course.switch(current_user, session)
+          menu # rebuilds the menu
+        end
+      end
+      exercise
+    end
+
     def set_random_seed
       session[:seed] = rand(1..10)
     end
@@ -66,8 +77,8 @@ class ApplicationController < ActionController::Base
     end
 
   private
-    def menu
-      menu = Layout::MenuPresenter.new(current_user)
+    def menu(user = current_user)
+      menu = Layout::MenuPresenter.new(user)
 
       @menu = menu.menu
       @menub4 = menu.menu_b4

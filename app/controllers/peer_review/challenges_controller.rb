@@ -238,9 +238,12 @@ module PeerReview
     def show
       @challenge = PeerReview::Challenge.find_by(id: params[:id])
 
+      # we try to find the exercise in other courses
+      @challenge ||= load_exercise(PeerReview::Challenge.unscoped.find_by(id: params[:id]))
+
       unless @challenge
-        flash[:alert] = "No pudimos encontrar el desafío que buscás... ¿es de este curso?"
-        redirect_to(peer_review_challenges_path) && return
+        flash[:alert] = "No pudimos encontrar el desafío que buscás..."
+        redirect_to(dashboard_index_path) && return
       end
 
       authorize @challenge, :show?
