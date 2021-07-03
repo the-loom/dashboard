@@ -66,7 +66,7 @@ group :development do
   gem "ffaker", "~> 2.18"
 
   # Best practices
-  gem "rails_best_practices", "~> 1.20"
+  gem "rails_best_practices", "~> 1.21"
   gem "rubocop-performance", "~> 1.11", require: false
   gem "rubocop-rails_config", "~> 1.5.5"
   gem "rubocop-rake", "~> 0.5", require: false
