@@ -15,6 +15,15 @@ module Admin
       render :form
     end
 
+    def rotate_password
+      authorize Course, :admin?
+      course = Course.find(params[:id])
+      course.rotate_password
+      course.save
+
+      redirect_to edit_admin_course_path(course)
+    end
+
     def replicate
       authorize Course, :admin?
       base_course = Course.find(params[:id])

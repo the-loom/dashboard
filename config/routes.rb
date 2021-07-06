@@ -170,6 +170,7 @@ Rails.application.routes.draw do
         post :restore
         post :duplicate
         post :replicate
+        post :rotate_password
       end
     end
     resources :users, only: [:index, :destroy, :edit, :update] do

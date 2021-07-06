@@ -38,10 +38,15 @@ class Course < ApplicationRecord
     new_course = nil
     Course.transaction do
       new_course = self.dup
+      new_course.rotate_password
       new_course.name = self.name + " " + ("0" + (self.replicas.size + 1).to_s)[-2..-1]
       new_course.save!
     end
     new_course
+  end
+
+  def rotate_password
+    self.password = open("https://www.dinopass.com/password/simple").read
   end
 
   def fully_duplicate!
@@ -49,6 +54,7 @@ class Course < ApplicationRecord
 
     Course.transaction do
       new_course = self.dup
+      new_course.rotate_password
       new_course.name = "Copia de " + self.name
       new_course.save!
 
