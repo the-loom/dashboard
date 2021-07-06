@@ -88,7 +88,7 @@ class StudentsController < ApplicationController
       end
 
       if params[:bulk_edit][:action] == "register_event"
-        event = Course.current.events.find(params[:bulk_edit][:auxiliary_id].to_i)
+        event = Event.find(params[:bulk_edit][:auxiliary_id].to_i)
 
         authorize Event, :register?
 

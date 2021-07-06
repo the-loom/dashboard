@@ -15,6 +15,19 @@ module Admin
       render :form
     end
 
+    def replicate
+      authorize Course, :admin?
+      base_course = Course.find(params[:id])
+
+      @course = base_course.replicate!
+      @course.replica = true
+      @course.parent_course = base_course
+      @course.save
+
+      @labels = OpenStruct.new(title: "Editar curso", button: "Actualizar curso")
+      render :form
+    end
+
     def new
       authorize Course, :admin?
       @course = Course.new

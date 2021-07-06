@@ -11,8 +11,11 @@ class PeerReview::ChallengePolicy < ApplicationPolicy
   def review?
     record.reviewable_by? user
   end
-  def manage?
+  def monitor?
     user.teacher?
+  end
+  def manage?
+    user.teacher? && Course.current.editable?
   end
   def purge?
     user.admin?

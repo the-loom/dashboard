@@ -76,6 +76,7 @@ module MultipleChoices
     end
 
     def overview
+      authorize MultipleChoices::Questionnaire, :monitor?
       @questionnaire = MultipleChoices::Questionnaire.find(params[:id])
       @solutions = @questionnaire.solutions
     end

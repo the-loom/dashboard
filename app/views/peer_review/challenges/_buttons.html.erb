@@ -1,14 +1,18 @@
 <% if policy(PeerReview::Challenge).manage? %>
   <div class="btn-group" role="group" aria-label="Basic example">
     <%= link_to "Panorama", overview_peer_review_challenge_path(challenge), class: 'btn btn-primary btn-lg', role: "button" %>
-    <%= link_to "Editar desafío", edit_peer_review_challenge_path(challenge), class: 'btn btn-outline-primary btn-lg', role: "button" %>
+    <% if policy(PeerReview::Challenge).edit? %>
+      <%= link_to "Editar desafío", edit_peer_review_challenge_path(challenge), class: 'btn btn-outline-primary btn-lg', role: "button" %>
+    <% end %>
     <% if challenge.published? %>
       <%= link_to "Despublicar", unpublish_peer_review_challenge_path(challenge), class: "btn btn-outline-primary btn-lg", method: :post, role: "button" %>
     <% else %>
       <%= link_to "Publicar", publish_peer_review_challenge_path(challenge), class: "btn btn-outline-primary btn-lg", method: :post, role: "button" %>
     <% end %>
     <%= link_to challenge.enabled? ? "Finalizar" : "Reabrir", toggle_peer_review_challenge_path(challenge), class: "btn btn-outline-primary btn-lg", role: "button" %>
-    <%= link_to "Duplicar", duplicate_peer_review_challenge_path(challenge), class: "btn btn-outline-primary btn-lg", role: "button" %>
+    <% if policy(PeerReview::Challenge).edit? %>
+      <%= link_to "Duplicar", duplicate_peer_review_challenge_path(challenge), class: "btn btn-outline-primary btn-lg", role: "button" %>
+    <% end %>
     <%= link_to "Descargar soluciones", bulk_download_peer_review_challenge_path(challenge), class: "btn btn-outline-primary btn-lg", role: "button" %>
     <%= link_to "Flujo de revisiones", flow_peer_review_challenge_path(challenge), class: "btn btn-outline-primary btn-lg", role: "button" %>
   </div>

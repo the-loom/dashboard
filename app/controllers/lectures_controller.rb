@@ -12,7 +12,7 @@ class LecturesController < ApplicationController
 
   def new
     authorize Lecture, :create?
-    latest_lecture = Lecture.order(id: :asc).last
+    latest_lecture = Lecture.order(id: :asc).last || NullLecture.new
     @lecture = Lecture.new(time_from: latest_lecture.time_from, time_to: latest_lecture.time_to)
     @labels = OpenStruct.new(title: "Nueva clase", button: "Guardar clase")
     render :form

@@ -26,7 +26,7 @@ module PeerReview
     end
 
     def messages
-      authorize PeerReview::Challenge, :manage?
+      authorize PeerReview::Challenge, :monitor?
       @messages = PeerReview::Message.all.map { |m| PeerReview::MessagePresenter.new(m) }
     end
 
@@ -38,20 +38,20 @@ module PeerReview
         redirect_to(peer_review_challenges_path) && return
       end
 
-      authorize @challenge, :manage?
+      authorize @challenge, :monitor?
       @flow_overview = PeerReview::FlowOverviewPresenter.new(PeerReview::Review.includes(:reviewer, :solution, solution: :author).where(peer_review_solutions: { peer_review_challenge_id: @challenge.id }))
       render :flow_overview
     end
 
     def overview
-      authorize PeerReview::Challenge, :manage?
+      authorize PeerReview::Challenge, :monitor?
       @challenge = PeerReview::Challenge.find(params[:id])
       @solvers = @challenge.team_challenge? ? @challenge.solvers : Course.current.users
       @overview = PeerReview::OverviewPresenter.new(@challenge)
     end
 
     def meta_overview
-      authorize PeerReview::Challenge, :manage?
+      authorize PeerReview::Challenge, :monitor?
       @challenges = PeerReview::Challenge.where(published: :true).order(title: :asc)
       @students = Course.current.memberships.includes(:user).student.collect(&:user).compact
       # TODO: fix this .compact, should not be empty memberships
@@ -59,7 +59,7 @@ module PeerReview
     end
 
     def flow_overview
-      authorize PeerReview::Challenge, :manage?
+      authorize PeerReview::Challenge, :monitor?
       @flow_overview = PeerReview::FlowOverviewPresenter.new(PeerReview::Review.includes(:reviewer, :solution, solution: :author))
     end
 
@@ -138,7 +138,7 @@ module PeerReview
 
     def award
       # TODO: use case
-      authorize PeerReview::Challenge, :manage?
+      authorize PeerReview::Challenge, :monitor?
       challenge = PeerReview::Challenge.find(params[:id])
 
       if challenge.awarded
@@ -150,17 +150,17 @@ module PeerReview
       begin
         ActiveRecord::Base.transaction do
           solve = "Resolver '#{challenge.title}'"
-          solve_event = Event.create(name: solve, description: solve, points: 8, min_points: 8, max_points: 8)
+          solve_event = Event.create(name: solve, description: solve, points: 8, min_points: 8, max_points: 8, course: Course.current)
 
           review = "Revisar '#{challenge.title}'"
-          review_event = Event.create(name: review, description: review, points: 6, min_points: 6, max_points: 12)
+          review_event = Event.create(name: review, description: review, points: 6, min_points: 6, max_points: 12, course: Course.current)
 
           extra_review = "Revisión extra sobre '#{challenge.title}'"
-          extra_review_event = Event.create(name: extra_review, description: extra_review, points: 4, min_points: 0, max_points: 0)
+          extra_review_event = Event.create(name: extra_review, description: extra_review, points: 4, min_points: 0, max_points: 0, course: Course.current)
 
           challenge.solutions.final.each do |s|
             next unless s.author
-            s.author.register(solve_event)
+            s.author.register(solve_event, 1, s.course)
           end
 
           reviews_by_reviewer = challenge.reviews.group_by { |r| r.reviewer }
@@ -170,9 +170,9 @@ module PeerReview
             base_reviews = [total_reviews, challenge.expected_reviews].min
             extra_reviews = [total_reviews - base_reviews, MAX_EXTRA_REVIEWS].min
 
-            reviewer.register(review_event, base_reviews)
+            reviewer.register(review_event, base_reviews, s.course)
 
-            reviewer.register(extra_review_event, extra_reviews)
+            reviewer.register(extra_review_event, extra_reviews, s.course)
           end
         end
       rescue ActiveRecord::RecordInvalid

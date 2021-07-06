@@ -1,7 +1,7 @@
 <% nav_add 'Cuestionarios de Opción Múltiple', '#' %>
 <%= nav_render4 %>
 
-<% if policy(MultipleChoices::Questionnaire).manage? %>
+<% if policy(MultipleChoices::Questionnaire).edit? %>
   <%= link_to 'Nuevo cuestionario', new_multiple_choices_questionnaire_path, class: 'btn btn-primary' %>
   <br><br>
 <% end %>
@@ -24,7 +24,7 @@
         <th>Nombre</th>
         <th>Estado</th>
         <th>Preguntas</th>
-        <% if policy(PeerReview::Challenge).manage? %>
+        <% if policy(PeerReview::Challenge).monitor? %>
           <th><i class="fa fa-eye" title="Publicado"></i></th>
         <% end %>
         <th class="no-sort">&nbsp;</th>
@@ -46,7 +46,7 @@
               <%= questionnaire.questions.hidden.count %> ocultas
             <% end %>
           </td>
-          <% if policy(MultipleChoices::Questionnaire).manage? %>
+          <% if policy(MultipleChoices::Questionnaire).monitor? %>
             <td>
               <%= yes_no questionnaire.published? %>
             </td>
@@ -59,25 +59,27 @@
               <%= link_to "Revisar", last_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-secondary btn-sm' %>
             <% end %>
 
-            <% if policy(MultipleChoices::Questionnaire).manage? %>
+            <% if policy(MultipleChoices::Questionnaire).monitor? %>
               <div class="btn-group">
                 <%= link_to "Panorama", overview_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-primary btn-sm', role: "button" %>
-                <%= link_to "Editar", edit_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-outline-primary btn-sm', role: "button" %>
-                <button type="button" class="btn btn-outline-primary dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <span class="caret"></span>
-                </button>
-                <div class="dropdown-menu">
-                  <%= link_to questionnaire.enabled? ? "Finalizar" : "Reabrir", toggle_multiple_choices_questionnaire_path(questionnaire), class: "dropdown-item", method: :post %>
-                  <% if questionnaire.published? %>
-                    <%= link_to unpublish_multiple_choices_questionnaire_path(questionnaire), class: "dropdown-item", method: :post do %>
-                      Despublicar
+                <% if policy(MultipleChoices::Questionnaire).manage? %>
+                  <%= link_to "Editar", edit_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-outline-primary btn-sm', role: "button" %>
+                  <button type="button" class="btn btn-outline-primary dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                  </button>
+                  <div class="dropdown-menu">
+                    <%= link_to questionnaire.enabled? ? "Finalizar" : "Reabrir", toggle_multiple_choices_questionnaire_path(questionnaire), class: "dropdown-item", method: :post %>
+                    <% if questionnaire.published? %>
+                      <%= link_to unpublish_multiple_choices_questionnaire_path(questionnaire), class: "dropdown-item", method: :post do %>
+                        Despublicar
+                      <% end %>
+                    <% else %>
+                      <%= link_to publish_multiple_choices_questionnaire_path(questionnaire), class: "dropdown-item", method: :post do %>
+                        Publicar
+                      <% end %>
                     <% end %>
-                  <% else %>
-                    <%= link_to publish_multiple_choices_questionnaire_path(questionnaire), class: "dropdown-item", method: :post do %>
-                      Publicar
-                    <% end %>
-                  <% end %>
-                </div>
+                  </div>
+                <% end %>
               </div>
             <% end %>
           </td>
