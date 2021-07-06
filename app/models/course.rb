@@ -21,6 +21,11 @@ class Course < ApplicationRecord
   scope :enabled, -> { where(enabled: true) }
   scope :disabled, -> { where(enabled: false) }
 
+  def all_events
+    inherited = replica ? parent_course.all_events : []
+    self.events + inherited
+  end
+
   def template?
     replicas.size > 0
   end

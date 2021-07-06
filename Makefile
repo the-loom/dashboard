@@ -35,6 +35,11 @@ stop:
 	docker-compose down
 	rm -f tmp/pids/server.pid
 
+restart:
+	echo "Restarting app..."
+	$(MAKE) stop
+	$(MAKE) start
+
 just_db:
 	docker-compose up -d db
 
