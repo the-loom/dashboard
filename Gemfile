@@ -18,7 +18,7 @@ gem "haml-rails", "~> 2.0"
 gem "uglifier", "~> 4.2"
 
 # Bug reporting
-gem "rollbar", "~> 3.1"
+gem "rollbar", "~> 3.2"
 gem "sentry-raven", "~> 3.1"
 
 gem "request_store", "~> 1.5"
@@ -66,11 +66,11 @@ group :development do
   gem "ffaker", "~> 2.18"
 
   # Best practices
-  gem "rails_best_practices", "~> 1.20"
+  gem "rails_best_practices", "~> 1.21"
   gem "rubocop-performance", "~> 1.11", require: false
   gem "rubocop-rails_config", "~> 1.5.5"
   gem "rubocop-rake", "~> 0.5", require: false
-  gem "rubocop-rspec", "~> 2.2", require: false
+  gem "rubocop-rspec", "~> 2.4", require: false
 
   gem "annotate", "~> 3.1"
   gem "binding_of_caller", "~> 1.0"
