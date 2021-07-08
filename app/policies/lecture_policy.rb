@@ -6,7 +6,7 @@ class LecturePolicy < ApplicationPolicy
     user.teacher?
   end
   def self_register?
-    user.student?
+    user.student? || user.teacher?
   end
   def register?
     user.teacher?
