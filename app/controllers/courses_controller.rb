@@ -2,7 +2,7 @@ class CoursesController < ApplicationController
   layout "application2"
 
   def index
-    @courses = Course.kept.enabled
+    @courses = Course.kept.enabled.order(name: :asc)
   end
 
   def enroll

@@ -1,7 +1,8 @@
 %nav#sidebarMenu.col-md-3.col-lg-2.d-md-block.bg-light.sidebar.collapse
   .sidebar-sticky.pt-3
-    - current_lecture = Lecture.current
-    - if current_lecture && current_lecture.current? && !current_user.present_at(current_lecture)
-      = link_to 'Dar presente', register_attendance_lecture_path(current_lecture), class: 'btn btn-lg btn-block btn-success mb-4', method: :post
+    - if current_user
+      - current_lecture = Lecture.current
+      - if current_lecture && current_lecture.current? && !current_user.present_at(current_lecture)
+        = link_to 'Dar presente', register_attendance_lecture_path(current_lecture), class: 'btn btn-lg btn-block btn-success mb-4', method: :post
     - menu.each do |option|
       = render partial:'layouts/side_menu', locals: { menu: option }
