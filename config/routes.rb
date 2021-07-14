@@ -77,6 +77,8 @@ Rails.application.routes.draw do
     votable
   end
 
+  resources :faqs, except: [:show]
+
   resources :dashboard, only: :index
   resources :posts, only: [:create, :destroy] do
     member do

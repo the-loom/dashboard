@@ -102,11 +102,12 @@ class Layout::MenuPresenter
 
     def resources_menu
       MenuLeaf.new("Recursos", route.resources_path)
-      if on?(:resources)
-        resources_node = MenuNode.new("Material")
-        resources_node << MenuLeaf.new("Recursos", route.resources_path)
-        resources_node
-      end
+      resources_node = MenuNode.new("Material")
+
+      resources_node << MenuLeaf.new("Recursos", route.resources_path) if on?(:resources)
+      resources_node << MenuLeaf.new("Preguntas frecuentes", route.faqs_path) if on?(:faqs)
+
+      resources_node unless resources_node.empty?
     end
 
     def dashboard_menu

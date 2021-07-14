@@ -34,6 +34,7 @@ es:
       tiny_cards: 'Tarjetas'
       multiple_choices: 'Preguntas de Opción Múltiple'
       resources: 'Recursos'
+      faqs: 'Preguntas Frecuentes'
 
   activerecord:
     errors:

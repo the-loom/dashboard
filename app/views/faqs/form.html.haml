@@ -1,0 +1,16 @@
+- nav_add 'Preguntas frecuentes', faqs_path
+- nav_add @faq.question[0..50], '#' unless @faq.new_record?
+- nav_add @labels.title, '#'
+= nav_render4
+= simple_form_for @faq do |f|
+  = render :partial => 'shared/errors', locals: { f: f }
+  = f.input :question, label: "Pregunta"
+  = f.input :answer, label: "Respuesta", as: :trix_editor
+  = f.button :submit, @labels.button, class: "btn-primary"
+
+
+= content_for :head do
+  %link{href: "https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.css", rel: "stylesheet"}
+
+= content_for :javascript do
+  %script{src: "https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.js", type: "application/javascript"}

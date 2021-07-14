@@ -1,0 +1,18 @@
+- nav_add 'Preguntas frecuentes', '#'
+= nav_render
+- if policy(Faq).manage?
+  = link_to 'Nueva pregunta frecuente', new_faq_path, class: 'btn btn-primary'
+  %br/
+  %br/
+- if @faqs.empty?
+  .alert.alert-info
+    %p Aún no hay ninguna pregunta frecuente
+- else
+  - @faqs.each do |faq|
+    .card.faq
+      .card-header
+        = faq.question
+      .card-body
+        %blockquote.blockquote.mb-0
+          %p
+            != faq.answer

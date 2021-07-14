@@ -86,3 +86,7 @@ img.team {
 .avatar.teacher {
     max-width: 150px;
 }
+
+.card.faq {
+    margin-bottom: 1em;
+}

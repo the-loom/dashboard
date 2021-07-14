@@ -141,7 +141,8 @@ class Course < ApplicationRecord
         competences: 128,
         tiny_cards: 256,
         multiple_choices: 512,
-        resources: 1024
+        resources: 1024,
+        faqs: 2048
     }
   end
 

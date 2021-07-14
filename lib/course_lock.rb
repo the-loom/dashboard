@@ -8,9 +8,9 @@ module CourseLock
         if Course.current.nil?
           raise NoCourseAvailable
         else
-          if Course.current.replica && [Exercise, PeerReview::Challenge, MultipleChoices::Questionnaire, Resource, ResourceCategory, Event].include?(base)
+          if Course.current.replica && [Exercise, PeerReview::Challenge, MultipleChoices::Questionnaire, Resource, ResourceCategory, Event, Faq].include?(base)
             where(course_id: Course.current.parent_course_id)
-          elsif Course.current.replicas.size > 0 && ![Lecture].include?(base)
+          elsif Course.current.replicas.size > 0 && ![Lecture, Faq, Resource].include?(base)
             where(course_id: Course.current.replicas.map(&:id) + [Course.current.id])
           else
             where(course_id: Course.current.id)
