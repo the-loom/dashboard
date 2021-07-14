@@ -1,7 +1,7 @@
 <% nav_add 'Ejercicios', '#' %>
 <%= nav_render %>
 
-<% if policy(Exercise).create? %>
+<% if policy(Exercise).manage? %>
   <%= link_to 'Nuevo ejercicio', new_exercise_path, class: 'btn btn-primary' %>
   <br><br>
 <% end %>

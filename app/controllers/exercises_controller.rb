@@ -16,14 +16,14 @@ class ExercisesController < ApplicationController
   end
 
   def new
-    authorize Exercise, :create?
+    authorize Exercise, :manage?
     @exercise = Exercise.new
     @labels = OpenStruct.new(title: "Nuevo ejercicio", button: "Guardar ejercicio")
     render :form
   end
 
   def create
-    authorize Exercise, :create?
+    authorize Exercise, :manage?
     @exercise = Exercise.new(exercise_params)
     if @exercise.valid?
       @exercise.save
@@ -36,14 +36,14 @@ class ExercisesController < ApplicationController
   end
 
   def edit
-    authorize Exercise, :create?
+    authorize Exercise, :manage?
     @exercise = Exercise.find(params[:id])
     @labels = OpenStruct.new(title: "Editar ejercicio", button: "Actualizar ejercicio")
     render :form
   end
 
   def update
-    authorize Exercise, :create?
+    authorize Exercise, :manage?
     @exercise = Exercise.find(params[:id])
 
     if @exercise.update_attributes(exercise_params)
