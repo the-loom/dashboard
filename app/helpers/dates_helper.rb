@@ -1,7 +1,13 @@
 module DatesHelper
+  DAYNAMES = %w(Domingo Lunes Martes Miércoles Jueves Viernes Sábado)
+
   def display_date(date)
     return "N/A" unless date.present?
     date.in_time_zone("Buenos Aires").strftime("%d/%m/%Y")
+  end
+
+  def display_day(wday)
+    DAYNAMES[wday]
   end
 
   def display_time(time)
