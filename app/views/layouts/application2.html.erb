@@ -40,20 +40,25 @@
 
 <div class="container-fluid">
   <% if Course.current.template? %>
-    <%= render partial: 'shared/alert', locals: {alert_type: 'danger', title: '¡Cuidado!', dismissable: false, message: "Estás en la plantilla de curso, los cambios que realices afectarán a todas réplicas"} %>
+    <%= render partial: 'shared/alert', locals: { alert_type: 'danger', title: '¡Cuidado!', dismissable: false, message: "Estás en la plantilla de curso, los cambios que realices afectarán a todas réplicas" } %>
   <% end %>
   <div class="row">
 
-    <%= render partial: 'layouts/sidebar', locals: {menu: @sidebar} %>
+    <%= render partial: 'layouts/sidebar', locals: { menu: @sidebar } %>
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
 
       <% if flash[:alert] %>
-        <%= render partial: 'shared/alert', locals: {alert_type: 'danger', title: '¡Oops!', dismissable: true, message: flash[:alert]} %>
+        <%= render partial: 'shared/alert', locals: { alert_type: 'danger', title: '¡Oops!', dismissable: true, message: flash[:alert] } %>
       <% end %>
 
       <% if flash[:info] %>
-        <%= render partial: 'shared/alert', locals: {title: '¡Atención!', dismissable: true, message: flash[:info]} %>
+        <%= render partial: 'shared/alert', locals: { title: '¡Atención!', dismissable: true, message: flash[:info] } %>
+      <% end %>
+
+      <% if current_user && (current_user.first_name == 'Nomen' || current_user.last_name == "Nescio") %>
+        <%= render partial: 'shared/alert', locals: { alert_type: 'danger', title: '¡Atención!', dismissable: false,
+                                                      message: "Parece que tu nombre ha sido configurado por defecto. Por favor, <a href='/profile/edit'>editá tu perfil</a>. Es muy importante que utilices tu nombre real para poder calificarte correctamente." } %>
       <% end %>
 
       <%= yield %>
