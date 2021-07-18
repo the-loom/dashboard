@@ -52,9 +52,9 @@
           <tbody>
           <% Lecture.past_and_current.each do |lecture| %>
             <tr>
-              <td><%= lecture.date.strftime("%d/%m/%Y") %></td>
+              <td><%= display_date lecture.date %> &mdash; <%= display_time_range(lecture.time_from, lecture.time_to) %></td>
               <td><%= lecture.summary %></td>
-              <td><%= @user.present_at(lecture) ? 'Presente' : lecture.required? ? 'Ausente' : 'Feriado' %></td>
+              <td><%= @user.present_at(lecture) ? 'Presente' : lecture.required? ? 'Ausente' : 'No requerida' %></td>
             </tr>
           <% end %>
           </tbody>
