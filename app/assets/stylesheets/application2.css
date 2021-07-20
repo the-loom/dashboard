@@ -90,3 +90,11 @@ img.team {
 .card.faq {
     margin-bottom: 1em;
 }
+
+.label {
+    padding: 0.4em;
+}
+
+.label.do-search {
+    cursor: pointer;
+}

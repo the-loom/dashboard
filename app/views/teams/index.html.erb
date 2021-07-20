@@ -13,6 +13,10 @@
 
 <% else %>
 
+  <% Team.tag_counts_on(:tags).each do |tag| %>
+    <span class="do-search label label-pill label-default" data-tag="<%= tag %>"><%= tag %></span>
+  <% end %>
+
   <div class="table-responsive">
     <table class="members teams table table-hover">
       <thead>
@@ -77,8 +81,9 @@
   <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="application/javascript"></script>
 
   <script type="application/javascript">
+    var teamsTable;
       $(function () {
-          $('.teams').DataTable({
+          teamsTable = $('.teams').DataTable({
               order: [[1, "asc"]],
               paging: false,
               language: {
@@ -89,6 +94,13 @@
                   orderable: false
               }]
           });
+          $(".do-search").on("click", function() {
+              teamsTable.search($(this).data("tag")).draw();
+              $(".label.do-search").removeClass("label-success");
+              //$(".label.do-search").addClass("label-success");
+              //$(this).removeClass("label-default");
+              $(this).addClass("label-success");
+          })
       });
   </script>
 <% end %>
