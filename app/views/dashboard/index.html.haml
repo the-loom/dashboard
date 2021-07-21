@@ -56,11 +56,11 @@
 
     %ul#challenge.nav.nav-tabs{role: "tablist"}
       %li.nav-item
-        %a#challenge-calendar-tab.nav-link.active{"aria-controls": "challenge-calendar", "aria-selected": "true", "data-toggle": "tab", href: "#challenge-calendar", role: "tab"} Calendario
+        %a#challenge-calendar-tab.nav-link{"aria-controls": "challenge-calendar", "aria-selected": "true", "data-toggle": "tab", href: "#challenge-calendar", role: "tab"} Calendario
       %li.nav-item
-        %a#challenge-table-tab.nav-link{"aria-controls": "challenge-table", "aria-selected": "false", "data-toggle": "tab", href: "#challenge-table", role: "tab"} Tabla
+        %a#challenge-table-tab.nav-link.active{"aria-controls": "challenge-table", "aria-selected": "false", "data-toggle": "tab", href: "#challenge-table", role: "tab"} Tabla
     #challengeContent.tab-content
-      #challenge-calendar.tab-pane.fade.show.active{"aria-labelledby": "challenge-calendar-tab", role: "tabpanel"}
+      #challenge-calendar.tab-pane.fade{"aria-labelledby": "challenge-calendar-tab", role: "tabpanel"}
         #event-calendar
           %script{type: "text/template", id: "event-calendar-template"}
             :plain
@@ -101,7 +101,7 @@
                 <% }); %>
               </div>
 
-      #challenge-table.tab-pane.fade{"aria-labelledby": "challenge-table-tab", role: "tabpanel"}
+      #challenge-table.tab-pane.fade.show.active{"aria-labelledby": "challenge-table-tab", role: "tabpanel"}
         .table-responsive
           %table.challenges.table.table-striped.table-hover
             %thead
@@ -111,7 +111,6 @@
                 %th Vencimiento
                 %th Estado
                 %th Opcional
-                %th Ejemplo de resolución
             %tbody
               - @challenges.each do |challenge|
                 - progress = challenge.progress_by? current_user
@@ -130,8 +129,6 @@
                     = challenge.enabled? ? "Vigente" : "Finalizado"
                   %td
                     = yes_no challenge.optional?
-                  %td
-                    = yes_no challenge.has_picked_solutions?
 
     %hr
     %legend Ejercicios
@@ -141,6 +138,7 @@
         %tr
           %th Dificultad
           %th Título
+          %th Fecha de publicación
       %tbody
         - @exercises.each do |exercise|
           %tr
@@ -148,7 +146,12 @@
               = stars_for exercise
             %td
               = link_to exercise.name, exercise_path(exercise)
-
+              %br
+              - exercise.tags.each do |tag|
+                %span.badge.badge-info
+                  = tag
+            %td
+              = display_date exercise.due_date
     %hr
     %legend Cuestionarios
 
@@ -376,7 +379,7 @@
         order: [[1, "asc"]],
         paging: false,
         info: false,
-        searching: false,
+        searching: true,
         language: {
           url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
         },
@@ -389,7 +392,7 @@
         order: [[1, "asc"]],
         paging: false,
         info: false,
-        searching: false,
+        searching: true,
         language: {
           url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
         },

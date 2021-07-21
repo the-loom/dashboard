@@ -19,6 +19,7 @@
     <tr>
       <th>Nombre</th>
       <th>Dificultad</th>
+      <th>Fecha</th>
       <th class="no-sort">&nbsp;</th>
     </tr>
     </thead>
@@ -27,9 +28,16 @@
       <tr>
         <td>
           <%= link_to exercise.name, exercise_path(exercise.id) %>
+          <br>
+          <% exercise.tags.each do |tag| %>
+            <span class="badge badge-info"><%= tag %></span>
+          <% end %>
         </td>
         <td>
           <%= stars_for exercise %>
+        </td>
+        <td>
+          <%= display_date exercise.due_date %>
         </td>
         <td>
           <div class="btn-group">
@@ -68,7 +76,7 @@
   <script type="application/javascript">
       $(function () {
           $('.exercises').DataTable({
-              order: [[0, "asc"]],
+              order: [[2, "asc"]],
               paging: false,
               language: {
                   url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
