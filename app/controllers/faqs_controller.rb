@@ -52,6 +52,6 @@ class FaqsController < ApplicationController
 
   private
     def faq_params
-      params[:faq].permit(:question, :answer)
+      params[:faq].permit(:question, :answer, :tag_list)
     end
 end

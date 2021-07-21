@@ -6,6 +6,7 @@
   = render :partial => 'shared/errors', locals: { f: f }
   = f.input :question, label: "Pregunta"
   = f.input :answer, label: "Respuesta", as: :trix_editor
+  = f.input :tag_list, label: 'Etiquetas'
   = f.button :submit, @labels.button, class: "btn-primary"
 
 
