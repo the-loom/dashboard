@@ -6,6 +6,11 @@ module DatesHelper
     date.in_time_zone("Buenos Aires").strftime("%d/%m/%Y")
   end
 
+  def display_invisible_date(date)
+    return "" unless date.present?
+    date.in_time_zone("Buenos Aires").strftime("%Y%m%d")
+  end
+
   def display_day(wday)
     DAYNAMES[wday]
   end

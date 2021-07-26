@@ -37,7 +37,12 @@
           <%= stars_for exercise %>
         </td>
         <td>
-          <%= display_date exercise.due_date %>
+          <span style="display: none">
+            <%= display_invisible_date(exercise.due_date) %>
+          </span>
+          <time datetime="<%= display_invisible_date(exercise.due_date) %>">
+            <%= display_date exercise.due_date %>
+          </time>
         </td>
         <td>
           <div class="btn-group">
@@ -59,7 +64,7 @@
 <% end %>
 
 <%= content_for :head do %>
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+  <link rel="stylesheet" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css"/>
 
   <style>
     form.button_to {
@@ -71,15 +76,15 @@
 <% end %>
 
 <%= content_for :javascript do %>
-  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="application/javascript"></script>
+  <script src="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js" type="application/javascript"></script>
 
   <script type="application/javascript">
       $(function () {
           $('.exercises').DataTable({
-              order: [[2, "asc"]],
+              order: [[2, "desc"]],
               paging: false,
               language: {
-                  url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                  url: "https://cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
               },
               columnDefs: [{
                   targets: 'no-sort',

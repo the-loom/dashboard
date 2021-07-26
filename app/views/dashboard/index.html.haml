@@ -151,7 +151,10 @@
                 %span.badge.badge-info
                   = tag
             %td
-              = display_date exercise.due_date
+              %span{style: 'display: none'}
+                = display_invisible_date(exercise.due_date)
+              %time{datetime: display_invisible_date(exercise.due_date)}
+                = display_date exercise.due_date
     %hr
     %legend Cuestionarios
 
