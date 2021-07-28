@@ -63,7 +63,7 @@ class LecturesController < ApplicationController
 
   def overview
     authorize Lecture
-    @lectures = Lecture.all
+    @lectures = Lecture.past_and_current
     @students = Course.current.memberships.includes({ user: :memberships }).student.collect(&:user)
   end
 
