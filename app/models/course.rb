@@ -160,8 +160,12 @@ class Course < ApplicationRecord
     RequestStore.store[:current_course] = course
   end
 
+  def family_ids
+    [id] + (replicas.size > 0 ? replicas.map(&:id) : [])
+  end
+
   def students
-    users.joins(:memberships).where(memberships: { role: :student, course: Course.current }).distinct
+    users.unscoped.joins(:memberships).where(memberships: { role: :student, course: family_ids }).distinct
   end
 
   def teachers

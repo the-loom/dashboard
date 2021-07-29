@@ -9,10 +9,16 @@ module CourseLock
           raise NoCourseAvailable
         else
           if Course.current.replica && [Exercise, PeerReview::Challenge, MultipleChoices::Questionnaire, Resource, ResourceCategory, Event, Faq].include?(base)
+            # replica and entity from parent
             where(course_id: Course.current.parent_course_id)
-          elsif Course.current.replicas.size > 0 && ![Exercise, MultipleChoices::Questionnaire, Lecture, Faq, Resource, ResourceCategory].include?(base)
-            where(course_id: Course.current.replicas.map(&:id) + [Course.current.id])
+          elsif Course.current.replica && [Post].include?(base)
+            # replica and entity from parent or myself
+            where(course_id: [Course.current.parent_course_id, Course.current.id])
+          elsif Course.current.replicas.size > 0 && ![Post, Exercise, MultipleChoices::Questionnaire, Faq, Resource, ResourceCategory].include?(base)
+            # parent and entity from me or replicas
+            where(course_id: Course.current.family_ids)
           else
+            # any other case
             where(course_id: Course.current.id)
           end
         end

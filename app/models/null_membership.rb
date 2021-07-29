@@ -34,4 +34,8 @@ class NullMembership
   def nil?
     true
   end
+
+  def points
+    0
+  end
 end

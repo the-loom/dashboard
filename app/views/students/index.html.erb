@@ -27,6 +27,9 @@
       <tr>
         <th class="no-sort"><a class="clickable do-select-all">All</a></th>
         <th class="no-sort">Foto</th>
+        <% if Course.current.template? %>
+          <th>Curso</th>
+        <% end %>
         <% if Course.current.on?(:teams) %>
           <th>Equipo</th>
         <% end %>
@@ -52,6 +55,11 @@
               <%= image_tag entity_avatar(student), {class: "avatar#{ ' disabled' unless student.enabled? }", alt: student.full_name, "data-id": student.id } %>
             </div>
           </td>
+          <% if Course.current.template? %>
+            <td>
+              <%= student.current_membership.course.name %>
+            </td>
+          <% end %>
           <% if Course.current.on?(:teams) %>
             <td>
               <% team = student.current_membership.team %>
@@ -248,7 +256,7 @@
           });
 
           $('.members').DataTable({
-              order: [[ 2, "asc" ], [ 3, "asc" ]],
+              order: [[ 2, "asc" ], [ 3, "asc" ], [ 4, "asc" ]],
               paging: false,
               language: {
                   url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
