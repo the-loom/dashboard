@@ -25,6 +25,8 @@ class ExercisesController < ApplicationController
   def create
     authorize Exercise, :manage?
     @exercise = Exercise.new(exercise_params)
+    @exercise.published = false
+
     if @exercise.valid?
       @exercise.save
       redirect_to exercises_path

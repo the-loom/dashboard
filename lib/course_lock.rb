@@ -25,7 +25,7 @@ module CourseLock
   end
 
   def verify_current_course
-    raise WrongCourseException unless self.course == Course.current || User.current.admin?
+    raise WrongCourseException unless self.course == Course.current || User.current && User.current.admin?
   end
 end
 
