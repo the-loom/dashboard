@@ -143,7 +143,7 @@ class User < ApplicationRecord
     return if present_at(lecture)
     register(attendance_event, 1)
 
-    if membership.present_at_lecture_ids != nil
+    if membership.present_at_lecture_ids != nil && membership.present_at_lecture_ids != false
       membership.present_at_lecture_ids << lecture.id
     else
       membership.present_at_lecture_ids = [lecture.id]
