@@ -124,3 +124,6 @@ detect_where_in_controllers:
 
 add_production_repo:
 	git remote add production https://git.heroku.com/the-loom.git
+
+publish_and_deploy:
+	git push origin master && git push production master

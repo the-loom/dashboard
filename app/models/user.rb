@@ -32,12 +32,13 @@ class User < ApplicationRecord
 
   def self.to_csv
     CSV.generate do |csv|
-      csv << ["Grupo", "Loom ID", "Apellido", "Nombre", "Correo Electrónico", "Presente"]
+      csv << ["Curso", "Grupo", "Loom ID", "Apellido", "Nombre", "Correo Electrónico", "Presente"]
 
-      enabled_students_for_course = User.includes(:memberships).includes(memberships: :team).where(memberships: { course: Course.current, role: :student, enabled: true }).order("teams.name, last_name, first_name")
+      enabled_students_for_course = User.includes(:memberships).includes(memberships: :team).where(memberships: { course: Course.current.family_ids, role: :student, enabled: true }).order("teams.name, last_name, first_name")
       enabled_students_for_course.each do |x|
+        course_name = x.current_membership.course.name
         team_name = x.current_membership.team.try(:name)
-        csv << [team_name, x.uuid.upcase, x.last_name, x.first_name, x.email]
+        csv << [course_name, team_name, x.uuid.upcase, x.last_name, x.first_name, x.email]
       end
     end
   end
