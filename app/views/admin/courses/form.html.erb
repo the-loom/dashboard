@@ -25,6 +25,8 @@
     </div>
   <% end %>
 
+  <%= f.input :registrable, label: 'Habilitar matriculación' %>
+
   <%= f.input :attendance_event_id, label: 'Evento de asistencia', collection: @course.all_events, label_method: :name , value_method: :id, include_blank: true %>
 
   <%= f.button :submit, @labels.button, class: "btn-primary" %>

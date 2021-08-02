@@ -109,7 +109,8 @@ module Admin
             name: params[:course][:name],
             password: params[:course][:password],
             features: features,
-            attendance_event_id: params[:course][:attendance_event_id]
+            attendance_event_id: params[:course][:attendance_event_id],
+            registrable: params[:course][:registrable]
         }
       end
   end

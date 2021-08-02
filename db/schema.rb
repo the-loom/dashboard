@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_21_132349) do
+ActiveRecord::Schema.define(version: 2021_08_02_232056) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -118,6 +118,7 @@ ActiveRecord::Schema.define(version: 2021_07_21_132349) do
     t.string "stats"
     t.integer "parent_course_id"
     t.boolean "replica", default: false
+    t.boolean "registrable", default: true
     t.index ["discarded_at"], name: "index_courses_on_discarded_at"
   end
 

@@ -30,7 +30,7 @@ class Event < ApplicationRecord
 
   def max_points
     if self == Course.current.attendance_event
-      x = Lecture.past_and_current.size
+      x = Lecture.past_and_current.required.size
       x * points
     else
       super
