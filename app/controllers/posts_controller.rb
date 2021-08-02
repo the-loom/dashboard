@@ -3,6 +3,7 @@ class PostsController < ApplicationController
     authorize Post, :manage?
     @post = Post.new(post_params)
     @post.author = current_user
+    @post.course = Course.current
 
     if @post.valid?
       @post.save
