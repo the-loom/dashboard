@@ -1,5 +1,5 @@
 ActiveRecord::Base.transaction do
-  Course.all.each do |course|
+  Course.enabled.each do |course|
     Course.current = course
 
     course.memberships.each do |membership|

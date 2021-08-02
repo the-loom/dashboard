@@ -19,11 +19,33 @@ class Event < ApplicationRecord
     end
   end
 
+  def min_points
+    if self == Course.current.attendance_event
+      x = Lecture.past_and_current.size
+      (x * 0.75).to_i * points
+    else
+      super
+    end
+  end
+
+  def max_points
+    if self == Course.current.attendance_event
+      x = Lecture.past_and_current.size
+      x * points
+    else
+      super
+    end
+  end
+
   def self.min_points
-    Event.enabled.sum(:min_points)
+    Event.enabled.sum do |event|
+      event.min_points
+    end
   end
 
   def self.max_points
-    Event.enabled.sum(:max_points)
+    Event.enabled.sum do |event|
+      event.max_points
+    end
   end
 end
