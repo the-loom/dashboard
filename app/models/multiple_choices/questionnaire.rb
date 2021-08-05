@@ -11,6 +11,15 @@ class MultipleChoices::Questionnaire < ApplicationRecord
 
   scope :enabled, -> { where(enabled: true) }
 
+  def last_solution_by(user)
+    solutions.where(solver: user).order(:created_at).last
+  end
+
+  def can_attempt?(user)
+    last_solution = last_solution_by user
+    !last_solution || last_solution && !single_use && last_solution.score < 100 && last_solution.created_at < (Time.current - 1.day)
+  end
+
   def solved_by?(user)
     solutions.where(solver: user).exists?
   end

@@ -99,16 +99,9 @@ module MultipleChoices
         redirect_to(multiple_choices_questionnaires_path) && return
       end
 
-      last_solution = @questionnaire.solutions.where(solver: current_user).order(:created_at).last
-      if last_solution
-        if last_solution.score == 100
-          flash[:info] = "Ya no podés resolver este cuestionario... ¡Obtuviste calificación perfecta! ¡Buen trabajo!"
-          redirect_to(multiple_choices_questionnaires_path) && return
-        end
-        if last_solution.created_at > (Time.current - 1.day)
-          flash[:info] = "Debes esperar al menos un día para volver a intentarlo..."
-          redirect_to(multiple_choices_questionnaires_path) && return
-        end
+      unless @questionnaire.can_attempt? current_user
+        flash[:alert] = "Por el momento no podés resolver el cuestionario"
+        redirect_to(dashboard_index_path) && return
       end
 
       set_random_seed
@@ -118,19 +111,12 @@ module MultipleChoices
     def grade
       @questionnaire = MultipleChoices::Questionnaire.find(params[:id])
 
-      last_solution = @questionnaire.solutions.where(solver: current_user).order(:created_at).last
-      if last_solution
-        if last_solution.score == 100
-          flash[:info] = "Ya no podés resolver este cuestionario... ¡Obtuviste calificación perfecta! ¡Buen trabajo!"
-          redirect_to(multiple_choices_questionnaires_path) && return
-        end
-        if last_solution.created_at > (Time.current - 1.day)
-          flash[:info] = "Debes esperar al menos un día para volver a intentarlo..."
-          redirect_to(multiple_choices_questionnaires_path) && return
-        end
-      end
-
       authorize @questionnaire, :access?
+
+      unless @questionnaire.can_attempt? current_user
+        flash[:alert] = "Por el momento no podés resolver el cuestionario"
+        redirect_to(dashboard_index_path) && return
+      end
 
       solution = MultipleChoices::Solution.create(solver: current_user, questionnaire: @questionnaire)
       answers = params[:question]
@@ -159,7 +145,7 @@ module MultipleChoices
 
     private
       def questionnaire_params
-        params[:multiple_choices_questionnaire].permit(:name,
+        params[:multiple_choices_questionnaire].permit(:name, :single_use,
                                                        questions_attributes: [:id, :wording, :hidden, :_destroy, :deleted_at,
                                                        answers_attributes: %i[id text explanation correct _destroy deleted_at]])
       end
