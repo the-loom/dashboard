@@ -145,7 +145,7 @@
             %td
               = stars_for exercise
             %td
-              = link_to exercise.name, exercise_path(exercise)
+              = link_to exercise.name, exercise_path(exercise.to_param)
               %br
               - exercise.tags.each do |tag|
                 %span.badge.badge-info

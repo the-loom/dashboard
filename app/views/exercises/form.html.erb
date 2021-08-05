@@ -1,5 +1,5 @@
 <% nav_add 'Ejercicios', exercises_path %>
-<% nav_add @exercise.name, exercise_path(@exercise) unless @exercise.new_record? %>
+<% nav_add @exercise.name, exercise_path(@exercise.to_param) unless @exercise.new_record? %>
 <% nav_add @labels.title, '#' %>
 <%= nav_render4 %>
 

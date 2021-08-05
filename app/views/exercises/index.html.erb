@@ -27,7 +27,7 @@
     <% @exercises.each do |exercise| %>
       <tr>
         <td>
-          <%= link_to exercise.name, exercise_path(exercise.id) %>
+          <%= link_to exercise.name, exercise_path(exercise.to_param) %>
           <br>
           <% exercise.tags.each do |tag| %>
             <span class="badge badge-info"><%= tag %></span>
