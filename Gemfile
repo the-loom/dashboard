@@ -71,6 +71,7 @@ group :development do
   gem "rubocop-rails_config", "~> 1.6.0"
   gem "rubocop-rake", "~> 0.6", require: false
   gem "rubocop-rspec", "~> 2.4", require: false
+  gem "fasterer"
 
   gem "annotate", "~> 3.1"
   gem "binding_of_caller", "~> 1.0"

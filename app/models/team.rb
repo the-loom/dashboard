@@ -22,11 +22,11 @@ class Team < ApplicationRecord
   end
 
   def badges
-    members.select { |m| m.enabled? }.collect { |member| member.badges }.flatten
+    members.select(&:enabled?).collect(&:badges).flatten
   end
 
   def enabled_members
-    members.includes(:memberships).select { |m| m.enabled? }
+    members.includes(:memberships).select(&:enabled?)
   end
 
   def refresh_points_cache!

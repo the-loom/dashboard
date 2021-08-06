@@ -38,14 +38,10 @@ class Event < ApplicationRecord
   end
 
   def self.min_points
-    Event.enabled.sum do |event|
-      event.min_points
-    end
+    Event.enabled.sum(&:min_points)
   end
 
   def self.max_points
-    Event.enabled.sum do |event|
-      event.max_points
-    end
+    Event.enabled.sum(&:max_points)
   end
 end

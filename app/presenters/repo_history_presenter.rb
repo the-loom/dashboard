@@ -8,9 +8,7 @@ class RepoHistoryPresenter
     @summary = Hash.new
     @test_runs.first.results.each do |result|
       @summary[result.test_type] = @test_runs.map do |tr|
-        tr.results.where(test_type: result.test_type).map do |r|
-          r.score
-        end
+        tr.results.where(test_type: result.test_type).map(&:score)
       end.flatten
     end
   end

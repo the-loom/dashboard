@@ -56,6 +56,9 @@ migrate:
 rubocop:
 	docker-compose run app bundle exec rubocop --auto-correct
 
+fasterer:
+	docker-compose run app bundle exec fasterer
+
 rbp:
 	docker-compose run app bundle exec rails_best_practices -f html .
 

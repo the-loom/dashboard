@@ -163,7 +163,7 @@ module PeerReview
             s.author.register(solve_event, 1, s.course)
           end
 
-          reviews_by_reviewer = challenge.reviews.group_by { |r| r.reviewer }
+          reviews_by_reviewer = challenge.reviews.group_by(&:reviewer)
           reviews_by_reviewer.each do |reviewer, reviews|
             next unless reviewer
             total_reviews = reviews.size

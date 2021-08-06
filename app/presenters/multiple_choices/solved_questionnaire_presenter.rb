@@ -12,7 +12,7 @@ class MultipleChoices::SolvedQuestionnairePresenter
   end
 
   def points
-    @questions.select { |x| x.correct }.count
+    @questions.select(&:correct).count
   end
 
   def total_points
