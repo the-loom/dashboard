@@ -69,6 +69,10 @@ class PeerReview::Challenge < ApplicationRecord
 
   scope :enabled, -> { where(enabled: true) }
 
+  def to_param
+    [id, title.parameterize].join("-")
+  end
+
   def code_extension
     return "py" if language == "python"
     language
