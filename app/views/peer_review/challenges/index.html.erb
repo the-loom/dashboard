@@ -3,7 +3,7 @@
 
 <% if policy(PeerReview::Challenge).manage? %>
   <div class="btn-group">
-    <% if policy(PeerReview::Challenge).edit? %>
+    <% if policy(PeerReview::Challenge).manage? %>
       <%= link_to 'Nuevo desafio', new_peer_review_challenge_path, class: 'btn btn-primary', role: "button" %>
     <% end %>
     <%= link_to 'Panorama de resoluciones', meta_overview_peer_review_challenges_path, class: 'btn btn-outline-primary', role: "button" %>
