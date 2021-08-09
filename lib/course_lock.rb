@@ -14,7 +14,7 @@ module CourseLock
           elsif Course.current.replica && [Post].include?(base)
             # replica and entity from parent or myself
             where(course_id: [Course.current.id, Course.current.parent_course_id])
-          elsif Course.current.replicas.size > 0 && ![Post, Exercise, MultipleChoices::Questionnaire, Faq, Resource, ResourceCategory, Event].include?(base)
+          elsif Course.current.replicas.size > 0 && ![Post, Exercise, PeerReview::Challenge, MultipleChoices::Questionnaire, Faq, Resource, ResourceCategory, Event].include?(base)
             # parent and entity from me or replicas
             where(course_id: Course.current.family_ids)
           else
