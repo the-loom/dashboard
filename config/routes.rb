@@ -69,6 +69,9 @@ Rails.application.routes.draw do
       post :enroll
       get :switch
     end
+    collection do
+      get :current
+    end
   end
 
   resources :resource_categories, except: [:show]

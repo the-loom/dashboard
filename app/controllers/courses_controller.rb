@@ -5,6 +5,11 @@ class CoursesController < ApplicationController
     @courses = Course.kept.enabled.registrable.order(name: :asc)
   end
 
+  def current
+    authorize Course, :manage?
+    @course = Course.current
+  end
+
   def enroll
     course = Course.find(params[:id])
 

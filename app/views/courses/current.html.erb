@@ -1,0 +1,36 @@
+<% nav_add 'Cursos', '#' %>
+<% nav_add @course.name, '#' %>
+<%= nav_render4 %>
+
+<div class="row">
+  <div class="col-md-6">
+    <dl class="row">
+
+      <dt class="col-sm-5">Contraseña</dt>
+      <dd class="col-sm-7">
+        <a href="#" class="do-show-password">** Clic para ver... **</a>
+      </dd>
+
+      <dt class="col-sm-5">Funcionalidades habilitadas</dt>
+      <dd class="col-sm-7">
+        <% Course.all_features.each do |feature, value| %>
+          <% if @course.on? feature.to_sym %>
+            <li>
+              <%= t "course.features.#{feature}" %>
+            </li>
+          <% end %>
+        <% end %>
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<%= content_for :javascript do %>
+  <script type="application/javascript">
+      $(function () {
+          $(".do-show-password").on('click', function() {
+              $(this).parent().html('<%= @course.password %>');
+          });
+      });
+  </script>
+<% end %>
