@@ -8,43 +8,54 @@
     <div class="profile">
       <%= image_tag entity_avatar(@team), {class: "avatar", alt: @team.name} %>
     </div>
+
+    <br><br>
+
+    <%= simple_form_for @team do |f| %>
+
+      <%= render :partial => 'shared/errors', locals: { f: f } %>
+
+      <%= f.input :name, label: 'Nombre de equipo' %>
+
+      <%= f.input :avatar, label: 'Imagen de perfil' %>
+
+      <%= f.button :submit, 'Actualizar', class: "btn-primary" %>
+
+    <% end %>
   </div>
   <div class="col-md-9">
     <div id="chart" data-score="<%= @team.score %>" data-xp="<%= @team.points %>"></div>
   </div>
 </div>
 
-
-<%= simple_form_for @team do |f| %>
-
-  <%= render :partial => 'shared/errors', locals: { f: f } %>
-
-  <%= f.input :name, label: 'Nombre de equipo' %>
-
-  <%= f.input :avatar, label: 'Imagen de perfil' %>
-
-  <%= f.button :submit, 'Actualizar', class: "btn-primary" %>
-
-<% end %>
-
 <br>
 
 <hr>
 
-<div class="students">
+<div class="teachers">
   <legend>Integrantes</legend>
   <div class="row">
     <% @team.members.each do |student| %>
-      <div class="col-lg-2 col-md-3">
+      <div class="col-lg-6 col-md-6 col-xs-12">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title"><%= student.full_name %>
-              <small><%= student.nickname %></small>
-            </h5>
-            <%= link_to user_details_url(student.nickname) do %>
-              <%= image_tag entity_avatar(student), {class: "avatar#{ ' disabled' unless student.enabled? }", alt: student.full_name} %>
-            <% end %>
-            <p class="card-text"><%= student.points %> XP</p>
+            <div class="left">
+              <%= link_to user_details_url(student.nickname) do %>
+                <%= image_tag entity_avatar(student), { class: "avatar student#{ ' disabled' unless student.enabled? }", alt: student.full_name} %>
+              <% end %>
+            </div>
+            <div class="right">
+              <h5 class="card-title">
+                <%= student.full_name %>
+                <small><%= student.nickname %></small>
+              </h5>
+              <p>
+                <%= student.bios %>
+              </p>
+              <p>
+                <%= student.points %> XP
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -52,59 +63,12 @@
   </div>
 </div>
 
-<br>
-
-<% if Course.current.on?(:badges) %>
-
-  <div class="col-md-12">
-  <legend>Emblemas del grupo
-    <small>(<%= @team.badges.uniq.size %> / <%= Badge.count %>)</small>
-  </legend>
-
-  <% if @team.badges.size == 0 %>
-
-    <div class="alert alert-info">
-      <p>Aún no se te otorgaron emblemas...</p>
-    </div>
-
-  <% else %>
-    <% @team.badges.uniq.each do |badge| %>
-      <div class="col-md-2 badge-box">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <%= badge.name %>
-          </div>
-          <div class="panel-body">
-            <%= image_tag badge.image, {class: "loom-badge", alt: badge.name,
-                                        "data-toggle": "tooltip", "data-placement": "bottom",
-                                        title: badge.description } %>
-          </div>
-          <div class="panel-footer">
-            <span class="label label-info">&times; <%= @team.badges.count(badge) %></span>
-          </div>
-        </div>
-      </div>
-    <% end %>
-    <% (Badge.all - @team.badges).each do |badge| %>
-      <div class="col-md-2 badge-box">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <%= badge.name %>
-          </div>
-          <div class="panel-body">
-            <%= image_tag "incognito.png", {class: "loom-badge", alt: badge.name,
-                                            "data-toggle": "tooltip", "data-placement": "bottom",
-                                            title: badge.description } %>
-          </div>
-          <div class="panel-footer">
-            <span class="label label-info">&times; 0</span>
-          </div>
-        </div>
-      </div>
-    <% end %>
-  <% end %>
-</div>
-
+<%= content_for :javascript do %>
+  <script type="text/javascript" charset="utf-8">
+      $(window).on('resize', function() {
+          equalizeHeights(".card");
+      }).resize();
+  </script>
 <% end %>
 
 <% content_for :head do %>

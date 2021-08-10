@@ -83,7 +83,8 @@ img.team {
     padding: 1.5em;
 }
 
-.avatar.teacher {
+.avatar.teacher,
+.avatar.student {
     max-width: 150px;
 }
 

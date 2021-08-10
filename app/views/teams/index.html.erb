@@ -1,6 +1,6 @@
 <% nav_add 'Aula', '#' %>
 <% nav_add 'Equipos', '#' %>
-<%= nav_render %>
+<%= nav_render4 %>
 
 <%= link_to 'Nuevo equipo', new_team_path, class: 'btn btn-primary' %>
 <br><br>
@@ -34,7 +34,9 @@
         <tr>
           <td>
             <%= link_to team_profile_url(team.nickname) do %>
-              <%= image_tag entity_avatar(team), {class: "avatar", alt: team.name, "data-id": team.id } %>
+              <div class="profile">
+                <%= image_tag entity_avatar(team), { class: "avatar", alt: team.name, "data-id": team.id } %>
+              </div>
             <% end %>
           </td>
           <td>
