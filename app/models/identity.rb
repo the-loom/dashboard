@@ -36,7 +36,11 @@ class Identity < ApplicationRecord
     end
 
     def self.find_corresponding_user(identity)
-      u = User.find_or_create_by(email: identity.email)
+      if identity.email.present?
+        u = User.find_or_create_by(email: identity.email)
+      else
+        u = User.new
+      end
       u.uuid = rand * 1000 # temp hotfix!
       u.update_with(identity)
       u.update_attributes(uuid: (u.id + 272).to_s(16).upcase)
