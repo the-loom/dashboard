@@ -1,8 +1,18 @@
 module Admin
   class UsersController < ApplicationController
+    layout "application2"
+
     def index
       authorize User, :impersonate?
+      @users = User.includes([:memberships, avatar_attachment: :blob]).where(memberships: { course: Course.enabled })
+      @title = "Usuarios activos"
+    end
+
+    def all
+      authorize User, :impersonate?
       @users = User.all.includes([:memberships, avatar_attachment: :blob, memberships: :course])
+      @title = "Todos los usuarios"
+      render :index
     end
 
     def edit

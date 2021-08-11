@@ -157,8 +157,9 @@ class Layout::MenuPresenter
     def admin_menu
       if @current_user.admin?
         MenuNode.new("Administración", [
-            MenuLeaf.new("Usuarios", route.admin_users_path),
-            MenuLeaf.new("Cursos", route.admin_courses_path)
+          MenuLeaf.new("Usuarios activos", route.admin_users_path),
+          MenuLeaf.new("Todos los usuarios", route.all_admin_users_path),
+          MenuLeaf.new("Cursos", route.admin_courses_path)
         ])
       end
     end

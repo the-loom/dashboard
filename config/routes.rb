@@ -183,6 +183,9 @@ Rails.application.routes.draw do
         get :impersonate
         post :restore
       end
+      collection do
+        get :all
+      end
     end
     resources :teachers, only: [:index, :destroy] do
       post :join, on: :collection
