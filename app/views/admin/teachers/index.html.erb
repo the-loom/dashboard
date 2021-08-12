@@ -33,7 +33,7 @@
             <%= link_to teacher.full_name, user_details_url(teacher.nickname) %>
             <br>
             <ul>
-              <% teacher.memberships.map { |x| "#{x.course.name} (#{x.role})" }.each do |m| %>
+              <% teacher.memberships.sort_by { |x| x.course.name }.map { |x| "#{x.course.name} (#{x.role})" }.each do |m| %>
                 <li><%= m %></li>
               <% end %>
             </ul>
