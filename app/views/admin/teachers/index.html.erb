@@ -1,12 +1,11 @@
 <% nav_add 'Aula', '#' %>
 <% nav_add 'Docentes', '#' %>
-<%= nav_render %>
+<%= nav_render4 %>
 
-<%= form_tag join_admin_teachers_path do %>
+<%= form_tag register_admin_teachers_path do %>
 
-  <% if policy(User).join? %>
-    <%= submit_tag 'Unir perfiles seleccionados', class: 'btn btn-warning' %>
-  <% end %>
+  <%= select_tag :course_id, options_from_collection_for_select(@courses, :id, :name), { class: "form-control col-md-3"} %>
+  <%= submit_tag 'Registrar docentes seleccionados en curso', class: 'btn btn-warning col-md-3' %>
 
   <div class="table-responsive">
     <table class="members table table-hover">
@@ -26,19 +25,29 @@
             <%= check_box_tag "teachers[ids][]", teacher.id, false %>
           </td>
           <td>
-            <%= image_tag entity_avatar(teacher), {class: "avatar#{ ' disabled' unless teacher.enabled? }", alt: teacher.full_name, "data-id": teacher.id} %>
+            <div class="profile">
+              <%= image_tag entity_avatar(teacher), {class: "avatar", alt: teacher.full_name, "data-id": teacher.id} %>
+            </div>
           </td>
           <td>
             <%= link_to teacher.full_name, user_details_url(teacher.nickname) %>
+            <br>
+            <ul>
+              <% teacher.memberships.map { |x| "#{x.course.name} (#{x.role})" }.each do |m| %>
+                <li><%= m %></li>
+              <% end %>
+            </ul>
           </td>
           <td><%= mail_to teacher.email %></td>
           <td>
-            <% if policy(:teacher).destroy? %>
-              <%= link_to 'Borrar perfil', admin_teacher_path(teacher), method: :delete, class: 'btn btn-danger btn-sm' %>
-            <% end %>
-            <% if policy(teacher).promote? %>
-              <%= link_to 'Degradar', demote_admin_teacher_path(teacher), method: :post, class: 'btn btn-warning btn-sm' %>
-            <% end %>
+            <!--
+            <%# if policy(:teacher).destroy? %>
+              <%#= link_to 'Borrar perfil', admin_teacher_path(teacher), method: :delete, class: 'btn btn-danger btn-sm' %>
+            <%# end %>
+            <%# if policy(teacher).promote? %>
+              <%#= link_to 'Degradar', demote_admin_teacher_path(teacher), method: :post, class: 'btn btn-warning btn-sm' %>
+            <%# end %>
+            -->
           </td>
         </tr>
       <% end %>
@@ -59,7 +68,7 @@
   <script type="application/javascript">
       $(function () {
           $('.members').DataTable({
-              order: [[3, "asc"]],
+              order: [[2, "asc"]],
               paging: false,
               language: {
                   url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"

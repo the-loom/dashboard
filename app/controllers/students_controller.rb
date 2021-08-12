@@ -1,5 +1,5 @@
 class StudentsController < ApplicationController
-  layout "application2" # , only: [:edit, :show]
+  layout "application2"
 
   def index
     authorize User

@@ -132,7 +132,6 @@ class Layout::MenuPresenter
       if manage?(User) && manage?(Team) && manage?(Lecture)
         classroom_node = MenuNode.new("Administración de Aula")
         classroom_node << MenuLeaf.new("Datos del curso", route.current_courses_path)
-        classroom_node << MenuLeaf.new("Docentes", route.admin_teachers_path)
         classroom_node << MenuLeaf.new("Estudiantes", route.students_path)
         classroom_node << MenuLeaf.new("Equipos", route.teams_path) if on?(:teams)
         if on?(:lectures)
@@ -159,6 +158,7 @@ class Layout::MenuPresenter
         MenuNode.new("Administración", [
           MenuLeaf.new("Usuarios activos", route.admin_users_path),
           MenuLeaf.new("Todos los usuarios", route.all_admin_users_path),
+          MenuLeaf.new("Todos los docentes", route.admin_teachers_path),
           MenuLeaf.new("Cursos", route.admin_courses_path)
         ])
       end

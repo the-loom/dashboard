@@ -37,7 +37,7 @@
         <td><%= mail_to user.email %></td>
         <td>
           <% if policy(user).impersonate? %>
-            <%= link_to 'Personificar', impersonate_admin_user_path(user), class: 'btn btn-default btn-sm' %><br/>
+            <%= link_to 'Personificar', impersonate_admin_user_path(user), class: 'btn btn-primary btn-sm' %><br/>
           <% end %>
 
         </td>

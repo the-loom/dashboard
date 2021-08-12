@@ -1,8 +1,23 @@
 module Admin
   class TeachersController < ApplicationController
+    layout "application2"
+
     def index
       authorize :teacher, :index?
-      @teachers = User.includes(:memberships).where(memberships: { course: Course.current, role: :teacher })
+      @teachers = Membership.where(role: :teacher).map(&:user).uniq.compact.sort
+      @courses = Course.enabled.sort
+    end
+
+    def register
+      authorize :teacher, :index?
+      teachers = User.where(id: params[:teachers][:ids].map(&:to_i))
+      course = Course.find(params[:course_id].to_i)
+
+      teachers.each do |teacher|
+        Membership.find_or_create_by(course: course, user: teacher, role: :teacher)
+      end
+
+      redirect_to admin_teachers_path
     end
 
     def destroy

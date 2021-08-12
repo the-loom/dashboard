@@ -188,8 +188,8 @@ Rails.application.routes.draw do
       end
     end
     resources :teachers, only: [:index, :destroy] do
-      post :join, on: :collection
       post :demote, on: :member
+      post :register, on: :collection
     end
   end
 end
