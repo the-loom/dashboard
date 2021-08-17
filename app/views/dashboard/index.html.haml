@@ -110,7 +110,7 @@
                   %th Título
                   %th Vencimiento
                   %th Estado
-                  %th Opcional
+                  %th Obligatorio
               %tbody
                 - @challenges.each do |challenge|
                   - progress = challenge.progress_by? current_user
@@ -128,7 +128,7 @@
                     %td
                       = challenge.enabled? ? "Vigente" : "Finalizado"
                     %td
-                      = yes_no challenge.optional?
+                      = yes_no !challenge.optional?
 
       %hr
 

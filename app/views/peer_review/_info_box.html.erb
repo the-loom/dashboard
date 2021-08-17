@@ -19,9 +19,9 @@
           <%= stars_for @challenge %>
         </dd>
 
-        <dt class="col-sm-5">Opcional</dt>
+        <dt class="col-sm-5">Obligatorio</dt>
         <dd class="col-sm-7">
-          <%= yes_no @challenge.optional? %>
+          <%= yes_no !@challenge.optional? %>
         </dd>
 
       </dl>
