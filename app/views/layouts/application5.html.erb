@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title><%== page_title %></title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+  <%= csrf_meta_tags %>
+  <%= stylesheet_link_tag 'application5', media: 'all' %>
+  <%= yield :head %>
+</head>
+<body>
+
+<%= render partial: 'layouts/navbar5', locals: {submenu: @sidebar, menu: @menub4} %>
+
+<div class="container">
+  <% if Course.current.template? %>
+    <%= render partial: 'shared/alert', locals: { alert_type: 'danger', title: '¡Cuidado!', dismissable: false, message: "Estás en la plantilla de curso, los cambios que realices afectarán a todas réplicas" } %>
+  <% end %>
+  <div class="row">
+
+    <%= render partial: 'layouts/sidebar', locals: { menu: @sidebar } %>
+
+    <main role="main" class="col">
+
+      <% if flash[:alert] %>
+        <%= render partial: 'shared/alert', locals: { alert_type: 'danger', title: '¡Oops!', dismissable: true, message: flash[:alert] } %>
+      <% end %>
+
+      <% if flash[:info] %>
+        <%= render partial: 'shared/alert', locals: { title: '¡Atención!', dismissable: true, message: flash[:info] } %>
+      <% end %>
+
+      <% if current_user && (current_user.first_name == 'Nomen' || current_user.last_name == "Nescio") %>
+        <%= render partial: 'shared/alert', locals: { alert_type: 'danger', title: '¡Atención!', dismissable: false,
+                                                      message: "Parece que tu nombre ha sido configurado por defecto. Por favor, <a href='/profile/edit'>editá tu perfil</a>. Es muy importante que utilices tu nombre real para poder calificarte correctamente." } %>
+      <% end %>
+
+      <%= yield %>
+
+      <br><br><br><br><br><br>
+
+    </main>
+  </div>
+</div>
+
+<% if current_user and current_user.current_membership %>
+  <%= link_to suggestions_path, class: 'btn btn-primary btn-suggestions' do %>
+    <i class="fas fa-lightbulb"></i> Sugerencias
+  <% end %>
+<% end %>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/5acba6449b.js" crossorigin="anonymous"></script>
+
+<script data-goatcounter="https://loom.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<%= javascript_include_tag 'application5' %>
+
+<%= yield :javascript %>
+
+</body>
+</html>

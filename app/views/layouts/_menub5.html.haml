@@ -1,0 +1,26 @@
+- if menu.class == Array
+  - menu.each do |option|
+    = render partial:'layouts/menub5', locals: { menu: option }
+- elsif menu.class == MenuNode
+  %li.nav-item.dropdown
+    %a.nav-link.dropdown-toggle.tour-exit{"aria-expanded": false, "aria-haspopup": true, "data-bs-toggle": "dropdown", href: "#", role: "button"}
+      = menu.title
+      %span.caret
+    %ul.dropdown-menu
+      - menu.leafs.each do |leaf|
+        - if leaf.class == MenuSeparator
+          .dropdown-divider
+        - else
+          %li
+            = link_to leaf.title, leaf.link, { style: leaf.style, class: 'dropdown-item' }
+  %li.divider{role: "separator"}
+- elsif menu.class == MenuNotification
+  %li.nav-item
+    = link_to menu.link, class: 'nav-link' do
+      %i.fa.fa-envelope
+      - if menu.show_badge?
+        %span.badge.badge-pill.badge-info
+          = menu.counter
+- else
+  %li.nav-item
+    = link_to menu.title, menu.link, { style: menu.style, class: 'nav-link' }

@@ -19,6 +19,11 @@ module NavigationHelper
     render partial: "shared/navigation4", locals: { nav: nav_ensure }
   end
 
+  # Bootstrap 5
+  def nav_render5
+    nav_render4
+  end
+
   private
     def set_title
       @title = nav_ensure.reverse.map { |nav| nav[:title] }

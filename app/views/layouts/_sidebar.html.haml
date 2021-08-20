@@ -1,5 +1,5 @@
-%nav#sidebarMenu.col-md-3.col-lg-2.d-md-block.bg-light.sidebar.collapse
-  .sidebar-sticky.pt-3
+%nav#sidebar-menu.col-2.bg-light.sidebar
+  .sidebar-sticky
     - if current_user && !Course.current.nil?
       - current_lecture = Lecture.current
       - if current_lecture && current_lecture.current? && !current_user.present_at(current_lecture)

@@ -1,5 +1,6 @@
 - nav_add 'Preguntas frecuentes', '#'
-= nav_render
+= nav_render5
+
 - if policy(Faq).manage?
   = link_to 'Nueva pregunta frecuente', new_faq_path, class: 'btn btn-primary'
   %br/
@@ -9,10 +10,10 @@
     %p Aún no hay ninguna pregunta frecuente
 - else
   - @faqs.each do |faq|
-    .card.faq
+    .card.faq.mb-2
       .card-header
         - faq.tags.each do |tag|
-          %span.badge.badge-info
+          %span.badge.bg-info
             = tag
         = faq.question
         - if policy(Faq).manage?

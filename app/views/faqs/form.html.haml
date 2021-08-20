@@ -1,7 +1,8 @@
 - nav_add 'Preguntas frecuentes', faqs_path
 - nav_add @faq.question[0..50], '#' unless @faq.new_record?
 - nav_add @labels.title, '#'
-= nav_render4
+= nav_render5
+
 = simple_form_for @faq do |f|
   = render :partial => 'shared/errors', locals: { f: f }
   = f.input :question, label: "Pregunta"

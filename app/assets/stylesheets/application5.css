@@ -1,0 +1,16 @@
+/*
+*= require codemirror/lib/codemirror
+*= require multiple_choices
+*= require_self
+*/
+
+body {
+    margin-top: 4em;
+}
+
+.btn-suggestions {
+    bottom: 7em;
+    position: fixed;
+    right: 0;
+    transform: rotate(-90deg);
+}
