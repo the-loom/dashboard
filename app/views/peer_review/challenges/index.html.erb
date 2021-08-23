@@ -100,9 +100,7 @@
                       <% end %>
                     <% end %>
                     <%= link_to challenge.enabled? ? "Finalizar" : "Reabrir", toggle_peer_review_challenge_path(challenge), class: "dropdown-item" %>
-                    <% if policy(PeerReview::Challenge).edit? %>
-                      <%= link_to "Duplicar", duplicate_peer_review_challenge_path(challenge), class: "dropdown-item" %>
-                    <% end %>
+                    <%= link_to "Duplicar", duplicate_peer_review_challenge_path(challenge), class: "dropdown-item" %>
                   <% end %>
                   <%= link_to "Descargar todo", bulk_download_peer_review_challenge_path(challenge), class: "dropdown-item" %>
                   <%= link_to "Flujo de revisiones", flow_peer_review_challenge_path(challenge), class: "dropdown-item" %>
