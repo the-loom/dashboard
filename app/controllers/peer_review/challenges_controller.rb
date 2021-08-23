@@ -12,11 +12,9 @@ module PeerReview
 
     def index
       authorize PeerReview::Challenge, :index?
-      if current_user.teacher?
-        @challenges = PeerReview::Challenge.all
-      else
-        @challenges = PeerReview::Challenge.published
-      end
+      @challenges = PeerReview::Challenge.published
+      @drafts = PeerReview::Challenge.draft
+
       respond_to do |format|
         format.html
         format.csv do

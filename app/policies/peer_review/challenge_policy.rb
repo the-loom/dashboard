@@ -1,6 +1,6 @@
 class PeerReview::ChallengePolicy < ApplicationPolicy
   def index?
-    user.teacher? || user.student?
+    user.teacher?
   end
   def show?
     user.teacher? || user.student? && record.published?

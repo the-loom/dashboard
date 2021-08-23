@@ -18,6 +18,8 @@
   </div>
 <% end %>
 
+<legend>Desafíos publicados</legend>
+
 <section class="forks">
 
   <% if @challenges.empty? %>
@@ -120,6 +122,101 @@
     </table>
   <% end %>
 </section>
+
+<hr>
+
+<legend>Borradores</legend>
+
+<table class="challenges table table-striped">
+  <thead>
+  <tr>
+    <th>Título</th>
+    <th>Vencimiento</th>
+    <th>Estado</th>
+    <th>Dificultad</th>
+    <th>Opcional</th>
+    <th>Tipo de Revisiones</th>
+    <th>Revisiones esperadas</th>
+    <th><i class="fa fa-paperclip" title="¿Permite archivos adjuntos?"></i></th>
+    <% if policy(PeerReview::Challenge).manage? %>
+      <th><i class="fa fa-eye" title="Publicado"></i></th>
+    <% end %>
+    <th class="no-sort">&nbsp;</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @drafts.each do |challenge| %>
+    <tr class="fork">
+      <td>
+        <%= link_to challenge.title, peer_review_challenge_path(challenge) %>
+      </td>
+      <td>
+        <%= display_date challenge.due_date %>
+      </td>
+      <td>
+        <%= challenge.enabled? ? "Vigente" : "Finalizado" %>
+      </td>
+      <td>
+        <%= stars_for challenge %>
+      </td>
+      <td>
+        <%= yes_no challenge.optional? %>
+      </td>
+      <td>
+        <%= t "challenges.challenge_modes.#{challenge.challenge_mode}" %>
+      </td>
+      <td>
+        <%= challenge.expected_reviews %>
+      </td>
+      <td>
+        <%= yes_no challenge.allows_attachment? %>
+      </td>
+      <% if policy(PeerReview::Challenge).manage? %>
+        <td>
+          <%= yes_no challenge.published? %>
+        </td>
+      <% end %>
+      <td>
+
+        <div class="btn-group" role="group">
+          <% if policy(PeerReview::Challenge).monitor? %>
+            <%= link_to "Panorama", overview_peer_review_challenge_path(challenge), class: 'btn btn-primary btn-sm', role: "button" %>
+            <% if policy(PeerReview::Challenge).manage? %>
+              <%= link_to "Editar", edit_peer_review_challenge_path(challenge), class: 'btn btn-outline-primary btn-sm', role: "button" %>
+            <% end %>
+            <button type="button" type="button" class="btn btn-outline-primary dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="caret"></span>
+            </button>
+            <div class="dropdown-menu">
+              <% if policy(PeerReview::Challenge).manage? %>
+                <% if challenge.published? %>
+                  <%= link_to unpublish_peer_review_challenge_path(challenge), class: "dropdown-item", method: :post do %>
+                    Despublicar
+                  <% end %>
+                <% else %>
+                  <%= link_to publish_peer_review_challenge_path(challenge), class: "dropdown-item", method: :post do %>
+                    Publicar
+                  <% end %>
+                <% end %>
+                <%= link_to challenge.enabled? ? "Finalizar" : "Reabrir", toggle_peer_review_challenge_path(challenge), class: "dropdown-item" %>
+                <%= link_to "Duplicar", duplicate_peer_review_challenge_path(challenge), class: "dropdown-item" %>
+              <% end %>
+              <%= link_to "Descargar todo", bulk_download_peer_review_challenge_path(challenge), class: "dropdown-item" %>
+              <%= link_to "Flujo de revisiones", flow_peer_review_challenge_path(challenge), class: "dropdown-item" %>
+              <% if policy(PeerReview::Challenge).purge? %>
+                <% unless challenge.awarded %>
+                  <%= link_to "Premiar", award_peer_review_challenge_path(challenge), class: "dropdown-item", method: :post %>
+                <% end %>
+                <%= link_to "Purgar", purge_peer_review_challenge_path(challenge), class: "dropdown-item", style: "color: red;" %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
 
 <%= content_for :head do %>
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css"/>
