@@ -50,6 +50,15 @@ class ResourceCategoriesController < ApplicationController
     end
   end
 
+  def destroy
+    authorize Resource, :manage?
+    resource_category = ResourceCategory.find(params[:id])
+    resource_category.destroy
+
+    redirect_to resource_categories_path
+    flash[:success] = "Se eliminó correctamente la categoría"
+  end
+
   private
     def resource_params
       params[:resource_category].permit(:name)

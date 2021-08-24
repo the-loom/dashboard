@@ -49,6 +49,15 @@ class ResourcesController < ApplicationController
     end
   end
 
+  def destroy
+    authorize Resource, :manage?
+    resource = Resource.find(params[:id])
+    resource.destroy
+
+    redirect_to resources_path
+    flash[:success] = "Se eliminó correctamente el recurso"
+  end
+
   def upvote
     authorize Resource, :use?
     resource = Resource.find(params[:id])
