@@ -1,5 +1,6 @@
 - nav_add 'Recursos', '#'
-= nav_render
+= nav_render5
+
 - if policy(Resource).manage?
   = link_to 'Nuevo recurso', new_resource_path, class: 'btn btn-primary'
   = link_to 'Categorías',resource_categories_path, class: 'btn btn-primary'
@@ -22,7 +23,7 @@
           %td{style: 'text-align: center'}
             %h4
               = resource.weighted_score
-            %nobr
+            .btn-group{ role: "group" }
               = link_to upvote_resource_path(resource), method: :post, class: 'btn btn-outline-secondary btn-sm' + (current_user.voted_as_when_voted_for(resource) ? ' disabled' : ''), title: 'A favor' do
                 %i.far.fa-thumbs-up
               = link_to downvote_resource_path(resource), method: :post, class: 'btn btn-outline-secondary btn-sm' + (current_user.voted_as_when_voted_for(resource) == false ? ' disabled' : ''), title: 'En contra' do
