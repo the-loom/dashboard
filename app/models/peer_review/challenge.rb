@@ -15,6 +15,13 @@ class PeerReview::Challenge < ApplicationRecord
 
   serialize :rubrics, JSON
 
+  scope :draft, -> { where(published: false).or(self.where(enabled: false)) }
+
+  def publish!
+    super
+    self.update_attribute(:enabled, true)
+  end
+
   def expire_if_in_the_past
     if due?
       disable!
