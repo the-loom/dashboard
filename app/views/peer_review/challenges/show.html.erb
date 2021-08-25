@@ -1,4 +1,8 @@
+<% if policy(PeerReview::Challenge).manage? %>
 <% nav_add 'Desafíos', peer_review_challenges_path %>
+<% else %>
+  <% nav_add 'Desafíos', dashboard_index_path %>
+<% end %>
 <% nav_add @challenge.title, '#' %>
 <%= nav_render4 %>
 
