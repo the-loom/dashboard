@@ -10,7 +10,7 @@ module Admin
 
     def all
       authorize User, :impersonate?
-      @users = User.all.includes([:memberships, avatar_attachment: :blob, memberships: :course])
+      @users = User.all.includes([avatar_attachment: :blob])
       @title = "Todos los usuarios"
       render :index
     end

@@ -451,17 +451,21 @@
       var challenges = [];
       #{
         @challenges.map { |challenge|
-          "challenges.push({" +
-            "progress: #{challenge.progress_by?(current_user)}, " +
-            "percentage: #{(challenge.progress_by?(current_user) * 100).to_i}, " +
-            "status: \"#{(challenge.progress_by?(current_user) * 100).to_i == 100 ? 'finished' : ((challenge.progress_by?(current_user) * 100).to_i < 100 && !challenge.enabled ? 'missed' : 'available')}\", " +
-            "title: \"#{challenge.title}\", " +
-            "url: \"#{peer_review_challenge_path(challenge)}\", " +
-            "date: \"#{challenge.due_date}\", " +
-            "enabled: #{challenge.enabled}, " +
-            "optional: #{challenge.optional?}, " +
-            "has_picked_solutions: #{challenge.has_picked_solutions?}" +
-          "});"
+          progress = challenge.progress_by? current_user
+          percentage = (progress * 100).to_i
+          """
+          challenges.push({
+            progress: #{progress},
+            percentage: #{percentage},
+            status: \"#{percentage == 100 ? 'finished' : (percentage < 100 && !challenge.enabled ? 'missed' : 'available')}\",
+            title: \"#{challenge.title}\",
+            url: \"#{peer_review_challenge_path(challenge)}\",
+            date: \"#{challenge.due_date}\",
+            enabled: #{challenge.enabled},
+            optional: #{challenge.optional?},
+            has_picked_solutions: #{challenge.has_picked_solutions?}
+          });
+          """
         }.join('\n  ').html_safe
       }
 
