@@ -2,6 +2,7 @@ namespace :challenges do
   desc "Disables due PeerReview::Challenges"
   task disable: :environment do
     Course.enabled.each do |course|
+      next unless course.template?
       Course.current = course
       next unless course.on?(:peer_review_challenges)
       puts "Disabling Challenges for Course #{course.name}"

@@ -29,7 +29,7 @@
         </td>
         <td>
           <ul>
-            <% user.memberships.map { |x| "#{x.course.name} (#{x.role})" }.each do |m| %>
+            <% user.memberships.includes([:course]).map { |x| "#{x.course.name} (#{x.role})" }.each do |m| %>
               <li><%= m %></li>
             <% end %>
           </ul>
