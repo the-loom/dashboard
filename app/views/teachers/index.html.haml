@@ -2,14 +2,14 @@
 - nav_add 'Mis docentes', '#'
 = nav_render5
 
-.teachers
+.team
   .row
     - @teachers.each do |teacher|
       .col-lg-6.col-md-6.col-xs-12
         .card
           .card-body
             .left
-              .teacher.avatar
+              .avatar
                 = image_tag entity_avatar(teacher), { alt: teacher.full_name }
             .right
               %h5.card-title= teacher.full_name

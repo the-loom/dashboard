@@ -1,4 +1,4 @@
-.teachers {
+.team {
   .card {
     margin: 1em;
     .card-body {
@@ -24,7 +24,7 @@
 }
 
 @media screen and (max-width: 1000px) {
-  .teachers {
+  .team {
     .card {
       .card-body {
         flex-direction: column;
