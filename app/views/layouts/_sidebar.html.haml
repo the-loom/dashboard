@@ -3,6 +3,7 @@
     - if current_user && !Course.current.nil?
       - current_lecture = Lecture.current
       - if current_lecture && current_lecture.current? && !current_user.present_at(current_lecture)
-        = link_to 'Dar presente', register_attendance_lecture_path(current_lecture), class: 'btn btn-lg btn-block btn-success mb-4', method: :post
+        .d-grid.gap-2
+          = link_to 'Dar presente', register_attendance_lecture_path(current_lecture), class: 'btn btn-lg btn-block btn-success mb-4', method: :post
     - menu.each do |option|
       = render partial:'layouts/side_menu', locals: { menu: option }

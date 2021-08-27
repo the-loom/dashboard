@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  layout "application2"
+  layout "application5"
 
   def root
     if current_user

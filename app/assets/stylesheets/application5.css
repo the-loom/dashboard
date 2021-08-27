@@ -2,6 +2,7 @@
 *= require codemirror/lib/codemirror
 *= require multiple_choices
 *= require avatars
+*= require tables
 *= require team
 *= require_self
 */

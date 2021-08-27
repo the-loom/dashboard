@@ -1,11 +1,28 @@
+.avatar-and-team {
+  max-width: 150px;
+  max-height: 150px;
+  position: relative;
+}
+
 .avatar {
   border-radius: 50%;
   border: 2px solid darkslategray;
   overflow: hidden;
   max-width: 150px;
   max-height: 150px;
+
   img {
     width: 100%;
     height: 100%;
   }
+
+  &.team {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 40%;
+    border: 2px solid darkslategray;
+    background: white;
+  }
+
 }

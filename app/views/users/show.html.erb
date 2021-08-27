@@ -1,20 +1,26 @@
 <% nav_add 'Aula', '#' %>
-<% nav_add 'Estudiantes', students_path %>
+<% nav_add 'Estudiantes', '#' %>
 <% nav_add "#{@user.full_name} - #{@user.nickname} (#{@user.uuid})", '#' %>
-<%= nav_render4 %>
+<%= nav_render5 %>
 
 <div class="row">
   <div class="col-md-3">
     <div class="profile">
-      <%= image_tag entity_avatar(@user), {class: "avatar", alt: @user.full_name} %>
-      <% if Course.current.on?(:teams) %>
-        <% team = @user.current_membership.team %>
-        <% if team.present? %>
-          <%= link_to team_profile_url(team.nickname) do %>
-            <%= image_tag entity_avatar(team), {class: "team avatar", alt: team.name} %>
+      <div class="avatar-and-team">
+        <div class="avatar">
+          <%= image_tag entity_avatar(@user), { alt: @user.full_name } %>
+        </div>
+        <% if Course.current.on?(:teams) %>
+          <% team = @user.current_membership.team %>
+          <% if team.present? %>
+            <div class="team avatar">
+              <%= link_to team_profile_url(team.nickname) do %>
+                <%= image_tag entity_avatar(team), { alt: team.name } %>
+              <% end %>
+            </div>
           <% end %>
         <% end %>
-      <% end %>
+      </div>
     </div>
   </div>
   <div class="col-md-9">
@@ -31,7 +37,9 @@
 
       <% current_lecture = Lecture.current %>
       <% if current_lecture && current_lecture.current? && !current_user.present_at(current_lecture) %>
-        <%= link_to 'Dar presente', register_attendance_lecture_path(current_lecture), class: 'btn btn-lg btn-block btn-success mb-4', method: :post %>
+        <div class="d-grid gap-2">
+          <%= link_to 'Dar presente', register_attendance_lecture_path(current_lecture), class: 'btn btn-lg btn-block btn-success mb-4', method: :post %>
+        </div>
       <% end %>
 
       <legend>Asistencia
@@ -81,12 +89,12 @@
             <tr>
               <td><%= occurrence.updated_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y") %></td>
               <td>
-                <label class="badge badge-dark"><%= occurrence.multiplier %>&times;</label>
+                <label class="badge bg-secondary"><%= occurrence.multiplier %>&times;</label>
                 <%= occurrence.event.name %>
               </td>
               <% if Course.current.on?(:competences) && occurrence.event.competence_tag %>
                 <td>
-                  <label class="badge badge-dark">
+                  <label class="badge bg-secondary">
                     <%= occurrence.event.competence_tag.name %>
                   </label>
                 </td>
