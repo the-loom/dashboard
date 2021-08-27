@@ -5,8 +5,9 @@
       loom
     %button.navbar-toggler{"aria-controls": "navbarNavDropdown", "aria-expanded": false, "aria-label": "Cambiar navegación", "data-bs-target": "#navbarNavDropdown", "data-bs-toggle": "collapse", type: "button"}
       %span.navbar-toggler-icon
-    #navbarNavDropdown.collapse.navbar-collapse.d-flex.flex-row-reverse
-      %ul.navbar-nav
-        = render partial: '/layouts/menub5', locals: { menu: menu }
-      %ul.navbar-nav.d-md-none
-        = render partial: '/layouts/menub5', locals: { menu: submenu }
+    #navbarNavDropdown.collapse.navbar-collapse
+      .navbar-right
+        %ul.navbar-nav.d-md-none
+          = render partial: '/layouts/menub5', locals: { menu: submenu }
+        %ul.navbar-nav
+          = render partial: '/layouts/menub5', locals: { menu: menu }

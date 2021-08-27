@@ -17,3 +17,7 @@ body {
     right: 0;
     transform: rotate(-90deg);
 }
+
+.navbar .navbar-right {
+    margin-left: auto;
+}
