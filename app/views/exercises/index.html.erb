@@ -1,5 +1,5 @@
 <% nav_add 'Ejercicios', '#' %>
-<%= nav_render %>
+<%= nav_render5 %>
 
 <% if policy(Exercise).manage? %>
   <%= link_to 'Nuevo ejercicio', new_exercise_path, class: 'btn btn-primary' %>
@@ -30,7 +30,7 @@
           <%= link_to exercise.name, exercise_path(exercise.to_param) %>
           <br>
           <% exercise.tags.each do |tag| %>
-            <span class="badge badge-info"><%= tag %></span>
+            <span class="badge bg-info"><%= tag %></span>
           <% end %>
         </td>
         <td>

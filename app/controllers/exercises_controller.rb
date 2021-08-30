@@ -1,18 +1,15 @@
 class ExercisesController < ApplicationController
   include Publisher.new(Exercise)
 
-  layout "application2"
+  layout "application5"
 
   before_action do
     check_feature(:exercises)
   end
 
   def index
-    if current_user.teacher?
-      @exercises = Exercise.all
-    else
-      @exercises = Exercise.published
-    end
+    authorize Exercise, :manage?
+    @exercises = Exercise.all
   end
 
   def new
