@@ -56,9 +56,9 @@
 
       %ul#challenge.nav.nav-tabs{role: "tablist"}
         %li.nav-item
-          %a#challenge-calendar-tab.nav-link{"aria-controls": "challenge-calendar", "aria-selected": "true", "data-toggle": "tab", href: "#challenge-calendar", role: "tab"} Calendario
+          %a#challenge-calendar-tab.nav-link{"aria-controls": "challenge-calendar", "aria-selected": "true", "data-bs-toggle": "tab", href: "#challenge-calendar", role: "tab"} Calendario
         %li.nav-item
-          %a#challenge-table-tab.nav-link.active{"aria-controls": "challenge-table", "aria-selected": "false", "data-toggle": "tab", href: "#challenge-table", role: "tab"} Tabla
+          %a#challenge-table-tab.nav-link.active{"aria-controls": "challenge-table", "aria-selected": "false", "data-bs-toggle": "tab", href: "#challenge-table", role: "tab"} Tabla
       #challengeContent.tab-content
         #challenge-calendar.tab-pane.fade{"aria-labelledby": "challenge-calendar-tab", role: "tabpanel"}
           #event-calendar
@@ -150,7 +150,7 @@
                 = link_to exercise.name, exercise_path(exercise.to_param)
                 %br
                 - exercise.tags.each do |tag|
-                  %span.badge.badge-info
+                  %span.badge.bg-info
                     = tag
               %td
                 %span{style: 'display: none'}
