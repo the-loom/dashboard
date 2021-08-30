@@ -1,5 +1,5 @@
 <% nav_add 'Cuestionarios de Opción Múltiple', '#' %>
-<%= nav_render4 %>
+<%= nav_render5 %>
 
 <% if policy(MultipleChoices::Questionnaire).manage? %>
   <%= link_to 'Nuevo cuestionario', new_multiple_choices_questionnaire_path, class: 'btn btn-primary' %>
@@ -63,7 +63,7 @@
                 <%= link_to "Panorama", overview_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-primary btn-sm', role: "button" %>
                 <% if policy(MultipleChoices::Questionnaire).manage? %>
                   <%= link_to "Editar", edit_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-outline-primary btn-sm', role: "button" %>
-                  <button type="button" class="btn btn-outline-primary dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <button type="button" class="btn btn-outline-primary dropdown-toggle btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="caret"></span>
                   </button>
                   <div class="dropdown-menu">

@@ -1,6 +1,6 @@
 module MultipleChoices
   class QuestionnairesController < ApplicationController
-    layout "application2", only: [:practice, :grade, :index, :last]
+    layout "application5", only: [:practice, :grade, :index, :last]
 
     include Publisher.new(MultipleChoices::Questionnaire, :multiple_choices_questionnaires)
 
@@ -9,12 +9,8 @@ module MultipleChoices
     end
 
     def index
-      authorize MultipleChoices::Questionnaire, :access?
-      if current_user.teacher?
-        @questionnaires = MultipleChoices::Questionnaire.all
-      else
-        @questionnaires = MultipleChoices::Questionnaire.published
-      end
+      authorize MultipleChoices::Questionnaire, :manage?
+      @questionnaires = MultipleChoices::Questionnaire.all
     end
 
     def new

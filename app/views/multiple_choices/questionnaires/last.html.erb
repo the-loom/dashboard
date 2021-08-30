@@ -1,7 +1,11 @@
-<% nav_add 'Cuestionarios de Opción Múltiple', multiple_choices_questionnaires_path %>
+<% if current_user.teacher? %>
+  <% nav_add 'Cuestionarios de Opción Múltiple', multiple_choices_questionnaires_path %>
+<% else %>
+  <% nav_add 'Cuestionarios de Opción Múltiple', '#' %>
+<% end %>
 <% nav_add @questionnaire.name, '#' %>
 <% nav_add 'Últimos resultados', '#' %>
-<%= nav_render4 %>
+<%= nav_render5 %>
 
 <div class="row">
   <div class="col-md-9">
