@@ -1,6 +1,6 @@
 module PeerReview
   class ReviewsController < ApplicationController
-    layout "application2", only: [:new]
+    layout "application5", only: [:new]
 
     def new
       @challenge = PeerReview::Challenge.find(params[:challenge_id])
@@ -57,7 +57,7 @@ module PeerReview
         if current_user.teacher?
           redirect_to overview_peer_review_challenge_path(@challenge)
         else
-          redirect_to peer_review_challenge_path(@challenge)
+          redirect_to dashboard_index_path
         end
       else
         render action: :new
