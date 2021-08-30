@@ -9,8 +9,7 @@ class Lecture < ApplicationRecord
   scope :past_and_current, -> { where("date < ?", Time.zone.now.end_of_day) }
 
   def self.current
-    now = Time.zone.now
-    where("date between ? and ? and time_from < ? and time_to > ?", Time.zone.now.beginning_of_day, Time.zone.now.end_of_day, now, now).first
+    where("date between ? and ?", Time.zone.now.beginning_of_day, Time.zone.now.end_of_day).first
   end
 
   def current?
