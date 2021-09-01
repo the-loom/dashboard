@@ -123,7 +123,9 @@ class Layout::MenuPresenter
       gamification_node << MenuLeaf.new("Competencias", route.competence_tags_path) if on?(:competences) && manage?(CompetenceTag)
       gamification_node << MenuLeaf.new("Emblemas", route.badges_path) if on?(:badges) && manage?(Badge)
       gamification_node << MenuSeparator.new unless gamification_node.empty?
-      gamification_node << MenuLeaf.new("Estadísticas", route.points_stats_path) if on?(:events)
+
+      # temporarily disabled
+      # gamification_node << MenuLeaf.new("Estadísticas", route.points_stats_path) if on?(:events)
 
       gamification_node unless gamification_node.empty?
     end

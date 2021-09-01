@@ -148,7 +148,7 @@ Rails.application.routes.draw do
         end
         publishable
       end
-      resources :reviews, only: [:new, :update] do
+      resources :reviews, only: [:new, :update, :destroy] do
         post :add_message, on: :member
       end
     end

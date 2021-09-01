@@ -9,7 +9,8 @@ class ExercisesController < ApplicationController
 
   def index
     authorize Exercise, :manage?
-    @exercises = Exercise.all
+    @exercises = Exercise.published
+    @drafts = Exercise.draft
   end
 
   def new

@@ -17,6 +17,16 @@ module PeerReview
       @quick_reviews = QuickReviewGenerator.generate(@challenge, @review) if current_user.teacher? && @challenge.allows_quick_reviews?
     end
 
+    def destroy
+      review = PeerReview::Review.find(params[:id])
+      challenge = review.challenge
+
+      review.destroy
+
+      redirect_to peer_review_challenge_path(challenge)
+      flash[:success] = "Se eliminó correctamente la revisión"
+    end
+
     def add_message
       review = PeerReview::Review.find(params[:id])
       authorize review, :message?

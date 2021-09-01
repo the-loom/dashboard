@@ -6,91 +6,13 @@
   <br><br>
 <% end %>
 
-<% if @exercises.empty? %>
+<h2>Ejercicios publicados</h2>
 
-  <div class="alert alert-info">
-    <p>Aún no hay ningún ejercicio para comenzar a resolver</p>
-  </div>
+<%= render partial: 'table', locals: { exercises: @exercises} %>
 
-<% else %>
+<br>
+<hr>
 
-  <table class="exercises table table-hover">
-    <thead>
-    <tr>
-      <th>Nombre</th>
-      <th>Dificultad</th>
-      <th>Fecha</th>
-      <th class="no-sort">&nbsp;</th>
-    </tr>
-    </thead>
-    <tbody>
-    <% @exercises.each do |exercise| %>
-      <tr>
-        <td>
-          <%= link_to exercise.name, exercise_path(exercise.to_param) %>
-          <br>
-          <% exercise.tags.each do |tag| %>
-            <span class="badge bg-info"><%= tag %></span>
-          <% end %>
-        </td>
-        <td>
-          <%= stars_for exercise %>
-        </td>
-        <td>
-          <span style="display: none">
-            <%= display_invisible_date(exercise.due_date) %>
-          </span>
-          <time datetime="<%= display_invisible_date(exercise.due_date) %>">
-            <%= display_date exercise.due_date %>
-          </time>
-        </td>
-        <td>
-          <div class="btn-group">
-            <% if policy(Exercise).manage? %>
-              <%= link_to "Editar", edit_exercise_path(exercise), role: 'button', class: 'btn btn-primary btn-sm' %>
-              <% if exercise.published? %>
-                <%= link_to "Despublicar", unpublish_exercise_path(exercise), method: :post, role: 'button', class: 'btn btn-outline-primary btn-sm' %>
-              <% else %>
-                <%= link_to "Publicar", publish_exercise_path(exercise), method: :post, role: 'button', class: 'btn btn-outline-primary btn-sm' %>
-              <% end %>
-            <% end %>
-          </div>
-        </td>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
+<h2>Borradores</h2>
 
-<% end %>
-
-<%= content_for :head do %>
-  <link rel="stylesheet" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css"/>
-
-  <style>
-    form.button_to {
-      display: inline-block;
-      margin: 0 0.1em;
-    }
-  </style>
-
-<% end %>
-
-<%= content_for :javascript do %>
-  <script src="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js" type="application/javascript"></script>
-
-  <script type="application/javascript">
-      $(function () {
-          $('.exercises').DataTable({
-              order: [[2, "desc"]],
-              paging: false,
-              language: {
-                  url: "https://cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
-              },
-              columnDefs: [{
-                  targets: 'no-sort',
-                  orderable: false
-              }]
-          });
-      });
-  </script>
-<% end %>
+<%= render partial: 'table', locals: { exercises: @drafts} %>
