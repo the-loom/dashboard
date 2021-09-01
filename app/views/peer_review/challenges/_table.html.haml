@@ -1,0 +1,84 @@
+- if challenges.empty?
+  .alert.alert-info
+    %p Aún no hay ningún desafío
+- else
+  %table.challenges.table.table-striped
+    %thead
+      %tr
+        %th Título
+        %th Vencimiento
+        %th Estado
+        %th Dificultad
+        %th Opcional
+        %th Tipo de Revisiones
+        %th Revisiones esperadas
+        %th
+          %i.fa.fa-paperclip{title: "¿Permite archivos adjuntos?"}
+        %th.no-sort
+    %tbody
+      - challenges.each do |challenge|
+        %tr.fork
+          %td
+            = link_to challenge.title, peer_review_challenge_path(challenge)
+          %td
+            = display_date challenge.due_date
+          %td
+            = challenge.enabled? ? "Vigente" : "Finalizado"
+          %td
+            = stars_for challenge
+          %td
+            = yes_no challenge.optional?
+          %td
+            = t "challenges.challenge_modes.#{challenge.challenge_mode}"
+          %td
+            = challenge.expected_reviews
+          %td
+            = yes_no challenge.allows_attachment?
+          %td
+            .btn-group{role: "group"}
+              - if policy(PeerReview::Challenge).monitor?
+                = link_to "Panorama", overview_peer_review_challenge_path(challenge), class: 'btn btn-primary btn-sm', role: "button"
+                - if policy(PeerReview::Challenge).manage?
+                  = link_to "Editar", edit_peer_review_challenge_path(challenge), class: 'btn btn-outline-primary btn-sm', role: "button"
+                %button.btn.btn-outline-primary.dropdown-toggle.btn-sm{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", type: "button"}
+                  %span.caret
+                .dropdown-menu
+                  - if policy(PeerReview::Challenge).manage?
+                    - if challenge.published?
+                      = link_to unpublish_peer_review_challenge_path(challenge), class: "dropdown-item", method: :post do
+                        Despublicar
+                    - else
+                      = link_to publish_peer_review_challenge_path(challenge), class: "dropdown-item", method: :post do
+                        Publicar
+                    = link_to challenge.enabled? ? "Finalizar" : "Reabrir", toggle_peer_review_challenge_path(challenge), class: "dropdown-item"
+                    = link_to "Duplicar", duplicate_peer_review_challenge_path(challenge), class: "dropdown-item"
+                  = link_to "Descargar todo", bulk_download_peer_review_challenge_path(challenge), class: "dropdown-item"
+                  = link_to "Flujo de revisiones", flow_peer_review_challenge_path(challenge), class: "dropdown-item"
+                  - if policy(PeerReview::Challenge).purge?
+                    - unless challenge.awarded
+                      = link_to "Premiar", award_peer_review_challenge_path(challenge), class: "dropdown-item", method: :post
+                    = link_to "Purgar", purge_peer_review_challenge_path(challenge), class: "dropdown-item", style: "color: red;"
+
+= content_for :head do
+  %link{href: "https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css", rel: "stylesheet", type: "text/css"}/
+= content_for :javascript do
+  %script{src: "https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js", type: "text/javascript"}
+  :javascript
+    var init = false;
+    $(function () {
+    if (!init) {
+      $('.challenges').DataTable({
+          order: [[0, "asc"]],
+          paging: false,
+          language: {
+              info: "_TOTAL_ desafíos",
+              infoFiltered: "(filtrado de _MAX_ desafíos en total)"
+          },
+          columnDefs: [{
+              targets: 'no-sort',
+              orderable: false
+          }]
+      });
+      init = true;
+    }
+  });
