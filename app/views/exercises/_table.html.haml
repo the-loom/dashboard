@@ -1,0 +1,62 @@
+- if @exercises.empty?
+  .alert.alert-info
+    %p Aún no hay ningún ejercicio para comenzar a resolver
+- else
+  %table.exercises.table.table-hover
+    %thead
+      %tr
+        %th Nombre
+        %th Dificultad
+        %th Fecha
+        %th.no-sort
+    %tbody
+      - exercises.each do |exercise|
+        %tr
+          %td
+            = link_to exercise.name, exercise_path(exercise.to_param)
+            %br/
+            - exercise.tags.each do |tag|
+              %span.badge.badge-info= tag
+          %td
+            = stars_for exercise
+          %td
+            %span{style: "display: none"}
+              = display_invisible_date(exercise.due_date)
+            %time{datetime: "#{display_invisible_date(exercise.due_date)}"}
+              = display_date exercise.due_date
+          %td
+            .btn-group
+              - if policy(Exercise).manage?
+                = link_to "Editar", edit_exercise_path(exercise), role: 'button', class: 'btn btn-primary btn-sm'
+                - if exercise.published?
+                  = link_to "Despublicar", unpublish_exercise_path(exercise), method: :post, role: 'button', class: 'btn btn-outline-primary btn-sm'
+                - else
+                  = link_to "Publicar", publish_exercise_path(exercise), method: :post, role: 'button', class: 'btn btn-outline-primary btn-sm'
+
+= content_for :head do
+  %link{href: "https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css", rel: "stylesheet"}/
+  :css
+    form.button_to {
+      display: inline-block;
+      margin: 0 0.1em;
+    }
+= content_for :javascript do
+  %script{src: "https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js", type: "application/javascript"}
+  :javascript
+    var init = false;
+    $(function () {
+      if (!init) {
+        $('.exercises').DataTable({
+          order: [[2, "desc"]],
+          paging: false,
+          language: {
+            url: "https://cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
+          },
+          columnDefs: [{
+            targets: 'no-sort',
+            orderable: false
+          }]
+        });
+        init = true;
+      }
+    });

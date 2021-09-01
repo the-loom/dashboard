@@ -8,11 +8,8 @@ class ExercisesController < ApplicationController
   end
 
   def index
-    if current_user.teacher?
-      @exercises = Exercise.all
-    else
-      @exercises = Exercise.published
-    end
+    @exercises = Exercise.published
+    @drafts = Exercise.draft
   end
 
   def new
