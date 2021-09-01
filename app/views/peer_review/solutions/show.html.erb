@@ -90,6 +90,11 @@
               <div class="tab-content" id="v-pills-tabContent">
                 <% @solution.reviews.final.each_with_index do |review, index| %>
                   <div class="tab-pane fade <%= 'show active' if index == 0 %>" id="<%= "review_#{index}" %>" role="tabpanel" aria-labelledby="<%= "review_#{index}" %>">
+                    <% if policy(@challenge).purge? %>
+                      <%= link_to peer_review_challenge_review_path(@challenge, review), method: :delete, class: "btn btn-danger pull-right" do %>
+                        <i class="fa fa-trash"></i>
+                      <% end %>
+                    <% end %>
                     <% if review.reviewer.teacher? %>
                       <h4>Revisión realizada por <%= review.reviewer.full_name %></h4>
                     <% end %>
