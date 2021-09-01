@@ -41,9 +41,6 @@
         <th>Tipo de Revisiones</th>
         <th>Revisiones esperadas</th>
         <th><i class="fa fa-paperclip" title="¿Permite archivos adjuntos?"></i></th>
-        <% if policy(PeerReview::Challenge).manage? %>
-          <th><i class="fa fa-eye" title="Publicado"></i></th>
-        <% end %>
         <th class="no-sort">&nbsp;</th>
       </tr>
       </thead>
@@ -74,13 +71,7 @@
           <td>
             <%= yes_no challenge.allows_attachment? %>
           </td>
-          <% if policy(PeerReview::Challenge).manage? %>
-            <td>
-              <%= yes_no challenge.published? %>
-            </td>
-          <% end %>
           <td>
-
             <div class="btn-group" role="group">
               <% if policy(PeerReview::Challenge).monitor? %>
                 <%= link_to "Panorama", overview_peer_review_challenge_path(challenge), class: 'btn btn-primary btn-sm', role: "button" %>
@@ -138,9 +129,6 @@
     <th>Tipo de Revisiones</th>
     <th>Revisiones esperadas</th>
     <th><i class="fa fa-paperclip" title="¿Permite archivos adjuntos?"></i></th>
-    <% if policy(PeerReview::Challenge).manage? %>
-      <th><i class="fa fa-eye" title="Publicado"></i></th>
-    <% end %>
     <th class="no-sort">&nbsp;</th>
   </tr>
   </thead>
@@ -171,13 +159,7 @@
       <td>
         <%= yes_no challenge.allows_attachment? %>
       </td>
-      <% if policy(PeerReview::Challenge).manage? %>
-        <td>
-          <%= yes_no challenge.published? %>
-        </td>
-      <% end %>
       <td>
-
         <div class="btn-group" role="group">
           <% if policy(PeerReview::Challenge).monitor? %>
             <%= link_to "Panorama", overview_peer_review_challenge_path(challenge), class: 'btn btn-primary btn-sm', role: "button" %>

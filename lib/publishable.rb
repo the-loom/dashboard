@@ -2,6 +2,7 @@ module Publishable
   def self.included(base)
     base.class_eval do
       scope :published, -> { where(published: true) }
+      scope :draft, -> { where(published: false) }
     end
   end
 
