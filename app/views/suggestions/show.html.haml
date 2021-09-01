@@ -1,6 +1,6 @@
 - nav_add 'Sugerencias', suggestions_path
 - nav_add @suggestion.title, '#'
-= nav_render4
+= nav_render5
 
 .row
   .col-md-2{style: 'text-align: center'}
@@ -14,7 +14,7 @@
       = link_to unvote_suggestion_path(@suggestion), method: :post, class: 'btn btn-outline-secondary btn-sm' + (current_user.voted_as_when_voted_for(@suggestion).nil? ? ' disabled' : ''), title: 'Retirar voto' do
         %i.fas.fa-times
   .col-md-10
-    %span.badge.badge-primary
+    %span.badge.bg-primary
       = t "suggestions.suggestion_type.#{@suggestion.suggestion_type}"
     %blockquote.blockquote
       != @suggestion.body
