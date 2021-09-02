@@ -104,15 +104,15 @@ class Layout::MenuPresenter
       MenuLeaf.new("Recursos", route.resources_path)
       resources_node = MenuNode.new("Material")
 
-      resources_node << MenuLeaf.new("Recursos", route.resources_path) if on?(:resources)
-      resources_node << MenuLeaf.new("Preguntas frecuentes", route.faqs_path) if on?(:faqs)
+      resources_node << MenuLeaf.new("Recursos", route.resources_path, "", "fas fa-bookmark") if on?(:resources)
+      resources_node << MenuLeaf.new("Preguntas frecuentes", route.faqs_path, "", "fas fa-question") if on?(:faqs)
 
       resources_node unless resources_node.empty?
     end
 
     def dashboard_menu
       MenuNode.new("", [
-        MenuLeaf.new("Tablero", route.dashboard_index_path)
+        MenuLeaf.new("Tablero", route.dashboard_index_path, "", "fas fa-tachometer-alt")
       ])
     end
 
@@ -147,11 +147,11 @@ class Layout::MenuPresenter
 
     def classroom_menu
       classroom_node = MenuNode.new("Mi Aula")
-      classroom_node << MenuLeaf.new("Mi perfil", route.profile_path)
+      classroom_node << MenuLeaf.new("Mi perfil", route.profile_path, "", "fas fa-user")
       if on?(:teams) && @current_user.current_membership.team
-        classroom_node << MenuLeaf.new("Mi equipo", route.team_path(@current_user.current_membership.team.nickname))
+        classroom_node << MenuLeaf.new("Mi equipo", route.team_path(@current_user.current_membership.team.nickname), "", "fas fa-users")
       end
-      classroom_node << MenuLeaf.new("Mis docentes", route.teachers_path)
+      classroom_node << MenuLeaf.new("Mis docentes", route.teachers_path, "", "fas fa-chalkboard-teacher")
       classroom_node
     end
 
@@ -195,13 +195,20 @@ end
 
 class MenuLeaf
   attr_reader :title, :link, :style
-  def initialize (title, link, style = "")
+  def initialize (title, link, style = "", icon = nil)
     @title = title
     @link = link
     @style = style
+    @icon = icon
   end
+
   def current_for?(current_path)
     @link == current_path
+  end
+
+  def icon_tag
+    return "" unless @icon.present?
+    "<i class='#{@icon}'></i>"
   end
 end
 

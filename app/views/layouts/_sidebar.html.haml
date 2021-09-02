@@ -1,4 +1,4 @@
-%nav#sidebar-menu.col-2.bg-light.sidebar
+%nav#sidebar-menu.col-2.bg-light.sidebar.d-sm-none.d-md-block
   .sidebar-sticky
     - if current_user && !Course.current.nil?
       - current_lecture = Lecture.current
