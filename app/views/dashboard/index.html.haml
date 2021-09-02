@@ -125,6 +125,7 @@
                       = link_to challenge.title, peer_review_challenge_path(challenge)
                     %td
                       = display_date challenge.due_date
+                      23:59:59
                     %td
                       = challenge.enabled? ? "Vigente" : "Finalizado"
                     %td
