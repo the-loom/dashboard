@@ -13,4 +13,9 @@ class Exercise < ApplicationRecord
   def to_param
     [id, name.parameterize].join("-")
   end
+
+  def current?
+    return false unless start_date
+    self.start_date.beginning_of_day < Time.zone.now
+  end
 end

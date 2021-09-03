@@ -70,6 +70,6 @@ class ExercisesController < ApplicationController
 
   private
     def exercise_params
-      params[:exercise].permit(:name, :notes, :difficulty, :tag_list, :due_date)
+      params[:exercise].permit(:name, :notes, :difficulty, :tag_list, :start_date)
     end
 end
