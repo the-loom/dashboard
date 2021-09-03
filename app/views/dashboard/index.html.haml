@@ -155,9 +155,9 @@
                     = tag
               %td
                 %span{style: 'display: none'}
-                  = display_invisible_date(exercise.due_date)
-                %time{datetime: display_invisible_date(exercise.due_date)}
-                  = display_date exercise.due_date
+                  = display_invisible_date(exercise.start_date)
+                %time{datetime: display_invisible_date(exercise.start_date)}
+                  = display_date exercise.start_date
       %hr
 
     - if @questionnaires.size > 0
