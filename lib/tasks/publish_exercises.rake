@@ -2,7 +2,7 @@ namespace :exercises do
   desc "Enables current Exercises"
   task publish: :environment do
     Course.enabled.each do |course|
-      next unless course.template?
+      next unless course.template? || course.unique?
       Course.current = course
       next unless course.on?(:exercises)
       puts "Enabling Exercises for Course #{course.name}"

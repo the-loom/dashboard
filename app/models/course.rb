@@ -32,6 +32,10 @@ class Course < ApplicationRecord
     replicas.size > 0
   end
 
+  def unique?
+    replicas.size == 0 && parent_course == nil
+  end
+
   def editable?
     !replica
   end
