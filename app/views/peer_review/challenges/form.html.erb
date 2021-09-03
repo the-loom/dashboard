@@ -13,6 +13,7 @@
 
   <%= f.input :challenge_mode, collection: PeerReview::Challenge.challenge_modes.map { |key, _| [key.humanize, key]} %>
 
+  <%= f.input :start_date, label: 'Inicio', as: :date, html5: true %>
   <%= f.input :due_date, label: 'Vencimiento', as: :date, html5: true %>
     
   <%= f.input :solution_type, label: 'Solución', collection: PeerReview::Challenge.solution_types.map { |key, _| [key.humanize, key]}, include_blank: false %>

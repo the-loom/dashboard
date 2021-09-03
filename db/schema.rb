@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_05_215833) do
+ActiveRecord::Schema.define(version: 2021_09_03_120202) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -288,6 +288,7 @@ ActiveRecord::Schema.define(version: 2021_08_05_215833) do
     t.boolean "awarded", default: false
     t.boolean "optional", default: false
     t.string "rubrics"
+    t.date "start_date"
   end
 
   create_table "peer_review_messages", force: :cascade do |t|
