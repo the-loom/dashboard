@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_03_123352) do
+ActiveRecord::Schema.define(version: 2021_09_04_132704) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -153,6 +153,8 @@ ActiveRecord::Schema.define(version: 2021_09_03_123352) do
     t.boolean "published", default: true
     t.integer "difficulty", default: 1
     t.date "start_date"
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_exercises_on_discarded_at"
   end
 
   create_table "faqs", force: :cascade do |t|

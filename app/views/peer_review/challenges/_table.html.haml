@@ -69,19 +69,19 @@
   :javascript
     var init = false;
     $(function () {
-    if (!init) {
-      $('.challenges').DataTable({
-          order: [[0, "asc"]],
-          paging: false,
-          language: {
-              info: "_TOTAL_ desafíos",
-              infoFiltered: "(filtrado de _MAX_ desafíos en total)"
-          },
-          columnDefs: [{
-              targets: 'no-sort',
-              orderable: false
-          }]
-      });
-      init = true;
-    }
-  });
+      if (!init) {
+        $('.challenges').DataTable({
+            order: [[0, "asc"]],
+            paging: false,
+            language: {
+                info: "_TOTAL_ desafíos",
+                infoFiltered: "(filtrado de _MAX_ desafíos en total)"
+            },
+            columnDefs: [{
+                targets: 'no-sort',
+                orderable: false
+            }]
+        });
+        init = true;
+      }
+    });

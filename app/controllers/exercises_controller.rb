@@ -8,8 +8,8 @@ class ExercisesController < ApplicationController
   end
 
   def index
-    @exercises = Exercise.published
-    @drafts = Exercise.draft
+    @exercises = Exercise.kept.published
+    @drafts = Exercise.kept.draft
   end
 
   def new
@@ -53,6 +53,16 @@ class ExercisesController < ApplicationController
       render :form
     end
   end
+
+  def destroy
+    authorize Exercise, :manage?
+
+    exercise = Exercise.find(params[:id])
+    exercise.discard
+
+    redirect_to exercises_path
+  end
+
 
   def show
     @exercise = Exercise.find_by(id: params[:id])

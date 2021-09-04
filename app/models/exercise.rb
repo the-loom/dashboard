@@ -2,6 +2,7 @@ class Exercise < ApplicationRecord
   include CourseLock
   include Publishable
   include HasDifficulty
+  include Discard::Model
 
   acts_as_taggable_on :tags
 
