@@ -1,0 +1,74 @@
+- if questionnaires.empty?
+  .alert.alert-info
+    %p Aún no hay ningun cuestionario
+- else
+  %table.questionnaires.table.table-striped
+    %thead
+      %tr
+        %th Nombre
+        %th Estado
+        %th Preguntas
+        - if policy(PeerReview::Challenge).monitor?
+          %th
+            %i.fa.fa-eye{title: "Publicado"}
+        %th.no-sort
+    %tbody
+      - questionnaires.each do |questionnaire|
+        %tr.fork
+          %td
+            = questionnaire.name
+          %td
+            = questionnaire.enabled? ? "Vigente" : "Finalizado"
+          %td
+            = questionnaire.questions.visible.count
+            visibles
+            - if policy(MultipleChoices::Questionnaire).manage?
+              %br/
+              = questionnaire.questions.hidden.count
+              ocultas
+          - if policy(MultipleChoices::Questionnaire).monitor?
+            %td
+              = yes_no questionnaire.published?
+          %td
+            - if questionnaire.enabled?
+              = link_to "Practicar", practice_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-primary btn-sm'
+            - if questionnaire.solved_by? current_user
+              = link_to "Revisar", last_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-secondary btn-sm'
+            - if policy(MultipleChoices::Questionnaire).monitor?
+              .btn-group
+                = link_to "Panorama", overview_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-primary btn-sm', role: "button"
+                - if policy(MultipleChoices::Questionnaire).manage?
+                  = link_to "Editar", edit_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-outline-primary btn-sm', role: "button"
+                  %button.btn.btn-outline-primary.dropdown-toggle.btn-sm{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", type: "button"}
+                    %span.caret
+                  .dropdown-menu
+                    = link_to questionnaire.enabled? ? "Finalizar" : "Reabrir", toggle_multiple_choices_questionnaire_path(questionnaire), class: "dropdown-item", method: :post
+                    - if questionnaire.published?
+                      = link_to unpublish_multiple_choices_questionnaire_path(questionnaire), class: "dropdown-item", method: :post do
+                        Despublicar
+                    - else
+                      = link_to publish_multiple_choices_questionnaire_path(questionnaire), class: "dropdown-item", method: :post do
+                        Publicar
+
+= content_for :head do
+  %link{href: "https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css", rel: "stylesheet", type: "text/css"}/
+= content_for :javascript do
+  %script{src: "https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js", type: "text/javascript"}
+  :javascript
+    var init = false;
+    $(function () {
+      if (!init) {
+        $('.questionnaires').DataTable({
+            order: [[0, "asc"]],
+            paging: false,
+            language: {
+                url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+            },
+            columnDefs: [{
+                targets: 'no-sort',
+                orderable: false
+            }]
+        });
+        init = true;
+      }
+    });

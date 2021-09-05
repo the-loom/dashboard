@@ -9,12 +9,9 @@ module MultipleChoices
     end
 
     def index
-      authorize MultipleChoices::Questionnaire, :access?
-      if current_user.teacher?
-        @questionnaires = MultipleChoices::Questionnaire.all
-      else
-        @questionnaires = MultipleChoices::Questionnaire.published
-      end
+      authorize MultipleChoices::Questionnaire, :manage?
+      @questionnaires = MultipleChoices::Questionnaire.published
+      @drafts = MultipleChoices::Questionnaire.draft
     end
 
     def new
