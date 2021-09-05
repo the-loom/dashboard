@@ -93,9 +93,14 @@ class PeerReview::Challenge < ApplicationRecord
     !enabled? && picked_solutions.size > 0
   end
 
+  def current?
+    return false unless start_date
+    self.start_date.beginning_of_day < Time.zone.now && !due?
+  end
+
   def due?
     return false unless due_date
-    Time.zone.now > self.due_date.beginning_of_day + 1.day
+    self.due_date.beginning_of_day + 1.day < Time.zone.now
   end
 
   def needs_purge?
@@ -110,6 +115,11 @@ class PeerReview::Challenge < ApplicationRecord
 
   def disable!
     self.update_attribute(:enabled, false)
+  end
+
+  def enable!
+    self.update_attribute(:enabled, true)
+    self.update_attribute(:published, true)
   end
 
   def solution_by(user)

@@ -11,6 +11,11 @@ class MultipleChoices::Questionnaire < ApplicationRecord
 
   scope :enabled, -> { where(enabled: true) }
 
+  def publish!
+    super
+    self.update_attribute(:enabled, true)
+  end
+
   def last_solution_by(user)
     solutions.where(solver: user).order(:created_at).last
   end

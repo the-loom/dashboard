@@ -9,8 +9,8 @@ class ExercisesController < ApplicationController
 
   def index
     authorize Exercise, :manage?
-    @exercises = Exercise.published
-    @drafts = Exercise.draft
+    @exercises = Exercise.kept.published
+    @drafts = Exercise.kept.draft
   end
 
   def new
@@ -55,6 +55,16 @@ class ExercisesController < ApplicationController
     end
   end
 
+  def destroy
+    authorize Exercise, :manage?
+
+    exercise = Exercise.find(params[:id])
+    exercise.discard
+
+    redirect_to exercises_path
+  end
+
+
   def show
     @exercise = Exercise.find_by(id: params[:id])
 
@@ -71,6 +81,6 @@ class ExercisesController < ApplicationController
 
   private
     def exercise_params
-      params[:exercise].permit(:name, :notes, :difficulty, :tag_list, :due_date)
+      params[:exercise].permit(:name, :notes, :difficulty, :tag_list, :start_date)
     end
 end

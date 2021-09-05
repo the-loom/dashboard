@@ -7,108 +7,13 @@
 
 <br><br>
 
-<section class="forks">
+<h2>Cuestionarios publicados</h2>
 
-  <% if @questionnaires.empty? %>
+<%= render partial: 'table', locals: { questionnaires: @questionnaires } %>
 
-    <div class="alert alert-info">
-      <p>Aún no hay ningun cuestionario</p>
-    </div>
+<br>
+<hr>
 
-  <% else %>
+<h2>Borradores</h2>
 
-    <table class="questionnaires table table-striped">
-      <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Estado</th>
-        <th>Preguntas</th>
-        <% if policy(PeerReview::Challenge).monitor? %>
-          <th><i class="fa fa-eye" title="Publicado"></i></th>
-        <% end %>
-        <th class="no-sort">&nbsp;</th>
-      </tr>
-      </thead>
-      <tbody>
-      <% @questionnaires.each do |questionnaire| %>
-        <tr class="fork">
-          <td>
-            <%= questionnaire.name %>
-          </td>
-          <td>
-            <%= questionnaire.enabled? ? "Vigente" : "Finalizado" %>
-          </td>
-          <td>
-            <%= questionnaire.questions.visible.count %> visibles
-            <% if policy(MultipleChoices::Questionnaire).manage? %>
-              <br>
-              <%= questionnaire.questions.hidden.count %> ocultas
-            <% end %>
-          </td>
-          <% if policy(MultipleChoices::Questionnaire).monitor? %>
-            <td>
-              <%= yes_no questionnaire.published? %>
-            </td>
-          <% end %>
-          <td>
-            <% if questionnaire.enabled? %>
-              <%= link_to "Practicar", practice_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-primary btn-sm' %>
-            <% end %>
-            <% if questionnaire.solved_by? current_user %>
-              <%= link_to "Revisar", last_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-secondary btn-sm' %>
-            <% end %>
-
-            <% if policy(MultipleChoices::Questionnaire).monitor? %>
-              <div class="btn-group">
-                <%= link_to "Panorama", overview_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-primary btn-sm', role: "button" %>
-                <% if policy(MultipleChoices::Questionnaire).manage? %>
-                  <%= link_to "Editar", edit_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-outline-primary btn-sm', role: "button" %>
-                  <button type="button" class="btn btn-outline-primary dropdown-toggle btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="caret"></span>
-                  </button>
-                  <div class="dropdown-menu">
-                    <%= link_to questionnaire.enabled? ? "Finalizar" : "Reabrir", toggle_multiple_choices_questionnaire_path(questionnaire), class: "dropdown-item", method: :post %>
-                    <% if questionnaire.published? %>
-                      <%= link_to unpublish_multiple_choices_questionnaire_path(questionnaire), class: "dropdown-item", method: :post do %>
-                        Despublicar
-                      <% end %>
-                    <% else %>
-                      <%= link_to publish_multiple_choices_questionnaire_path(questionnaire), class: "dropdown-item", method: :post do %>
-                        Publicar
-                      <% end %>
-                    <% end %>
-                  </div>
-                <% end %>
-              </div>
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
-      </tbody>
-    </table>
-  <% end %>
-</section>
-
-<%= content_for :head do %>
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css"/>
-<% end %>
-
-<%= content_for :javascript do %>
-  <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js"></script>
-
-  <script type="application/javascript">
-      $(function () {
-          $('.questionnaires').DataTable({
-              order: [[0, "asc"]],
-              paging: false,
-              language: {
-                  url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
-              },
-              columnDefs: [{
-                  targets: 'no-sort',
-                  orderable: false
-              }]
-          });
-      });
-  </script>
-<% end %>
+<%= render partial: 'table', locals: { questionnaires: @drafts } %>

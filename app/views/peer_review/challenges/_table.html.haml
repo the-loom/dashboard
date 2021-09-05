@@ -6,6 +6,7 @@
     %thead
       %tr
         %th Título
+        %th Inicio
         %th Vencimiento
         %th Estado
         %th Dificultad
@@ -20,6 +21,8 @@
         %tr.fork
           %td
             = link_to challenge.title, peer_review_challenge_path(challenge)
+          %td
+            = display_date challenge.start_date
           %td
             = display_date challenge.due_date
           %td
@@ -66,19 +69,19 @@
   :javascript
     var init = false;
     $(function () {
-    if (!init) {
-      $('.challenges').DataTable({
-          order: [[0, "asc"]],
-          paging: false,
-          language: {
-              info: "_TOTAL_ desafíos",
-              infoFiltered: "(filtrado de _MAX_ desafíos en total)"
-          },
-          columnDefs: [{
-              targets: 'no-sort',
-              orderable: false
-          }]
-      });
-      init = true;
-    }
-  });
+      if (!init) {
+        $('.challenges').DataTable({
+            order: [[0, "asc"]],
+            paging: false,
+            language: {
+                info: "_TOTAL_ desafíos",
+                infoFiltered: "(filtrado de _MAX_ desafíos en total)"
+            },
+            columnDefs: [{
+                targets: 'no-sort',
+                orderable: false
+            }]
+        });
+        init = true;
+      }
+    });

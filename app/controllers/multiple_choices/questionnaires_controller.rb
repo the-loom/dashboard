@@ -10,7 +10,8 @@ module MultipleChoices
 
     def index
       authorize MultipleChoices::Questionnaire, :manage?
-      @questionnaires = MultipleChoices::Questionnaire.all
+      @questionnaires = MultipleChoices::Questionnaire.published
+      @drafts = MultipleChoices::Questionnaire.draft
     end
 
     def new
