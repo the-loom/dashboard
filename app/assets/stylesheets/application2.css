@@ -99,3 +99,7 @@ img.team {
 .label.do-search {
     cursor: pointer;
 }
+
+.badge.bg-golden {
+    background-color: goldenrod;
+}

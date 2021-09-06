@@ -91,8 +91,8 @@
           </td>
           <% if Course.current.on?(:badges) %>
             <td>
-              <span class="badge golden-badge" title="Medallas de oro">&times;<%= student.badges.featured.count %></span>
-              <span class="badge" title="Medallas de plata">&times;<%= student.badges.not_featured.count %></span>
+              <span class="badge bg-golden" title="Medallas de oro">&times;<%= student.badges.featured.count %></span>
+              <span class="badge bg-secondary" title="Medallas de plata">&times;<%= student.badges.not_featured.count %></span>
             </td>
           <% end %>
           <td>
