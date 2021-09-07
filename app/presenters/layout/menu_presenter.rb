@@ -91,7 +91,7 @@ class Layout::MenuPresenter
     def exercises_menu
       exercises_node = MenuNode.new("Ejercitación")
       exercises_node << MenuLeaf.new("Tarjetas", route.tiny_cards_decks_path) if on?(:tiny_cards)
-      if @current_user.teacher?
+      if @current_user.teacher? && Course.current.editable?
         exercises_node << MenuLeaf.new("Ejercicios", route.exercises_path) if on?(:exercises)
         exercises_node << MenuLeaf.new("Cuestionarios de Opción Múltiple", route.multiple_choices_questionnaires_path) if on?(:multiple_choices)
         exercises_node << MenuLeaf.new("Desafíos de Corrección Automática", route.repos_path) if on?(:automatic_correction_challenges)
