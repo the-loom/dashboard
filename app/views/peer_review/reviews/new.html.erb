@@ -5,6 +5,8 @@
 
 <%= raw @challenge.instructions %>
 
+<hr/>
+
 <% if current_user.teacher? %>
   <h2>Solución de <%= @challenge.team_challenge ? @review.solution.author.current_membership.team.name : @review.solution.author.full_name %></h2>
 <% else %>
@@ -13,6 +15,8 @@
 
 <%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: @review.solution.wording, language: @challenge.language } %>
 <%= render partial: '/peer_review/attachment', locals: {challenge: @challenge, document: @review.solution.solution_attachment} %>
+
+<br>
 
 <h2>Instrucciones para el revisor</h2>
 

@@ -1,0 +1,26 @@
+/*
+*= require codemirror/lib/codemirror
+*= require multiple_choices
+*= require avatars
+*= require tables
+*= require team
+*= require code
+*= require menu
+*= require badges
+*= require_self
+*/
+
+body {
+    margin-top: 4em;
+}
+
+.btn-suggestions {
+    bottom: 7em;
+    position: fixed;
+    right: 0;
+    transform: rotate(-90deg);
+}
+
+.navbar .navbar-right {
+    margin-left: auto;
+}

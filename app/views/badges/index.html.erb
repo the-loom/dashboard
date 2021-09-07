@@ -1,6 +1,6 @@
 <% nav_add 'Gamificación', '#' %>
 <% nav_add 'Emblemas', '#' %>
-<%= nav_render %>
+<%= nav_render5 %>
 
 <%= link_to 'Nuevo emblema', new_badge_path, class: 'btn btn-primary' %>
 <br><br>
@@ -28,7 +28,9 @@
     <% @badges.each do |badge| %>
       <tr>
         <td>
-          <%= image_tag badge.image, {class: "loom-badge", alt: badge.name } %>
+          <div class="loom-badge">
+            <%= image_tag badge.image, { alt: badge.name } %>
+          </div>
         </td>
         <td>
           <%= link_to badge.name, badge_path(badge.id) %>
@@ -43,7 +45,7 @@
           <%= badge.earnings.size %> veces
         </td>
         <td>
-          <%= link_to "Editar", edit_badge_path(badge), class: 'btn btn-default' %>
+          <%= link_to "Editar", edit_badge_path(badge), class: 'btn btn-primary' %>
         </td>
       </tr>
     <% end %>

@@ -17,6 +17,8 @@
  *= require bootstrap-tour/build/css/bootstrap-tour
  *= require codemirror/lib/codemirror
  *= require_tree .
+ *= stub 'application2'
+ *= stub 'application5'
  *= require_self
  */
 

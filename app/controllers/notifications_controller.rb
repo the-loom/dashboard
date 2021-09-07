@@ -1,5 +1,5 @@
 class NotificationsController < ApplicationController
-  layout "application2", only: [:index]
+  layout "application5", only: [:index]
 
   def index
     authorize Notification

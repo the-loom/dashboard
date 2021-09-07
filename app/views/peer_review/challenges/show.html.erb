@@ -1,10 +1,10 @@
 <% if policy(PeerReview::Challenge).manage? %>
-<% nav_add 'Desafíos', peer_review_challenges_path %>
+  <% nav_add 'Desafíos', peer_review_challenges_path %>
 <% else %>
   <% nav_add 'Desafíos', dashboard_index_path %>
 <% end %>
 <% nav_add @challenge.title, '#' %>
-<%= nav_render4 %>
+<%= nav_render5 %>
 
 <% unless @challenge.reviews.draft.by(current_user).empty? %>
   <%= render partial: 'shared/alert', locals: {alert_type: 'danger', title: '¡Cuidado!', dismissable: true,
@@ -51,13 +51,14 @@
 
 <nav>
   <div class="nav nav-tabs" id="nav-tab" role="tablist">
-    <a class="nav-item nav-link active" id="nav-solution-tab" data-toggle="tab" href="#nav-solution" role="tab" aria-controls="nav-solution" aria-selected="true">Mi
+    <a class="nav-item nav-link active" id="nav-solution-tab" data-bs-toggle="tab" href="#nav-solution" role="tab" aria-controls="nav-solution" aria-selected="true">Mi
       solución</a>
-    <a class="nav-item nav-link" id="nav-reviews-tab" data-toggle="tab" href="#nav-reviews" role="tab" aria-controls="nav-reviews" aria-selected="false">Revisiones realizadas</a>
-    <a class="nav-item nav-link" id="nav-examples-tab" data-toggle="tab" href="#nav-examples" role="tab" aria-controls="nav-examples" aria-selected="false">Soluciones
+    <a class="nav-item nav-link" id="nav-reviews-tab" data-bs-toggle="tab" href="#nav-reviews" role="tab" aria-controls="nav-reviews" aria-selected="false">Revisiones realizadas</a>
+    <a class="nav-item nav-link" id="nav-examples-tab" data-bs-toggle="tab" href="#nav-examples" role="tab" aria-controls="nav-examples" aria-selected="false">Soluciones
       sugeridas</a>
   </div>
 </nav>
+
 <div class="tab-content" id="nav-tabContent">
   <div class="tab-pane fade show active" id="nav-solution" role="tabpanel" aria-labelledby="nav-solution-tab">
     <% if @solution.new_record? %>
@@ -93,7 +94,7 @@
               <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <% @solution.reviews.final.each_with_index do |review, index| %>
                   <a href="#<%= "review_#{index}" %>" id="#<%= "review_#{index}" %>" class="nav-link<%= ' active' if index == 0 %>"
-                     aria-controls="#<%= "review_#{index}" %>" role="tab" data-toggle="pill" aria-selected="<%= index == 0 %>">
+                     aria-controls="#<%= "review_#{index}" %>" role="tab" data-bs-toggle="pill" aria-selected="<%= index == 0 %>">
                     <%= "Revisión ##{index + 1}" %>
                     <% if review.reviewer.teacher? %>
                       (docente)
@@ -134,7 +135,7 @@
           <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <% @challenge.reviews.by(current_user).each_with_index do |review, index| %>
               <a href="#<%= "rreview_#{index}" %>" id="#<%= "rreview_#{index}" %>" class="nav-link<%= ' active' if index == 0 %>"
-                 aria-controls="#<%= "rreview_#{index}" %>" role="tab" data-toggle="pill" aria-selected="<%= index == 0 %>">
+                 aria-controls="#<%= "rreview_#{index}" %>" role="tab" data-bs-toggle="pill" aria-selected="<%= index == 0 %>">
                 <%= "Revisión ##{index + 1}" %>
                 <% if review.reviewer.teacher? %>
                   (docente)
@@ -178,7 +179,7 @@
           <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <% @challenge.picked_solutions.each_with_index do |_, index| %>
               <a href="#<%= "ssolution_#{index}" %>" id="#<%= "ssolution_#{index}" %>" class="nav-link<%= ' active' if index == 0 %>"
-                 aria-controls="#<%= "ssolution_#{index}" %>" role="tab" data-toggle="pill" aria-selected="<%= index == 0 %>">
+                 aria-controls="#<%= "ssolution_#{index}" %>" role="tab" data-bs-toggle="pill" aria-selected="<%= index == 0 %>">
                 <%= "Solución ##{index + 1}" %>
               </a>
             <% end %>

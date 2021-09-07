@@ -1,5 +1,5 @@
 class DashboardController < ApplicationController
-  layout "application2"
+  layout "application5"
 
   def index
     @post = policy(Post).manage? ? Post.new : nil

@@ -1,7 +1,8 @@
 - random_id = "_" + rand(36**6).to_s(36)
 - if source_code
-  %textarea{id: random_id}
-    != wording
+  .code.solution
+    %textarea{id: random_id}
+      != wording
 - else
   .well
     != wording

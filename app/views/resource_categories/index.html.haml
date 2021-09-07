@@ -1,0 +1,41 @@
+- nav_add 'Recursos', resources_path
+- nav_add 'Categorías', '#'
+= nav_render5
+- if policy(Resource).manage?
+  = link_to 'Nueva categoría', new_resource_category_path, class: 'btn btn-primary'
+  %br/
+  %br/
+- if @resource_categories.empty?
+  .alert.alert-info
+    %p Aún no hay ningúna categoría
+- else
+  %table.categories.table.table-hover
+    %thead
+      %tr
+        %th Nombre
+        %th.no-sort
+    %tbody
+      - @resource_categories.each do |category|
+        %tr
+          %td
+            = category.name
+          %td
+            = render partial: 'shared/actions4', locals: { entity_class: Resource, entity: category, controller: :resource_categories }
+= content_for :head do
+  %link{href: "https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css", rel: "stylesheet", type: "text/css"}/
+= content_for :javascript do
+  %script{src: "https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js", type: "text/javascript"}
+  :javascript
+    $(function () {
+      $('.categories').DataTable({
+        order: [[0, "asc"], [1, "asc"]],
+        paging: false,
+        language: {
+          url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+        },
+        columnDefs: [{
+          targets: 'no-sort',
+          orderable: false
+        }]
+      });
+    });

@@ -1,6 +1,6 @@
 module PeerReview
   class ChallengesController < ApplicationController
-    layout "application2", only: [:show, :index, :messages]
+    layout "application5", only: [:show, :index, :messages]
 
     include Publisher.new(PeerReview::Challenge, :peer_review_challenges)
 
@@ -11,7 +11,8 @@ module PeerReview
     end
 
     def index
-      authorize PeerReview::Challenge, :index?
+      authorize PeerReview::Challenge, :manage?
+
       @challenges = PeerReview::Challenge.published
       @drafts = PeerReview::Challenge.draft
 

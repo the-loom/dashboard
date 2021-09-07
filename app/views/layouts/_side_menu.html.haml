@@ -11,4 +11,6 @@
 - elsif menu.class == MenuNotification
 - else
   %li.nav-item{ class: ('active' if menu.current_for?(request.env['PATH_INFO'])) }
-    = link_to menu.title, menu.link, { style: menu.style, class: 'nav-link' }
+    = link_to menu.link, { style: menu.style, class: 'nav-link' } do
+      != menu.icon_tag
+      = menu.title

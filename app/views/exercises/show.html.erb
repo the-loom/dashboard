@@ -1,6 +1,10 @@
-<% nav_add 'Ejercicios', exercises_path %>
+<% if current_user.teacher? %>
+  <% nav_add 'Ejercicios', exercises_path %>
+<% else %>
+  <% nav_add 'Ejercicios', '#' %>
+<% end %>
 <% nav_add @exercise.name, '#' %>
-<%= nav_render4 %>
+<%= nav_render5 %>
 
 <div class="exercise-wording">
   <%== @exercise.notes %>

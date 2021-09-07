@@ -3,18 +3,20 @@
   - nav_add 'Rechazadas', '#'
 - else
   - nav_add 'Sugerencias', '#'
-= nav_render4
+= nav_render5
 
-- if policy(Suggestion).manage?
-  - if params[:action] == "index"
-    = link_to({ controller: 'suggestions', action: 'dismissed' }, { class: 'btn btn-default' }) do
-      %i.fa.fa-recycle
-      Sugerencias rechazadas
+.btn-group
+  - if policy(Suggestion).manage?
+    - if params[:action] == "index"
+      = link_to({ controller: 'suggestions', action: 'dismissed' }, { class: 'btn btn-outline-primary' }) do
+        %i.fa.fa-recycle
+        Sugerencias rechazadas
 
-- if policy(Suggestion).use?
-  = link_to 'Nueva sugerencia', new_suggestion_path, class: 'btn btn-primary'
-  %br/
-  %br/
+  - if policy(Suggestion).use?
+    = link_to 'Nueva sugerencia', new_suggestion_path, class: 'btn btn-primary'
+
+%br/
+%br/
 
 - if @suggestions.empty?
   .alert.alert-info
@@ -42,10 +44,10 @@
                 %i.fas.fa-times
           %td
             %p
-              %span.badge.badge-primary
+              %span.badge.bg-primary
                 = t "suggestions.suggestion_type.#{suggestion.suggestion_type}"
               - if suggestion.done
-                %span.badge.badge-success
+                %span.badge.bg-success
                   ¡Hecha!
               &nbsp;
               = link_to suggestion_path(suggestion) do

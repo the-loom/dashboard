@@ -1,9 +1,9 @@
 - nav_add 'Notificaciones', '#'
-= nav_render4
+= nav_render5
 
 - if @notifications.empty?
   .alert.alert-info
-    %p Aún no hay ninguna notificación
+    %p Aún no hay notificaciones
 - else
   %section.notifications
     - @notifications.each do |notification|

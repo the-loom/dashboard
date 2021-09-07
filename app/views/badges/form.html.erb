@@ -2,7 +2,7 @@
 <% nav_add 'Emblemas', badges_path %>
 <% nav_add @badge.name, badge_path(@badge) unless @badge.new_record? %>
 <% nav_add @labels.title, '#' %>
-<%= nav_render %>
+<%= nav_render5 %>
 
 <%= simple_form_for @badge do |f| %>
 
@@ -17,6 +17,5 @@
   <%= f.input :featured, label: 'Especial', as: :boolean %>
 
   <%= f.button :submit, @labels.button, class: "btn-primary" %>
-
 
 <% end %>

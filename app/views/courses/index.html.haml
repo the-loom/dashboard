@@ -1,5 +1,5 @@
 - nav_add 'Cursos', '#'
-= nav_render4
+= nav_render5
 
 - if @courses.empty?
   .alert.alert-info
@@ -11,13 +11,13 @@
         %tr
           %td
             = course.name
-          %td
+          %td.mw-200
             - if current_user.courses.include?(course)
-              = link_to switch_course_path(course), class: 'btn btn-primary' do
-                Ir al aula virtual
+              .d-grid.gap-2
+                = link_to switch_course_path(course), class: 'btn btn-primary' do
+                  Ir al aula virtual
             - else
-              = simple_form_for :enrollment, url: enroll_course_path(course), html: { class: 'form-inline' } do |f|
+              = simple_form_for :enrollment, url: enroll_course_path(course), html: { class: 'form-inline' }, wrapper: nil do |f|
                 .input-group
-                  = f.input :password, label: false, input_html: {placeholder: 'Contraseña', autocomplete: "new-password"}
-                  .input-group-append
-                    = f.button :submit, 'Inscribirse', class: "btn-primary"
+                  = f.password_field :password, class: "form-control", placeholder: 'Contraseña', autocomplete: "new-password"
+                  = f.button :submit, 'Inscribirse', class: "btn btn-primary"
