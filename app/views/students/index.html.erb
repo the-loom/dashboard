@@ -1,6 +1,6 @@
 <% nav_add 'Aula', '#' %>
 <% nav_add 'Estudiantes', '#' %>
-<%= nav_render4 %>
+<%= nav_render5 %>
 
 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#actions">Acciones masivas</button>
 <%= link_to 'Hoja de asistencia', students_path(format: :csv), class: 'btn btn-primary btn-sm'%>
@@ -51,8 +51,8 @@
                               disabled: !student.enabled? %>
           </td>
           <td>
-            <div class="profile">
-              <%= image_tag entity_avatar(student), {class: "avatar#{ ' disabled' unless student.enabled? }", alt: student.full_name, "data-id": student.id } %>
+            <div class="avatar">
+              <%= image_tag entity_avatar(student), {class: "#{ 'disabled' unless student.enabled? }", alt: student.full_name, "data-id": student.id } %>
             </div>
           </td>
           <% if Course.current.template? %>
@@ -97,12 +97,23 @@
           <% end %>
           <td>
             <% if policy(student).manage? %>
-              <%= link_to student.enabled? ? 'Deshabilitar' : 'Habilitar', toggle_student_path(student),
-                          method: :post, class: 'btn btn-secondary btn-sm' %>
-              <br/>
-              <%= link_to 'Borrar perfil', student_path(student), method: :delete, class: 'btn btn-danger btn-sm' %>
-
-              <%= link_to 'Editar perfil', edit_student_path(student), class: 'btn btn-primary btn-sm' %>
+              <div class="btn-group">
+                <%= link_to toggle_student_path(student),
+                            method: :post, class: 'btn btn-secondary btn-sm', title: student.enabled? ? 'Deshabilitar' : 'Habilitar' do %>
+                  <% if student.enabled? %>
+                    <i class="fas fa-user-times"></i>
+                  <% else %>
+                    <i class="fas fa-user-plus"></i>
+                  <% end %>
+                <% end %>
+                <br/>
+                <%= link_to student_path(student), method: :delete, class: 'btn btn-danger btn-sm', title: 'Eliminar membresia' do %>
+                  <i class="fas fa-trash"></i>
+                <% end %>
+                <%= link_to edit_student_path(student), class: 'btn btn-primary btn-sm', title: 'Editar perfil' do %>
+                  <i class="fas fa-pen"></i>
+                <% end %>
+              </div>
             <% end %>
           </td>
         </tr>

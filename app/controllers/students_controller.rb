@@ -1,5 +1,5 @@
 class StudentsController < ApplicationController
-  layout "application2"
+  layout "application5"
 
   def index
     authorize User
