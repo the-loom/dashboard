@@ -24,7 +24,7 @@
 
     <%= render partial: 'layouts/sidebar', locals: { menu: @sidebar } %>
 
-    <main role="main" class="col">
+    <main role="main" class="col-10">
 
       <% if flash[:alert] %>
         <%= render partial: 'shared/alert', locals: { alert_type: 'danger', title: '¡Oops!', dismissable: true, message: flash[:alert] } %>

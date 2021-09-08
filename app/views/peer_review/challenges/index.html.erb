@@ -7,10 +7,10 @@
       <%= link_to 'Nuevo desafio', new_peer_review_challenge_path, class: 'btn btn-primary', role: "button" %>
     <% end %>
     <%= link_to 'Panorama de resoluciones', meta_overview_peer_review_challenges_path, class: 'btn btn-outline-primary', role: "button" %>
-    <button type="button" class="btn btn-outline-primary dropdown-toggle btn-sm" data-toggle="dropdown">
+    <button type="button" class="btn btn-outline-primary dropdown-toggle btn-sm" data-bs-toggle="dropdown">
       <span class="caret"></span>
     </button>
-      <div class="dropdown-menu">
+      <div class="dropdown-menu dropdown-menu-end">
         <%= link_to 'Panorama de flujo de revisiones', flow_overview_peer_review_challenges_path, class: "dropdown-item" %>
         <%= link_to 'Descargar panorama', peer_review_challenges_path(format: :csv), class: "dropdown-item" %>
         <%= link_to 'Mensajería interna', messages_peer_review_challenges_path, class: "dropdown-item" %>
