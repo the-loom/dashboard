@@ -2,7 +2,7 @@
 <% nav_add 'Estudiantes', '#' %>
 <%= nav_render5 %>
 
-<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#actions">Acciones masivas</button>
+<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#actions">Acciones masivas</button>
 <%= link_to 'Hoja de asistencia', students_path(format: :csv), class: 'btn btn-primary btn-sm'%>
 
 <br><br>
@@ -130,35 +130,33 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Acciones masivas</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
         </div>
         <div class="modal-body">
 
           <ul class="nav nav-tabs" id="myTabs" role="tablist">
             <li role="presentation" class="nav-item">
-              <a class="nav-link active" href="#badges-tab" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
+              <a class="nav-link active" href="#badges-tab" id="home-tab" role="tab" data-bs-toggle="tab" aria-expanded="false">
                 Asignar emblema
               </a>
             </li>
             <li role="presentation" class="nav-item">
-              <a class="nav-link" href="#events-tab" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
+              <a class="nav-link" href="#events-tab" id="home-tab" role="tab" data-bs-toggle="tab" aria-expanded="false">
                 Registrar evento
               </a>
             </li>
             <li role="presentation" class="nav-item">
-              <a class="nav-link" href="#misc-tab" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
+              <a class="nav-link" href="#misc-tab" id="home-tab" role="tab" data-bs-toggle="tab" aria-expanded="false">
                 Acciones varias
               </a>
             </li>
             <li role="presentation" class="nav-item">
-              <a class="nav-link" href="#attendance-tab" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
+              <a class="nav-link" href="#attendance-tab" id="home-tab" role="tab" data-bs-toggle="tab" aria-expanded="false">
                 Dar presente
               </a>
             </li>
             <li role="presentation" class="nav-item">
-              <a class="nav-link" href="#teams-tab" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">
+              <a class="nav-link" href="#teams-tab" id="home-tab" role="tab" data-bs-toggle="tab" aria-expanded="false">
                 Asignar a equipo
               </a>
             </li>
