@@ -39,9 +39,9 @@
                 = link_to "Panorama", overview_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-primary btn-sm', role: "button"
                 - if policy(MultipleChoices::Questionnaire).manage?
                   = link_to "Editar", edit_multiple_choices_questionnaire_path(questionnaire), class: 'btn btn-outline-primary btn-sm', role: "button"
-                  %button.btn.btn-outline-primary.dropdown-toggle.btn-sm{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", type: "button"}
+                  %button.btn.btn-outline-primary.dropdown-toggle.btn-sm{"aria-expanded" => "false", "aria-haspopup" => "true", "data-bs-toggle" => "dropdown", type: "button"}
                     %span.caret
-                  .dropdown-menu
+                  .dropdown-menu.dropdown-menu-end
                     = link_to questionnaire.enabled? ? "Finalizar" : "Reabrir", toggle_multiple_choices_questionnaire_path(questionnaire), class: "dropdown-item", method: :post
                     - if questionnaire.published?
                       = link_to unpublish_multiple_choices_questionnaire_path(questionnaire), class: "dropdown-item", method: :post do
