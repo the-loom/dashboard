@@ -1,6 +1,6 @@
 <% nav_add 'Aula', '#' %>
 <% nav_add 'Resumen de asistencia', '#' %>
-<%= nav_render %>
+<%= nav_render5 %>
 
 <% if @lectures.empty? %>
 
@@ -10,59 +10,62 @@
 
 <% else %>
 
-  <table class="table table-hover attendance">
-    <thead>
-    <tr>
-      <th>Estudiante</th>
-      <% @lectures.each do |lecture| %>
-        <th title="<%= lecture.summary %>"><%= lecture.date.strftime('%d/%m') %></th>
-      <% end %>
-      <th>Asist.</th>
-      <th><nobr>Asist. %</nobr></th>
-    </tr>
-    </thead>
-    <tbody>
-    <% @students.each do |student| %>
+  <div class="table-responsive">
+
+    <table class="table table-hover attendance">
+      <thead>
       <tr>
-        <td>
-          <% if student.current_membership.enabled? %>
-            <%= link_to student.full_name, user_details_url(student.nickname) %>
-          <% else %>
-            <s>
-              <%= link_to student.full_name, user_details_url(student.nickname) %>
-            </s>
-          <% end %>
-        </td>
+        <th>Estudiante</th>
+        <th>Asist.</th>
+        <th><nobr>Asist. %</nobr></th>
         <% @lectures.each do |lecture| %>
+          <th title="<%= lecture.summary %>"><%= lecture.date.strftime('%d/%m') %></th>
+        <% end %>
+      </tr>
+      </thead>
+      <tbody>
+      <% @students.each do |student| %>
+        <tr>
           <td>
-            <% if lecture.required? %>
-              <% present = student.present_at(lecture) %>
-              <%= checkmark present %>
+            <% if student.current_membership.enabled? %>
+              <%= link_to student.full_name, user_details_url(student.nickname) %>
             <% else %>
-              <label class="label label-default">
-                ✘
-              </label>
+              <s>
+                <%= link_to student.full_name, user_details_url(student.nickname) %>
+              </s>
             <% end %>
           </td>
-        <% end %>
-        <td>
-          <%= student.total_attendance %>/<%= @lectures.required.size %>
-        </td>
-        <td>
-          <%= (student.total_attendance.to_d * 100 / @lectures.required.size).round(2) %>%
-        </td>
-      </tr>
-    <% end %>
-    </tbody>
-    <tfoot>
-    <th>Totales</th>
-    <% @lectures.each do |lecture| %>
-      <th><%= @students.count { |student| student.present_at(lecture)} %></th>
-    <% end %>
-    <th>Asist.</th>
-    <th>Asist. %</th>
-    </tfoot>
-  </table>
+          <td>
+            <%= student.total_attendance %>/<%= @lectures.required.size %>
+          </td>
+          <td>
+            <%= (student.total_attendance.to_d * 100 / @lectures.required.size).round(2) %>%
+          </td>
+          <% @lectures.each do |lecture| %>
+            <td>
+              <% if lecture.required? %>
+                <% present = student.present_at(lecture) %>
+                <%= checkmark present %>
+              <% else %>
+                <label class="label label-default">
+                  ✘
+                </label>
+              <% end %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+      </tbody>
+      <tfoot>
+      <th>Totales</th>
+      <th>Asist.</th>
+      <th>Asist. %</th>
+      <% @lectures.each do |lecture| %>
+        <th><%= @students.count { |student| student.present_at(lecture)} %></th>
+      <% end %>
+      </tfoot>
+    </table>
+  </div>
 
 <% end %>
 

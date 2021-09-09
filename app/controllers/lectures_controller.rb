@@ -1,5 +1,5 @@
 class LecturesController < ApplicationController
-  layout "application2", except: [:overview]
+  layout "application5"
 
   before_action do
     check_feature(:lectures)
@@ -64,7 +64,7 @@ class LecturesController < ApplicationController
   def overview
     authorize Lecture
     @lectures = Lecture.past_and_current
-    @students = Course.current.memberships.includes({ user: :memberships }).student.collect(&:user)
+    @students = Course.current.memberships.includes({ user: :memberships }).student.collect(&:user).compact
   end
 
   private

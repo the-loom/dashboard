@@ -19,7 +19,7 @@
     = link_to menu.link, class: 'nav-link' do
       %i.fa.fa-envelope
       - if menu.show_badge?
-        %span.badge.badge-pill.badge-info
+        %span.badge.rounded-pill.bg-danger
           = menu.counter
 - else
   %li.nav-item
