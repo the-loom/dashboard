@@ -4,7 +4,7 @@ class PeerReview::FlowOverviewPresenter
   def initialize(reviews)
     @relevant_data = reviews.map { |r| { reviewer: r.reviewer, reviewee: r.solution.author } }
     @relevant_data.select! { |r| !(r[:reviewer].nil? || r[:reviewee].nil?) }
-    @reviewers = @relevant_data.group_by { |r| r[:reviewer] }.sort { |r1, r2| r2[1].size <=> r1[1].size }.map { |x| x[0] }
+    @reviewers = @relevant_data.group_by { |r| r[:reviewer] }.sort_by { |r| -r[1].size }.map { |x| x[0] }
 
     @matrix = @reviewers.map do |reviewer|
       @reviewers.map do |reviewee|

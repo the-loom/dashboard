@@ -7,9 +7,7 @@ class QuickReviewGenerator
       to_list(review)
     end.flatten.compact.group_by(&:itself).map do |line, repetitions|
       [repetitions.size, line]
-    end.sort do |x, y|
-      y[0] <=> x[0]
-    end
+    end.sort_by { |element| element[0] }
 
     my_reviews = to_list(current_review)
 
