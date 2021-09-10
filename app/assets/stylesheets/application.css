@@ -23,38 +23,38 @@
  */
 
 body {
-    font-family: 'Open Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .loom-logo {
-    display: inline-block !important;
-    margin: 0 0.5em !important;
+  display: inline-block !important;
+  margin: 0 0.5em !important;
 }
 
 .clickable {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .golden-badge {
-    background-color: goldenrod;
+  background-color: goldenrod;
 }
 
 .red-badge {
-    background-color: #d43f3a;
+  background-color: #d43f3a;
 }
 
-.trix-content{
-    min-height: 250px;
-    max-height: 500px;
-    overflow-y: auto;
+.trix-content {
+  min-height: 250px;
+  max-height: 500px;
+  overflow-y: auto;
 }
 
 .btn-suggestions {
-    position: fixed;
-    right: 0;
-    bottom: 7em;
-    -webkit-transform: rotate(-90deg);
-    -moz-transform: rotate(-90deg);
-    -ms-transform: rotate(-90deg);
-    -o-transform: rotate(-90deg);
+  position: fixed;
+  right: 0;
+  bottom: 7em;
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
 }

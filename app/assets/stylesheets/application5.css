@@ -11,16 +11,16 @@
 */
 
 body {
-    margin-top: 4em;
+  margin-top: 4em;
 }
 
 .btn-suggestions {
-    bottom: 7em;
-    position: fixed;
-    right: 0;
-    transform: rotate(-90deg);
+  bottom: 7em;
+  position: fixed;
+  right: 0;
+  transform: rotate(-90deg);
 }
 
 .navbar .navbar-right {
-    margin-left: auto;
+  margin-left: auto;
 }
