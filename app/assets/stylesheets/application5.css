@@ -7,8 +7,13 @@
 *= require code
 *= require menu
 *= require badges
+*= require footer
 *= require_self
 */
+
+.heart {
+    color: #cb3434;
+}
 
 body {
   margin-top: 4em;

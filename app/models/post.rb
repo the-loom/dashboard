@@ -8,7 +8,7 @@ class Post < ApplicationRecord
   belongs_to :author, class_name: "User"
   belongs_to :notification, optional: true
 
-  after_destroy { self.notification.destroy }
+  after_destroy { self.notification&.destroy }
 
   def notify!
     self.notification = Notification.create(subject: "¡Hay un nuevo anuncio de '#{author.full_name}'!", author: "Loombot",

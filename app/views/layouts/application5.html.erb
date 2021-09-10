@@ -24,7 +24,7 @@
 
     <%= render partial: 'layouts/sidebar', locals: { menu: @sidebar } %>
 
-    <main role="main" class="col-10">
+    <main role="main" class="col-9 col-lg-10">
 
       <% if flash[:alert] %>
         <%= render partial: 'shared/alert', locals: { alert_type: 'danger', title: '¡Oops!', dismissable: true, message: flash[:alert] } %>
@@ -46,6 +46,11 @@
     </main>
   </div>
 </div>
+<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+  <div class="container">
+    <span class="text-muted">Made with <span class="heart">♥</span></span>
+  </div>
+</footer>
 
 <% if current_user and current_user.current_membership %>
   <%= link_to suggestions_path, class: 'btn btn-primary btn-suggestions' do %>

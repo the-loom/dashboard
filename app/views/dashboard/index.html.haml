@@ -13,10 +13,11 @@
           %div{ style: "text-align: right;" }
             = f.button :submit, 'Crear anuncio', class: "btn-primary", data: { disable_with: false }
 
-    .container-fluid.post-list
+    .container-fluid.post-list{ style: 'padding: 0 12px'}
       - if @posts.empty?
-        .alert.alert-info
-          %p Aún no hay anuncios
+        .row
+          .alert.alert-info
+            %p Aún no hay anuncios
       - @posts.each do |post|
         .row.post{ class: post.pinned ? "pinned" : "", data: {id: post.id} }
           .col-12.p-3
