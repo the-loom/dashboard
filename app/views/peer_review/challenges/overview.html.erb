@@ -1,7 +1,7 @@
 <% nav_add 'Desafíos', peer_review_challenges_path %>
 <% nav_add @challenge.title, peer_review_challenge_path(@challenge) %>
 <% nav_add 'Panorama', '#' %>
-<%= nav_render %>
+<%= nav_render5 %>
 
 <%= render partial: 'buttons', locals: { challenge: @challenge } %>
 
@@ -31,101 +31,103 @@
 
 <h2>Panorama</h2>
 
-<table class="table table-hover table-striped reviews">
-  <thead>
-  <tr>
-    <th>Participantes</th>
-    <% unless @challenge.team_challenge %>
-      <th>Equipo</th>
-    <% end %>
-    <th>Estado</th>
-    <th>Progreso</th>
-    <th>Revisado</th>
-    <th>Profesor</th>
-    <th class="no-sort">Fecha de Resolución</th>
-    <th>Revisiones recibidas</th>
-    <th>Mensajes en revisiones recibidas</th>
-    <th>Revisiones realizadas</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @solvers.each do |solver| %>
-    <% stats = PeerReviewChallengeSolverStats.new(@challenge, solver) %>
+<div class="table-responsive">
+  <table class="table table-hover table-striped reviews">
+    <thead>
     <tr>
-      <td>
-        <% if @challenge.team_challenge %>
-          Equipo: <%= stats.solver.current_membership.team.try(:name) %>
-        <% else %>
-          <%= stats.solver.full_name %>
-        <% end %>
-
-        <br/>
-        <% if stats.solution %>
-          <%= link_to "Ver solución", peer_review_challenge_solution_path(@challenge, stats.solution) %>
-          <% my_review = stats.solution.review_by(current_user) %>
-          <% unless my_review.present? && my_review.status.to_sym == :final || stats.solution.draft? %>
-            •
-            <%= link_to (my_review.present? ? 'Continuar revisión' : 'Revisar'), review_peer_review_challenge_solution_path(@challenge, stats.solution) %>
-          <% end %>
-          <% if stats.solution.picked? %>
-            <br>
-            <div class="label label-success">Solución ejemplar</div>
-          <% end %>
-      <% end %>
-      </td>
+      <th>Participantes</th>
       <% unless @challenge.team_challenge %>
+        <th>Equipo</th>
+      <% end %>
+      <th>Estado</th>
+      <th>Progreso</th>
+      <th>Revisado</th>
+      <th>Profesor</th>
+      <th class="no-sort">Fecha de Resolución</th>
+      <th>Revisiones recibidas</th>
+      <th>Mensajes en revisiones recibidas</th>
+      <th>Revisiones realizadas</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @solvers.each do |solver| %>
+      <% stats = PeerReviewChallengeSolverStats.new(@challenge, solver) %>
+      <tr>
         <td>
-          <% team = stats.solver.current_membership.team %>
-          <% if team %>
-            <%= team.name %>
-            <br>
-            <% (team.tags).each do |tag| %>
-              <span class="badge badge-info"><%= tag %></span>
+          <% if @challenge.team_challenge %>
+            Equipo: <%= stats.solver.current_membership.team.try(:name) %>
+          <% else %>
+            <%= stats.solver.full_name %>
+          <% end %>
+
+          <br/>
+          <% if stats.solution %>
+            <%= link_to "Ver solución", peer_review_challenge_solution_path(@challenge, stats.solution) %>
+            <% my_review = stats.solution.review_by(current_user) %>
+            <% unless my_review.present? && my_review.status.to_sym == :final || stats.solution.draft? %>
+              •
+              <%= link_to (my_review.present? ? 'Continuar revisión' : 'Revisar'), review_peer_review_challenge_solution_path(@challenge, stats.solution) %>
             <% end %>
+            <% if stats.solution.picked? %>
+              <br>
+              <div class="label label-success">Solución ejemplar</div>
+            <% end %>
+        <% end %>
+        </td>
+        <% unless @challenge.team_challenge %>
+          <td>
+            <% team = stats.solver.current_membership.team %>
+            <% if team %>
+              <%= team.name %>
+              <br>
+              <% (team.tags).each do |tag| %>
+                <span class="badge bg-info"><%= tag %></span>
+              <% end %>
+            <% end %>
+          </td>
+        <% end %>
+        <td>
+          <% if stats.solution %>
+            <%= stats.solution.final? ? 'Final' : 'Borrador' %><br/>
+            <%= stats.solution.size %>
+          <% else %>
+            No resuelto
           <% end %>
         </td>
-      <% end %>
-      <td>
+        <td>
+          <% progress = @challenge.progress_by? stats.solver %>
+          <div class="progress" style="height: 10px;">
+            <div class="progress-bar progress-bar-success" role="progressbar" style="width: <%= ratio_to_percentage progress %>;" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <%= ratio_to_percentage progress %>
+        </td>
+        <td>
+          <% if stats.solution && stats.solution.final? %>
+            <%= yes_no stats.reviewed_by_teacher? %>
+          <% end %>
+        </td>
+        <td>
+          <% if stats.solution && stats.solution.final? %>
+            <%= stats.teachers_who_reviewed %>
+          <% end %>
+        </td>
+        <td>
+          <%= stats.solution.updated_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M") if stats.solution %>
+        </td>
         <% if stats.solution %>
-          <%= stats.solution.final? ? 'Final' : 'Borrador' %><br/>
-          <%= stats.solution.size %>
+          <td><%= stats.reviews_received %></td>
+          <td><%= stats.messages_on_received_reviews %></td>
+          <td><%= stats.reviews_made %></td>
         <% else %>
-          No resuelto
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
         <% end %>
-      </td>
-      <td>
-        <% progress = @challenge.progress_by? stats.solver %>
-        <div class="progress" style="height: 10px;">
-          <div class="progress-bar progress-bar-success" role="progressbar" style="width: <%= ratio_to_percentage progress %>;" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
-        <%= ratio_to_percentage progress %>
-      </td>
-      <td>
-        <% if stats.solution && stats.solution.final? %>
-          <%= yes_no stats.reviewed_by_teacher? %>
-        <% end %>
-      </td>
-      <td>
-        <% if stats.solution && stats.solution.final? %>
-          <%= stats.teachers_who_reviewed %>
-        <% end %>
-      </td>
-      <td>
-        <%= stats.solution.updated_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y %H:%M") if stats.solution %>
-      </td>
-      <% if stats.solution %>
-        <td><%= stats.reviews_received %></td>
-        <td><%= stats.messages_on_received_reviews %></td>
-        <td><%= stats.reviews_made %></td>
-      <% else %>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-      <% end %>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
 
 <%= content_for :head do %>
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>

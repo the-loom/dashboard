@@ -1,6 +1,6 @@
 module PeerReview
   class ChallengesController < ApplicationController
-    layout "application5", only: [:show, :index, :messages]
+    layout "application5"
 
     include Publisher.new(PeerReview::Challenge, :peer_review_challenges)
 

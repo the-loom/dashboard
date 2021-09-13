@@ -1,7 +1,7 @@
 <% nav_add 'Desafíos', peer_review_challenges_path %>
 <% nav_add @challenge.title, peer_review_challenge_path(@challenge) unless @challenge.new_record? %>
 <% nav_add @labels.title, '#' %>
-<%= nav_render %>
+<%= nav_render5 %>
 
 <%= simple_form_for @challenge do |f| %>
 
