@@ -1,7 +1,7 @@
 <% nav_add 'Gamificación', '#' %>
 <% nav_add 'Eventos', events_path %>
 <% nav_add @event.name, '#' %>
-<%= nav_render %>
+<%= nav_render5 %>
 
 <% if @students.empty? %>
   <div class="alert alert-info">
@@ -30,7 +30,9 @@
       %>
         <tr>
           <td>
-            <%= image_tag entity_avatar(student), {class: "avatar#{ ' disabled' unless student.enabled? }", alt: student.full_name, "data-id": student.id } %>
+            <div class="avatar">
+              <%= image_tag entity_avatar(student), {class: "#{ ' disabled' unless student.enabled? }", alt: student.full_name, "data-id": student.id } %>
+            </div>
           </td>
           <td>
             <%= link_to student.current_membership.team.try(:name), team_profile_url(student.current_membership.team.nickname) if student.current_membership.team.present? %>
@@ -49,7 +51,7 @@
           <td>
             <% if policy(Event).register? %>
               <%= button_to occurrence_path(occurrence), method: :delete, class: 'btn btn-danger btn-sm' do %>
-                Borrar
+                <i class="fas fa-trash"></i>
               <% end %>
             <% end %>
           </td>

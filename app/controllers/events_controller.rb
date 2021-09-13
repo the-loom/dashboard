@@ -1,4 +1,6 @@
 class EventsController < ApplicationController
+  layout "application5"
+
   before_action do
     check_feature(:events)
   end

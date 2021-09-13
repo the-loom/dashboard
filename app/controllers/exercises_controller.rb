@@ -1,7 +1,7 @@
 class ExercisesController < ApplicationController
-  include Publisher.new(Exercise)
-
   layout "application5"
+
+  include Publisher.new(Exercise)
 
   before_action do
     check_feature(:exercises)

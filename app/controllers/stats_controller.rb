@@ -1,5 +1,5 @@
 class StatsController < ApplicationController
-  layout "application2"
+  layout "application5"
 
   def points
     @calculator = ScoreCalculator.new
