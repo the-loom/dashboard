@@ -1,6 +1,6 @@
 module Admin
   class TeachersController < ApplicationController
-    layout "application2"
+    layout "application5"
 
     def index
       authorize :teacher, :index?

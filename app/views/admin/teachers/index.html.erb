@@ -1,11 +1,11 @@
 <% nav_add 'Aula', '#' %>
 <% nav_add 'Docentes', '#' %>
-<%= nav_render4 %>
+<%= nav_render5 %>
 
 <%= form_tag register_admin_teachers_path do %>
 
-  <%= select_tag :course_id, options_from_collection_for_select(@courses, :id, :name), { class: "form-control col-md-3"} %>
-  <%= submit_tag 'Registrar docentes seleccionados en curso', class: 'btn btn-warning col-md-3' %>
+  <%= select_tag :course_id, options_from_collection_for_select(@courses, :id, :name), { class: "form-control"} %>
+  <%= submit_tag 'Registrar docentes seleccionados en curso', class: 'btn btn-warning col-md-6' %>
 
   <div class="table-responsive">
     <table class="members table table-hover">
@@ -25,8 +25,8 @@
             <%= check_box_tag "teachers[ids][]", teacher.id, false %>
           </td>
           <td>
-            <div class="profile">
-              <%= image_tag entity_avatar(teacher), {class: "avatar", alt: teacher.full_name, "data-id": teacher.id} %>
+            <div class="avatar">
+              <%= image_tag entity_avatar(teacher), {alt: teacher.full_name, "data-id": teacher.id} %>
             </div>
           </td>
           <td>

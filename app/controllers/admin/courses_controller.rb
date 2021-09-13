@@ -1,5 +1,7 @@
 module Admin
   class CoursesController < ApplicationController
+    layout "application5"
+
     def index
       @enabled_courses = Course.enabled
       @disabled_courses = Course.disabled

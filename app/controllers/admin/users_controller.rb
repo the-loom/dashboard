@@ -1,6 +1,6 @@
 module Admin
   class UsersController < ApplicationController
-    layout "application2"
+    layout "application5"
 
     def index
       authorize User, :impersonate?

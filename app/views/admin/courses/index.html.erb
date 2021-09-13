@@ -1,6 +1,6 @@
 <% nav_add 'Administración', '#' %>
 <% nav_add 'Cursos', '#' %>
-<%= nav_render %>
+<%= nav_render5 %>
 
 <% if policy(Course).admin? %>
   <%= link_to 'Nuevo curso', new_admin_course_path, class: 'btn btn-primary' %>

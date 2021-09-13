@@ -33,16 +33,16 @@
         </td>
         <td>
           <% if policy(Course).admin? %>
-            <%= link_to edit_admin_course_path(course), class: 'btn btn-default btn-sm' do %>
+            <%= link_to edit_admin_course_path(course), class: 'btn btn-outline-primary btn-sm' do %>
               <i class="fa fa-pencil"></i> Editar
             <% end %>
-            <%= link_to duplicate_admin_course_path(course), method: :post, class: 'btn btn-default btn-sm' do %>
+            <%= link_to duplicate_admin_course_path(course), method: :post, class: 'btn btn-outline-primary btn-sm' do %>
               <i class="fa fa-copy"></i> Duplicar
             <% end %>
-            <%= link_to replicate_admin_course_path(course), method: :post, class: 'btn btn-default btn-sm' do %>
+            <%= link_to replicate_admin_course_path(course), method: :post, class: 'btn btn-outline-primary btn-sm' do %>
               <i class="fa fa-copy"></i> Replicar (no editable)
             <% end %>
-            <%= link_to toggle_admin_course_path(course), class: 'btn btn-default btn-sm' do %>
+            <%= link_to toggle_admin_course_path(course), class: 'btn btn-outline-primary btn-sm' do %>
 
               <% if course.enabled? %>
                 <i class="fa fa-eye-slash"></i> Deshabilitar
@@ -57,7 +57,7 @@
                 <i class="fa fa-undo"></i> Restaurar
               <% end %>
             <% else %>
-              <%= button_to admin_course_path(course), class: 'btn btn-danger btn-sm', method: :delete do %>
+              <%= button_to admin_course_path(course), class: 'btn btn-outline-danger btn-sm', method: :delete do %>
                 <i class="fa fa-trash"></i> Borrar
               <% end %>
             <% end %>
