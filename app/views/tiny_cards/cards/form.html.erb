@@ -1,7 +1,7 @@
 <% nav_add 'Mazos', tiny_cards_decks_path %>
 <% nav_add @deck.name, tiny_cards_deck_path(@deck) %>
 <% nav_add @labels.title, '#' %>
-<%= nav_render %>
+<%= nav_render5 %>
 
 <%  url = @card.new_record? ? tiny_cards_deck_cards_path(@deck) : tiny_cards_deck_card_path(@deck, @card) %>
 <%= simple_form_for([@deck, @card], url: url) do |f| %>
