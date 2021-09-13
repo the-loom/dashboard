@@ -1,6 +1,6 @@
 <% nav_add 'Aula', '#' %>
 <% nav_add 'Equipos', '#' %>
-<%= nav_render4 %>
+<%= nav_render5 %>
 
 <%= link_to 'Nuevo equipo', new_team_path, class: 'btn btn-primary' %>
 <br><br>
@@ -43,7 +43,7 @@
             <%= team.name %>
             <br>
             <% team.tags.each do |tag| %>
-              <span class="badge badge-info"><%= tag %></span>
+              <span class="badge bg-info"><%= tag %></span>
             <% end %>
           </td>
           <td><%= team.points %></td>
@@ -55,7 +55,6 @@
               <% team.enabled_members.each do |member| %>
                 <li>
                   <%= member.full_name %>
-
                 </li>
               <% end %>
             </ul>

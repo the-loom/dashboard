@@ -1,6 +1,5 @@
 class TeamsController < ApplicationController
-  layout "application2"
-  layout "application5", only: [:show]
+  layout "application5"
   before_action do
     check_feature(:teams)
   end
