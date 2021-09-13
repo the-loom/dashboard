@@ -1,6 +1,6 @@
 module PeerReview
   class SolutionsController < ApplicationController
-    layout "application5", only: [:new, :show, :review]
+    layout "application5"
 
     def show
       @challenge = PeerReview::Challenge.find(params[:challenge_id])
