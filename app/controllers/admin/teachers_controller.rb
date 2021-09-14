@@ -1,7 +1,5 @@
 module Admin
   class TeachersController < ApplicationController
-    layout "application5"
-
     def index
       authorize :teacher, :index?
       @teachers = Membership.where(role: :teacher).map(&:user).uniq.compact.sort

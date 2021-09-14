@@ -1,7 +1,7 @@
 <% nav_add 'Desafíos', peer_review_challenges_path %>
 <% nav_add @challenge.title, peer_review_challenge_path(@challenge) %>
 <% nav_add 'Resolver', '#' %>
-<%= nav_render5 %>
+<%= nav_render %>
 
 <div id="wording">
   <%= raw @challenge.instructions %>

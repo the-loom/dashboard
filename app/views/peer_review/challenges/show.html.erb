@@ -4,7 +4,7 @@
   <% nav_add 'Desafíos', dashboard_index_path %>
 <% end %>
 <% nav_add @challenge.title, '#' %>
-<%= nav_render5 %>
+<%= nav_render %>
 
 <% unless @challenge.reviews.draft.by(current_user).empty? %>
   <%= render partial: 'shared/alert', locals: {alert_type: 'danger', title: '¡Cuidado!', dismissable: true,

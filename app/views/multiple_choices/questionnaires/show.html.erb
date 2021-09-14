@@ -1,6 +1,6 @@
 <% nav_add 'Cuestionarios de Opción Múltiple', multiple_choices_questionnaires_path %>
 <% nav_add @questionnaire.name, '#' %>
-<%= nav_render5 %>
+<%= nav_render %>
 
 <% if policy(MultipleChoices::Questionnaire).manage? %>
   <%= link_to 'Nueva pregunta', new_multiple_choices_questionnaire_question_path(@questionnaire), class: 'btn btn-primary' %>

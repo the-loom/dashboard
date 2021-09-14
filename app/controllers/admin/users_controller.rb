@@ -1,7 +1,5 @@
 module Admin
   class UsersController < ApplicationController
-    layout "application5"
-
     def index
       authorize User, :impersonate?
       @users = User.includes([:memberships, avatar_attachment: :blob]).where(memberships: { course: Course.enabled })

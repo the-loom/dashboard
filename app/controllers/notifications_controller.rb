@@ -1,6 +1,4 @@
 class NotificationsController < ApplicationController
-  layout "application5"
-
   def index
     authorize Notification
     @notifications = Notification.where(receiver: [nil, current_user])

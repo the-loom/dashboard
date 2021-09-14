@@ -1,7 +1,7 @@
 - nav_add 'Recursos', resources_path
 - nav_add @resource.title, '#' unless @resource.new_record?
 - nav_add @labels.title, '#'
-= nav_render5
+= nav_render
 
 = simple_form_for @resource do |f|
   = render :partial => 'shared/errors', locals: { f: f }

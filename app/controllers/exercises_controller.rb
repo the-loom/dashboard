@@ -1,6 +1,4 @@
 class ExercisesController < ApplicationController
-  layout "application5"
-
   include Publisher.new(Exercise)
 
   before_action do

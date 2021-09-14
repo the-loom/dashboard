@@ -2,7 +2,7 @@
 - nav_add 'Categorías', resource_categories_path
 - nav_add @resource_category.name, '#' unless @resource_category.new_record?
 - nav_add @labels.title, '#'
-= nav_render5
+= nav_render
 
 = simple_form_for @resource_category do |f|
   = render :partial => 'shared/errors', locals: { f: f }

@@ -1,6 +1,6 @@
 <% nav_add 'Mazos', tiny_cards_decks_path %>
 <% nav_add @deck.name, '#' %>
-<%= nav_render5 %>
+<%= nav_render %>
 
 <% if policy(TinyCards::Card).manage? %>
   <%= link_to 'Nueva carta', new_tiny_cards_deck_card_path(@deck), class: 'btn btn-primary' %>

@@ -1,5 +1,5 @@
 <% nav_add 'Mazos', '#' %>
-<%= nav_render5 %>
+<%= nav_render %>
 
 <% if policy(TinyCards::Deck).manage? %>
   <%= link_to 'Nuevo mazo', new_tiny_cards_deck_path, class: 'btn btn-primary' %>

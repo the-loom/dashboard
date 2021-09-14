@@ -7,9 +7,9 @@ module NavigationHelper
     nav_ensure << { title: title, url: url }
   end
 
-  def nav_render5
+  def nav_render
     set_title
-    render partial: "shared/navigation5", locals: { nav: nav_ensure }
+    render partial: "shared/navigation", locals: { nav: nav_ensure }
   end
 
   private

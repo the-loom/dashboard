@@ -1,6 +1,6 @@
 - nav_add 'Recursos', resources_path
 - nav_add 'Categorías', '#'
-= nav_render5
+= nav_render
 - if policy(Resource).manage?
   = link_to 'Nueva categoría', new_resource_category_path, class: 'btn btn-primary'
   %br/

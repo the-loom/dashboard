@@ -1,6 +1,4 @@
 class ReposController < ApplicationController
-  layout "application5"
-
   before_action do
     check_feature(:automatic_correction_challenges)
   end

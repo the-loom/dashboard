@@ -1,6 +1,4 @@
 class SuggestionsController < ApplicationController
-  layout "application5"
-
   def index
     authorize Suggestion, :use?
     @suggestions = Suggestion.kept

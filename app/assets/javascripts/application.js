@@ -1,25 +1,21 @@
-// This is a manifest file that'll be compiled into application.js, which will include all the files
-// listed below.
-//
-// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
-// or any plugin's vendor/assets/javascripts directory can be referenced here using a relative path.
-//
-// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
-// compiled file. JavaScript code in this file should be added after the last require_* statement.
-//
-// Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
-// about supported directives.
-//
-//= require jquery/dist/jquery
-//= require bootstrap/dist/js/bootstrap
 //= require rails-ujs
-//= require d3/d3
-//= require c3/c3
-//= require moment/moment
-//= require messenger/build/js/messenger
-//= require bootstrap3-typeahead/bootstrap3-typeahead
-//= require bootstrap-tour/build/js/bootstrap-tour
 //= require codemirror/lib/codemirror
 //= require codemirror/lib/autorefresh
 //= require codemirror/mode/clike/clike
-//= require_tree .
+//= require codemirror/mode/python/python
+//= require radarChart
+//= require moment/moment
+//= require moment/locale/es
+//= require helpers
+
+function equalizeHeights(selector) {
+    var maxHeight = 0;
+    $(selector).height('auto');
+    $(selector).each(function () {
+        var thisH = $(this).height();
+        if (thisH > maxHeight) {
+            maxHeight = thisH;
+        }
+    });
+    $(selector).height(maxHeight);
+}
