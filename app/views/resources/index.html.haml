@@ -37,7 +37,7 @@
               = link_to resource.title, resource.url, target: "blank"
             %p= resource.description
           %td
-            = render partial: 'shared/actions4', locals: { entity_class: Resource, entity: resource, controller: :resources }
+            = render partial: 'shared/actions', locals: { entity_class: Resource, entity: resource, controller: :resources }
 = content_for :head do
   %link{href: "https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css", rel: "stylesheet", type: "text/css"}/
 = content_for :javascript do

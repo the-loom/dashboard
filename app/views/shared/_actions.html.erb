@@ -1,7 +1,12 @@
 <% if policy(entity_class).manage? %>
-  <%= link_to({ controller: controller, action: :edit, id: entity }, { class: 'btn btn-default btn-sm' }) do %>
-    <i class="fa fa-pencil"></i> Editar
-  <% end %>
+  <div class="btn-group">
+    <%= link_to({ controller: controller, action: :edit, id: entity }, { class: 'btn btn-secondary' }) do %>
+      <i class="fa fa-pencil"></i>
+    <% end %>
+    <%= link_to({ controller: controller, action: :destroy, id: entity }, { class: 'btn btn-danger', method: :delete }) do %>
+      <i class="fa fa-trash"></i>
+    <% end %>
+  </div>
 <% end %>
 
 <%= yield %>
