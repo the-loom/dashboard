@@ -26,6 +26,10 @@
 
     <main role="main" class="col-9 col-lg-10">
 
+      <% if flash[:success] %>
+        <%= render partial: 'shared/alert', locals: { alert_type: 'success', title: '¡Bien hecho!', dismissable: true, message: flash[:success] } %>
+      <% end %>
+
       <% if flash[:alert] %>
         <%= render partial: 'shared/alert', locals: { alert_type: 'danger', title: '¡Oops!', dismissable: true, message: flash[:alert] } %>
       <% end %>
