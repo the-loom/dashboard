@@ -1,4 +1,4 @@
-FROM ruby:2.6.6
+FROM ruby:2.7.4
 
 RUN useradd -u 1000 --create-home --home-dir /xyz --shell /bin/bash loom
 
@@ -10,7 +10,11 @@ USER loom
 
 WORKDIR /usr/src/app
 COPY Gemfile* ./
+
+RUN gem install bundler
+RUN bundle update --bundler
 RUN bundle install
+
 COPY . .
 
 EXPOSE 3000
