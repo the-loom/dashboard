@@ -8,7 +8,7 @@ class StudentsController < ApplicationController
     @lectures = Lecture.all.order(date: :asc)
     @teams = Team.all.order(name: :asc)
     @badges = Badge.all
-    @events = Event.all.order(name: :asc) - [Course.current.attendance_event]
+    @events = Event.enabled.order(name: :asc) - [Course.current.attendance_event]
     @score_calculator = ScoreCalculator.new
 
     respond_to do |format|
