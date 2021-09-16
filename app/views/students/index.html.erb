@@ -51,8 +51,8 @@
                               disabled: !student.enabled? %>
           </td>
           <td>
-            <div class="avatar">
-              <%= image_tag entity_avatar(student), {class: "#{ 'disabled' unless student.enabled? }", alt: student.full_name, "data-id": student.id } %>
+            <div class="avatar<%= ' disabled' unless student.enabled? %>">
+              <%= image_tag entity_avatar(student), {alt: student.full_name, "data-id": student.id} %>
             </div>
           </td>
           <% if Course.current.template? %>

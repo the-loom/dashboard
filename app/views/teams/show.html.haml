@@ -27,7 +27,7 @@
         .card
           .card-body
             .left
-              .avatar.:{class: "\#{student.enabled ? '' 'disabled'}"}
+              .avatar{class: student.enabled? ? '' : 'disabled'}
                 = link_to user_details_url(student.nickname) do
                   = image_tag entity_avatar(student), { alt: student.full_name}
             .right
