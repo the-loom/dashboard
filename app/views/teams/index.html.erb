@@ -42,9 +42,7 @@
           <td>
             <%= team.name %>
             <br>
-            <% team.tags.each do |tag| %>
-              <span class="badge badge-info"><%= tag %></span>
-            <% end %>
+            <%= show_tags team.tags %>
           </td>
           <td><%= team.points %></td>
           <td>
@@ -55,7 +53,6 @@
               <% team.enabled_members.each do |member| %>
                 <li>
                   <%= member.full_name %>
-
                 </li>
               <% end %>
             </ul>

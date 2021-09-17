@@ -151,9 +151,7 @@
               %td
                 = link_to exercise.name, exercise_path(exercise.to_param)
                 %br
-                - exercise.tags.each do |tag|
-                  %span.badge.bg-info
-                    = tag
+                = show_tags exercise.tags
               %td
                 %span{style: 'display: none'}
                   = display_invisible_date(exercise.start_date)
