@@ -1,6 +1,6 @@
 - if exercises.empty?
   .alert.alert-info
-    %p Aún no hay ningún ejercicio para comenzar a resolver
+    %p Aún no hay ejercicios
 - else
   %table.exercises.table.table-hover
     %thead
@@ -16,7 +16,8 @@
             = link_to exercise.name, exercise_path(exercise.to_param)
             %br/
             - exercise.tags.each do |tag|
-              %span.badge.badge-info= tag
+              %span.badge.bg-info
+                = tag
           %td
             = stars_for exercise
           %td
