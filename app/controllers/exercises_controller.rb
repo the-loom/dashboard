@@ -10,8 +10,7 @@ class ExercisesController < ApplicationController
 
   def index
     authorize Exercise, :manage?
-    @exercises = Exercise.kept.published
-    @drafts = Exercise.kept.draft
+    @exercises = Exercise.kept
   end
 
   def new

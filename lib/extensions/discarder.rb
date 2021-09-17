@@ -10,6 +10,19 @@ module Extensions
           flash[:success] = "Se eliminó correctamente"
           redirect_to redirect_path || { controller: entity_class.name.downcase.pluralize, action: :index }
         end
+
+        define_method(:bin) do
+          authorize entity_class, :manage?
+          @entities = entity_class.discarded
+        end
+
+        define_method(:restore) do
+          authorize entity_class, :manage?
+          entity = entity_class.find(params[:id])
+          entity.undiscard
+          flash[:success] = "Se restauró correctamente"
+          redirect_to redirect_path || { controller: entity_class.name.downcase.pluralize, action: :index }
+        end
       end
     end
   end

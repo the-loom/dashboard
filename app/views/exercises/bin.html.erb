@@ -1,0 +1,7 @@
+<% nav_add 'Ejercicios', exercises_path %>
+<% nav_add 'Papelera', '#' %>
+<%= nav_render5 %>
+
+<h2>Ejercicios descartados</h2>
+
+<%= render partial: 'table', locals: { exercises: @entities} %>
