@@ -1,5 +1,6 @@
 class ExercisesController < ApplicationController
   include Publisher.new(Exercise)
+  include Extensions::Discarder.new(Exercise)
 
   before_action do
     check_feature(:exercises)
@@ -7,8 +8,7 @@ class ExercisesController < ApplicationController
 
   def index
     authorize Exercise, :manage?
-    @exercises = Exercise.kept.published
-    @drafts = Exercise.kept.draft
+    @exercises = Exercise.kept
   end
 
   def new
@@ -52,16 +52,6 @@ class ExercisesController < ApplicationController
       render :form
     end
   end
-
-  def destroy
-    authorize Exercise, :manage?
-
-    exercise = Exercise.find(params[:id])
-    exercise.discard
-
-    redirect_to exercises_path
-  end
-
 
   def show
     @exercise = Exercise.find_by(id: params[:id])

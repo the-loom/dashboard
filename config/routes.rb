@@ -6,6 +6,11 @@ Rails.application.routes.draw do
     post :unpublish, on: :member
   end
 
+  def discardable
+    post :restore, on: :member
+    get :bin, on: :collection
+  end
+
   def votable
     post :upvote, on: :member
     post :downvote, on: :member
@@ -98,6 +103,7 @@ Rails.application.routes.draw do
 
   resources :exercises do
     publishable
+    discardable
   end
 
   namespace :multiple_choices do

@@ -3,16 +3,17 @@
 
 <% if policy(Exercise).manage? %>
   <%= link_to 'Nuevo ejercicio', new_exercise_path, class: 'btn btn-primary' %>
+  <%= link_to 'Papelera', bin_exercises_path, class: 'btn btn-outline-primary' %>
   <br><br>
 <% end %>
 
 <h2>Ejercicios publicados</h2>
 
-<%= render partial: 'table', locals: { exercises: @exercises} %>
+<%= render partial: 'table', locals: { exercises: @exercises.published} %>
 
 <br>
 <hr>
 
 <h2>Borradores</h2>
 
-<%= render partial: 'table', locals: { exercises: @drafts} %>
+<%= render partial: 'table', locals: { exercises: @exercises.draft} %>

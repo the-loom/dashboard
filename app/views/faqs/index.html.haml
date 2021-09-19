@@ -12,9 +12,7 @@
   - @faqs.each do |faq|
     .card.faq.mb-2
       .card-header
-        - faq.tags.each do |tag|
-          %span.badge.bg-info
-            = tag
+        = show_tags faq.tags
         = faq.question
         - if policy(Faq).manage?
           = link_to "Editar", edit_faq_path(faq)

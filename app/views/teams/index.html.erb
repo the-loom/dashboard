@@ -42,9 +42,7 @@
           <td>
             <%= team.name %>
             <br>
-            <% team.tags.each do |tag| %>
-              <span class="badge bg-info"><%= tag %></span>
-            <% end %>
+            <%= show_tags team.tags %>
           </td>
           <td><%= team.points %></td>
           <td>
