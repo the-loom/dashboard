@@ -26,15 +26,20 @@
           %td
             .btn-group
               - if policy(Exercise).manage?
-                = link_to "Editar", edit_exercise_path(exercise), role: 'button', class: 'btn btn-primary btn-sm'
-                - if exercise.published?
-                  = link_to "Despublicar", unpublish_exercise_path(exercise), method: :post, role: 'button', class: 'btn btn-outline-primary btn-sm'
-                - else
-                  = link_to "Publicar", publish_exercise_path(exercise), method: :post, role: 'button', class: 'btn btn-outline-primary btn-sm'
+                = link_to edit_exercise_path(exercise), role: 'button', class: 'btn btn-primary btn-sm' do
+                  %i.fas.fa-pen
                 - if exercise.discarded?
-                  = link_to "Restaurar", restore_exercise_path(exercise), role: 'button', class: 'btn btn-success btn-sm', method: :post
+                  = link_to restore_exercise_path(exercise), role: 'button', class: 'btn btn-success btn-sm', method: :post do
+                    %i.fas.fa-recycle
                 - else
-                  = link_to "Eliminar", exercise_path(exercise), role: 'button', class: 'btn btn-danger btn-sm', method: :delete
+                  - if exercise.published?
+                    = link_to unpublish_exercise_path(exercise), method: :post, role: 'button', class: 'btn btn-outline-primary btn-sm' do
+                      %i.fas.fa-eye-slash
+                  - else
+                    = link_to publish_exercise_path(exercise), method: :post, role: 'button', class: 'btn btn-outline-primary btn-sm' do
+                      %i.fas.fa-eye-slash
+                  = link_to exercise_path(exercise), role: 'button', class: 'btn btn-danger btn-sm', method: :delete do
+                    %i.fas.fa-trash
 
 = content_for :head do
   %link{href: "https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css", rel: "stylesheet"}/
