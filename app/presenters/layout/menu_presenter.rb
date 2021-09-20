@@ -76,8 +76,10 @@ class Layout::MenuPresenter
       else
         courses_for_user = @current_user.courses
       end
-      courses_for_user.order(enabled: :desc, name: :asc).each do |course|
-        courses_node << MenuLeaf.new(course.name, route.switch_course_path(course), (!course.enabled? ? "text-decoration: line-through" : nil))
+      courses_for_user.order(enabled: :desc, name: :asc).each_with_index do |course, index|
+        if index < 7
+          courses_node << MenuLeaf.new(course.name, route.switch_course_path(course), (!course.enabled? ? "text-decoration: line-through" : nil))
+        end
       end
       courses_node << MenuSeparator.new
       courses_node << MenuLeaf.new("Otros cursos", route.courses_path)
