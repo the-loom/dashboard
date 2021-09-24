@@ -8,7 +8,7 @@
     <legend><%= @questionnaire.name %></legend>
 
     <ol class="questionnaire">
-      <% @questionnaire.questions.each do |question| %>
+      <% @questionnaire.questions.includes([:answers]).each do |question| %>
         <% stats = MultipleChoices::QuestionStats.new(question) %>
         <li class="question">
           <%= question.wording %>
