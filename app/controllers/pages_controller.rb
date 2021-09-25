@@ -1,6 +1,4 @@
 class PagesController < ApplicationController
-  layout "application5"
-
   def root
     if current_user
       redirect_to dashboard_index_path

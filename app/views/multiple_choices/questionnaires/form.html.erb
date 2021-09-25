@@ -45,10 +45,10 @@
           </div>
           <div class="col-md-2">
             <button type="button" class="btn btn-danger" v-on:click="removeEntry(question)">
-              Remover pregunta
+              <i class="fas fa-trash"></i>
             </button>
             <button type="button" class="btn btn-warning" v-on:click="dupQuestion(question)">
-              Duplicar pregunta
+              <i class="far fa-copy"></i>
             </button>
           </div>
         </template>
@@ -104,10 +104,10 @@
               </td>
               <td>
                 <button type="button" class="btn btn-danger" v-on:click="removeEntry(answer)">
-                  Remover esta opción
+                  <i class="fas fa-trash"></i>
                 </button>
                 <button type="button" class="btn btn-warning" v-on:click="dupAnswer(question, answer)">
-                  Duplicar esta opción
+                  <i class="far fa-copy"></i>
                 </button>
               </td>
             </tr>
@@ -153,6 +153,7 @@
           z-index: 999;
           margin-left: -2em;
           box-shadow: 1px 1px 1px black;
+          width: 3em;
       }
   </style>
 

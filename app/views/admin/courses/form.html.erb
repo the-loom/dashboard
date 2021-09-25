@@ -12,8 +12,10 @@
 
   <%= f.input :password, label: 'Contraseña', as: :string  %>
   <% unless @course.new_record? %>
-    <%= link_to "Rotar password", rotate_password_admin_course_path(@course), class: 'btn btn-large btn-primary', method: :post %>
+    <%= link_to "Rotar password", rotate_password_admin_course_path(@course), class: 'btn btn-large btn-outline-primary', method: :post %>
   <% end %>
+
+  <br><br>
 
   <% Course.all_features.each do |feature, value| %>
     <div class="checkbox">

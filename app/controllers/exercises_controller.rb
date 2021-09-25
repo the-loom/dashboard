@@ -2,8 +2,6 @@ class ExercisesController < ApplicationController
   include Publisher.new(Exercise)
   include Extensions::Discarder.new(Exercise)
 
-  layout "application5"
-
   before_action do
     check_feature(:exercises)
   end

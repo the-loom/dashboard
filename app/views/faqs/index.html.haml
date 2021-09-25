@@ -1,5 +1,5 @@
 - nav_add 'Preguntas frecuentes', '#'
-= nav_render5
+= nav_render
 
 - if policy(Faq).manage?
   = link_to 'Nueva pregunta frecuente', new_faq_path, class: 'btn btn-primary'

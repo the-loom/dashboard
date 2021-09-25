@@ -17,7 +17,6 @@
     <thead>
     <tr>
       <th>Evento</th>
-      <th>Descripción</th>
       <th>Habilitado</th>
       <th>Otorgamientos</th>
       <th>Puntos</th>
@@ -33,10 +32,8 @@
     <% @events.each do |event| %>
       <tr>
         <td>
-          <%= link_to event.name, event_path(event.id) %>
-        </td>
-        <td>
-          <%= event.description %>
+          <p><%= link_to event.name, event_path(event.id) %></p>
+          <p><%= event.description %></p>
         </td>
         <td>
           <%= yes_no(event.enabled) %>
@@ -59,7 +56,9 @@
           </td>
         <% end %>
         <td>
-          <%= link_to "Editar", edit_event_path(event), class: 'btn btn-default' %>
+          <%= link_to edit_event_path(event), class: 'btn btn-primary' do %>
+            <i class="fas fa-pen"></i>
+          <% end %>
         </td>
       </tr>
     <% end %>

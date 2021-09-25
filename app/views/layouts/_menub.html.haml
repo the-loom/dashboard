@@ -1,6 +1,6 @@
 - if menu.class == Array
   - menu.each do |option|
-    = render partial:'layouts/menub5', locals: { menu: option }
+    = render partial:'layouts/menub', locals: { menu: option }
 - elsif menu.class == MenuNode
   %li.nav-item.dropdown
     %a.nav-link.dropdown-toggle.tour-exit{"aria-expanded": false, "aria-haspopup": true, "data-bs-toggle": "dropdown", href: "#", role: "button"}

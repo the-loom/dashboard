@@ -1,60 +1,35 @@
 /*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
- * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
- *= require bootstrap/dist/css/bootstrap
- *= require c3/c3
- *= require messenger/build/css/messenger
- *= require messenger/build/css/messenger-theme-air
- *= require bootstrap-tour/build/css/bootstrap-tour
- *= require codemirror/lib/codemirror
- *= require_tree .
- *= stub 'application2'
- *= stub 'application5'
- *= require_self
- */
+*= require avatars
+*= require badges
+*= require codemirror/lib/codemirror
+*= require footer
+*= require menu
+*= require multiple_choices
+*= require pages
+*= require tables
+*= require team
+*= require_self
+*/
 
-body {
-  font-family: 'Open Sans', sans-serif;
+.heart {
+  color: #cb3434;
 }
 
-.loom-logo {
-  display: inline-block !important;
-  margin: 0 0.5em !important;
+body {
+  margin-top: 4em;
+}
+
+.btn-suggestions {
+  bottom: 7em;
+  position: fixed;
+  right: 0;
+  transform: rotate(-90deg);
+}
+
+.navbar .navbar-right {
+  margin-left: auto;
 }
 
 .clickable {
   cursor: pointer;
-}
-
-.golden-badge {
-  background-color: goldenrod;
-}
-
-.red-badge {
-  background-color: #d43f3a;
-}
-
-.trix-content {
-  min-height: 250px;
-  max-height: 500px;
-  overflow-y: auto;
-}
-
-.btn-suggestions {
-  position: fixed;
-  right: 0;
-  bottom: 7em;
-  -webkit-transform: rotate(-90deg);
-  -moz-transform: rotate(-90deg);
-  -ms-transform: rotate(-90deg);
-  -o-transform: rotate(-90deg);
 }

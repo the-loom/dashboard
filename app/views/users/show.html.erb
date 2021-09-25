@@ -1,7 +1,7 @@
 <% nav_add 'Aula', '#' %>
 <% nav_add 'Estudiantes', '#' %>
 <% nav_add "#{@user.full_name} - #{@user.nickname} (#{@user.uuid})", '#' %>
-<%= nav_render5 %>
+<%= nav_render %>
 
 <div class="row">
   <div class="col-md-3">
@@ -255,12 +255,6 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js" charset="utf-8"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
-
-  <script>
-      $(function () {
-          $('[data-toggle="tooltip"]').tooltip()
-      });
-  </script>
 
   <script>
       var $chart = $("#chart");

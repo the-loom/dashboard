@@ -1,6 +1,4 @@
 class CoursesController < ApplicationController
-  layout "application5"
-
   def index
     @courses = Course.kept.enabled.registrable.order(name: :asc)
   end

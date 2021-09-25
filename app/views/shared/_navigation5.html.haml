@@ -1,5 +1,0 @@
-%nav{"aria-label" => "breadcrumb"}
-  %ol.breadcrumb
-    - nav[0..-2].each do |n|
-      %li.breadcrumb-item= link_to n[:title], n[:url]
-    %li.breadcrumb-item.active{"aria-current" => "page"}= nav[-1][:title]

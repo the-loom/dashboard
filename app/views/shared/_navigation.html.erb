@@ -1,6 +1,13 @@
-<ol class="breadcrumb">
-  <% nav[0..-2].each do |n| %>
-    <li><%= link_to n[:title], n[:url] %></li>
-  <% end %>
-  <li class="active"><%= nav[-1][:title] %></li>
-</ol>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <%= link_to root_path do %>
+        <i class="fas fa-home"></i>
+      <% end %>
+    </li>
+    <% nav[0..-2].each do |n| %>
+      <li class="breadcrumb-item"><%= link_to n[:title], n[:url] %></li>
+    <% end %>
+    <li class="breadcrumb-item active"><%= nav[-1][:title] %></li>
+  </ol>
+</nav>

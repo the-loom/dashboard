@@ -1,6 +1,4 @@
 class FaqsController < ApplicationController
-  layout "application5"
-
   before_action do
     check_feature(:faqs)
   end

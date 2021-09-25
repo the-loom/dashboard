@@ -1,6 +1,4 @@
 class StudentsController < ApplicationController
-  layout "application5"
-
   def index
     authorize User
     @students = Course.current.students
