@@ -16,10 +16,10 @@ class MultipleChoices::Solution < ApplicationRecord
   end
 
   def answer_for?(question)
-    responses.find_by(question: question)
+    responses.find { |response| response.question == question }
   end
 
   def correct_answer_for?(question)
-    responses.find_by(question: question).correct?
+    answer_for?(question).correct?
   end
 end

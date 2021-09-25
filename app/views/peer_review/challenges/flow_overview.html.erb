@@ -8,6 +8,16 @@
   <div class="col-md-6">
     <% if @flow_overview.has_teacher_reviews? %>
       <div id="teacher_reviews_chart"></div>
+
+      <h4>Revisiones por docente</h4>
+      <table class="table table-bordered table-striped">
+        <% @flow_overview.teacher_reviews.each do |t, s| %>
+          <tr>
+            <td><%= t %></td>
+            <td><%= s %></td>
+          </tr>
+        <% end %>
+      </table>
     <% else %>
       <div class="alert alert-info">
         <p>No hay revisiones de docentes para este desafío</p>

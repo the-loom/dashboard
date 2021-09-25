@@ -73,7 +73,7 @@ module MultipleChoices
     def overview
       authorize MultipleChoices::Questionnaire, :monitor?
       @questionnaire = MultipleChoices::Questionnaire.find(params[:id])
-      @solutions = @questionnaire.solutions
+      @solutions = @questionnaire.solutions.includes(:solver, :responses, responses: [:question, :answer])
     end
 
     def practice

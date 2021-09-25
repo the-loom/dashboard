@@ -7,8 +7,13 @@
   <div class="col-md-12">
     <legend><%= @questionnaire.name %></legend>
 
+
+    <div id="chart"></div>
+
+    <legend>Resumen</legend>
+
     <ol class="questionnaire">
-      <% @questionnaire.questions.each do |question| %>
+      <% @questionnaire.questions.includes([:answers]).each do |question| %>
         <% stats = MultipleChoices::QuestionStats.new(question) %>
         <li class="question">
           <%= question.wording %>
@@ -25,9 +30,15 @@
   </div>
 
   <div class="col-md-12">
-    <legend>Resumen</legend>
+    <legend>Detalle</legend>
 
-    <table class="table solutions table-stripped table-hover">
+    <% MAGIC_NUMBER = 2000 # heuristically adjustable %>
+    <% if (@questionnaire.questions.count * @questionnaire.solutions.count > MAGIC_NUMBER) && Rails.env.production? %>
+      <div class="alert alert-info">
+        Lamentablemente no puede mostrarse el detalle de este cuestionario por ser muy extenso.
+      </div>
+    <% else %>
+      <table class="table solutions table-stripped table-hover">
       <thead>
       <tr>
         <th>Estudiante</th>
@@ -74,6 +85,7 @@
       <% end %>
       </tbody>
     </table>
+    <% end %>
   </div>
 </div>
 
@@ -99,6 +111,41 @@
               }]
           });
       });
+  </script>
+
+  <script type="application/javascript">
+    <% graph = MultipleChoices::QuestionnaireGraph.new(@questionnaire) %>
+    let right = <%== graph.correct_responses %>;
+    let wrong = <%== graph.incorrect_responses %>;
+    var chart = c3.generate({
+        data: {
+            columns: [
+                wrong, right
+            ],
+            type: 'bar',
+            colors: {
+                'M': 'rgb(214, 39, 40)',
+                'B': 'rgb(44, 160, 44)'
+            },
+            groups: [
+                ['M', 'B']
+            ],
+            order: 'asc'
+        },
+        grid: {
+            y: {
+                lines: [{value:0}]
+            }
+        },
+        axis: {
+          x: {
+              type: 'category',
+              tick: {
+                  format: function (x) { return "Q" + (x+1); }
+              }
+          }
+      }
+    });
   </script>
 
 <% end %>
