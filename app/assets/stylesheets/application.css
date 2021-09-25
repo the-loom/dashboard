@@ -29,3 +29,7 @@ body {
 .navbar .navbar-right {
   margin-left: auto;
 }
+
+.clickable {
+  cursor: pointer;
+}

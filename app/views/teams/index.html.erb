@@ -14,7 +14,7 @@
 <% else %>
 
   <% Team.tag_counts_on(:tags).each do |tag| %>
-    <span class="do-search label label-pill label-default" data-tag="<%= tag %>"><%= tag %></span>
+    <span class="clickable do-search badge bg-info" data-tag="tag:<%= tag %>"><%= tag %></span>
   <% end %>
 
   <div class="table-responsive">
@@ -95,10 +95,10 @@
           });
           $(".do-search").on("click", function() {
               teamsTable.search($(this).data("tag")).draw();
-              $(".label.do-search").removeClass("label-success");
-              //$(".label.do-search").addClass("label-success");
-              //$(this).removeClass("label-default");
-              $(this).addClass("label-success");
+              $(".badge.do-search").removeClass("bg-success");
+              $(".badge.do-search").addClass("bg-info");
+              $(this).removeClass("bg-info");
+              $(this).addClass("bg-success");
           })
       });
   </script>
