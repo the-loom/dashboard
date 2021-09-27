@@ -32,8 +32,8 @@
   <div class="col-md-12">
     <legend>Detalle</legend>
 
-    <% MAGIC_NUMBER = 2000 # heuristically adjustable %>
-    <% if (@questionnaire.questions.count * @questionnaire.solutions.count > MAGIC_NUMBER) && Rails.env.production? %>
+    <% magic_number = 2000 # heuristically adjustable %>
+    <% if (@questionnaire.questions.count * @questionnaire.solutions.count > magic_number) && Rails.env.production? %>
       <div class="alert alert-info">
         Lamentablemente no puede mostrarse el detalle de este cuestionario por ser muy extenso.
       </div>
