@@ -91,10 +91,13 @@
 
 <%= content_for :head do %>
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.5/c3.min.css" rel="stylesheet">
 <% end %>
 
 <%= content_for :javascript do %>
   <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="application/javascript"></script>
+  <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.22/c3.min.js"></script>
 
   <script type="application/javascript">
 
