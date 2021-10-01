@@ -91,7 +91,7 @@ gem "zip-zip", "~> 0.3"
 gem "rouge", "~> 3.26"
 
 # Tagging
-gem "acts-as-taggable-on", "~> 7.0"
+gem "acts-as-taggable-on", "~> 8.1"
 
 # Voting
 gem "acts_as_votable", "~> 0.13"
