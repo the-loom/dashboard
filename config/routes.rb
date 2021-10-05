@@ -6,6 +6,12 @@ Rails.application.routes.draw do
     post :unpublish, on: :member
   end
 
+  def exportable
+    get :export, on: :member
+    get :import, on: :collection
+    post :import, on: :collection
+  end
+
   def discardable
     post :restore, on: :member
     get :bin, on: :collection
@@ -109,6 +115,7 @@ Rails.application.routes.draw do
   namespace :multiple_choices do
     resources :questionnaires, except: :show do
       publishable
+      exportable
       member do
         get :practice
         get :overview

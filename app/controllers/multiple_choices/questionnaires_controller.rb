@@ -63,6 +63,32 @@ module MultipleChoices
       flash[:success] = "Se eliminó el cuestionario"
     end
 
+    def export
+      authorize MultipleChoices::Questionnaire, :manage?
+      questionnaire = MultipleChoices::Questionnaire.find(params[:id])
+
+      respond_to do |format|
+        format.json {
+          render json: Serializers::MultipleChoiceQuestionnaireSerializer.serialize(questionnaire)
+        }
+      end
+    end
+
+    def import
+      if request.post?
+        questionnaire = Serializers::MultipleChoiceQuestionnaireSerializer.deserialize(params[:import][:json])
+
+        if questionnaire.valid?
+          questionnaire.save
+          redirect_to multiple_choices_questionnaires_path
+          flash[:success] = "Se importó correctamente el cuestionario"
+        else
+          flash[:alert] = "Ha ocurrido un error"
+          render :import
+        end
+      end
+    end
+
     def toggle
       authorize MultipleChoices::Questionnaire, :manage?
       questionnaire = MultipleChoices::Questionnaire.find(params[:id])

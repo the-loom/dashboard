@@ -1,0 +1,8 @@
+<% nav_add 'Cuestionario de Opción Múltiple', multiple_choices_questionnaires_path %>
+<% nav_add "Importar cuestionario", '#' %>
+<%= nav_render %>
+
+<%= simple_form_for :import, url: import_multiple_choices_questionnaires_path do |f| %>
+  <%=  f.input :json, :as => :text %>
+  <%= f.button :submit, "Importar", class: "btn-primary" %>
+<% end %>

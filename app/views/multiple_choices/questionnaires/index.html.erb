@@ -3,6 +3,7 @@
 
 <% if policy(MultipleChoices::Questionnaire).manage? %>
   <%= link_to 'Nuevo cuestionario', new_multiple_choices_questionnaire_path, class: 'btn btn-primary' %>
+  <%= link_to 'Importar cuestionario', import_multiple_choices_questionnaires_path, class: 'btn btn-outline-primary' %>
 <% end %>
 
 <br><br>
