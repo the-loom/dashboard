@@ -86,6 +86,11 @@ class PeerReview::Challenge < ApplicationRecord
   def code_mirror_mode
     return "text/x-java" if language == "java"
     return "text/x-c++src" if language == "cpp"
+    return "text/javascript" if language == "javascript"
+    return "text/x-sql" if language == "sql"
+    return "text/css" if language == "css"
+    return "text/html" if language == "html"
+    return "text/x-python" if language == "python"
     language
   end
 

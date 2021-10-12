@@ -69,7 +69,7 @@
         <%= render partial: 'shared/alert', locals: { message: "Cuando consideres que tu solución está presentable... ¡publicala! Así podrás recibir revisiones, y revisar las soluciones de otros participantes." } %>
       <% end %>
 
-      <%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: @solution.wording, language: @challenge.language} %>
+      <%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: @solution.wording, language: @challenge.code_mirror_mode} %>
       <%= render partial: '/peer_review/attachment', locals: {challenge: @challenge, document: @solution.solution_attachment} %>
 
       <br>
@@ -150,7 +150,7 @@
               <div class="tab-pane fade <%= 'show active' if index == 0 %>" id="<%= "rreview_#{index}" %>" role="tabpanel" aria-labelledby="<%= "rreview_#{index}" %>">
 
                 <h3>Solución revisada</h3>
-                <%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: review.solution.wording, language: @challenge.language} %>
+                <%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: review.solution.wording, language: @challenge.code_mirror_mode} %>
                 <%= render partial: '/peer_review/attachment', locals: {challenge: @challenge, document: review.solution.solution_attachment} %>
 
                 <br>
@@ -189,7 +189,7 @@
           <div class="tab-content" id="v-pills-tabContent">
             <% @challenge.picked_solutions.each_with_index do |solution, index| %>
               <div class="tab-pane fade <%= 'show active' if index == 0 %>" id="<%= "ssolution_#{index}" %>" role="tabpanel" aria-labelledby="<%= "ssolution_#{index}" %>">
-                <%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: solution.wording, language: @challenge.language} %>
+                <%= render partial: '/peer_review/solution_wording', locals: {source_code: @challenge.source_code?, wording: solution.wording, language: @challenge.code_mirror_mode} %>
                 <%= render partial: '/peer_review/attachment', locals: {challenge: @challenge, document: solution.solution_attachment} %>
               </div>
             <% end %>
