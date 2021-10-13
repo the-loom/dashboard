@@ -82,6 +82,11 @@
             <small>(<%= student.uuid %>)</small><br/>
             <small><%= student.nickname %></small>
             <!-- <%= student.email %> -->
+            <p>
+              <% unless student.enabled? %>
+                <span class="badge bg-info">Deshabilitado</span>
+              <% end %>
+            </p>
           </td>
           <td>
             <%= student.points %>
