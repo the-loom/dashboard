@@ -222,8 +222,8 @@
           <% @user.comments.each do |comment| %>
             <div class="row" style="margin-bottom: 1em">
               <div class="col-sm-2">
-                <div class="thumbnail">
-                  <%= image_tag entity_avatar(comment.commenter), {class: 'avatar', alt: comment.commenter.full_name} %>
+                <div class="avatar">
+                  <%= image_tag entity_avatar(comment.commenter), { alt: comment.commenter.full_name } %>
                 </div>
               </div>
               <div class="col-sm-10">
