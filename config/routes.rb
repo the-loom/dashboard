@@ -102,9 +102,10 @@ Rails.application.routes.draw do
   end
   resources :notifications, only: [:index, :new, :create]
 
-  resources :lectures, except: :destroy do
+  resources :lectures do
     get :overview, on: :collection
     post :register_attendance, on: :member
+    discardable
   end
 
   resources :exercises do

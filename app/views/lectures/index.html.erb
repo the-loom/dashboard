@@ -3,6 +3,7 @@
 <%= nav_render %>
 
 <%= link_to 'Nueva clase', new_lecture_path, class: 'btn btn-primary' %>
+<%= link_to 'Papelera', bin_lectures_path, class: 'btn btn-outline-primary' %>
 <br><br>
 
 <% unless Course.current.attendance_event %>
@@ -11,41 +12,4 @@
   </div>
 <% end %>
 
-<% if @lectures.empty? %>
-
-  <div class="alert alert-info">
-    <p>Aún no hay ninguna clase</p>
-  </div>
-
-<% else %>
-
-  <table class="table table-hover">
-    <thead>
-    <tr>
-      <th>Resumen</th>
-      <th>Fecha</th>
-      <th>Horario</th>
-      <th>Asistencia requerida</th>
-    </tr>
-    </thead>
-    <tbody>
-    <% @lectures.each do |lecture| %>
-      <tr>
-        <td>
-          <%= link_to lecture.summary, edit_lecture_path(lecture) %>
-        </td>
-        <td>
-          <%= display_date lecture.date %>
-        </td>
-        <td>
-          <%= display_time_range lecture.time_from, lecture.time_to %>
-        </td>
-        <td>
-          <%= yes_no(lecture.required) %>
-        </td>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
-
-<% end %>
+<%= render partial: "table", locals: { lectures: @lectures } %>

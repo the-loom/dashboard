@@ -1,5 +1,6 @@
 class Lecture < ApplicationRecord
   include CourseLock
+  include Discard::Model
 
   validates_presence_of :date, :time_from, :time_to, :summary
   validates :summary, uniqueness: { scope: :course_id }

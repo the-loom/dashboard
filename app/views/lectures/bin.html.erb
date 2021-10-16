@@ -1,0 +1,8 @@
+<% nav_add 'Aula', '#' %>
+<% nav_add 'Clases', lectures_path %>
+<% nav_add 'Papelera', '#' %>
+<%= nav_render %>
+
+<h2>Clases descartadas</h2>
+
+<%= render partial: 'table', locals: { lectures: @entities } %>

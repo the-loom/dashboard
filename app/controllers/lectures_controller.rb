@@ -1,4 +1,6 @@
 class LecturesController < ApplicationController
+  include Extensions::Discarder.new(Lecture)
+
   before_action do
     check_feature(:lectures)
   end

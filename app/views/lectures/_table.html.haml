@@ -1,0 +1,26 @@
+- if lectures.empty?
+  .alert.alert-info
+    %p Aún no hay ninguna clase
+- else
+  %table.table.table-hover
+    %thead
+      %tr
+        %th Resumen
+        %th Fecha
+        %th Horario
+        %th Asistencia requerida
+        %th Acciones
+    %tbody
+      - lectures.each do |lecture|
+        %tr
+          %td
+            = link_to lecture.summary, edit_lecture_path(lecture)
+          %td
+            = display_date lecture.date
+          %td
+            = display_time_range lecture.time_from, lecture.time_to
+          %td
+            = yes_no(lecture.required)
+          %td
+            = link_to lecture_path(lecture), role: 'button', class: 'btn btn-danger btn-sm', method: :delete do
+              %i.fas.fa-trash

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_04_132704) do
+ActiveRecord::Schema.define(version: 2021_10_16_165644) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -186,6 +186,8 @@ ActiveRecord::Schema.define(version: 2021_09_04_132704) do
     t.boolean "required", default: true
     t.time "time_from"
     t.time "time_to"
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_lectures_on_discarded_at"
   end
 
   create_table "memberships", id: :serial, force: :cascade do |t|
