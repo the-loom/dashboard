@@ -58,7 +58,7 @@
 
         <table class="table table-striped table-bordered">
           <tbody>
-          <% Lecture.past_and_current.each do |lecture| %>
+          <% Lecture.past_and_current.required.each do |lecture| %>
             <tr>
               <td><%= display_day lecture.date.wday %> </td>
               <td><%= display_date lecture.date %> &mdash; <%= display_time_range(lecture.time_from, lecture.time_to) %></td>

@@ -7,7 +7,7 @@ class Lecture < ApplicationRecord
 
   default_scope { order(date: :asc) }
   scope :required, -> { where(required: true) }
-  scope :past_and_current, -> { where("date < ?", Time.zone.now.end_of_day) }
+  scope :past_and_current, -> { kept.where("date < ?", Time.zone.now.end_of_day) }
 
   def self.current
     where("date between ? and ?", Time.zone.now.beginning_of_day, Time.zone.now.end_of_day).first

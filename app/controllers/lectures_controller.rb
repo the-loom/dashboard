@@ -7,7 +7,7 @@ class LecturesController < ApplicationController
 
   def index
     authorize Lecture
-    @lectures = Lecture.all
+    @lectures = Lecture.kept
   end
 
   def new
