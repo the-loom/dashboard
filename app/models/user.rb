@@ -125,7 +125,7 @@ class User < ApplicationRecord
   end
 
   def current_membership(course = Course.current)
-    if course.template?
+    if course&.template?
       return self.all_memberships.includes([:course, :team]).find_by(course_id: course.family_ids) || NullMembership.new
     end
     self.all_memberships.includes([:course, :team]).find_by(course: course) || NullMembership.new
