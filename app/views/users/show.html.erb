@@ -197,8 +197,6 @@
 
         <%= f.input :body, label: 'Texto', as: :text, required: false %>
 
-        <%= f.input :mood, label: 'Humor', collection: Comment.moods, include_blank: false, required: false %>
-
         <%= f.button :submit, 'Comentar', class: "btn-primary" %>
 
       <% end %>
@@ -229,7 +227,7 @@
               <div class="col-sm-10">
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    <strong><%= comment.commenter.nickname %> (<%= comment.mood %>)</strong>
+                    <strong><%= comment.commenter.nickname %></strong>
                     <span class="text-muted"><%= l comment.created_at.in_time_zone('Buenos Aires') %></span>
                   </div>
                   <div class="panel-body">
