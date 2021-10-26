@@ -38,6 +38,9 @@
               %p
                 = student.points
                 XP
+              - if policy(@team).add_member?
+                %p
+                  = link_to "Desvincular", remove_from_team_student_path(student), method: :post
 
 = content_for :head do
   %link{href: "https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css", rel: "stylesheet" }

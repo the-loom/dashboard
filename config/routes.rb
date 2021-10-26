@@ -41,6 +41,7 @@ Rails.application.routes.draw do
       post :toggle
       post :promote
       post :comment
+      post :remove_from_team
     end
     collection do
       post :bulk_edit

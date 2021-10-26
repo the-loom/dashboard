@@ -62,6 +62,18 @@ class StudentsController < ApplicationController
     redirect_to students_path
   end
 
+  def remove_from_team
+    user = User.find(params[:id])
+    authorize user, :manage?
+
+    mem = user.current_membership
+    team = mem.team
+    mem.team = nil
+    mem.save!
+
+    redirect_to team_path(team.nickname)
+  end
+
   def bulk_edit
     if !params[:students].present? || !params[:students][:ids].present?
       flash[:info] = "Debes seleccionar al menos a un estudiante para asignar una acción masiva"
