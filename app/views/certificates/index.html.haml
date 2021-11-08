@@ -1,0 +1,20 @@
+- nav_add 'Mis certificados', '#'
+= nav_render
+
+- if @certificates.empty?
+  .alert.alert-info
+    %p Aún no tenés certificados
+- else
+  %table.resources.table.table-hover
+    %thead
+      %tr
+        %th Título
+        %th Fecha de otorgamiento
+    %tbody
+      - @certificates.each do |certificate|
+        %tr
+          %td
+            = link_to "https://certificados.wecode.io/#{certificate.code}", target: "_blank" do
+              = certificate.name
+          %td
+            = display_date(certificate.created_at)

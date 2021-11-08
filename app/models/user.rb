@@ -28,6 +28,8 @@ class User < ApplicationRecord
   has_many :peer_review_solutions, foreign_key: :author_id, class_name: "PeerReview::Solution"
   has_many :peer_review_reviews, foreign_key: :reviewer_id, class_name: "PeerReview::Review"
 
+  has_many :certificates
+
   validates :avatar, size: { less_than: 500.kilobyte }, content_type: [:png, :jpg, :jpeg]
 
   def self.to_csv

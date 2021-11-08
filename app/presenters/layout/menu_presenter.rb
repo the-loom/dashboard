@@ -64,6 +64,7 @@ class Layout::MenuPresenter
       MenuNode.new(@current_user.short_name, [
           MenuLeaf.new("Perfil", route.profile_path),
           MenuLeaf.new("Editar perfil", route.edit_profile_path),
+          MenuLeaf.new("Mis certificados", route.certificates_path),
           MenuSeparator.new,
           MenuLeaf.new("Salir", route.logout_path)
       ])

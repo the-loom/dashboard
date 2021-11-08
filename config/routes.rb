@@ -114,6 +114,8 @@ Rails.application.routes.draw do
     discardable
   end
 
+  resources :certificates, only: :index
+
   namespace :multiple_choices do
     resources :questionnaires, except: :show do
       publishable
