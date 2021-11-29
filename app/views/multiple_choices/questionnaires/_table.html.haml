@@ -50,6 +50,7 @@
                       = link_to publish_multiple_choices_questionnaire_path(questionnaire), class: "dropdown-item", method: :post do
                         Publicar
                     = link_to "Exportar", export_multiple_choices_questionnaire_path(questionnaire, format: :json), class: "dropdown-item", method: :get
+                    = link_to "Eliminar", multiple_choices_questionnaire_path(questionnaire), class: 'dropdown-item text-danger', method: :delete
 
 = content_for :head do
   %link{href: "https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css", rel: "stylesheet", type: "text/css"}/
