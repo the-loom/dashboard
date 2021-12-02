@@ -20,6 +20,10 @@
   <% if Course.current.template? %>
     <%= render partial: 'shared/alert', locals: { alert_type: 'danger', title: '¡Cuidado!', dismissable: false, message: "Estás en la plantilla de curso, los cambios que realices afectarán a todas réplicas" } %>
   <% end %>
+
+  <% if current_user && !current_user.enabled? %>
+    <%= render partial: 'shared/alert', locals: { alert_type: 'danger', title: '¡Cuidado!', dismissable: false, message: "Tu membresía ha sido deshabilitada por un docente. Si esto fuera un error, ponete en contacto." } %>
+  <% end %>
   <div class="row">
 
     <%= render partial: 'layouts/sidebar', locals: { menu: @sidebar } %>

@@ -21,6 +21,11 @@
 
 <%= form_tag bulk_edit_students_path do %>
 
+  <% %w(Deshabilitado Habilitado).each do |tag| %>
+    <span class="clickable do-search badge bg-info" data-tag="tag:<%= tag %>"><%= tag %></span>
+  <% end %>
+  <span class="clickable do-search badge bg-info" data-tag="">Todos</span>
+
   <div class="table-responsive">
     <table class="members table table-hover">
       <thead>
@@ -80,11 +85,12 @@
             <small>(<%= student.uuid %>)</small><br/>
             <small><%= student.nickname %></small>
             <!-- <%= student.email %> -->
-            <p>
-              <% unless student.enabled? %>
-                <span class="badge bg-info">Deshabilitado</span>
-              <% end %>
-            </p>
+            <br>
+            <% if student.enabled? %>
+              <%= show_tags ["Habilitado"] %>
+            <% else %>
+              <%= show_tags ["Deshabilitado"] %>
+            <% end %>
           </td>
           <td>
             <%= student.points %>
@@ -276,7 +282,7 @@
               checkbox.prop('checked', !checkbox.prop('checked'));
           });
 
-          $('.members').DataTable({
+          studentsTable = $('.members').DataTable({
               order: [[ 2, "asc" ], [ 3, "asc" ], [ 4, "asc" ]],
               paging: false,
               language: {
@@ -296,6 +302,14 @@
               var team = $(this).data('teamId');
               $('input').filter('[data-team-id="' + team + '"]').prop('checked', true);
 
+          })
+
+          $(".do-search").on("click", function() {
+              studentsTable.search($(this).data("tag")).draw();
+              $(".badge.do-search").removeClass("bg-success");
+              $(".badge.do-search").addClass("bg-info");
+              $(this).removeClass("bg-info");
+              $(this).addClass("bg-success");
           })
       });
   </script>

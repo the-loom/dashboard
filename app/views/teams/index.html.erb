@@ -16,6 +16,7 @@
   <% Team.tag_counts_on(:tags).each do |tag| %>
     <span class="clickable do-search badge bg-info" data-tag="tag:<%= tag %>"><%= tag %></span>
   <% end %>
+  <span class="clickable do-search badge bg-info" data-tag="">Todos</span>
 
   <div class="table-responsive">
     <table class="members teams table table-hover">
