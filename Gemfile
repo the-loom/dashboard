@@ -66,11 +66,11 @@ group :development do
   gem "ffaker", "~> 2.19"
 
   # Best practices
-  gem "rails_best_practices", "~> 1.21"
+  gem "rails_best_practices", "~> 1.22"
   gem "rubocop-performance", "~> 1.11", require: false
   gem "rubocop-rails_config", "~> 1.7.3"
   gem "rubocop-rake", "~> 0.6", require: false
-  gem "rubocop-rspec", "~> 2.4", require: false
+  gem "rubocop-rspec", "~> 2.7", require: false
   gem "fasterer"
 
   gem "annotate", "~> 3.1"
