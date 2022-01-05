@@ -56,7 +56,7 @@ group :development do
   gem "pessimize", "~> 0.4"
 
   # Performance asessment
-  gem "bullet", "~> 6.1"
+  gem "bullet", "~> 7.0"
   gem "rack-mini-profiler", "~> 2.3"
 
   # Debugging
