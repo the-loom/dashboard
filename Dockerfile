@@ -11,7 +11,7 @@ USER loom
 WORKDIR /usr/src/app
 COPY Gemfile* ./
 
-RUN gem install bundler
+RUN gem install bundler --version '2.1.4'
 # RUN bundle update --bundler
 RUN bundle install
 
