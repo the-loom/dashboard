@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 ruby "2.7.4"
 
-gem "rails", "5.2.4.5"
+gem "rails", "6.1.4.4"
 
 gem "pg", "~> 1.2"
 
@@ -11,6 +11,7 @@ gem "puma", "~> 3.12"
 gem "responders", "~> 3.0"
 gem "sass-rails", "~> 6.0"
 gem "therubyracer", "~> 0.12", platforms: :ruby
+gem "execjs", "~> 2.8.1"
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Templating

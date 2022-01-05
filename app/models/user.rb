@@ -158,7 +158,7 @@ class User < ApplicationRecord
   end
 
   def register(event, times = 1, course = Course.current)
-    return unless current_membership(course).enabled? # TODO: preventive fix, needs re-do
+    # return unless current_membership(course).enabled? # TODO: preventive fix, needs re-do
     occurrence = occurrences.find_or_initialize_by(event: event, course: course)
     occurrence.multiplier = occurrence.new_record? ? times : occurrence.multiplier + times
     occurrence.save

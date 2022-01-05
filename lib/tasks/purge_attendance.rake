@@ -3,7 +3,6 @@ namespace :attendance do
   task purge: :environment do
     ActiveRecord::Base.transaction do
       Course.enabled.each do |course|
-
         next if course.template? || course.nil?
 
         Course.current = course
