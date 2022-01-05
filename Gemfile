@@ -47,7 +47,7 @@ gem "omniauth-rails_csrf_protection", "~> 1.0"
 
 # Forms
 gem "simple_form", "~> 5.1"
-gem "trix-rails", "~> 2.3", require: "trix" # remove?
+gem "trix-rails", "~> 2.4", require: "trix" # remove?
 
 group :development do
   # Gemfile health
@@ -70,7 +70,7 @@ group :development do
   gem "rubocop-performance", "~> 1.11", require: false
   gem "rubocop-rails_config", "~> 1.7.3"
   gem "rubocop-rake", "~> 0.6", require: false
-  gem "rubocop-rspec", "~> 2.4", require: false
+  gem "rubocop-rspec", "~> 2.7", require: false
   gem "fasterer"
 
   gem "annotate", "~> 3.1"
