@@ -1,0 +1,11 @@
+/* line 1, app/assets/stylesheets/menu.scss */
+.sidebar-sticky i {
+  width: 1.5em;
+  text-align: center;
+}
+
+/* line 6, app/assets/stylesheets/menu.scss */
+.sidebar-heading {
+  font-weight: bold;
+  font-size: 1.1em;
+}

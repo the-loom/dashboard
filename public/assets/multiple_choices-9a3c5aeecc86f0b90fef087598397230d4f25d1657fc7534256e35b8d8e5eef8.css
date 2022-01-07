@@ -1,0 +1,45 @@
+/* line 2, app/assets/stylesheets/multiple_choices.scss */
+.questionnaire .question {
+  margin-bottom: 1em;
+}
+
+/* line 6, app/assets/stylesheets/multiple_choices.scss */
+.questionnaire .answer {
+  width: 100%;
+  margin: 0.5em;
+  display: block;
+  background-color: #ddd;
+  padding: 4px 10px;
+}
+
+/* line 13, app/assets/stylesheets/multiple_choices.scss */
+.questionnaire .answer.hoverable:hover {
+  cursor: pointer;
+  background-color: #357d7e;
+  color: whitesmoke;
+}
+
+/* line 19, app/assets/stylesheets/multiple_choices.scss */
+.questionnaire .answer.selected {
+  background-color: #357d7e;
+  color: whitesmoke;
+}
+
+/* line 24, app/assets/stylesheets/multiple_choices.scss */
+.questionnaire .answer.chosen {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}
+
+/* line 36, app/assets/stylesheets/multiple_choices.scss */
+.questionnaire .answer.chosen.correct {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
