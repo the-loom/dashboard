@@ -65,8 +65,8 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
       zeitwerk (~> 2.3)
-    acts-as-taggable-on (7.0.0)
-      activerecord (>= 5.0, < 6.2)
+    acts-as-taggable-on (9.0.1)
+      activerecord (>= 6.0, < 7.1)
     acts_as_votable (0.13.2)
     annotate (3.1.1)
       activerecord (>= 3.2, < 7.0)
@@ -413,7 +413,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_storage_validations (~> 0.9)
-  acts-as-taggable-on (~> 7.0)
+  acts-as-taggable-on (~> 9.0)
   acts_as_votable (~> 0.13)
   annotate (~> 3.1)
   aws-sdk-s3 (~> 1.111)
