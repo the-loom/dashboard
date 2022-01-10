@@ -97,7 +97,7 @@ module Admin
     def toggle
       authorize Course, :admin?
       course = Course.find(params[:id])
-      course.update_attributes(enabled: !course.enabled?)
+      course.update_attribute(:enabled, !course.enabled?)
       redirect_to admin_courses_path
     end
 
