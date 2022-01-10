@@ -61,7 +61,7 @@ group :development do
 
   # Debugging
   gem "better_errors", "~> 2.9"
-  gem "web-console", "~> 3.7"
+  gem "web-console", "~> 4.2"
 
   # Creating dev data
   gem "ffaker", "~> 2.20"
