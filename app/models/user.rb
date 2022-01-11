@@ -138,7 +138,7 @@ class User < ApplicationRecord
   end
 
   def student?
-    current_membership.student?
+    current_membership.student? || current_membership.nil?
   end
 
   def register_attendance(lecture)

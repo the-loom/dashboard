@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
         unless session[:course_id].present? && (Course.enabled.map(&:id).include?(session[:course_id]) || current_user.teacher?)
           Course.current = Course.find_by(id: current_user.enabled_memberships.first.try(:course_id))
         end
-        if !Course.current && controller_path != "courses"
+        if !Course.current && !["courses", "certificates"].include?(controller_path)
           redirect_to courses_url
         end
       end
@@ -108,7 +108,7 @@ class ApplicationController < ActionController::Base
     end
 
     def pages_controller?
-      controller_path.starts_with?("pages") || controller_path.starts_with?("sessions")
+      controller_path.starts_with?("pages") || controller_path.starts_with?("sessions") || controller_path.starts_with?("certificates")
     end
 
     def repos_api?
