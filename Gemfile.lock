@@ -285,7 +285,7 @@ GEM
       ffi (~> 1.0)
     ref (2.0.0)
     regexp_parser (2.2.0)
-    request_store (1.5.0)
+    request_store (1.5.1)
       rack (>= 1.4)
     require_all (3.0.0)
     responders (3.0.1)
