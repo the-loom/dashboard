@@ -1,4 +1,8 @@
 /*
+*= require colors
+*= require header
+
+
 *= require avatars
 *= require badges
 *= require codemirror/lib/codemirror
@@ -11,12 +15,9 @@
 *= require_self
 */
 
-.heart {
-  color: #cb3434;
-}
-
 body {
   margin-top: 4em;
+  font-family: 'Prompt', sans-serif;
 }
 
 .btn-suggestions {

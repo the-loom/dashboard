@@ -1,0 +1,30 @@
+@import colors.sass
+
+nav.navbar
+  background-color: $black
+  font-size: 14px
+  
+  a
+    color: white
+    &:hover
+      color: $teal
+
+  .dropdown-menu
+    a
+      color: $black
+
+  .divider:not(:last-child)
+    border-right: 1px solid rgba(white, 0.75)
+    margin: 12px 5px
+
+  .envelope
+    background: url(/assets/icon-envelope.svg) no-repeat center center
+    display: inline-block
+    height: 18px
+    vertical-align: middle
+    width: 20px
+
+  .avatar
+    border-radius: 50%
+    width: 35px
+    height: 35px
