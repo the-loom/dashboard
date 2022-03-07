@@ -25,3 +25,5 @@
 *.dump
 storage
 /db-data/*
+app/assets/stylesheets/.DS_Store
+app/assets/.DS_Store
