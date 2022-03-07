@@ -1,11 +1,12 @@
 - if menu.class == Array
   - menu.each do |option|
-    = render partial:'layouts/menub', locals: { menu: option }
+    = render partial:'layouts/menub', locals: { menu: option, last: option == menu.last }
 - elsif menu.class == MenuNode
   %li.nav-item.dropdown
     %a.nav-link.dropdown-toggle.tour-exit{"aria-expanded": false, "aria-haspopup": true, "data-bs-toggle": "dropdown", href: "#", role: "button"}
       = menu.title
-      (avatar goes here)
+      - if last
+        = image_tag entity_avatar(current_user), { alt: current_user.full_name }
       %span.caret
     %ul.dropdown-menu.dropdown-menu-end
       - menu.leafs.each do |leaf|
