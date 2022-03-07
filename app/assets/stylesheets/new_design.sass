@@ -1,0 +1,68 @@
+@import colors.sass
+
+
+body
+  > .container
+    margin: 0
+
+main.col-lg-10
+  flex: 1
+
+nav#sidebar-menu
+  background: $black !important
+  color: white
+  @media (min-width: 992px)
+    min-width: 290px
+  a:not(.btn)
+    color: white
+    font-size: 13px
+    padding: 0
+
+    span.icon
+      background: rgba(white, 0.1) url(/assets/icon-nav-default.svg) no-repeat center center
+      border: 2px solid rgba(white, 0.2)
+      border-radius: 10px
+      padding-bottom: 100%
+      display: block
+      margin-bottom: 10px
+      &.dashboard
+        background-image: url(/assets/icon-nav-dashboard.svg)
+      &.account
+        background-image: url(/assets/icon-nav-account.svg)
+      &.team
+        background-image: url(/assets/icon-nav-team.svg)
+      &.teachers
+        background-image: url(/assets/icon-nav-teachers.svg)
+      &.resources
+        background-image: url(/assets/icon-nav-resources.svg)
+      &.faq
+        background-image: url(/assets/icon-nav-faq.svg)
+    &:hover
+      span.icon
+        border-color: $teal
+
+  li.active
+    a
+      line-height: 1
+      color: $teal
+      span.icon
+        background-color: rgba($teal, 0.4)
+        border-color: $teal
+
+  .sidebar-heading
+    color: white
+    font-weight: 500
+    margin-bottom: 10px
+
+  ul.nav
+    display: grid
+    grid-template-columns: repeat(2, 1fr)
+    gap: 30px
+    text-align: center
+    margin-bottom: 30px
+
+  .footer
+    padding: 25px 0 15px
+    .btn-suggestions
+      margin: 0 0 40px -12px
+      padding: 8px 20px 8px 30px

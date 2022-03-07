@@ -1,0 +1,11 @@
+<div class="footer">
+  
+  <% if current_user and current_user.current_membership %>
+    <%= link_to suggestions_path, class: 'btn btn-primary btn-suggestions' do %>
+      <span class="lightbulb"></span> Sugerencias
+    <% end %>
+  <% end %>
+
+  <div>Made with <span class="heart">♥</span></div>
+
+</div>
