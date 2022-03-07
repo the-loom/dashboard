@@ -6,7 +6,7 @@ nav.navbar
   
   a
     color: white
-    &:hover
+    &:hover, &:active, &:focus
       color: $teal
 
   .dropdown-menu
@@ -24,7 +24,15 @@ nav.navbar
     vertical-align: middle
     width: 20px
 
+  @media (min-width: 768px)
+    li.nav-item
+      &:nth-child(2), &:first-child
+        padding-top: 6px
+
   .avatar
+    background: rgba(white, 0.1)
     border-radius: 50%
-    width: 35px
+    border: 0 none
+    display: inline-block
     height: 35px
+    width: 35px
