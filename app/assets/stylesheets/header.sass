@@ -3,6 +3,19 @@
 nav.navbar
   background-color: $black
   font-size: 14px
+  @media (min-width: 768px)
+    padding: 0
+  > .container
+    margin-left: 0
+    @media (min-width: 768px)
+      padding-left: 20px
+    @media (min-width: 992px)
+      padding-left: 30px
+
+    @media (min-width: 768px) and (max-width: 1600px)
+      max-width: 100%
+    @media (min-width: 1600px)
+      max-width: 1600px
   
   a
     color: white

@@ -16,11 +16,6 @@
 *= require_self
 */
 
-body {
-  margin-top: 4em;
-  font-family: 'Prompt', sans-serif;
-}
-
 .btn-suggestions {
   bottom: 7em;
   position: fixed;

@@ -2,20 +2,43 @@
 
 
 body
+  font-family: 'Prompt', sans-serif  
+  margin-top: 51px
+  background: url(/assets/squares.png) repeat-x center bottom
+  background-size: 425px auto
   > .container
     margin: 0
+    max-width: 100%
+    @media (min-width: 1600px)
+      max-width: 1600px
 
 main.col-lg-10
   flex: 1
 
+  @media (min-width: 768px)
+    background: url(/assets/corner.svg) no-repeat left top
+    padding: 30px 20px
+  @media (min-width: 992px)
+    padding: 40px 30px
+
 nav#sidebar-menu
   background: $black !important
   color: white
+  padding-top: 10px
+  @media (min-width: 768px)
+    padding-left: 20px
+    padding-right: 20px
+
+    
+
   @media (min-width: 992px)
     min-width: 290px
+    padding-left: 30px
+    padding-right: 30px
   a:not(.btn)
     color: white
     font-size: 13px
+    line-height: 1.25
     padding: 0
 
     span.icon
@@ -42,8 +65,7 @@ nav#sidebar-menu
         border-color: $teal
 
   li.active
-    a
-      line-height: 1
+    a      
       color: $teal
       span.icon
         background-color: rgba($teal, 0.4)
@@ -64,5 +86,9 @@ nav#sidebar-menu
   .footer
     padding: 25px 0 15px
     .btn-suggestions
-      margin: 0 0 40px -12px
+      margin: 0 0 40px 0
       padding: 8px 20px 8px 30px
+      @media (min-width: 768px)
+        margin-left: -20px
+      @media (min-width: 992px)
+        margin-left: -30px
