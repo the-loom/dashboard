@@ -2,10 +2,11 @@
 
 
 body
-  font-family: 'Prompt', sans-serif  
-  margin-top: 51px
   background: url(/assets/squares.png) repeat-x center bottom
   background-size: 425px auto
+  font-family: 'Prompt', sans-serif  
+  margin-top: 51px
+  padding-bottom: 80px
   > .container
     margin: 0
     max-width: 100%
@@ -15,11 +16,13 @@ body
 main.col-lg-10
   flex: 1
 
-  @media (min-width: 768px)
-    background: url(/assets/corner.svg) no-repeat left top
+  @media (min-width: 768px)    
     padding: 30px 20px
+    margin-left: 270px
+    box-sizing: border-box
   @media (min-width: 992px)
     padding: 40px 30px
+    margin-left: 290px
 
 nav#sidebar-menu
   background: $black !important
@@ -28,13 +31,29 @@ nav#sidebar-menu
   @media (min-width: 768px)
     padding-left: 20px
     padding-right: 20px
-
-    
+    width: 270px
+    position: fixed
+    height: calc(100% - 51px)
+    overflow-y: scroll
+    box-sizing: border-box
+    bottom: 0
+    &:after
+      content: ""
+      position: fixed
+      top: 51px
+      left: 270px
+      background: url(/assets/corner.svg) no-repeat left top
+      pointer-events: none
+      width: 30px
+      height: 30px
+      z-index: 2
 
   @media (min-width: 992px)
-    min-width: 290px
+    width: 290px
     padding-left: 30px
     padding-right: 30px
+    &:after
+      left: 290px
   a:not(.btn)
     color: white
     font-size: 13px
