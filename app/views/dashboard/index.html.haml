@@ -23,13 +23,12 @@
           .col-12.p-3
             .row.mb-2.no-gutters
               .col-auto.pr-2
-                = image_tag entity_avatar(post.author), style: "border-radius: 999px; width: 50px; border: 1px solid #333;"
+                = image_tag entity_avatar(post.author), class: 'avatar'
               .col
-                %div{ style: "font-size: 1.1em" }
-                  = post.author.full_name
-                %div{ style: "font-size: 0.9em" }
+                = post.author.full_name
+                .time
                   - if post.pinned
-                    %i.fa.fa-thumbtack
+                    %span.icon-pin
                   %a.moment-datetime{ href: "?post=" + post.id.to_s, style: "color: #555;", "data-datetime": post.created_at.to_i * 1000 }
                     = post.created_at.strftime("%Y-%m-%d %H:%M")
               - if policy(Post).manage?
@@ -228,19 +227,6 @@
 
     trix-toolbar .trix-button {
       background-color: #FFF;
-    }
-
-    .new-post,
-    .post {
-      background-color: #EEE;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
-      border-radius: 8px;
-      margin-top: 15px;
-      margin-bottom: 15px;
-    }
-
-    .pinned {
-      background-color: #DFE8F8;
     }
 
     /**/

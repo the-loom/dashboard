@@ -13,6 +13,43 @@ body
     @media (min-width: 1600px)
       max-width: 1600px
 
+.breadcrumb
+  display: none
+  font-size: 13px
+  a
+    color: $teal
+    &:hover
+      color: darken($teal, 10%)
+
+.post, .new-post
+  border-radius: 20px
+  background-color: #EEE
+  margin-top: 15px
+  margin-bottom: 15px
+
+  textarea
+    font-size: 16px
+
+.post
+  &.pinned
+    background: rgba($teal, 0.3)
+
+  img
+    border-radius: 50%
+    border: 4px solid $teal
+    height: auto
+    width: 70px
+
+  .time
+    font-size: 12px
+
+  .icon-pin
+    display: inline-block
+    height: 21px
+    width: 14px
+    background: url(/assets/icon-pin.svg) repeat-x center center
+    vertical-align: middle
+
 main.col-lg-10
   flex: 1
 
@@ -23,6 +60,9 @@ main.col-lg-10
   @media (min-width: 992px)
     padding: 40px 30px
     margin-left: 290px
+
+legend
+  margin-bottom: 25px
 
 nav#sidebar-menu
   background: $black !important
