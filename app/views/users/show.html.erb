@@ -3,30 +3,65 @@
 <% nav_add "#{@user.full_name} - #{@user.nickname} (#{@user.uuid})", '#' %>
 <%= nav_render %>
 
-<div class="row">
-  <div class="col-md-3">
-    <div class="profile">
-      <div class="avatar-and-team">
-        <div class="avatar">
-          <%= image_tag entity_avatar(@user), { alt: @user.full_name } %>
-        </div>
-        <% if Course.current.on?(:teams) %>
-          <% team = @user.current_membership.team %>
-          <% if team.present? %>
-            <div class="team avatar">
-              <%= link_to team_profile_url(team.nickname) do %>
-                <%= image_tag entity_avatar(team), { alt: team.name } %>
-              <% end %>
-            </div>
+
+<div class="profile">
+  <h1>Mi Perfil</h1>
+  <div class="avatar-and-team">
+
+    <%= image_tag entity_avatar(@user), { alt: @user.full_name, class: 'avatar' } %>
+    <% if Course.current.on?(:teams) %>
+      <% team = @user.current_membership.team %>
+      <% if team.present? %>
+        <div class="team avatar">
+          <%= link_to team_profile_url(team.nickname) do %>
+            <%= image_tag entity_avatar(team), { alt: team.name } %>
           <% end %>
-        <% end %>
-      </div>
-    </div>
+        </div>
+      <% end %>
+    <% end %>
   </div>
-  <div class="col-md-9">
-    <div id="chart" data-score="<%= @user.score %>" data-xp="<%= @user.points %>"></div>
+
+  <div class="badges">
+    <% if Course.current.on?(:badges) %>
+
+<!--       <legend>Emblemas
+        <small>(<%= @user.badges.size %>/<%= Badge.count %>)</small>
+      </legend> -->
+
+      <% if @user.earnings.size == 0 %>
+
+        <div class="alert alert-info">
+          <p>Aún no se te otorgaron emblemas...</p>
+        </div>
+
+      <% else %>
+        <ul>
+          <li>
+            <% @user.earnings.each do |earning| %>
+              <%= image_tag earning.badge.image, { alt: earning.badge.name, width: 100, height: 100, title: earning.badge.description} %>
+              <h3><%= earning.badge.name %></h3>
+            <% end %>
+          </li>
+        </ul>
+         
+     
+
+
+          <% @missing_badges.each do |badge| %>
+            <%= image_tag "badges/generic.png", { alt: badge.name, width: 100, height: 100, title: badge.description } %>
+            <h3><%= badge.name %></h3>
+          <% end %>
+
+      <% end %>
+    <% end %>
   </div>
+
+
 </div>
+
+<div id="chart" data-score="<%= @user.score %>" data-xp="<%= @user.points %>"></div>
+
+
 
 <br><br>
 
@@ -132,54 +167,7 @@
 
     <% end %>
 
-    <% if Course.current.on?(:badges) %>
-
-      <legend>Emblemas
-        <small>(<%= @user.badges.size %>/<%= Badge.count %>)</small>
-      </legend>
-
-      <% if @user.earnings.size == 0 %>
-
-        <div class="alert alert-info">
-          <p>Aún no se te otorgaron emblemas...</p>
-        </div>
-
-      <% else %>
-
-        <div class="row">
-          <% @user.earnings.each do |earning| %>
-            <div class="col-sm-6">
-              <div class="card" style="width: 12rem;">
-                <div class="loom-badge">
-                  <%= image_tag earning.badge.image, { alt: earning.badge.name } %>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title"><%= earning.badge.name %></h5>
-                  <p class="card-text">
-                    <%= earning.badge.description %>
-                  </p>
-                </div>
-              </div>
-            </div>
-          <% end %>
-          <% @missing_badges.each do |badge| %>
-            <div class="col-sm-6">
-              <div class="card" style="width: 12rem;">
-                <div class="loom-badge">
-                  <%= image_tag "incognito.png", { alt: badge.name } %>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title"><%= badge.name %></h5>
-                  <p class="card-text">
-                    <%= badge.description %>
-                  </p>
-                </div>
-              </div>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
-    <% end %>
+    
   </div>
 
 </div>

@@ -28,3 +28,5 @@ storage
 app/assets/stylesheets/.DS_Store
 app/assets/.DS_Store
 app/views/.DS_Store
+app/assets/images/.DS_Store
+app/assets/images/badges/.DS_Store
