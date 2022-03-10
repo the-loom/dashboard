@@ -1,7 +1,11 @@
 /*
 *= require colors
-*= require header
 *= require new_design
+*= require header
+*= require tabs
+*= require pagination
+*= require buttons
+
 
 
 *= require avatars

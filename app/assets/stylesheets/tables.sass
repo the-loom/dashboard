@@ -1,0 +1,58 @@
+@import colors.sass
+
+table td.mw-200
+  max-width: 200px
+
+
+table.table
+  th
+    font-weight: 500
+    font-size: 14px
+
+  a
+    color: $black
+
+  .progress
+    background-color: #dcd6d4
+    height: 8px
+    margin-bottom: 5px
+
+  tr
+    font-size: 12px
+    &.missed
+      background-color: $peach
+      a:not(.btn)
+        color: $flamingo
+      .progress
+        mix-blend-mode: multiply
+      &:hover
+        background-color: darken($peach, 5%)
+    &.finished
+      background-color: #dff0d8
+      .progress
+        background-color: $teal_dark
+      a:not(.btn)
+        color: $teal_dark
+      &:hover
+        background-color: #c6d7bf
+
+
+
+.dataTables_wrapper
+  > .row:first-child
+    font-size: 14px
+
+  table.table
+
+    a:not(.btn)
+      color: $teal_dark
+
+    .badge
+      margin-top: 3px
+
+  .badge
+    border-radius: 2px
+    font-size: 11px
+    font-weight: 500
+    &.bg-info
+      background-color: $teal_dark !important
