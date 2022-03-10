@@ -4,21 +4,36 @@
 <%= nav_render %>
 
 
-<div class="profile">
-  <h1>Mi Perfil</h1>
-  <div class="avatar-and-team">
+<div class="text-center">
+  <h1 class="trapezoid-title">Mi Perfil</h1>
+</div>
 
-    <%= image_tag entity_avatar(@user), { alt: @user.full_name, class: 'avatar' } %>
-    <% if Course.current.on?(:teams) %>
-      <% team = @user.current_membership.team %>
-      <% if team.present? %>
-        <div class="team avatar">
-          <%= link_to team_profile_url(team.nickname) do %>
-            <%= image_tag entity_avatar(team), { alt: team.name } %>
+<div class="profile">  
+  <div>
+    <div class="pieContainer">
+      <div class="hold">
+        <div class="pieSlice" style="transform: rotate(<%= @user.points*3.60 %>deg)"></div>
+      </div>
+      <div class="avatar-and-team">
+        <%= image_tag entity_avatar(@user), { alt: @user.full_name, class: 'avatar' } %>
+        <% if Course.current.on?(:teams) %>
+          <% team = @user.current_membership.team %>
+          <% if team.present? %>
+            <div class="team avatar">
+              <%= link_to team_profile_url(team.nickname) do %>
+                <%= image_tag entity_avatar(team), { alt: team.name, width: '56', height: '56' } %>
+              <% end %>
+            </div>
           <% end %>
-        </div>
-      <% end %>
-    <% end %>
+        <% end %>
+      </div>
+    </div>
+
+
+    <div class="xp">
+      <%= @user.points %>
+      XP
+    </div>
   </div>
 
   <div class="badges">
@@ -36,21 +51,23 @@
 
       <% else %>
         <ul>
-          <li>
-            <% @user.earnings.each do |earning| %>
+          <% @user.earnings.each do |earning| %>
+            <li>
               <%= image_tag earning.badge.image, { alt: earning.badge.name, width: 100, height: 100, title: earning.badge.description} %>
-              <h3><%= earning.badge.name %></h3>
-            <% end %>
-          </li>
-        </ul>
-         
-     
-
-
-          <% @missing_badges.each do |badge| %>
-            <%= image_tag "badges/generic.png", { alt: badge.name, width: 100, height: 100, title: badge.description } %>
-            <h3><%= badge.name %></h3>
+              <h3><%= earning.badge.name %></h3>            
+            </li>
           <% end %>
+          
+          <% @missing_badges.each do |badge| %>
+            <li>
+              <%= image_tag "badges/generic.png", { alt: badge.name, width: 100, height: 100, title: badge.description } %>
+              <h3><%= badge.name %></h3>
+            </li>
+          <% end %>          
+        </ul>     
+
+
+          
 
       <% end %>
     <% end %>

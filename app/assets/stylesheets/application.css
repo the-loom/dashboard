@@ -1,6 +1,14 @@
 /*
 *= require new_design
 
+*= require header
+*= require tabs
+*= require pagination
+*= require buttons
+
+*= require profile
+
+
 *= require avatars
 *= require badges
 *= require codemirror/lib/codemirror

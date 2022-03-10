@@ -1,33 +1,80 @@
 @import colors.sass
 
+
+.pieContainer
+  height: 198px
+  width: 198px
+  position: relative
+  background: $gray_light
+  border-radius: 50%
+
+  .avatar-and-team
+    position: absolute
+    left: 24px
+    top: 24px
+    z-index: 2
+
+  .hold
+    position: absolute
+    width: 198px
+    height: 198px
+    border-radius: 100%
+    clip: rect(0px, 198px, 198px, 99px)
+    transform: rotate(180deg)
+    .pieSlice
+      position: absolute
+      width: 198px
+      height: 198px
+      border-radius: 100%
+      clip: rect(0px, 99px, 198px, 0px)
+      background: $violet
+
+
 .profile
-  background: #3d393a
+  background: $gray_dark
   border-radius: 18px
   color: white
-  font-size: 15px
+  font-size: 12px
   padding: 30px
   display: flex
   justify-content: space-between
-
-  h1
-    text-align: center
-    text-transform: uppercase
-    font-size: 18px
-    font-weight: 500
-    background: $black
-    padding: 20px
-    display: inline-block
+  align-items: center
+    
 
   .avatar-and-team
+    max-height: 100%
     .avatar
-      border: 3px solid #b9ada9
+      background: $gray_dark
+      border: 3px solid $gray_light
+      &.team
+        border-width: 2px
+        right: -20px
+        width: 56px
+        height: 56px
+
+  .xp
+    font-size: 16px
+    margin-top: 8px
+    text-align: center
 
   .badges
+    flex: 2
     ul
       display: flex
+      list-style: none
+      align-items: flex-start
+      padding: 0
+      margin: 0 0 0 25px
+
       li
         text-align: center
+        &:not(:last-child)
+          margin-right: 20px
         img
           max-width: 100%
           height: auto
-          margin-bottom: 20px
+
+        h3
+          font-size: 12px
+          font-weight: 400
+          margin-top: 20px

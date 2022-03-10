@@ -1,13 +1,5 @@
 @import colors.sass
 
-@import header.sass
-@import tabs.sass
-@import pagination.sass
-@import buttons.sass
-
-@import profile.sass
-
-
 
 body
   background: url(/assets/squares.png) repeat-x center bottom
@@ -159,3 +151,33 @@ nav#sidebar-menu
         margin-left: -20px
       @media (min-width: 992px)
         margin-left: -30px
+
+.text-center
+  text-align: center
+
+.trapezoid-title
+  background: $black
+  color: white
+  display: inline-block
+  font-size: 18px
+  font-weight: 400  
+  margin: 0
+  padding: 0 50px
+  height: 50px
+  line-height: 50px
+  text-transform: uppercase
+  min-width: 185px
+  transform: translateY(50%)
+  &:before, &:after
+    content: ""
+    background: url(/assets/trapezoid-left.svg) no-repeat left top
+    width: 25px
+    height: 50px
+    display: block
+    top: 0
+    position: absolute
+  &:before
+    left: -25px
+  &:after
+    right: -25px
+    background: url(/assets/trapezoid-right.svg) no-repeat right top
