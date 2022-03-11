@@ -5,6 +5,13 @@
     background: rgba($violet, 0.2)
     border-radius: 20px
     border: 0 none
+
+    .role
+      display: block
+      font-size: 13px
+      margin: -5px 0 15px
+      text-transform: uppercase
+
     .card-body
       .left
         background-color: #ece2fb !important
@@ -14,3 +21,9 @@
           border-color: $gray_light
       .right
         font-size: 14px
+
+    @media (max-width: 767px)
+      height: auto !important
+      .card-body
+        .left
+          border-radius: 20px 20px 0 0 !important
