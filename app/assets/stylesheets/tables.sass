@@ -37,6 +37,36 @@ table.table
         background-color: #c6d7bf
 
 
+  tr
+    td
+      padding: 10px
+
+      .badge
+        border-radius: 2px
+        font-size: 11px
+        font-weight: 500
+        -webkit-font-smoothing: antialiased
+        &.color
+          text-transform: uppercase
+          background: $violet
+          &.teal
+            background: $teal
+          &.flamingo
+            background: $flamingo
+          &.blue
+            background: $blue
+          &.yellow
+            background: $yellow
+          &.tuscany
+            background: $tuscany
+
+  &.table-bordered
+    td
+      &:first-child
+        border-left: 0 none
+      &:last-child
+        border-right: 0 none
+
 
 .dataTables_wrapper
   > .row:first-child

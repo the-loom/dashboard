@@ -76,7 +76,7 @@
 
 </div>
 
-<div id="chart" data-score="<%= @user.score %>" data-xp="<%= @user.points %>"></div>
+<!-- <div id="chart" data-score="<%= @user.score %>" data-xp="<%= @user.points %>"></div> -->
 
 
 
@@ -115,7 +115,10 @@
               <td><%= display_day lecture.date.wday %> </td>
               <td><%= display_date lecture.date %> &mdash; <%= display_time_range(lecture.time_from, lecture.time_to) %></td>
               <td><%= lecture.summary %></td>
-              <td><%= @user.present_at(lecture) ? 'Presente' : lecture.required? ? 'Ausente' : 'No requerida' %></td>
+              <td>
+                <%= @user.present_at(lecture) ? 'Presente' : lecture.required? ? 'Ausente' : 'No requerida' %>
+                
+              </td>
             </tr>
           <% end %>
           </tbody>
@@ -141,12 +144,12 @@
             <tr>
               <td><%= occurrence.updated_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y") %></td>
               <td>
-                <label class="badge bg-secondary"><%= occurrence.multiplier %>&times;</label>
+                <label class="badge bg-secondary"><%= occurrence.multiplier %>x</label>
                 <%= occurrence.event.name %>
               </td>
               <% if Course.current.on?(:competences) && occurrence.event.competence_tag %>
                 <td>
-                  <label class="badge bg-secondary">
+                  <label class="badge color">
                     <%= occurrence.event.competence_tag.name %>
                   </label>
                 </td>
@@ -170,17 +173,19 @@
 
       <div class="radarChart"></div>
 
-      <p>
-        <span style="background-color: #00A0B0; min-width: 1em; display: inline-block">&nbsp;</span> Curso
-      </p>
-      <% if @user.current_membership.team.present? %>
-        <p>
-          <span style="background-color: #EDC951; min-width: 1em; display: inline-block">&nbsp;</span> Equipo
-        </p>
-      <% end %>
-      <p>
-        <span style="background-color: #CC333F; min-width: 1em; display: inline-block">&nbsp;</span> Propia
-      </p>
+      <ul class="chartReferences">
+        <li>
+          <span class="sample" style="background-color: #00A0B0"></span> <span>Curso</span>
+        </li>
+        <% if @user.current_membership.team.present? %>
+          <li>
+            <span class="sample" style="background-color: #EDC951"></span> <span>Equipo</span>
+          </li>
+        <% end %>
+        <li>
+          <span class="sample" style="background-color: #CC333F"></span> <span>Propia</span>
+        </li>
+      </ul>
 
     <% end %>
 
