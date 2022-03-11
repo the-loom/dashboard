@@ -116,8 +116,13 @@
               <td><%= display_date lecture.date %> &mdash; <%= display_time_range(lecture.time_from, lecture.time_to) %></td>
               <td><%= lecture.summary %></td>
               <td>
-                <%= @user.present_at(lecture) ? 'Presente' : lecture.required? ? 'Ausente' : 'No requerida' %>
-                
+                <% if @user.present_at(lecture) %>
+                  <span class="present">Presente</span>
+                <% elsif lecture.required? %>
+                  <span class="absent">Ausente</span>
+                <% else %>
+                  <span class="xxx">No requerida</span>
+                <% end %>
               </td>
             </tr>
           <% end %>

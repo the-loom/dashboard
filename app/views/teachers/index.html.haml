@@ -13,6 +13,8 @@
                 = image_tag entity_avatar(teacher), { alt: teacher.full_name }
             .right
               %h5.card-title= teacher.full_name
+              %span.role
+                Docente
               = teacher.bios
 
 = content_for :javascript do
