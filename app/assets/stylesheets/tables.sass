@@ -41,6 +41,25 @@ table.table
     td
       padding: 10px
 
+      .present, .absent, .unrequired
+        text-transform: uppercase
+        font-weight: 500
+        &:before
+          background: url(/assets/icon-unrequired.svg) no-repeat center center
+          content: ""
+          display: inline-block
+          margin-right: 2px
+          height: 16px
+          vertical-align: middle
+          width: 16px
+          transform: translateY(-1px)
+      .present:before
+        background-image: url(/assets/icon-present.svg)
+      .absent:before
+        background-image: url(/assets/icon-absent.svg)
+
+
+
       .badge
         border-radius: 2px
         font-size: 11px
