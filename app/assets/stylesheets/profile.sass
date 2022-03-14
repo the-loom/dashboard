@@ -7,6 +7,8 @@
   position: relative
   background: $gray_light
   border-radius: 50%
+  @media (max-width: 767px)
+    margin: 0 auto
 
   .avatar-and-team
     position: absolute
@@ -36,9 +38,15 @@
   color: white
   font-size: 12px
   padding: 50px 30px 30px
-  display: flex
-  justify-content: space-between
-  align-items: center  
+  @media (min-width: 768px)
+    display: flex
+    justify-content: space-between
+    align-items: center
+  &.light
+    background: #f1efee
+    color: $black
+    .pieContainer
+      background: rgba(black, 0.06)
     
 
   .avatar-and-team
@@ -82,6 +90,36 @@
           font-size: 12px
           font-weight: 400
           margin-top: 20px
+
+
+  form
+    flex: 2
+    @media (min-width: 768px)
+      margin-left: 30px
+    @media (min-width: 1220px)
+      display: flex
+      align-items: flex-start      
+      .team_name, .team_avatar
+        margin: 0 24px 0 0 !important
+
+      .btn
+        margin-top: 30px
+    
+    input
+      color: $black
+      &[type="text"]
+        font-size: 14px
+        border-color: $teal
+        background-image: url(/assets/icon-checkmark.svg)
+        background-size: 24px auto
+
+    label
+      color: $black
+      display: block
+      font-size: 15px
+      -webkit-font-smoothing: antialiased
+      font-weight: 500
+      margin-bottom: 10px
 
 
 ul.chartReferences
