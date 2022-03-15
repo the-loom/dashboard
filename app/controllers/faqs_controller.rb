@@ -39,7 +39,7 @@ class FaqsController < ApplicationController
     authorize Faq, :manage?
     @faq = Faq.find(params[:id])
 
-    if @faq.update_attributes(faq_params)
+    if @faq.update(faq_params)
       redirect_to faqs_path
       flash[:success] = "Se editó correctamente la pregunta frecuente"
     else
