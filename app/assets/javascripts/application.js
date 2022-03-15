@@ -23,3 +23,14 @@ function equalizeHeights(selector) {
     });
     $(selector).height(maxHeight);
 }
+
+
+$(document).ready(function(){
+  // FAQ Toggles
+  $('a.toggle-trigger').click(function() {
+    $(this).next('.toggle-content').slideToggle(250);
+    $(this).parent().toggleClass('open');
+    return false;
+  });
+
+});

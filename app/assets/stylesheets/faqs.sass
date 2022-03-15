@@ -1,0 +1,64 @@
+@import colors.sass
+
+ul.faqs
+  counter-reset: section
+  list-style: none
+  padding: 0
+  li
+    transition: all 0.2s
+    border: 1px solid $gray_light
+    border-width: 1px 0    
+    font-size: 13px
+    margin-bottom: -1px
+    padding: 20px 30px
+    position: relative
+    &:not(.open)
+      &:hover
+        background-color: rgba($teal, 0.15)
+
+    &:before
+      counter-increment: section
+      content: counter(section)
+      color: #b9ada9
+      font-size: 18px
+      font-weight: 500
+      left: 0
+      line-height: 1
+      position: absolute
+      top: 20px
+    
+
+    a.toggle-trigger
+      color: $gray_dark
+      display: block
+      text-decoration: none
+      &:after
+        background: white url(/assets/icon-plus.svg) no-repeat center center
+        border-radius: 50%
+        border: 1px solid $gray_light
+        content: ""
+        height: 30px
+        position: absolute
+        right: 0
+        top: 20px
+        width: 30px
+      h2
+        font-size: 17px
+        font-weight: 400
+
+
+    .toggle-content
+      display: none
+
+    &.open
+      a.toggle-trigger
+        color: $teal
+        h2
+          font-weight: 500
+        &:after
+          background-image: url(/assets/icon-minus.svg)
+
+
+        
+        
+

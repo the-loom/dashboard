@@ -3,8 +3,29 @@
 
 - if policy(Faq).manage?
   = link_to 'Nueva pregunta frecuente', new_faq_path, class: 'btn btn-primary'
-  %br/
-  %br/
+  %br
+  %br
+
+%ul.faqs
+  %li
+    %a.toggle-trigger{:href=>"#faq1"}
+      %h2 Is Superbad the best movie of all time?
+    .toggle-content#faq1
+      %p Superbad has been crowned the funniest movie of all time, according to 'science'. The 2007 movie, starring the likes of Jonah Hill, Michael Cera and Seth Rogen, has long been a comedy favourite, but now it's officially earned the number one spot.
+
+  %li
+    %a.toggle-trigger{:href=>"#faq2"}
+      %h2 Is Superbad a true story?
+    .toggle-content#faq2
+      %p The film was written by Goldberg and Rogen during their teen years. It is loosely based on their own experience as seniors in Vancouver in the late 1990s, hence the character names Seth and Evan.
+
+  %li
+    %a.toggle-trigger{:href=>"#faq3"}
+      %h2 How much did Jonah Hill make in Superbad?
+    .toggle-content#faq3
+      %p According to the actor, the biggest residual check he got for Superbad was $10,033.34, followed by $4,241.80 and $5,760.89. "This is the largest residual check I ever had," he noted. "Overall. The film paid me, probably over time $100,000," he said.
+
+
 - if @faqs.empty?
   .alert.alert-info
     %p Aún no hay ninguna pregunta frecuente
