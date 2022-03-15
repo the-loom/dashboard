@@ -10,7 +10,7 @@
   .alert.alert-info
     %p Aún no hay ningún recurso
 - else
-  %table.resources.table.table-hover
+  %table.resources.table.table-hover.resources
     %thead
       %tr
         %th Votos
@@ -24,11 +24,11 @@
             %h4
               = resource.weighted_score
             .btn-group{ role: "group" }
-              = link_to upvote_resource_path(resource), method: :post, class: 'btn btn-outline-secondary btn-sm' + (current_user.voted_as_when_voted_for(resource) ? ' disabled' : ''), title: 'A favor' do
+              = link_to upvote_resource_path(resource), method: :post, class: 'btn btn-outline-secondary btn-sm upvote' + (current_user.voted_as_when_voted_for(resource) ? ' disabled' : ''), title: 'A favor' do
                 %i.far.fa-thumbs-up
-              = link_to downvote_resource_path(resource), method: :post, class: 'btn btn-outline-secondary btn-sm' + (current_user.voted_as_when_voted_for(resource) == false ? ' disabled' : ''), title: 'En contra' do
+              = link_to downvote_resource_path(resource), method: :post, class: 'btn btn-outline-secondary btn-sm downvote' + (current_user.voted_as_when_voted_for(resource) == false ? ' disabled' : ''), title: 'En contra' do
                 %i.far.fa-thumbs-down
-              = link_to unvote_resource_path(resource), method: :post, class: 'btn btn-outline-secondary btn-sm' + (current_user.voted_as_when_voted_for(resource).nil? ? ' disabled' : ''), title: 'Retirar voto' do
+              = link_to unvote_resource_path(resource), method: :post, class: 'btn btn-outline-secondary btn-sm remove' + (current_user.voted_as_when_voted_for(resource).nil? ? ' disabled' : ''), title: 'Retirar voto' do
                 %i.fas.fa-times
           %td
             = resource.resource_category.name

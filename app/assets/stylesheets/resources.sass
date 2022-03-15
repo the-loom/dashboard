@@ -1,0 +1,27 @@
+@import colors.sass
+
+
+table.resources
+  tbody
+    tr
+      &:nth-child(odd)
+        background: rgba($teal, 0.12)
+
+
+  a.btn
+    &.upvote, &.downvote, &.remove
+      background: url(/assets/upvote.svg) no-repeat center center
+      i
+        color: transparent
+      &:hover
+        background-color: $teal
+
+    &.downvote
+      background-image: url(/assets/downvote.svg)
+      &:hover
+        background-color: $flamingo
+
+    &.remove
+      background-image: url(/assets/remove.svg)
+      &:hover
+        background-color: $gray
