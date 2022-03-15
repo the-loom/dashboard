@@ -10,7 +10,7 @@
 .profile.light
   %div
     .pieContainer
-      .pieSlice{style: "background: conic-gradient(#ccb1f0 0.00% #{@team.points}%, transparent #{@team.points}% )"}
+      .pieSlice{style: "background: conic-gradient(#ccb1f0 0.00% #{@team.score * 10}%, transparent #{@team.points}% )"}
 
       .avatar-and-team
         = image_tag entity_avatar(@team), { alt: @team.name, class: 'avatar' }
