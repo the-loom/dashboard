@@ -10,8 +10,7 @@
 .profile.light
   %div
     .pieContainer
-      .hold
-        .pieSlice{style: "transform: rotate(#{@team.points*3.60}deg)"}
+      .pieSlice{style: "background: conic-gradient(#ccb1f0 0.00% #{@team.points}%, transparent #{@team.points}% )"}
 
       .avatar-and-team
         = image_tag entity_avatar(@team), { alt: @team.name, class: 'avatar' }

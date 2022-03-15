@@ -11,9 +11,7 @@
 <div class="profile">  
   <div>
     <div class="pieContainer">
-      <div class="hold">
-        <div class="pieSlice" style="transform: rotate(<%= @user.points*3.60 %>deg)"></div>
-      </div>
+      <div class="pieSlice" style="background: conic-gradient(#ccb1f0 0.00% <%= @user.points%>%, transparent <%= @user.points%>% )"></div>
       <div class="avatar-and-team">
         <%= image_tag entity_avatar(@user), { alt: @user.full_name, class: 'avatar' } %>
         <% if Course.current.on?(:teams) %>
