@@ -21,4 +21,9 @@ module ApplicationHelper
   def checkmark(bool_value)
     render "shared/checkmark", value: bool_value
   end
+
+  def tag_color_for_entity(entity)
+    colors = %w(default teal flamingo blue yellow tuscany)
+    colors[entity.id % 6]
+  end
 end

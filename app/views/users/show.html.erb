@@ -154,7 +154,7 @@
               </td>
               <% if Course.current.on?(:competences) && occurrence.event.competence_tag %>
                 <td>
-                  <label class="badge color">
+                  <label class="badge color <%= tag_color_for_entity(occurrence.event.competence_tag) %>">
                     <%= occurrence.event.competence_tag.name %>
                   </label>
                 </td>
