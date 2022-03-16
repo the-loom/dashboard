@@ -7,6 +7,8 @@ body
   font-family: 'Prompt', sans-serif  
   margin-top: 51px
   padding-bottom: 80px
+  min-height: 100vh
+  box-sizing: border-box
   > .container
     margin: 0
     max-width: 100%
@@ -20,6 +22,10 @@ body
     color: $teal
     &:hover
       color: darken($teal, 10%)
+
+.hidden-xs
+  @media (max-width: 767px)
+    display: none
 
 .post, .new-post
   border-radius: 20px
@@ -55,7 +61,7 @@ main.col-lg-10
 
   @media (min-width: 768px)    
     padding: 30px 20px
-    margin-left: 270px
+    margin-left: 200px
     box-sizing: border-box
   @media (min-width: 992px)
     padding: 40px 30px
@@ -75,20 +81,20 @@ nav#sidebar-menu
   background: $black !important
   color: white
   padding-top: 10px
-  @media (min-width: 768px)
-    padding-left: 20px
-    padding-right: 20px
-    width: 270px
-    position: fixed
-    height: calc(100% - 51px)
-    overflow-y: scroll
-    box-sizing: border-box
-    bottom: 0
+  bottom: 0
+  box-sizing: border-box
+  height: calc(100% - 51px)
+  overflow-y: scroll
+  padding-left: 20px
+  padding-right: 20px
+  position: fixed
+  @media (min-width: 768px)    
+    width: 200px
     &:after
       content: ""
       position: fixed
       top: 51px
-      left: 270px
+      left: 200px
       background: url(/assets/corner.svg) no-repeat left top
       pointer-events: none
       width: 30px
@@ -114,6 +120,8 @@ nav#sidebar-menu
       padding-bottom: 100%
       display: block
       margin-bottom: 10px
+      @media (min-width: 768px) and (max-width: 991px)
+        background-size: 60% auto
       &.dashboard
         background-image: url(/assets/icon-nav-dashboard.svg)
       &.account
@@ -148,6 +156,10 @@ nav#sidebar-menu
     gap: 30px
     text-align: center
     margin-bottom: 30px
+    @media (min-width: 768px) and (max-width: 991px)
+      gap: 20px
+      li a
+        font-size: 12px
 
   .footer
     padding: 25px 0 15px
@@ -158,6 +170,27 @@ nav#sidebar-menu
         margin-left: -20px
       @media (min-width: 992px)
         margin-left: -30px
+
+
+  @media (max-width: 767px)
+    // display: none
+    position: fixed
+    left: 0
+    width: 100%
+    z-index: 10
+    box-sizing: border-box
+    padding: 20px
+    ul.nav
+      gap: 20px
+      grid-template-columns: repeat(3, 1fr)
+      margin-bottom: 20px
+    .footer
+      padding: 0
+      display: flex
+      align-items: center
+      justify-content: space-between
+      .btn-suggestions
+        margin: 0 0 0 -20px
 
 .text-center
   text-align: center
@@ -206,4 +239,3 @@ nav#sidebar-menu
 
 
 
-      
