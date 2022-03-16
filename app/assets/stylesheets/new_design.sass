@@ -9,6 +9,10 @@ body
   padding-bottom: 80px
   min-height: 100vh
   box-sizing: border-box
+  &.no-scroll
+    overflow: hidden
+    -webkit-overflow-scrolling: auto
+    height: 100vh
   > .container
     margin: 0
     max-width: 100%
@@ -173,13 +177,14 @@ nav#sidebar-menu
 
 
   @media (max-width: 767px)
-    // display: none
+    display: none
     position: fixed
     left: 0
     width: 100%
     z-index: 10
     box-sizing: border-box
     padding: 20px
+    height: calc(100% - 40px)
     ul.nav
       gap: 20px
       grid-template-columns: repeat(3, 1fr)

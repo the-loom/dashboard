@@ -24,12 +24,33 @@ function equalizeHeights(selector) {
     $(selector).height(maxHeight);
 }
 
+navExpands = function () {
+  $('button.lines-button.x').addClass('close');
+  $('nav#sidebar-menu').show();
+  $('body').addClass('no-scroll');
+}
+navCollapses = function () {
+  $('button.lines-button.x').removeClass('close');
+  $('nav#sidebar-menu').hide();
+  $('body').removeClass('no-scroll');
+}
+
 
 $(document).ready(function(){
   // FAQ Toggles
   $('a.toggle-trigger').click(function() {
     $(this).next('.toggle-content').slideToggle(250);
     $(this).parent().toggleClass('open');
+    return false;
+  });
+
+  // Animated Hamburger Icon  
+  $('body').on('click', 'button.lines-button.x', function (){
+    if ( !$('button.lines-button').hasClass('close') ) {
+      navExpands();  
+    } else {
+      navCollapses();
+    }      
     return false;
   });
 

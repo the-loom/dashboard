@@ -3,6 +3,7 @@
 nav.navbar
   background-color: $black
   font-size: 14px
+  z-index: 11
   @media (min-width: 768px)
     padding: 0
   > .container
@@ -37,10 +38,19 @@ nav.navbar
     vertical-align: middle
     width: 20px
 
+  button.lines-button
+    display: none
+    position: absolute
+    right: 10px
+
   @media (min-width: 768px)
     li.nav-item
       &:nth-child(2), &:first-child
         padding-top: 6px
+
+  @media (max-width: 767px)
+    button.lines-button
+      display: block
 
   .avatar
     background: rgba(white, 0.1)

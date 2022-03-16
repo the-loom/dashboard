@@ -6,6 +6,7 @@
 *= require pagination
 *= require buttons
 *= require forms
+*= require animated-hamburguer-icon
 
 *= require profile
 *= require teachers

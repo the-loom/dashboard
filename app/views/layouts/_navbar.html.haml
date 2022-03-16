@@ -2,8 +2,11 @@
   .container
     = link_to root_path, class: 'logo' do
       = image_tag "loom.svg", { width: 110, height: 30, alt: 'Loom', title: 'Loom'}
-    %button.navbar-toggler{"aria-controls": "navbarNavDropdown", "aria-expanded": false, "aria-label": "Cambiar navegación", "data-bs-target": "#navbarNavDropdown", "data-bs-toggle": "collapse", type: "button"}
-      %span.navbar-toggler-icon
+    / %button.navbar-toggler{"aria-controls": "navbarNavDropdown", "aria-expanded": false, "aria-label": "Cambiar navegación", "data-bs-target": "#navbarNavDropdown", "data-bs-toggle": "collapse", type: "button"}
+    /   %span.navbar-toggler-icon
+    %button.lines-button.x{"aria-label" => "Toggle Navigation", :role => "button", :type => "button"}
+      %span.lines
+
     #navbarNavDropdown.collapse.navbar-collapse
       .navbar-right
         %ul.navbar-nav.d-md-none
