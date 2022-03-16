@@ -5,6 +5,7 @@
 *= require tabs
 *= require pagination
 *= require buttons
+*= require forms
 
 *= require profile
 *= require teachers
