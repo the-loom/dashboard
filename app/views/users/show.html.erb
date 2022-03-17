@@ -9,12 +9,10 @@
 <% end %>
 <!-- <div id="chart" data-score="<%= @user.score %>" data-xp="<%= @user.points %>"></div> -->
 
-<br><br>
-
 <div class="row student dashboard">
   <div class="col-lg-12 col-xl-6">
 
-    <% if @user.earnings.size = 0 %>
+    <% if @user.earnings.size == 0 %>
       <div class="text-center">
         <h1 class="trapezoid-title">Mi Perfil</h1>
       </div>

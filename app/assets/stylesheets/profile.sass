@@ -25,12 +25,14 @@
     transform: rotate(180deg)
 
 
-.profile
+.profile-summary
   background: $gray_dark
   border-radius: 18px
   color: white
   font-size: 12px
   padding: 50px 30px 30px
+  + .dashboard
+    margin-top: 35px
   @media (min-width: 768px)
     display: flex
     justify-content: space-between
@@ -113,11 +115,13 @@ ul.chartReferences
     width: 20px
 
 .student.dashboard
-  .profile // no badges
-    > div
+  .profile-summary // no badges
+    display: block
+    .pieContainer
       margin: 0 auto
-    .badges
-      display: none
+    .alert
+      margin-top: 15px
+      font-size: 16px
 
 
 
