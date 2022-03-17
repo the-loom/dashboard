@@ -169,6 +169,15 @@ nav#sidebar-menu
     .btn-suggestions
       margin: 0 0 40px 0
       padding: 8px 20px 8px 30px
+      // outline
+      color: $teal
+      background: transparent
+      border-left: 0
+      span.lightbulb
+        background-image: url(/assets/lightbulb-teal.svg)
+      &:hover
+        background-color: rgba($teal, 0.1)
+      // end outline
       @media (min-width: 768px)
         margin-left: -20px
       @media (min-width: 992px)
