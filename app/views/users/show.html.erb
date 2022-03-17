@@ -1,88 +1,11 @@
 
-<div class="text-center">
-  <h1 class="trapezoid-title">Mi Perfil</h1>
-</div>
+
 
 <% if @user.earnings.size > 0 %>
-<div class="profile">  
-  <div>
-
-    <%
-       colores = ['#FF0000', '#F6C600', '#60B044', '#0000FF']
-       if @user.score < 4
-         index = 0
-       elsif @user.score < 7
-         index = 1
-       elsif @user.score < 10
-         index = 2
-       else
-         index = 3
-       end
-       color = colores[index]
-    %>
-
-    <div class="pieContainer">
-      <div class="pieSlice" style="background: conic-gradient(<%= color %> 0.00% <%= @user.score * 10 %>%, transparent <%= @user.score * 10 %>% )"></div>
-      <div class="avatar-and-team">
-        <%= image_tag entity_avatar(@user), { alt: @user.full_name, class: 'avatar' } %>
-        <% if Course.current.on?(:teams) %>
-          <% team = @user.current_membership.team %>
-          <% if team.present? %>
-            <div class="team avatar">
-              <%= link_to team_profile_url(team.nickname) do %>
-                <%= image_tag entity_avatar(team), { alt: team.name, width: '56', height: '56' } %>
-              <% end %>
-            </div>
-          <% end %>
-        <% end %>
-      </div>
-    </div>
-
-    <div class="xp">
-      <%= @user.points %>
-      XP
-    </div>
+  <div class="text-center">
+    <h1 class="trapezoid-title">Mi Perfil</h1>
   </div>
-
-  <div class="badges">
-    <% if Course.current.on?(:badges) %>
-
-<!--       <legend>Emblemas
-        <small>(<%= @user.badges.size %>/<%= Badge.count %>)</small>
-      </legend> -->
-
-      <% if @user.earnings.size == 0 %>
-
-        <div class="alert alert-info">
-          <p>Aún no se te otorgaron emblemas...</p>
-        </div>
-
-      <% else %>
-        <ul>
-          <% @user.earnings.each do |earning| %>
-            <li>
-              <%= image_tag earning.badge.image, { alt: earning.badge.name, width: 100, height: 100, title: earning.badge.description} %>
-              <h3><%= earning.badge.name %></h3>            
-            </li>
-          <% end %>
-          
-          <% @missing_badges.each do |badge| %>
-            <li>
-              <%= image_tag "badges/generic.png", { alt: badge.name, width: 100, height: 100, title: badge.description } %>
-              <h3><%= badge.name %></h3>
-            </li>
-          <% end %>          
-        </ul>     
-
-
-          
-
-      <% end %>
-    <% end %>
-  </div>
-
-
-</div>
+  <%= render partial: 'shared/profile-summary' %>
 <% end %>
 <!-- <div id="chart" data-score="<%= @user.score %>" data-xp="<%= @user.points %>"></div> -->
 
@@ -90,6 +13,13 @@
 
 <div class="row student dashboard">
   <div class="col-lg-12 col-xl-6">
+
+    <% if @user.earnings.size = 0 %>
+      <div class="text-center">
+        <h1 class="trapezoid-title">Mi Perfil</h1>
+      </div>
+      <%= render partial: 'shared/profile-summary' %>
+    <% end %>
 
     <% if Course.current.on?(:lectures) %>
 
