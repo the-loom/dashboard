@@ -46,7 +46,7 @@ module TinyCards
       authorize TinyCards::Deck, :manage?
       @deck = TinyCards::Deck.find(params[:id])
 
-      if @deck.update_attributes(deck_params)
+      if @deck.update(deck_params)
         redirect_to tiny_cards_decks_path
         flash[:success] = "Se editó correctamente el mazo"
       else

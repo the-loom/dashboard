@@ -45,7 +45,7 @@ module TinyCards
       authorize TinyCards::Card, :manage?
       @card = TinyCards::Card.find(params[:id])
 
-      if @card.update_attributes(card_params)
+      if @card.update(card_params)
         redirect_to tiny_cards_deck_path(@card.deck)
         flash[:success] = "Se editó correctamente la carta"
       else

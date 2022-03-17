@@ -46,7 +46,7 @@ class TeamsController < ApplicationController
     @team = Course.current.teams.find(params[:id])
     authorize @team, :manage?
 
-    if @team.update_attributes(team_params)
+    if @team.update(team_params)
       redirect_to team_profile_path(@team.nickname)
       flash[:success] = "Se actualizó correctamente el equipo"
     else

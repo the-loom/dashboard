@@ -223,7 +223,7 @@ module PeerReview
       @challenge = PeerReview::Challenge.find(params[:id])
 
       @challenge.rubrics = build_rubrics
-      if @challenge.update_attributes(challenge_params)
+      if @challenge.update(challenge_params)
         redirect_to peer_review_challenges_path
         flash[:success] = "Se editó correctamente el desafío"
       else
@@ -250,7 +250,7 @@ module PeerReview
     def toggle
       authorize PeerReview::Challenge, :manage?
       challenge = PeerReview::Challenge.find(params[:id])
-      challenge.update_attributes(enabled: !challenge.enabled?)
+      challenge.update(enabled: !challenge.enabled?)
       redirect_to peer_review_challenges_path
     end
 

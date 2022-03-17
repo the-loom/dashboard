@@ -39,7 +39,7 @@ class ResourceCategoriesController < ApplicationController
     authorize Resource, :manage?
     @resource_category = ResourceCategory.find(params[:id])
 
-    if @resource_category.update_attributes(resource_params)
+    if @resource_category.update(resource_params)
       redirect_to resource_categories_path
       flash[:success] = "Se editó correctamente la categoría"
     else

@@ -38,7 +38,7 @@ class ReposController < ApplicationController
 
     if repo.parent == nil
       fork = AutomaticCorrection::Repo.find_or_create_by(parent: repo, author: current_user, user: current_user.github_username, name: repo.name, difficulty: repo.difficulty, description: repo.description)
-      fork.update_attributes(pending: true, git_url: "git@github.com:#{current_user.github_username}/#{repo.name}.git")
+      fork.update(pending: true, git_url: "git@github.com:#{current_user.github_username}/#{repo.name}.git")
     end
 
     redirect_to repo_path(user: repo.user, name: repo.name)

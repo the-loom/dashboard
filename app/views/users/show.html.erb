@@ -8,6 +8,7 @@
   <h1 class="trapezoid-title">Mi Perfil</h1>
 </div>
 
+<% if @user.earnings.size > 0 %>
 <div class="profile">  
   <div>
 
@@ -26,7 +27,7 @@
     %>
 
     <div class="pieContainer">
-      <div class="pieSlice" style="background: conic-gradient(<%= color %> 0.00% <%= @user.score * 10 %>%, transparent <%= @user.points%>% )"></div>
+      <div class="pieSlice" style="background: conic-gradient(<%= color %> 0.00% <%= @user.score * 10 %>%, transparent <%= @user.score * 10 %>% )"></div>
       <div class="avatar-and-team">
         <%= image_tag entity_avatar(@user), { alt: @user.full_name, class: 'avatar' } %>
         <% if Course.current.on?(:teams) %>
@@ -87,10 +88,8 @@
 
 
 </div>
-
+<% end %>
 <!-- <div id="chart" data-score="<%= @user.score %>" data-xp="<%= @user.points %>"></div> -->
-
-
 
 <br><br>
 

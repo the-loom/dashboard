@@ -42,8 +42,8 @@ module PeerReview
       @challenge = PeerReview::Challenge.find(params[:challenge_id])
       @solution = ::SolutionFinder.new(@challenge, current_user).find_solution
       authorize @solution, :solve?
-      @solution.update_attributes(solution_params)
-      @solution.update_attributes(author: current_user) # team challenges, steal authorship
+      @solution.update(solution_params)
+      @solution.update(author: current_user) # team challenges, steal authorship
 
       if @solution.valid?
         @solution.save

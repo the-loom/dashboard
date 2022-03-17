@@ -40,7 +40,7 @@ class CompetenceTagsController < ApplicationController
     authorize CompetenceTag, :manage?
     @competence_tag = CompetenceTag.find(params[:id])
 
-    if @competence_tag.update_attributes(competence_tag_params)
+    if @competence_tag.update(competence_tag_params)
       redirect_to competence_tags_path
       flash[:success] = "Se actualizó correctamente la competencia"
     else
