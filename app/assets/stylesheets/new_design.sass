@@ -21,10 +21,11 @@ body
 
 .breadcrumb
   font-size: 13px
-  a
-    color: $teal
-    &:hover
-      color: darken($teal, 10%)
+
+a
+  color: $teal_dark
+  &:hover
+    color: darken($teal_dark, 10%)
 
 .hidden-xs
   @media (max-width: 767px)
@@ -250,5 +251,10 @@ nav#sidebar-menu
   &.bg-info, &.bg-primary 
     background-color: $teal_dark !important
 
-
+.alert
+  &.alert-danger
+    a
+      color: $flamingo
+      &:hover
+        color: darken($flamingo, 10%)
 

@@ -38,10 +38,25 @@
     justify-content: space-between
     align-items: center
   &.light
-    background: #f1efee
+    // background: #f1efee
+    background: rgba($teal, 0.5)
     color: $black
     .pieContainer
       background: rgba(black, 0.06)
+
+
+  // no badges
+  .alert
+    margin-left: 30px
+    font-size: 15px
+    text-align: center
+    background: $black
+    color: white
+    border: 2px solid rgba(white, 0.45)
+    @media (max-width: 767px)
+      margin: 20px 0 0 0
+    p:last-child
+      margin-bottom: 0
     
 
   .avatar-and-team
@@ -113,15 +128,6 @@ ul.chartReferences
     height: 20px
     margin-right: 6px
     width: 20px
-
-.student.dashboard
-  .profile-summary // no badges
-    display: block
-    .pieContainer
-      margin: 0 auto
-    .alert
-      margin-top: 15px
-      font-size: 16px
 
 
 
