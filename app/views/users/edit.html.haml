@@ -15,22 +15,24 @@
     .col-md-6.col-lg-4
       = f.input :bios, label: 'Bio', as: :text, input_html: { maxlength: 200 }
       = f.button :submit, 'Actualizar', class: "btn-primary"
-%hr/
-%legend Perfiles registrados  
-%ul.identity_provider.row
-  - @user.identities.each do |identity|
-    %li.col-lg-12.col-xl-6
-      %h3= identity.provider      
-      .flex
-        .left
-          %img{height: "150", src: "#{identity.image}", width: "150", class: 'avatar'}
-        .right          
-          %dl
-            %dt Nombre
-            %dd= identity.full_name
-            %dt Apodo
-            %dd= identity.nickname
-            %dt Correo Electrónico
-            %dd= identity.email
-          = link_to change_identity_path(identity.id), class: 'btn btn-outline-primary' do
-            Utilizar esta identidad
+
+- if current_user.admin?
+  %hr/
+  %legend Perfiles registrados
+  %ul.identity_provider.row
+    - @user.identities.each do |identity|
+      %li.col-lg-12.col-xl-6
+        %h3= identity.provider
+        .flex
+          .left
+            %img{height: "150", src: "#{identity.image}", width: "150", class: 'avatar'}
+          .right
+            %dl
+              %dt Nombre
+              %dd= identity.full_name
+              %dt Apodo
+              %dd= identity.nickname
+              %dt Correo Electrónico
+              %dd= identity.email
+            = link_to change_identity_path(identity.id), class: 'btn btn-outline-primary' do
+              Utilizar esta identidad

@@ -12,9 +12,3 @@
               %span.role
                 Docente
               = teacher.bios
-
-= content_for :javascript do
-  :javascript
-    $(window).on('resize', function() {
-        equalizeHeights(".card");
-    }).resize();
