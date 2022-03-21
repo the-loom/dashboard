@@ -2,7 +2,7 @@
 
 
 body
-  background: url(/assets/squares.png) repeat-x center bottom
+  background: asset-url("/assets/squares.png") repeat-x center bottom
   background-size: 425px auto
   font-family: 'Prompt', sans-serif  
   padding-top: 51px
@@ -57,7 +57,7 @@ a
     display: inline-block
     height: 21px
     width: 14px
-    background: url(/assets/icon-pin.svg) repeat-x center center
+    background: asset-url("/assets/icon-pin.svg") repeat-x center center
     vertical-align: middle
 
 main.col-lg-10
@@ -99,7 +99,7 @@ nav#sidebar-menu
       position: fixed
       top: 51px
       left: 200px
-      background: url(/assets/corner.svg) no-repeat left top
+      background: asset-url("/assets/corner.svg") no-repeat left top
       pointer-events: none
       width: 30px
       height: 30px
@@ -118,7 +118,7 @@ nav#sidebar-menu
     padding: 0
 
     span.icon
-      background: rgba(white, 0.1) url(/assets/icon-nav-default.svg) no-repeat center center
+      background: rgba(white, 0.1) asset-url("/assets/icon-nav-default.svg") no-repeat center center
       border: 2px solid rgba(white, 0.2)
       border-radius: 10px
       padding-bottom: 100%
@@ -127,17 +127,17 @@ nav#sidebar-menu
       @media (min-width: 768px) and (max-width: 991px)
         background-size: 60% auto
       &.dashboard
-        background-image: url(/assets/icon-nav-dashboard.svg)
+        background-image: asset-url("/assets/icon-nav-dashboard.svg")
       &.account
-        background-image: url(/assets/icon-nav-account.svg)
+        background-image: asset-url("/assets/icon-nav-account.svg")
       &.team
-        background-image: url(/assets/icon-nav-team.svg)
+        background-image: asset-url("/assets/icon-nav-team.svg")
       &.teachers
-        background-image: url(/assets/icon-nav-teachers.svg)
+        background-image: asset-url("/assets/icon-nav-teachers.svg")
       &.resources
-        background-image: url(/assets/icon-nav-resources.svg)
+        background-image: asset-url("/assets/icon-nav-resources.svg")
       &.faq
-        background-image: url(/assets/icon-nav-faq.svg)
+        background-image: asset-url("/assets/icon-nav-faq.svg")
     &:hover
       span.icon
         border-color: $teal
@@ -175,7 +175,7 @@ nav#sidebar-menu
       background: transparent
       border-left: 0
       span.lightbulb
-        background-image: url(/assets/lightbulb-teal.svg)
+        background-image: asset-url("/assets/lightbulb-teal.svg")
       &:hover
         background-color: rgba($teal, 0.1)
       // end outline
@@ -224,7 +224,7 @@ nav#sidebar-menu
   transform: translateY(50%)
   &:before, &:after
     content: ""
-    background: url(/assets/trapezoid-left.svg) no-repeat left top
+    background: asset-url("/assets/trapezoid-left.svg") no-repeat left top
     width: 25px
     height: 50px
     display: block
@@ -234,14 +234,14 @@ nav#sidebar-menu
     left: -25px
   &:after
     right: -25px
-    background: url(/assets/trapezoid-right.svg) no-repeat right top
+    background: asset-url("/assets/trapezoid-right.svg") no-repeat right top
 
   &.teal
     background: $teal
     &:before
-      background-image: url(/assets/trapezoid-left-teal.svg)
+      background-image: asset-url("/assets/trapezoid-left-teal.svg")
     &:after
-      background-image: url(/assets/trapezoid-right-teal.svg)
+      background-image: asset-url("/assets/trapezoid-right-teal.svg")
 
 
 .badge

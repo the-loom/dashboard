@@ -9,18 +9,18 @@ table.resources
 
   a.btn
     &.upvote, &.downvote, &.remove
-      background: url(/assets/upvote.svg) no-repeat center center
+      background: asset-url("/assets/upvote.svg") no-repeat center center
       i
         color: transparent
       &:hover
         background-color: $teal
 
     &.downvote
-      background-image: url(/assets/downvote.svg)
+      background-image: asset-url("/assets/downvote.svg")
       &:hover
         background-color: $flamingo
 
     &.remove
-      background-image: url(/assets/remove.svg)
+      background-image: asset-url("/assets/remove.svg")
       &:hover
         background-color: $gray
