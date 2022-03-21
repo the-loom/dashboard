@@ -1,0 +1,37 @@
+@charset "UTF-8";
+/* line 6, app/assets/stylesheets/pagination.sass */
+ul.pagination li.page-item a {
+  color: #272324;
+  font-size: 14px;
+  padding: 5px 12px;
+}
+
+/* line 11, app/assets/stylesheets/pagination.sass */
+ul.pagination li.page-item.active a {
+  background: #3db79a;
+  border-color: #3db79a;
+}
+
+/* line 16, app/assets/stylesheets/pagination.sass */
+ul.pagination li.previous a, ul.pagination li.next a {
+  border: 0 none;
+  color: #3db79a;
+  font-size: 12px;
+  margin-left: 0 !important;
+  padding: 7px 12px 8px;
+}
+
+/* line 23, app/assets/stylesheets/pagination.sass */
+ul.pagination li.previous.disabled a, ul.pagination li.next.disabled a {
+  color: #939598;
+}
+
+/* line 26, app/assets/stylesheets/pagination.sass */
+ul.pagination li.previous.previous a:before, ul.pagination li.next.previous a:before {
+  content: "« ";
+}
+
+/* line 29, app/assets/stylesheets/pagination.sass */
+ul.pagination li.previous.next a:after, ul.pagination li.next.next a:after {
+  content: " »";
+}

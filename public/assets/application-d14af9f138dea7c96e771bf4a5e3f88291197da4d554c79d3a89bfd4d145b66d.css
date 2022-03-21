@@ -1,0 +1,1986 @@
+/* line 4, app/assets/stylesheets/new_design.sass */
+body {
+  background: url(/assets/squares.png) repeat-x center bottom;
+  background-size: 425px auto;
+  font-family: 'Prompt', sans-serif;
+  padding-top: 51px;
+  padding-bottom: 80px;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* line 12, app/assets/stylesheets/new_design.sass */
+body.no-scroll {
+  overflow: hidden;
+  -webkit-overflow-scrolling: auto;
+  height: 100vh;
+}
+
+/* line 16, app/assets/stylesheets/new_design.sass */
+body > .container {
+  margin: 0;
+  max-width: 100%;
+}
+
+@media (min-width: 1600px) {
+  /* line 16, app/assets/stylesheets/new_design.sass */
+  body > .container {
+    max-width: 1600px;
+  }
+}
+
+/* line 22, app/assets/stylesheets/new_design.sass */
+.breadcrumb {
+  font-size: 13px;
+}
+
+/* line 25, app/assets/stylesheets/new_design.sass */
+a {
+  color: #3db79a;
+}
+
+/* line 27, app/assets/stylesheets/new_design.sass */
+a:hover {
+  color: #30917a;
+}
+
+@media (max-width: 767px) {
+  /* line 30, app/assets/stylesheets/new_design.sass */
+  .hidden-xs {
+    display: none;
+  }
+}
+
+/* line 34, app/assets/stylesheets/new_design.sass */
+.post, .new-post {
+  border-radius: 20px;
+  background-color: #EEE;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+/* line 40, app/assets/stylesheets/new_design.sass */
+.post textarea, .new-post textarea {
+  font-size: 16px;
+}
+
+/* line 44, app/assets/stylesheets/new_design.sass */
+.post.pinned {
+  background: rgba(137, 215, 198, 0.3);
+}
+
+/* line 47, app/assets/stylesheets/new_design.sass */
+.post img {
+  border-radius: 50%;
+  border: 4px solid #89d7c6;
+  height: auto;
+  width: 70px;
+}
+
+/* line 53, app/assets/stylesheets/new_design.sass */
+.post .time {
+  font-size: 12px;
+}
+
+/* line 56, app/assets/stylesheets/new_design.sass */
+.post .icon-pin {
+  display: inline-block;
+  height: 21px;
+  width: 14px;
+  background: url(/assets/icon-pin.svg) repeat-x center center;
+  vertical-align: middle;
+}
+
+/* line 63, app/assets/stylesheets/new_design.sass */
+main.col-lg-10 {
+  flex: 1;
+}
+
+@media (min-width: 768px) {
+  /* line 63, app/assets/stylesheets/new_design.sass */
+  main.col-lg-10 {
+    padding: 30px 20px;
+    margin-left: 200px;
+    box-sizing: border-box;
+  }
+}
+
+@media (min-width: 992px) {
+  /* line 63, app/assets/stylesheets/new_design.sass */
+  main.col-lg-10 {
+    padding: 40px 30px;
+    margin-left: 290px;
+  }
+}
+
+/* line 74, app/assets/stylesheets/new_design.sass */
+legend {
+  -webkit-font-smoothing: antialiased;
+  font-weight: 500;
+  margin-bottom: 25px;
+}
+
+/* line 78, app/assets/stylesheets/new_design.sass */
+legend small {
+  font-weight: 400;
+}
+
+/* line 81, app/assets/stylesheets/new_design.sass */
+table + legend {
+  margin-top: 40px;
+}
+
+/* line 84, app/assets/stylesheets/new_design.sass */
+nav#sidebar-menu {
+  background: #272324 !important;
+  color: white;
+  padding-top: 10px;
+  bottom: 0;
+  box-sizing: border-box;
+  height: calc(100% - 51px);
+  overflow-y: scroll;
+  padding-left: 20px;
+  padding-right: 20px;
+  position: fixed;
+}
+
+@media (min-width: 768px) {
+  /* line 84, app/assets/stylesheets/new_design.sass */
+  nav#sidebar-menu {
+    width: 200px;
+  }
+  /* line 97, app/assets/stylesheets/new_design.sass */
+  nav#sidebar-menu:after {
+    content: "";
+    position: fixed;
+    top: 51px;
+    left: 200px;
+    background: url(/assets/corner.svg) no-repeat left top;
+    pointer-events: none;
+    width: 30px;
+    height: 30px;
+    z-index: 2;
+  }
+}
+
+@media (min-width: 992px) {
+  /* line 84, app/assets/stylesheets/new_design.sass */
+  nav#sidebar-menu {
+    width: 290px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+  /* line 112, app/assets/stylesheets/new_design.sass */
+  nav#sidebar-menu:after {
+    left: 290px;
+  }
+}
+
+/* line 114, app/assets/stylesheets/new_design.sass */
+nav#sidebar-menu a:not(.btn) {
+  color: white;
+  font-size: 13px;
+  line-height: 1.25;
+  padding: 0;
+}
+
+/* line 120, app/assets/stylesheets/new_design.sass */
+nav#sidebar-menu a:not(.btn) span.icon {
+  background: rgba(255, 255, 255, 0.1) url(/assets/icon-nav-default.svg) no-repeat center center;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding-bottom: 100%;
+  display: block;
+  margin-bottom: 10px;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  /* line 120, app/assets/stylesheets/new_design.sass */
+  nav#sidebar-menu a:not(.btn) span.icon {
+    background-size: 60% auto;
+  }
+}
+
+/* line 129, app/assets/stylesheets/new_design.sass */
+nav#sidebar-menu a:not(.btn) span.icon.dashboard {
+  background-image: url(/assets/icon-nav-dashboard.svg);
+}
+
+/* line 131, app/assets/stylesheets/new_design.sass */
+nav#sidebar-menu a:not(.btn) span.icon.account {
+  background-image: url(/assets/icon-nav-account.svg);
+}
+
+/* line 133, app/assets/stylesheets/new_design.sass */
+nav#sidebar-menu a:not(.btn) span.icon.team {
+  background-image: url(/assets/icon-nav-team.svg);
+}
+
+/* line 135, app/assets/stylesheets/new_design.sass */
+nav#sidebar-menu a:not(.btn) span.icon.teachers {
+  background-image: url(/assets/icon-nav-teachers.svg);
+}
+
+/* line 137, app/assets/stylesheets/new_design.sass */
+nav#sidebar-menu a:not(.btn) span.icon.resources {
+  background-image: url(/assets/icon-nav-resources.svg);
+}
+
+/* line 139, app/assets/stylesheets/new_design.sass */
+nav#sidebar-menu a:not(.btn) span.icon.faq {
+  background-image: url(/assets/icon-nav-faq.svg);
+}
+
+/* line 142, app/assets/stylesheets/new_design.sass */
+nav#sidebar-menu a:not(.btn):hover span.icon {
+  border-color: #89d7c6;
+}
+
+/* line 146, app/assets/stylesheets/new_design.sass */
+nav#sidebar-menu li.active a {
+  color: #89d7c6;
+}
+
+/* line 148, app/assets/stylesheets/new_design.sass */
+nav#sidebar-menu li.active a span.icon {
+  background-color: rgba(137, 215, 198, 0.4);
+  border-color: #89d7c6;
+}
+
+/* line 152, app/assets/stylesheets/new_design.sass */
+nav#sidebar-menu .sidebar-heading {
+  color: white;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+/* line 157, app/assets/stylesheets/new_design.sass */
+nav#sidebar-menu ul.nav {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  /* line 157, app/assets/stylesheets/new_design.sass */
+  nav#sidebar-menu ul.nav {
+    gap: 20px;
+  }
+  /* line 165, app/assets/stylesheets/new_design.sass */
+  nav#sidebar-menu ul.nav li a {
+    font-size: 12px;
+  }
+}
+
+/* line 168, app/assets/stylesheets/new_design.sass */
+nav#sidebar-menu .footer {
+  padding: 25px 0 15px;
+}
+
+/* line 170, app/assets/stylesheets/new_design.sass */
+nav#sidebar-menu .footer .btn-suggestions {
+  margin: 0 0 40px 0;
+  padding: 8px 20px 8px 30px;
+  color: #89d7c6;
+  background: transparent;
+  border-left: 0;
+}
+
+/* line 177, app/assets/stylesheets/new_design.sass */
+nav#sidebar-menu .footer .btn-suggestions span.lightbulb {
+  background-image: url(/assets/lightbulb-teal.svg);
+}
+
+/* line 179, app/assets/stylesheets/new_design.sass */
+nav#sidebar-menu .footer .btn-suggestions:hover {
+  background-color: rgba(137, 215, 198, 0.1);
+}
+
+@media (min-width: 768px) {
+  /* line 170, app/assets/stylesheets/new_design.sass */
+  nav#sidebar-menu .footer .btn-suggestions {
+    margin-left: -20px;
+  }
+}
+
+@media (min-width: 992px) {
+  /* line 170, app/assets/stylesheets/new_design.sass */
+  nav#sidebar-menu .footer .btn-suggestions {
+    margin-left: -30px;
+  }
+}
+
+@media (max-width: 767px) {
+  /* line 84, app/assets/stylesheets/new_design.sass */
+  nav#sidebar-menu {
+    display: none;
+    position: fixed;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    box-sizing: border-box;
+    padding: 20px;
+    height: calc(100% - 40px);
+  }
+  /* line 197, app/assets/stylesheets/new_design.sass */
+  nav#sidebar-menu ul.nav {
+    gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    margin-bottom: 20px;
+  }
+  /* line 201, app/assets/stylesheets/new_design.sass */
+  nav#sidebar-menu .footer {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  /* line 206, app/assets/stylesheets/new_design.sass */
+  nav#sidebar-menu .footer .btn-suggestions {
+    margin: 0 0 0 -20px;
+  }
+}
+
+/* line 209, app/assets/stylesheets/new_design.sass */
+.text-center {
+  text-align: center;
+}
+
+/* line 212, app/assets/stylesheets/new_design.sass */
+.trapezoid-title {
+  background: #272324;
+  color: white;
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 400;
+  margin: 0;
+  padding: 0 50px;
+  height: 50px;
+  line-height: 50px;
+  text-transform: uppercase;
+  min-width: 185px;
+  transform: translateY(50%);
+}
+
+/* line 225, app/assets/stylesheets/new_design.sass */
+.trapezoid-title:before, .trapezoid-title:after {
+  content: "";
+  background: url(/assets/trapezoid-left.svg) no-repeat left top;
+  width: 25px;
+  height: 50px;
+  display: block;
+  top: 0;
+  position: absolute;
+}
+
+/* line 233, app/assets/stylesheets/new_design.sass */
+.trapezoid-title:before {
+  left: -25px;
+}
+
+/* line 235, app/assets/stylesheets/new_design.sass */
+.trapezoid-title:after {
+  right: -25px;
+  background: url(/assets/trapezoid-right.svg) no-repeat right top;
+}
+
+/* line 239, app/assets/stylesheets/new_design.sass */
+.trapezoid-title.teal {
+  background: #89d7c6;
+}
+
+/* line 241, app/assets/stylesheets/new_design.sass */
+.trapezoid-title.teal:before {
+  background-image: url(/assets/trapezoid-left-teal.svg);
+}
+
+/* line 243, app/assets/stylesheets/new_design.sass */
+.trapezoid-title.teal:after {
+  background-image: url(/assets/trapezoid-right-teal.svg);
+}
+
+/* line 247, app/assets/stylesheets/new_design.sass */
+.badge {
+  border-radius: 2px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* line 251, app/assets/stylesheets/new_design.sass */
+.badge.bg-info, .badge.bg-primary {
+  background-color: #3db79a !important;
+}
+
+/* line 256, app/assets/stylesheets/new_design.sass */
+.alert.alert-danger a {
+  color: #F46936;
+}
+
+/* line 258, app/assets/stylesheets/new_design.sass */
+.alert.alert-danger a:hover {
+  color: #ea480d;
+}
+/* line 3, app/assets/stylesheets/header.sass */
+nav.navbar {
+  background-color: #272324;
+  font-size: 14px;
+  z-index: 11;
+  min-height: 51px;
+}
+
+@media (min-width: 768px) {
+  /* line 3, app/assets/stylesheets/header.sass */
+  nav.navbar {
+    padding: 0;
+  }
+}
+
+/* line 10, app/assets/stylesheets/header.sass */
+nav.navbar > .container {
+  margin-left: 0;
+}
+
+@media (min-width: 768px) {
+  /* line 10, app/assets/stylesheets/header.sass */
+  nav.navbar > .container {
+    padding-left: 20px;
+  }
+}
+
+@media (min-width: 992px) {
+  /* line 10, app/assets/stylesheets/header.sass */
+  nav.navbar > .container {
+    padding-left: 30px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1600px) {
+  /* line 10, app/assets/stylesheets/header.sass */
+  nav.navbar > .container {
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 1600px) {
+  /* line 10, app/assets/stylesheets/header.sass */
+  nav.navbar > .container {
+    max-width: 1600px;
+  }
+}
+
+/* line 22, app/assets/stylesheets/header.sass */
+nav.navbar a {
+  color: white;
+}
+
+/* line 24, app/assets/stylesheets/header.sass */
+nav.navbar a:hover, nav.navbar a:active, nav.navbar a:focus {
+  color: #89d7c6;
+}
+
+/* line 27, app/assets/stylesheets/header.sass */
+nav.navbar a.logo {
+  width: 110px;
+  height: 30px;
+  display: inline-block;
+  background: url(/assets/loom-hover.svg) no-repeat center top;
+}
+
+/* line 32, app/assets/stylesheets/header.sass */
+nav.navbar a.logo:hover {
+  background-position: center -30px;
+}
+
+/* line 35, app/assets/stylesheets/header.sass */
+nav.navbar .dropdown-menu {
+  font-size: 13px;
+  max-height: calc(100vh - 100px);
+  overflow-y: scroll;
+}
+
+/* line 39, app/assets/stylesheets/header.sass */
+nav.navbar .dropdown-menu a {
+  color: #272324;
+}
+
+/* line 42, app/assets/stylesheets/header.sass */
+nav.navbar .divider:not(:last-child) {
+  border-right: 1px solid rgba(255, 255, 255, 0.75);
+  margin: 12px 5px;
+}
+
+/* line 46, app/assets/stylesheets/header.sass */
+nav.navbar .envelope {
+  background: url(/assets/icon-envelope.svg) no-repeat center center;
+  display: inline-block;
+  height: 18px;
+  vertical-align: middle;
+  width: 20px;
+}
+
+/* line 53, app/assets/stylesheets/header.sass */
+nav.navbar button.lines-button {
+  display: none;
+  position: absolute;
+  right: 10px;
+}
+
+@media (min-width: 768px) {
+  /* line 60, app/assets/stylesheets/header.sass */
+  nav.navbar li.nav-item:nth-child(2), nav.navbar li.nav-item:first-child {
+    padding-top: 6px;
+  }
+}
+
+@media (max-width: 767px) {
+  /* line 64, app/assets/stylesheets/header.sass */
+  nav.navbar button.lines-button {
+    display: block;
+  }
+}
+
+/* line 67, app/assets/stylesheets/header.sass */
+nav.navbar .avatar {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border: 0 none;
+  display: inline-block;
+  height: 35px;
+  width: 35px;
+}
+/* line 5, app/assets/stylesheets/tabs.sass */
+.nav-tabs li.nav-item {
+  font-size: 15px;
+}
+
+/* line 7, app/assets/stylesheets/tabs.sass */
+.nav-tabs li.nav-item a.nav-link {
+  color: #939598;
+}
+
+/* line 9, app/assets/stylesheets/tabs.sass */
+.nav-tabs li.nav-item a.nav-link.active {
+  border: 0 none;
+  border-bottom: 3px solid #272324;
+  color: #272324;
+  font-weight: 500;
+}
+@charset "UTF-8";
+/* line 6, app/assets/stylesheets/pagination.sass */
+ul.pagination li.page-item a {
+  color: #272324;
+  font-size: 14px;
+  padding: 5px 12px;
+}
+
+/* line 11, app/assets/stylesheets/pagination.sass */
+ul.pagination li.page-item.active a {
+  background: #3db79a;
+  border-color: #3db79a;
+}
+
+/* line 16, app/assets/stylesheets/pagination.sass */
+ul.pagination li.previous a, ul.pagination li.next a {
+  border: 0 none;
+  color: #3db79a;
+  font-size: 12px;
+  margin-left: 0 !important;
+  padding: 7px 12px 8px;
+}
+
+/* line 23, app/assets/stylesheets/pagination.sass */
+ul.pagination li.previous.disabled a, ul.pagination li.next.disabled a {
+  color: #939598;
+}
+
+/* line 26, app/assets/stylesheets/pagination.sass */
+ul.pagination li.previous.previous a:before, ul.pagination li.next.previous a:before {
+  content: "« ";
+}
+
+/* line 29, app/assets/stylesheets/pagination.sass */
+ul.pagination li.previous.next a:after, ul.pagination li.next.next a:after {
+  content: " »";
+}
+/* line 3, app/assets/stylesheets/buttons.sass */
+.btn {
+  border-radius: 3px;
+  transition: all 0.2s;
+}
+
+/* line 6, app/assets/stylesheets/buttons.sass */
+.btn.btn-primary, .btn.btn-secondary {
+  background: #3db79a;
+  color: white;
+  border-color: #3db79a;
+}
+
+/* line 10, app/assets/stylesheets/buttons.sass */
+.btn.btn-primary:hover, .btn.btn-secondary:hover {
+  background-color: #76d1bd;
+  outline: 3px solid rgba(137, 215, 198, 0.5);
+}
+
+/* line 13, app/assets/stylesheets/buttons.sass */
+.btn.btn-secondary {
+  background: #ccb1f0;
+  border-color: #ccb1f0;
+}
+
+/* line 16, app/assets/stylesheets/buttons.sass */
+.btn.btn-secondary:hover {
+  outline: 3px solid rgba(204, 177, 240, 0.5);
+  background-color: #be9cec;
+}
+
+/* line 19, app/assets/stylesheets/buttons.sass */
+.btn.btn-sm {
+  font-size: 13px;
+}
+
+/* line 22, app/assets/stylesheets/buttons.sass */
+.btn.btn-outline-primary {
+  background: white;
+  color: #3db79a;
+  border-color: #3db79a;
+}
+
+/* line 26, app/assets/stylesheets/buttons.sass */
+.btn.btn-outline-primary:hover {
+  background: rgba(137, 215, 198, 0.15);
+  outline: 3px solid rgba(137, 215, 198, 0.5);
+}
+/* line 3, app/assets/stylesheets/forms.sass */
+.form-control {
+  color: #272324;
+  font-size: 14px;
+}
+
+/* line 6, app/assets/stylesheets/forms.sass */
+.form-control:focus {
+  box-shadow: 0 0 0 0.25rem rgba(204, 177, 240, 0.5);
+  border-color: #ccb1f0;
+}
+
+/* line 9, app/assets/stylesheets/forms.sass */
+.form-control.is-valid {
+  border-color: #89d7c6;
+  background-image: url(/assets/icon-checkmark.svg);
+  background-size: 24px auto;
+}
+
+/* line 13, app/assets/stylesheets/forms.sass */
+.form-control.is-valid:focus {
+  box-shadow: 0 0 0 0.25rem rgba(137, 215, 198, 0.5);
+}
+
+/* line 18, app/assets/stylesheets/forms.sass */
+textarea {
+  min-height: 110px !important;
+}
+
+/* line 21, app/assets/stylesheets/forms.sass */
+label {
+  color: #272324;
+  display: block;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+/* line 2, app/assets/stylesheets/animated-hamburguer-icon.sass */
+button.lines-button {
+  -webkit-appearance: none;
+  background: transparent;
+  border: 0 none;
+  outline: 0 none;
+}
+
+/* line 20, app/assets/stylesheets/animated-hamburguer-icon.sass */
+button .lines {
+  background: white;
+}
+
+/* line 22, app/assets/stylesheets/animated-hamburguer-icon.sass */
+button .lines:before, button .lines:after {
+  background: white;
+}
+
+/* line 25, app/assets/stylesheets/animated-hamburguer-icon.sass */
+.lines {
+  vertical-align: middle;
+  background: white;
+  border-radius: 0.0833333333rem;
+  display: inline-block;
+  height: 0.125rem;
+  transition: 0.3s;
+  width: 1.25rem;
+  position: relative;
+}
+
+/* line 31, app/assets/stylesheets/animated-hamburguer-icon.sass */
+.lines:before, .lines:after {
+  background: white;
+  border-radius: 0.0833333333rem;
+  display: inline-block;
+  height: 0.125rem;
+  transition: 0.3s;
+  width: 1.25rem;
+  position: absolute;
+  left: 0;
+  content: '';
+  transform-origin: 0.0892857143rem center;
+  -webkit-transform-origin: 0.0892857143rem center;
+}
+
+/* line 38, app/assets/stylesheets/animated-hamburguer-icon.sass */
+.lines:before {
+  top: 0.3125rem;
+}
+
+/* line 40, app/assets/stylesheets/animated-hamburguer-icon.sass */
+.lines:after {
+  top: -0.3125rem;
+}
+
+/* line 43, app/assets/stylesheets/animated-hamburguer-icon.sass */
+.lines-button {
+  border-radius: 0.1785714286rem;
+  cursor: pointer;
+  display: inline-block;
+  padding: 0.4385964912rem;
+  padding-bottom: 0.625rem;
+  transition: all 0.3s;
+  user-select: none;
+}
+
+/* line 51, app/assets/stylesheets/animated-hamburguer-icon.sass */
+.lines-button:hover {
+  opacity: 1;
+}
+
+/* line 53, app/assets/stylesheets/animated-hamburguer-icon.sass */
+.lines-button:active {
+  background: rgba(0, 0, 0, 0.1);
+  transition: 0;
+}
+
+/* line 57, app/assets/stylesheets/animated-hamburguer-icon.sass */
+.lines-button.x.close .lines {
+  background: transparent;
+}
+
+/* line 61, app/assets/stylesheets/animated-hamburguer-icon.sass */
+.lines-button.x.close .lines:before, .lines-button.x.close .lines:after {
+  transform-origin: 50% 50%;
+  -webkit-transform-origin: 50% 50%;
+  top: 0;
+  width: 1.25rem;
+}
+
+/* line 67, app/assets/stylesheets/animated-hamburguer-icon.sass */
+.lines-button.x.close .lines:before {
+  transform: rotate3d(0, 0, 1, 45deg);
+}
+
+/* line 70, app/assets/stylesheets/animated-hamburguer-icon.sass */
+.lines-button.x.close .lines:after {
+  transform: rotate3d(0, 0, 1, -45deg);
+}
+/* line 4, app/assets/stylesheets/profile.sass */
+.pieContainer {
+  height: 198px;
+  width: 198px;
+  position: relative;
+  background: #e3dedd;
+  border-radius: 50%;
+}
+
+@media (max-width: 767px) {
+  /* line 4, app/assets/stylesheets/profile.sass */
+  .pieContainer {
+    margin: 0 auto;
+  }
+}
+
+/* line 13, app/assets/stylesheets/profile.sass */
+.pieContainer .avatar-and-team {
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  z-index: 2;
+}
+
+/* line 19, app/assets/stylesheets/profile.sass */
+.pieContainer .pieSlice {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #ccb1f0;
+  transform: rotate(180deg);
+}
+
+/* line 28, app/assets/stylesheets/profile.sass */
+.profile-summary {
+  background: #3d393a;
+  border-radius: 18px;
+  color: white;
+  font-size: 12px;
+  padding: 50px 30px 30px;
+}
+
+/* line 34, app/assets/stylesheets/profile.sass */
+.profile-summary + .dashboard {
+  margin-top: 35px;
+}
+
+@media (min-width: 768px) {
+  /* line 28, app/assets/stylesheets/profile.sass */
+  .profile-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+/* line 40, app/assets/stylesheets/profile.sass */
+.profile-summary.light {
+  background: rgba(137, 215, 198, 0.5);
+  color: #272324;
+}
+
+/* line 44, app/assets/stylesheets/profile.sass */
+.profile-summary.light .pieContainer {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+/* line 49, app/assets/stylesheets/profile.sass */
+.profile-summary .alert {
+  margin-left: 30px;
+  font-size: 15px;
+  text-align: center;
+  background: #272324;
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.45);
+}
+
+@media (max-width: 767px) {
+  /* line 49, app/assets/stylesheets/profile.sass */
+  .profile-summary .alert {
+    margin: 20px 0 0 0;
+  }
+}
+
+/* line 58, app/assets/stylesheets/profile.sass */
+.profile-summary .alert p:last-child {
+  margin-bottom: 0;
+}
+
+/* line 62, app/assets/stylesheets/profile.sass */
+.profile-summary .avatar-and-team {
+  max-height: 100%;
+}
+
+/* line 64, app/assets/stylesheets/profile.sass */
+.profile-summary .avatar-and-team .avatar {
+  background: #3d393a;
+  border: 3px solid #e3dedd;
+}
+
+/* line 67, app/assets/stylesheets/profile.sass */
+.profile-summary .avatar-and-team .avatar.team {
+  border-width: 2px;
+  left: -20px;
+  width: 56px;
+  height: 56px;
+}
+
+/* line 73, app/assets/stylesheets/profile.sass */
+.profile-summary .xp {
+  font-size: 16px;
+  margin-top: 8px;
+  text-align: center;
+}
+
+/* line 78, app/assets/stylesheets/profile.sass */
+.profile-summary .badges {
+  flex: 2;
+}
+
+/* line 80, app/assets/stylesheets/profile.sass */
+.profile-summary .badges ul {
+  display: flex;
+  list-style: none;
+  align-items: flex-start;
+  padding: 0;
+  margin: 0 0 0 25px;
+}
+
+@media (max-width: 1024px) {
+  /* line 80, app/assets/stylesheets/profile.sass */
+  .profile-summary .badges ul {
+    flex-wrap: wrap;
+  }
+}
+
+/* line 89, app/assets/stylesheets/profile.sass */
+.profile-summary .badges ul li {
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+/* line 93, app/assets/stylesheets/profile.sass */
+.profile-summary .badges ul li:not(:last-child) {
+  margin-right: 20px;
+}
+
+/* line 95, app/assets/stylesheets/profile.sass */
+.profile-summary .badges ul li img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* line 99, app/assets/stylesheets/profile.sass */
+.profile-summary .badges ul li h3 {
+  font-size: 12px;
+  font-weight: 400;
+  margin-top: 20px;
+}
+
+/* line 105, app/assets/stylesheets/profile.sass */
+.profile-summary form {
+  flex: 2;
+}
+
+@media (min-width: 768px) {
+  /* line 105, app/assets/stylesheets/profile.sass */
+  .profile-summary form {
+    margin-left: 30px;
+  }
+}
+
+@media (min-width: 1220px) {
+  /* line 105, app/assets/stylesheets/profile.sass */
+  .profile-summary form {
+    display: flex;
+    align-items: flex-start;
+  }
+  /* line 112, app/assets/stylesheets/profile.sass */
+  .profile-summary form .team_name, .profile-summary form .team_avatar {
+    margin: 0 24px 0 0 !important;
+  }
+  /* line 115, app/assets/stylesheets/profile.sass */
+  .profile-summary form .btn {
+    margin-top: 30px;
+  }
+}
+
+/* line 119, app/assets/stylesheets/profile.sass */
+ul.chartReferences {
+  list-style: none;
+  font-size: 12px;
+}
+
+/* line 122, app/assets/stylesheets/profile.sass */
+ul.chartReferences li {
+  margin-bottom: 10px;
+}
+
+/* line 124, app/assets/stylesheets/profile.sass */
+ul.chartReferences span {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* line 127, app/assets/stylesheets/profile.sass */
+ul.chartReferences .sample {
+  height: 20px;
+  margin-right: 6px;
+  width: 20px;
+}
+
+/* line 135, app/assets/stylesheets/profile.sass */
+.identity_provider {
+  list-style: none;
+  padding: 0;
+}
+
+@media (min-width: 768px) {
+  /* line 138, app/assets/stylesheets/profile.sass */
+  .identity_provider .flex {
+    display: flex;
+  }
+  /* line 141, app/assets/stylesheets/profile.sass */
+  .identity_provider .flex .left {
+    margin-right: 20px;
+  }
+}
+/* line 4, app/assets/stylesheets/teachers.sass */
+.team .card {
+  background: rgba(204, 177, 240, 0.2);
+  border-radius: 20px;
+  border: 0 none;
+  margin: 0 !important;
+  height: auto !important;
+}
+
+/* line 11, app/assets/stylesheets/teachers.sass */
+.team .card .role {
+  display: block;
+  font-size: 13px;
+  margin: -5px 0 15px;
+  text-transform: uppercase;
+}
+
+/* line 17, app/assets/stylesheets/teachers.sass */
+.team .card .card-body {
+  align-items: stretch;
+}
+
+/* line 19, app/assets/stylesheets/teachers.sass */
+.team .card .card-body .left {
+  background-color: #ece2fb !important;
+  border-radius: 20px 0 0 20px !important;
+}
+
+/* line 23, app/assets/stylesheets/teachers.sass */
+.team .card .card-body .left .avatar {
+  border-color: #e3dedd;
+}
+
+/* line 25, app/assets/stylesheets/teachers.sass */
+.team .card .card-body .right {
+  font-size: 14px;
+}
+
+@media (max-width: 767px) {
+  /* line 4, app/assets/stylesheets/teachers.sass */
+  .team .card {
+    height: auto !important;
+  }
+  /* line 31, app/assets/stylesheets/teachers.sass */
+  .team .card .card-body .left {
+    border-radius: 20px 20px 0 0 !important;
+  }
+}
+/* line 6, app/assets/stylesheets/resources.sass */
+table.resources tbody tr:nth-child(odd) {
+  background: rgba(137, 215, 198, 0.12);
+}
+
+/* line 11, app/assets/stylesheets/resources.sass */
+table.resources a.btn.upvote, table.resources a.btn.downvote, table.resources a.btn.remove {
+  background: url(/assets/upvote.svg) no-repeat center center;
+}
+
+/* line 13, app/assets/stylesheets/resources.sass */
+table.resources a.btn.upvote i, table.resources a.btn.downvote i, table.resources a.btn.remove i {
+  color: transparent;
+}
+
+/* line 15, app/assets/stylesheets/resources.sass */
+table.resources a.btn.upvote:hover, table.resources a.btn.downvote:hover, table.resources a.btn.remove:hover {
+  background-color: #89d7c6;
+}
+
+/* line 18, app/assets/stylesheets/resources.sass */
+table.resources a.btn.downvote {
+  background-image: url(/assets/downvote.svg);
+}
+
+/* line 20, app/assets/stylesheets/resources.sass */
+table.resources a.btn.downvote:hover {
+  background-color: #F46936;
+}
+
+/* line 23, app/assets/stylesheets/resources.sass */
+table.resources a.btn.remove {
+  background-image: url(/assets/remove.svg);
+}
+
+/* line 25, app/assets/stylesheets/resources.sass */
+table.resources a.btn.remove:hover {
+  background-color: #939598;
+}
+/* line 3, app/assets/stylesheets/faqs.sass */
+ul.faqs {
+  counter-reset: section;
+  list-style: none;
+  padding: 0;
+}
+
+/* line 7, app/assets/stylesheets/faqs.sass */
+ul.faqs li {
+  transition: all 0.2s;
+  border: 1px solid #e3dedd;
+  border-width: 1px 0;
+  font-size: 13px;
+  margin-bottom: -1px;
+  padding: 20px 30px;
+  position: relative;
+}
+
+/* line 16, app/assets/stylesheets/faqs.sass */
+ul.faqs li:not(.open):hover {
+  background-color: rgba(137, 215, 198, 0.15);
+}
+
+/* line 19, app/assets/stylesheets/faqs.sass */
+ul.faqs li:before {
+  counter-increment: section;
+  content: counter(section);
+  color: #b9ada9;
+  font-size: 18px;
+  font-weight: 500;
+  left: 0;
+  line-height: 1;
+  position: absolute;
+  top: 20px;
+}
+
+/* line 31, app/assets/stylesheets/faqs.sass */
+ul.faqs li a.toggle-trigger {
+  color: #3d393a;
+  display: block;
+  text-decoration: none;
+}
+
+/* line 35, app/assets/stylesheets/faqs.sass */
+ul.faqs li a.toggle-trigger:after {
+  background: white url(/assets/icon-plus.svg) no-repeat center center;
+  border-radius: 50%;
+  border: 1px solid #e3dedd;
+  content: "";
+  height: 30px;
+  position: absolute;
+  right: 0;
+  top: 20px;
+  width: 30px;
+}
+
+/* line 45, app/assets/stylesheets/faqs.sass */
+ul.faqs li a.toggle-trigger h2 {
+  font-size: 17px;
+  font-weight: 400;
+}
+
+/* line 48, app/assets/stylesheets/faqs.sass */
+ul.faqs li a.toggle-trigger h2 .badge {
+  vertical-align: middle;
+}
+
+/* line 50, app/assets/stylesheets/faqs.sass */
+ul.faqs li a.toggle-trigger h2 .badge.bg-info {
+  background-color: #89d7c6 !important;
+}
+
+/* line 54, app/assets/stylesheets/faqs.sass */
+ul.faqs li .toggle-content {
+  display: none;
+}
+
+/* line 58, app/assets/stylesheets/faqs.sass */
+ul.faqs li.open a.toggle-trigger {
+  color: #89d7c6;
+}
+
+/* line 60, app/assets/stylesheets/faqs.sass */
+ul.faqs li.open a.toggle-trigger h2 {
+  font-weight: 500;
+}
+
+/* line 62, app/assets/stylesheets/faqs.sass */
+ul.faqs li.open a.toggle-trigger:after {
+  background-image: url(/assets/icon-minus.svg);
+}
+@media (max-width: 767px) {
+  /* line 3, app/assets/stylesheets/welcome.sass */
+  .jumbotron {
+    margin-top: 20px;
+  }
+  /* line 7, app/assets/stylesheets/welcome.sass */
+  .jumbotron a.btn {
+    display: block;
+    margin-bottom: 15px;
+  }
+}
+/* line 1, app/assets/stylesheets/avatars.scss */
+.avatar-and-team {
+  max-width: 150px;
+  max-height: 150px;
+  position: relative;
+}
+
+/* line 7, app/assets/stylesheets/avatars.scss */
+.avatar {
+  border-radius: 50%;
+  border: 2px solid darkslategray;
+  overflow: hidden;
+  width: 150px;
+  height: 150px;
+}
+
+/* line 14, app/assets/stylesheets/avatars.scss */
+.avatar img {
+  width: 100%;
+  height: 100%;
+}
+
+/* line 19, app/assets/stylesheets/avatars.scss */
+.avatar.team {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 40%;
+  border: 2px solid darkslategray;
+  background: white;
+}
+
+/* line 28, app/assets/stylesheets/avatars.scss */
+.avatar.disabled {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+  opacity: 0.2;
+}
+/* line 1, app/assets/stylesheets/badges.scss */
+.loom-badge {
+  width: 100px;
+  margin: 1em auto auto auto;
+}
+
+/* line 4, app/assets/stylesheets/badges.scss */
+.loom-badge img {
+  width: 100%;
+  height: 100%;
+}
+
+/* line 10, app/assets/stylesheets/badges.scss */
+.badge.bg-golden {
+  background-color: goldenrod;
+}
+/* BASICS */
+
+.CodeMirror {
+  /* Set height, width, borders, and global font properties here */
+  font-family: monospace;
+  height: 300px;
+  color: black;
+  direction: ltr;
+}
+
+/* PADDING */
+
+.CodeMirror-lines {
+  padding: 4px 0; /* Vertical padding around content */
+}
+.CodeMirror pre.CodeMirror-line,
+.CodeMirror pre.CodeMirror-line-like {
+  padding: 0 4px; /* Horizontal padding of content */
+}
+
+.CodeMirror-scrollbar-filler, .CodeMirror-gutter-filler {
+  background-color: white; /* The little square between H and V scrollbars */
+}
+
+/* GUTTER */
+
+.CodeMirror-gutters {
+  border-right: 1px solid #ddd;
+  background-color: #f7f7f7;
+  white-space: nowrap;
+}
+.CodeMirror-linenumbers {}
+.CodeMirror-linenumber {
+  padding: 0 3px 0 5px;
+  min-width: 20px;
+  text-align: right;
+  color: #999;
+  white-space: nowrap;
+}
+
+.CodeMirror-guttermarker { color: black; }
+.CodeMirror-guttermarker-subtle { color: #999; }
+
+/* CURSOR */
+
+.CodeMirror-cursor {
+  border-left: 1px solid black;
+  border-right: none;
+  width: 0;
+}
+/* Shown when moving in bi-directional text */
+.CodeMirror div.CodeMirror-secondarycursor {
+  border-left: 1px solid silver;
+}
+.cm-fat-cursor .CodeMirror-cursor {
+  width: auto;
+  border: 0 !important;
+  background: #7e7;
+}
+.cm-fat-cursor div.CodeMirror-cursors {
+  z-index: 1;
+}
+.cm-fat-cursor-mark {
+  background-color: rgba(20, 255, 20, 0.5);
+  -webkit-animation: blink 1.06s steps(1) infinite;
+  -moz-animation: blink 1.06s steps(1) infinite;
+  animation: blink 1.06s steps(1) infinite;
+}
+.cm-animate-fat-cursor {
+  width: auto;
+  border: 0;
+  -webkit-animation: blink 1.06s steps(1) infinite;
+  -moz-animation: blink 1.06s steps(1) infinite;
+  animation: blink 1.06s steps(1) infinite;
+  background-color: #7e7;
+}
+@-moz-keyframes blink {
+  0% {}
+  50% { background-color: transparent; }
+  100% {}
+}
+@-webkit-keyframes blink {
+  0% {}
+  50% { background-color: transparent; }
+  100% {}
+}
+@keyframes blink {
+  0% {}
+  50% { background-color: transparent; }
+  100% {}
+}
+
+/* Can style cursor different in overwrite (non-insert) mode */
+.CodeMirror-overwrite .CodeMirror-cursor {}
+
+.cm-tab { display: inline-block; text-decoration: inherit; }
+
+.CodeMirror-rulers {
+  position: absolute;
+  left: 0; right: 0; top: -50px; bottom: 0;
+  overflow: hidden;
+}
+.CodeMirror-ruler {
+  border-left: 1px solid #ccc;
+  top: 0; bottom: 0;
+  position: absolute;
+}
+
+/* DEFAULT THEME */
+
+.cm-s-default .cm-header {color: blue;}
+.cm-s-default .cm-quote {color: #090;}
+.cm-negative {color: #d44;}
+.cm-positive {color: #292;}
+.cm-header, .cm-strong {font-weight: bold;}
+.cm-em {font-style: italic;}
+.cm-link {text-decoration: underline;}
+.cm-strikethrough {text-decoration: line-through;}
+
+.cm-s-default .cm-keyword {color: #708;}
+.cm-s-default .cm-atom {color: #219;}
+.cm-s-default .cm-number {color: #164;}
+.cm-s-default .cm-def {color: #00f;}
+.cm-s-default .cm-variable,
+.cm-s-default .cm-punctuation,
+.cm-s-default .cm-property,
+.cm-s-default .cm-operator {}
+.cm-s-default .cm-variable-2 {color: #05a;}
+.cm-s-default .cm-variable-3, .cm-s-default .cm-type {color: #085;}
+.cm-s-default .cm-comment {color: #a50;}
+.cm-s-default .cm-string {color: #a11;}
+.cm-s-default .cm-string-2 {color: #f50;}
+.cm-s-default .cm-meta {color: #555;}
+.cm-s-default .cm-qualifier {color: #555;}
+.cm-s-default .cm-builtin {color: #30a;}
+.cm-s-default .cm-bracket {color: #997;}
+.cm-s-default .cm-tag {color: #170;}
+.cm-s-default .cm-attribute {color: #00c;}
+.cm-s-default .cm-hr {color: #999;}
+.cm-s-default .cm-link {color: #00c;}
+
+.cm-s-default .cm-error {color: #f00;}
+.cm-invalidchar {color: #f00;}
+
+.CodeMirror-composing { border-bottom: 2px solid; }
+
+/* Default styles for common addons */
+
+div.CodeMirror span.CodeMirror-matchingbracket {color: #0b0;}
+div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #a22;}
+.CodeMirror-matchingtag { background: rgba(255, 150, 0, .3); }
+.CodeMirror-activeline-background {background: #e8f2ff;}
+
+/* STOP */
+
+/* The rest of this file contains styles related to the mechanics of
+   the editor. You probably shouldn't touch them. */
+
+.CodeMirror {
+  position: relative;
+  overflow: hidden;
+  background: white;
+}
+
+.CodeMirror-scroll {
+  overflow: scroll !important; /* Things will break if this is overridden */
+  /* 50px is the magic margin used to hide the element's real scrollbars */
+  /* See overflow: hidden in .CodeMirror */
+  margin-bottom: -50px; margin-right: -50px;
+  padding-bottom: 50px;
+  height: 100%;
+  outline: none; /* Prevent dragging from highlighting the element */
+  position: relative;
+}
+.CodeMirror-sizer {
+  position: relative;
+  border-right: 50px solid transparent;
+}
+
+/* The fake, visible scrollbars. Used to force redraw during scrolling
+   before actual scrolling happens, thus preventing shaking and
+   flickering artifacts. */
+.CodeMirror-vscrollbar, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-gutter-filler {
+  position: absolute;
+  z-index: 6;
+  display: none;
+}
+.CodeMirror-vscrollbar {
+  right: 0; top: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+.CodeMirror-hscrollbar {
+  bottom: 0; left: 0;
+  overflow-y: hidden;
+  overflow-x: scroll;
+}
+.CodeMirror-scrollbar-filler {
+  right: 0; bottom: 0;
+}
+.CodeMirror-gutter-filler {
+  left: 0; bottom: 0;
+}
+
+.CodeMirror-gutters {
+  position: absolute; left: 0; top: 0;
+  min-height: 100%;
+  z-index: 3;
+}
+.CodeMirror-gutter {
+  white-space: normal;
+  height: 100%;
+  display: inline-block;
+  vertical-align: top;
+  margin-bottom: -50px;
+}
+.CodeMirror-gutter-wrapper {
+  position: absolute;
+  z-index: 4;
+  background: none !important;
+  border: none !important;
+}
+.CodeMirror-gutter-background {
+  position: absolute;
+  top: 0; bottom: 0;
+  z-index: 4;
+}
+.CodeMirror-gutter-elt {
+  position: absolute;
+  cursor: default;
+  z-index: 4;
+}
+.CodeMirror-gutter-wrapper ::selection { background-color: transparent }
+.CodeMirror-gutter-wrapper ::-moz-selection { background-color: transparent }
+
+.CodeMirror-lines {
+  cursor: text;
+  min-height: 1px; /* prevents collapsing before first draw */
+}
+.CodeMirror pre.CodeMirror-line,
+.CodeMirror pre.CodeMirror-line-like {
+  /* Reset some styles that the rest of the page might have set */
+  -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0;
+  border-width: 0;
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  margin: 0;
+  white-space: pre;
+  word-wrap: normal;
+  line-height: inherit;
+  color: inherit;
+  z-index: 2;
+  position: relative;
+  overflow: visible;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-variant-ligatures: contextual;
+  font-variant-ligatures: contextual;
+}
+.CodeMirror-wrap pre.CodeMirror-line,
+.CodeMirror-wrap pre.CodeMirror-line-like {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: normal;
+}
+
+.CodeMirror-linebackground {
+  position: absolute;
+  left: 0; right: 0; top: 0; bottom: 0;
+  z-index: 0;
+}
+
+.CodeMirror-linewidget {
+  position: relative;
+  z-index: 2;
+  padding: 0.1px; /* Force widget margins to stay inside of the container */
+}
+
+.CodeMirror-widget {}
+
+.CodeMirror-rtl pre { direction: rtl; }
+
+.CodeMirror-code {
+  outline: none;
+}
+
+/* Force content-box sizing for the elements where we expect it */
+.CodeMirror-scroll,
+.CodeMirror-sizer,
+.CodeMirror-gutter,
+.CodeMirror-gutters,
+.CodeMirror-linenumber {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+.CodeMirror-measure {
+  position: absolute;
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+}
+
+.CodeMirror-cursor {
+  position: absolute;
+  pointer-events: none;
+}
+.CodeMirror-measure pre { position: static; }
+
+div.CodeMirror-cursors {
+  visibility: hidden;
+  position: relative;
+  z-index: 3;
+}
+div.CodeMirror-dragcursors {
+  visibility: visible;
+}
+
+.CodeMirror-focused div.CodeMirror-cursors {
+  visibility: visible;
+}
+
+.CodeMirror-selected { background: #d9d9d9; }
+.CodeMirror-focused .CodeMirror-selected { background: #d7d4f0; }
+.CodeMirror-crosshair { cursor: crosshair; }
+.CodeMirror-line::selection, .CodeMirror-line > span::selection, .CodeMirror-line > span > span::selection { background: #d7d4f0; }
+.CodeMirror-line::-moz-selection, .CodeMirror-line > span::-moz-selection, .CodeMirror-line > span > span::-moz-selection { background: #d7d4f0; }
+
+.cm-searching {
+  background-color: #ffa;
+  background-color: rgba(255, 255, 0, .4);
+}
+
+/* Used to force a border model for a node */
+.cm-force-border { padding-right: .1px; }
+
+@media print {
+  /* Hide the cursor when printing */
+  .CodeMirror div.CodeMirror-cursors {
+    visibility: hidden;
+  }
+}
+
+/* See issue #2901 */
+.cm-tab-wrap-hack:after { content: ''; }
+
+/* Help users use markselection to safely style text background */
+span.CodeMirror-selectedtext { background: none; }
+/* line 3, app/assets/stylesheets/footer.sass */
+.footer {
+  font-size: 13px;
+}
+
+/* line 6, app/assets/stylesheets/footer.sass */
+.footer .heart {
+  background: url(/assets/heart.svg) no-repeat center center;
+  display: inline-block;
+  height: 18px;
+  text-indent: -3000px;
+  vertical-align: middle;
+  width: 20px;
+  margin-left: 3px;
+}
+
+/* line 15, app/assets/stylesheets/footer.sass */
+.footer .btn-suggestions {
+  background: #89d7c6;
+  border-color: #89d7c6;
+  border-radius: 0 3px 3px 0;
+  bottom: auto;
+  font-size: 13px;
+  position: relative;
+  right: auto;
+  line-height: 1;
+  transform: rotate(0deg);
+}
+
+/* line 26, app/assets/stylesheets/footer.sass */
+.footer .btn-suggestions span.lightbulb {
+  background: url(/assets/lightbulb.svg) no-repeat center center;
+  display: inline-block;
+  height: 18px;
+  vertical-align: middle;
+  width: 15px;
+  margin-right: 3px;
+}
+
+@media (min-width: 768px) {
+  /* line 34, app/assets/stylesheets/footer.sass */
+  footer {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  /* line 38, app/assets/stylesheets/footer.sass */
+  footer .footer {
+    max-width: 320px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  /* line 45, app/assets/stylesheets/footer.sass */
+  footer .footer .btn-suggestions {
+    border-radius: 3px;
+  }
+}
+/* line 1, app/assets/stylesheets/menu.scss */
+.sidebar-sticky i {
+  width: 1.5em;
+  text-align: center;
+}
+
+/* line 6, app/assets/stylesheets/menu.scss */
+.sidebar-heading {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+/* line 2, app/assets/stylesheets/multiple_choices.scss */
+.questionnaire .question {
+  margin-bottom: 1em;
+}
+
+/* line 6, app/assets/stylesheets/multiple_choices.scss */
+.questionnaire .answer {
+  width: 100%;
+  margin: 0.5em;
+  display: block;
+  background-color: #ddd;
+  padding: 4px 10px;
+}
+
+/* line 13, app/assets/stylesheets/multiple_choices.scss */
+.questionnaire .answer.hoverable:hover {
+  cursor: pointer;
+  background-color: #357d7e;
+  color: whitesmoke;
+}
+
+/* line 19, app/assets/stylesheets/multiple_choices.scss */
+.questionnaire .answer.selected {
+  background-color: #357d7e;
+  color: whitesmoke;
+}
+
+/* line 24, app/assets/stylesheets/multiple_choices.scss */
+.questionnaire .answer.chosen {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}
+
+/* line 36, app/assets/stylesheets/multiple_choices.scss */
+.questionnaire .answer.chosen.correct {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+/* line 1, app/assets/stylesheets/pages.scss */
+.jumbotron .pronunciation {
+  border-bottom: 1px dotted #000;
+  cursor: help;
+}
+/* line 3, app/assets/stylesheets/tables.sass */
+table td.mw-200 {
+  max-width: 200px;
+}
+
+/* line 8, app/assets/stylesheets/tables.sass */
+table.table th {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+/* line 12, app/assets/stylesheets/tables.sass */
+table.table a {
+  color: #272324;
+}
+
+/* line 15, app/assets/stylesheets/tables.sass */
+table.table .progress {
+  background-color: #dcd6d4;
+  height: 8px;
+  margin-bottom: 5px;
+}
+
+/* line 20, app/assets/stylesheets/tables.sass */
+table.table tr {
+  font-size: 12px;
+}
+
+/* line 22, app/assets/stylesheets/tables.sass */
+table.table tr.missed {
+  background-color: #fcd2c3;
+}
+
+/* line 24, app/assets/stylesheets/tables.sass */
+table.table tr.missed a:not(.btn) {
+  color: #F46936;
+}
+
+/* line 26, app/assets/stylesheets/tables.sass */
+table.table tr.missed .progress {
+  mix-blend-mode: multiply;
+}
+
+/* line 28, app/assets/stylesheets/tables.sass */
+table.table tr.missed:hover {
+  background-color: #fbc0ab;
+}
+
+/* line 30, app/assets/stylesheets/tables.sass */
+table.table tr.finished {
+  background-color: #dff0d8;
+}
+
+/* line 32, app/assets/stylesheets/tables.sass */
+table.table tr.finished .progress {
+  background-color: #3db79a;
+}
+
+/* line 34, app/assets/stylesheets/tables.sass */
+table.table tr.finished a:not(.btn) {
+  color: #3db79a;
+}
+
+/* line 36, app/assets/stylesheets/tables.sass */
+table.table tr.finished:hover {
+  background-color: #c6d7bf;
+}
+
+/* line 41, app/assets/stylesheets/tables.sass */
+table.table tr td {
+  padding: 10px;
+}
+
+/* line 44, app/assets/stylesheets/tables.sass */
+table.table tr td .present, table.table tr td .absent, table.table tr td .unrequired {
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* line 47, app/assets/stylesheets/tables.sass */
+table.table tr td .present:before, table.table tr td .absent:before, table.table tr td .unrequired:before {
+  background: url(/assets/icon-unrequired.svg) no-repeat center center;
+  content: "";
+  display: inline-block;
+  margin-right: 2px;
+  height: 16px;
+  vertical-align: middle;
+  width: 16px;
+  transform: translateY(-1px);
+}
+
+/* line 56, app/assets/stylesheets/tables.sass */
+table.table tr td .present:before {
+  background-image: url(/assets/icon-present.svg);
+}
+
+/* line 58, app/assets/stylesheets/tables.sass */
+table.table tr td .absent:before {
+  background-image: url(/assets/icon-absent.svg);
+}
+
+/* line 63, app/assets/stylesheets/tables.sass */
+table.table tr td .badge {
+  border-radius: 2px;
+  font-size: 11px;
+  font-weight: 500;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* line 68, app/assets/stylesheets/tables.sass */
+table.table tr td .badge.color {
+  text-transform: uppercase;
+  background: #ccb1f0;
+}
+
+/* line 71, app/assets/stylesheets/tables.sass */
+table.table tr td .badge.color.teal {
+  background: #89d7c6;
+}
+
+/* line 73, app/assets/stylesheets/tables.sass */
+table.table tr td .badge.color.flamingo {
+  background: #F46936;
+}
+
+/* line 75, app/assets/stylesheets/tables.sass */
+table.table tr td .badge.color.blue {
+  background: #657AF0;
+}
+
+/* line 77, app/assets/stylesheets/tables.sass */
+table.table tr td .badge.color.yellow {
+  background: #ffd91d;
+}
+
+/* line 79, app/assets/stylesheets/tables.sass */
+table.table tr td .badge.color.tuscany {
+  background: #C14F2D;
+}
+
+/* line 84, app/assets/stylesheets/tables.sass */
+table.table.table-bordered td:first-child {
+  border-left: 0 none;
+}
+
+/* line 86, app/assets/stylesheets/tables.sass */
+table.table.table-bordered td:last-child {
+  border-right: 0 none;
+}
+
+/* line 91, app/assets/stylesheets/tables.sass */
+.dataTables_wrapper > .row:first-child {
+  font-size: 14px;
+}
+
+/* line 96, app/assets/stylesheets/tables.sass */
+.dataTables_wrapper table.table a:not(.btn) {
+  color: #3db79a;
+}
+
+/* line 99, app/assets/stylesheets/tables.sass */
+.dataTables_wrapper table.table .badge {
+  margin-top: 3px;
+}
+
+/* line 103, app/assets/stylesheets/tables.sass */
+.dataTables_info {
+  font-size: 11px;
+}
+
+/* line 107, app/assets/stylesheets/tables.sass */
+.table-responsive + br, .table-responsive + br + br, .table-responsive + br + br + br, .table-responsive + br + br + br + br, .table-responsive + br + br + br + br + br, .table-responsive + br + br + br + br + br + br {
+  display: none;
+}
+/* line 2, app/assets/stylesheets/team.scss */
+.team .card {
+  margin: 1em;
+}
+
+/* line 4, app/assets/stylesheets/team.scss */
+.team .card .card-body {
+  flex-direction: row;
+  display: flex;
+  padding: 0;
+}
+
+/* line 8, app/assets/stylesheets/team.scss */
+.team .card .card-body .left {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  background-color: #f8f9fa;
+  border-radius: .25rem 0 0 .25rem;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 33%;
+  padding: 1.5em;
+}
+
+/* line 19, app/assets/stylesheets/team.scss */
+.team .card .card-body .right {
+  padding: 1.5em;
+}
+
+@media screen and (max-width: 1000px) {
+  /* line 29, app/assets/stylesheets/team.scss */
+  .team .card .card-body {
+    flex-direction: column;
+  }
+}
+/*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*/
+
+.btn-suggestions {
+  bottom: 7em;
+  position: fixed;
+  right: 0;
+  transform: rotate(-90deg);
+}
+
+.navbar .navbar-right {
+  margin-left: auto;
+}
+
+.clickable {
+  cursor: pointer;
+}

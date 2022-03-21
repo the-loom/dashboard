@@ -1,0 +1,48 @@
+/* line 3, app/assets/stylesheets/buttons.sass */
+.btn {
+  border-radius: 3px;
+  transition: all 0.2s;
+}
+
+/* line 6, app/assets/stylesheets/buttons.sass */
+.btn.btn-primary, .btn.btn-secondary {
+  background: #3db79a;
+  color: white;
+  border-color: #3db79a;
+}
+
+/* line 10, app/assets/stylesheets/buttons.sass */
+.btn.btn-primary:hover, .btn.btn-secondary:hover {
+  background-color: #76d1bd;
+  outline: 3px solid rgba(137, 215, 198, 0.5);
+}
+
+/* line 13, app/assets/stylesheets/buttons.sass */
+.btn.btn-secondary {
+  background: #ccb1f0;
+  border-color: #ccb1f0;
+}
+
+/* line 16, app/assets/stylesheets/buttons.sass */
+.btn.btn-secondary:hover {
+  outline: 3px solid rgba(204, 177, 240, 0.5);
+  background-color: #be9cec;
+}
+
+/* line 19, app/assets/stylesheets/buttons.sass */
+.btn.btn-sm {
+  font-size: 13px;
+}
+
+/* line 22, app/assets/stylesheets/buttons.sass */
+.btn.btn-outline-primary {
+  background: white;
+  color: #3db79a;
+  border-color: #3db79a;
+}
+
+/* line 26, app/assets/stylesheets/buttons.sass */
+.btn.btn-outline-primary:hover {
+  background: rgba(137, 215, 198, 0.15);
+  outline: 3px solid rgba(137, 215, 198, 0.5);
+}

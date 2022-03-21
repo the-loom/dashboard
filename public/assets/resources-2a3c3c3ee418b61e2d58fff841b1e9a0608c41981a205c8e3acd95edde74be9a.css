@@ -1,0 +1,39 @@
+/* line 6, app/assets/stylesheets/resources.sass */
+table.resources tbody tr:nth-child(odd) {
+  background: rgba(137, 215, 198, 0.12);
+}
+
+/* line 11, app/assets/stylesheets/resources.sass */
+table.resources a.btn.upvote, table.resources a.btn.downvote, table.resources a.btn.remove {
+  background: url(/assets/upvote.svg) no-repeat center center;
+}
+
+/* line 13, app/assets/stylesheets/resources.sass */
+table.resources a.btn.upvote i, table.resources a.btn.downvote i, table.resources a.btn.remove i {
+  color: transparent;
+}
+
+/* line 15, app/assets/stylesheets/resources.sass */
+table.resources a.btn.upvote:hover, table.resources a.btn.downvote:hover, table.resources a.btn.remove:hover {
+  background-color: #89d7c6;
+}
+
+/* line 18, app/assets/stylesheets/resources.sass */
+table.resources a.btn.downvote {
+  background-image: url(/assets/downvote.svg);
+}
+
+/* line 20, app/assets/stylesheets/resources.sass */
+table.resources a.btn.downvote:hover {
+  background-color: #F46936;
+}
+
+/* line 23, app/assets/stylesheets/resources.sass */
+table.resources a.btn.remove {
+  background-image: url(/assets/remove.svg);
+}
+
+/* line 25, app/assets/stylesheets/resources.sass */
+table.resources a.btn.remove:hover {
+  background-color: #939598;
+}

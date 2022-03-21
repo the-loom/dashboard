@@ -1,0 +1,174 @@
+/* line 3, app/assets/stylesheets/tables.sass */
+table td.mw-200 {
+  max-width: 200px;
+}
+
+/* line 8, app/assets/stylesheets/tables.sass */
+table.table th {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+/* line 12, app/assets/stylesheets/tables.sass */
+table.table a {
+  color: #272324;
+}
+
+/* line 15, app/assets/stylesheets/tables.sass */
+table.table .progress {
+  background-color: #dcd6d4;
+  height: 8px;
+  margin-bottom: 5px;
+}
+
+/* line 20, app/assets/stylesheets/tables.sass */
+table.table tr {
+  font-size: 12px;
+}
+
+/* line 22, app/assets/stylesheets/tables.sass */
+table.table tr.missed {
+  background-color: #fcd2c3;
+}
+
+/* line 24, app/assets/stylesheets/tables.sass */
+table.table tr.missed a:not(.btn) {
+  color: #F46936;
+}
+
+/* line 26, app/assets/stylesheets/tables.sass */
+table.table tr.missed .progress {
+  mix-blend-mode: multiply;
+}
+
+/* line 28, app/assets/stylesheets/tables.sass */
+table.table tr.missed:hover {
+  background-color: #fbc0ab;
+}
+
+/* line 30, app/assets/stylesheets/tables.sass */
+table.table tr.finished {
+  background-color: #dff0d8;
+}
+
+/* line 32, app/assets/stylesheets/tables.sass */
+table.table tr.finished .progress {
+  background-color: #3db79a;
+}
+
+/* line 34, app/assets/stylesheets/tables.sass */
+table.table tr.finished a:not(.btn) {
+  color: #3db79a;
+}
+
+/* line 36, app/assets/stylesheets/tables.sass */
+table.table tr.finished:hover {
+  background-color: #c6d7bf;
+}
+
+/* line 41, app/assets/stylesheets/tables.sass */
+table.table tr td {
+  padding: 10px;
+}
+
+/* line 44, app/assets/stylesheets/tables.sass */
+table.table tr td .present, table.table tr td .absent, table.table tr td .unrequired {
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* line 47, app/assets/stylesheets/tables.sass */
+table.table tr td .present:before, table.table tr td .absent:before, table.table tr td .unrequired:before {
+  background: url(/assets/icon-unrequired.svg) no-repeat center center;
+  content: "";
+  display: inline-block;
+  margin-right: 2px;
+  height: 16px;
+  vertical-align: middle;
+  width: 16px;
+  transform: translateY(-1px);
+}
+
+/* line 56, app/assets/stylesheets/tables.sass */
+table.table tr td .present:before {
+  background-image: url(/assets/icon-present.svg);
+}
+
+/* line 58, app/assets/stylesheets/tables.sass */
+table.table tr td .absent:before {
+  background-image: url(/assets/icon-absent.svg);
+}
+
+/* line 63, app/assets/stylesheets/tables.sass */
+table.table tr td .badge {
+  border-radius: 2px;
+  font-size: 11px;
+  font-weight: 500;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* line 68, app/assets/stylesheets/tables.sass */
+table.table tr td .badge.color {
+  text-transform: uppercase;
+  background: #ccb1f0;
+}
+
+/* line 71, app/assets/stylesheets/tables.sass */
+table.table tr td .badge.color.teal {
+  background: #89d7c6;
+}
+
+/* line 73, app/assets/stylesheets/tables.sass */
+table.table tr td .badge.color.flamingo {
+  background: #F46936;
+}
+
+/* line 75, app/assets/stylesheets/tables.sass */
+table.table tr td .badge.color.blue {
+  background: #657AF0;
+}
+
+/* line 77, app/assets/stylesheets/tables.sass */
+table.table tr td .badge.color.yellow {
+  background: #ffd91d;
+}
+
+/* line 79, app/assets/stylesheets/tables.sass */
+table.table tr td .badge.color.tuscany {
+  background: #C14F2D;
+}
+
+/* line 84, app/assets/stylesheets/tables.sass */
+table.table.table-bordered td:first-child {
+  border-left: 0 none;
+}
+
+/* line 86, app/assets/stylesheets/tables.sass */
+table.table.table-bordered td:last-child {
+  border-right: 0 none;
+}
+
+/* line 91, app/assets/stylesheets/tables.sass */
+.dataTables_wrapper > .row:first-child {
+  font-size: 14px;
+}
+
+/* line 96, app/assets/stylesheets/tables.sass */
+.dataTables_wrapper table.table a:not(.btn) {
+  color: #3db79a;
+}
+
+/* line 99, app/assets/stylesheets/tables.sass */
+.dataTables_wrapper table.table .badge {
+  margin-top: 3px;
+}
+
+/* line 103, app/assets/stylesheets/tables.sass */
+.dataTables_info {
+  font-size: 11px;
+}
+
+/* line 107, app/assets/stylesheets/tables.sass */
+.table-responsive + br, .table-responsive + br + br, .table-responsive + br + br + br, .table-responsive + br + br + br + br, .table-responsive + br + br + br + br + br, .table-responsive + br + br + br + br + br + br {
+  display: none;
+}

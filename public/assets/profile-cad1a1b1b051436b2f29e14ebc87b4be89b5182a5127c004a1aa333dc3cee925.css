@@ -1,0 +1,230 @@
+/* line 4, app/assets/stylesheets/profile.sass */
+.pieContainer {
+  height: 198px;
+  width: 198px;
+  position: relative;
+  background: #e3dedd;
+  border-radius: 50%;
+}
+
+@media (max-width: 767px) {
+  /* line 4, app/assets/stylesheets/profile.sass */
+  .pieContainer {
+    margin: 0 auto;
+  }
+}
+
+/* line 13, app/assets/stylesheets/profile.sass */
+.pieContainer .avatar-and-team {
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  z-index: 2;
+}
+
+/* line 19, app/assets/stylesheets/profile.sass */
+.pieContainer .pieSlice {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #ccb1f0;
+  transform: rotate(180deg);
+}
+
+/* line 28, app/assets/stylesheets/profile.sass */
+.profile-summary {
+  background: #3d393a;
+  border-radius: 18px;
+  color: white;
+  font-size: 12px;
+  padding: 50px 30px 30px;
+}
+
+/* line 34, app/assets/stylesheets/profile.sass */
+.profile-summary + .dashboard {
+  margin-top: 35px;
+}
+
+@media (min-width: 768px) {
+  /* line 28, app/assets/stylesheets/profile.sass */
+  .profile-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+/* line 40, app/assets/stylesheets/profile.sass */
+.profile-summary.light {
+  background: rgba(137, 215, 198, 0.5);
+  color: #272324;
+}
+
+/* line 44, app/assets/stylesheets/profile.sass */
+.profile-summary.light .pieContainer {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+/* line 49, app/assets/stylesheets/profile.sass */
+.profile-summary .alert {
+  margin-left: 30px;
+  font-size: 15px;
+  text-align: center;
+  background: #272324;
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.45);
+}
+
+@media (max-width: 767px) {
+  /* line 49, app/assets/stylesheets/profile.sass */
+  .profile-summary .alert {
+    margin: 20px 0 0 0;
+  }
+}
+
+/* line 58, app/assets/stylesheets/profile.sass */
+.profile-summary .alert p:last-child {
+  margin-bottom: 0;
+}
+
+/* line 62, app/assets/stylesheets/profile.sass */
+.profile-summary .avatar-and-team {
+  max-height: 100%;
+}
+
+/* line 64, app/assets/stylesheets/profile.sass */
+.profile-summary .avatar-and-team .avatar {
+  background: #3d393a;
+  border: 3px solid #e3dedd;
+}
+
+/* line 67, app/assets/stylesheets/profile.sass */
+.profile-summary .avatar-and-team .avatar.team {
+  border-width: 2px;
+  left: -20px;
+  width: 56px;
+  height: 56px;
+}
+
+/* line 73, app/assets/stylesheets/profile.sass */
+.profile-summary .xp {
+  font-size: 16px;
+  margin-top: 8px;
+  text-align: center;
+}
+
+/* line 78, app/assets/stylesheets/profile.sass */
+.profile-summary .badges {
+  flex: 2;
+}
+
+/* line 80, app/assets/stylesheets/profile.sass */
+.profile-summary .badges ul {
+  display: flex;
+  list-style: none;
+  align-items: flex-start;
+  padding: 0;
+  margin: 0 0 0 25px;
+}
+
+@media (max-width: 1024px) {
+  /* line 80, app/assets/stylesheets/profile.sass */
+  .profile-summary .badges ul {
+    flex-wrap: wrap;
+  }
+}
+
+/* line 89, app/assets/stylesheets/profile.sass */
+.profile-summary .badges ul li {
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+/* line 93, app/assets/stylesheets/profile.sass */
+.profile-summary .badges ul li:not(:last-child) {
+  margin-right: 20px;
+}
+
+/* line 95, app/assets/stylesheets/profile.sass */
+.profile-summary .badges ul li img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* line 99, app/assets/stylesheets/profile.sass */
+.profile-summary .badges ul li h3 {
+  font-size: 12px;
+  font-weight: 400;
+  margin-top: 20px;
+}
+
+/* line 105, app/assets/stylesheets/profile.sass */
+.profile-summary form {
+  flex: 2;
+}
+
+@media (min-width: 768px) {
+  /* line 105, app/assets/stylesheets/profile.sass */
+  .profile-summary form {
+    margin-left: 30px;
+  }
+}
+
+@media (min-width: 1220px) {
+  /* line 105, app/assets/stylesheets/profile.sass */
+  .profile-summary form {
+    display: flex;
+    align-items: flex-start;
+  }
+  /* line 112, app/assets/stylesheets/profile.sass */
+  .profile-summary form .team_name, .profile-summary form .team_avatar {
+    margin: 0 24px 0 0 !important;
+  }
+  /* line 115, app/assets/stylesheets/profile.sass */
+  .profile-summary form .btn {
+    margin-top: 30px;
+  }
+}
+
+/* line 119, app/assets/stylesheets/profile.sass */
+ul.chartReferences {
+  list-style: none;
+  font-size: 12px;
+}
+
+/* line 122, app/assets/stylesheets/profile.sass */
+ul.chartReferences li {
+  margin-bottom: 10px;
+}
+
+/* line 124, app/assets/stylesheets/profile.sass */
+ul.chartReferences span {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* line 127, app/assets/stylesheets/profile.sass */
+ul.chartReferences .sample {
+  height: 20px;
+  margin-right: 6px;
+  width: 20px;
+}
+
+/* line 135, app/assets/stylesheets/profile.sass */
+.identity_provider {
+  list-style: none;
+  padding: 0;
+}
+
+@media (min-width: 768px) {
+  /* line 138, app/assets/stylesheets/profile.sass */
+  .identity_provider .flex {
+    display: flex;
+  }
+  /* line 141, app/assets/stylesheets/profile.sass */
+  .identity_provider .flex .left {
+    margin-right: 20px;
+  }
+}

@@ -1,0 +1,17 @@
+/* line 5, app/assets/stylesheets/tabs.sass */
+.nav-tabs li.nav-item {
+  font-size: 15px;
+}
+
+/* line 7, app/assets/stylesheets/tabs.sass */
+.nav-tabs li.nav-item a.nav-link {
+  color: #939598;
+}
+
+/* line 9, app/assets/stylesheets/tabs.sass */
+.nav-tabs li.nav-item a.nav-link.active {
+  border: 0 none;
+  border-bottom: 3px solid #272324;
+  color: #272324;
+  font-weight: 500;
+}

@@ -1,0 +1,38 @@
+/* line 3, app/assets/stylesheets/forms.sass */
+.form-control {
+  color: #272324;
+  font-size: 14px;
+}
+
+/* line 6, app/assets/stylesheets/forms.sass */
+.form-control:focus {
+  box-shadow: 0 0 0 0.25rem rgba(204, 177, 240, 0.5);
+  border-color: #ccb1f0;
+}
+
+/* line 9, app/assets/stylesheets/forms.sass */
+.form-control.is-valid {
+  border-color: #89d7c6;
+  background-image: url(/assets/icon-checkmark.svg);
+  background-size: 24px auto;
+}
+
+/* line 13, app/assets/stylesheets/forms.sass */
+.form-control.is-valid:focus {
+  box-shadow: 0 0 0 0.25rem rgba(137, 215, 198, 0.5);
+}
+
+/* line 18, app/assets/stylesheets/forms.sass */
+textarea {
+  min-height: 110px !important;
+}
+
+/* line 21, app/assets/stylesheets/forms.sass */
+label {
+  color: #272324;
+  display: block;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
