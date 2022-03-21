@@ -43,7 +43,7 @@ class LecturesController < ApplicationController
     authorize Lecture, :manage?
     @lecture = Lecture.find(params[:id])
 
-    if @lecture.update_attributes(lecture_params)
+    if @lecture.update(lecture_params)
       redirect_to lectures_path
       flash[:success] = "Se actualizó correctamente la clase"
     else

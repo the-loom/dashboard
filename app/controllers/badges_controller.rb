@@ -47,7 +47,7 @@ class BadgesController < ApplicationController
     authorize Badge, :manage?
     @badge = Badge.find(params[:id])
 
-    if @badge.update_attributes(badge_params)
+    if @badge.update(badge_params)
       redirect_to badges_path
       flash[:success] = "Se actualizó correctamente el emblema"
     else

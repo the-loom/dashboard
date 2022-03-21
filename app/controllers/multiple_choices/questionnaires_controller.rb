@@ -45,7 +45,7 @@ module MultipleChoices
       authorize MultipleChoices::Questionnaire, :manage?
       @questionnaire = MultipleChoices::Questionnaire.find(params[:id])
 
-      if @questionnaire.update_attributes(questionnaire_params)
+      if @questionnaire.update(questionnaire_params)
         redirect_to multiple_choices_questionnaires_path
         flash[:success] = "Se editó correctamente el cuestionario"
       else
@@ -92,7 +92,7 @@ module MultipleChoices
     def toggle
       authorize MultipleChoices::Questionnaire, :manage?
       questionnaire = MultipleChoices::Questionnaire.find(params[:id])
-      questionnaire.update_attributes(enabled: !questionnaire.enabled?)
+      questionnaire.update(enabled: !questionnaire.enabled?)
       redirect_to multiple_choices_questionnaires_path
     end
 

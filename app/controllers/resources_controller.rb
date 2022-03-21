@@ -39,7 +39,7 @@ class ResourcesController < ApplicationController
     authorize Resource, :manage?
     @resource = Resource.find(params[:id])
 
-    if @resource.update_attributes(resource_params)
+    if @resource.update(resource_params)
       redirect_to resources_path
       flash[:success] = "Se editó correctamente el recurso"
     else

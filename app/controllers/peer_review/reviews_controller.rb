@@ -55,7 +55,7 @@ module PeerReview
       if @challenge.allows_quick_reviews?
         @review.wording = wording_params
       else
-        @review.update_attributes(solution_params)
+        @review.update(solution_params)
       end
       @review.rubrics = build_rubrics
 

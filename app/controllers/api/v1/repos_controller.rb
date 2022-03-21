@@ -60,7 +60,7 @@ module Api
             end
           end
 
-          fork.update_attributes(pending: false)
+          fork.update(pending: false)
           # TODO(delucas): habilitar las notificaciones cuando haya destinatarios
           # Notification.create(subject: "[#{fork.full_name}] ¡Tenés una nueva corrección!", text: "Recordá revisar los detalles de tu calificación dentro del menú de Desafíos", author: "LoomBot")
 

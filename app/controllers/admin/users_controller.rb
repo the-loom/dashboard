@@ -29,7 +29,7 @@ module Admin
       authorize Course, :admin?
       @course = Course.find(params[:id])
 
-      if @course.update_attributes(course_params)
+      if @course.update(course_params)
         redirect_to admin_courses_path
         flash[:info] = "Se editó correctamente el curso"
       else

@@ -44,7 +44,7 @@ class ExercisesController < ApplicationController
     authorize Exercise, :manage?
     @exercise = Exercise.find(params[:id])
 
-    if @exercise.update_attributes(exercise_params)
+    if @exercise.update(exercise_params)
       redirect_to exercises_path
       flash[:success] = "Se editó correctamente el ejercicio"
     else
