@@ -35,7 +35,7 @@ class Layout::MenuPresenter
         ].compact
       else
         # Expand to profile when permissions there got improved
-        [profile_menu, exit_only_menu].compact
+        [profile_menu].compact
       end
     else
       []

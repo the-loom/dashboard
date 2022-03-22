@@ -237,9 +237,9 @@ nav#sidebar-menu
     top: 0
     position: absolute
   &:before
-    left: -25px
+    left: -23px
   &:after
-    right: -25px
+    right: -23px
     background: asset-url("/assets/trapezoid-right.svg") no-repeat right top
 
   &.teal
@@ -264,3 +264,6 @@ nav#sidebar-menu
       &:hover
         color: darken($flamingo, 10%)
 
+
+trix-toolbar .trix-button-group:not(:first-child)
+  margin-left: 13px !important
