@@ -8,6 +8,8 @@
   .col-xs-12.col-md-4
     = simple_form_for @student, url: student_path(@student) do |f|
       = render :partial => 'shared/errors', locals: {f: f}
+      - if current_user.teacher?
+        = f.input :alternative_id, label: 'AltID'
       = f.input :first_name, label: 'Nombres'
       = f.input :last_name, label: 'Apellidos'
       = f.button :submit, 'Actualizar', class: "btn-primary"

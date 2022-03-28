@@ -159,6 +159,6 @@ class StudentsController < ApplicationController
 
   private
     def user_params
-      params[:user].permit(:first_name, :last_name)
+      params[:user].permit(:first_name, :last_name, :alternative_id)
     end
 end
