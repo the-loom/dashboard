@@ -34,6 +34,8 @@
                 <%= link_to student.full_name, user_details_url(student.nickname) %>
               </s>
             <% end %>
+            <br>
+            <%= student.alternative_id %>
           </td>
           <td>
             <%= student.total_attendance %>/<%= @lectures.required.size %>
