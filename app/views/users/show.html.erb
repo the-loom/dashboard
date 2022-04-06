@@ -2,7 +2,7 @@
 
 
 <div class="text-center">
-  <h1 class="trapezoid-title">Mi Perfil</h1>
+  <h1 class="trapezoid-title"><%= @user == current_user ? 'Mi Perfil' : @user.full_name %></h1>
 </div>
 <%= render partial: 'shared/profile-summary' %>
 
