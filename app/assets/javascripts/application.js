@@ -48,6 +48,14 @@ $(document).ready(function(){
     return false;
   });
 
+  // Sidebar Toggle
+  $('a.sidebar-toggle').click(function() {
+    $('#sidebar-menu, .corner, a.sidebar-toggle').toggleClass('go-hide');
+    $(this).toggleClass('reverse');
+    $('main').toggleClass('expand');
+    return false;
+  });
+
   // Animated Hamburger Icon  
   $('body').on('click', 'button.lines-button.x', function (){
     if ( !$('button.lines-button').hasClass('close') ) {

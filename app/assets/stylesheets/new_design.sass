@@ -69,9 +69,13 @@ main.col-lg-10
     padding: 30px 20px
     margin-left: 200px
     box-sizing: border-box
+    transition: margin 0.25s ease-in-out
+    &.expand
+      margin-left: 20px
   @media (min-width: 992px)
     padding: 40px 30px
     margin-left: 290px
+
 
 legend
   -webkit-font-smoothing: antialiased
@@ -82,6 +86,50 @@ legend
 
 table + legend
   margin-top: 40px
+
+
+.corner
+  @media (min-width: 768px)  
+    background: asset-url("/assets/corner.svg") no-repeat left top
+    height: 30px
+    left: 200px
+    pointer-events: none
+    position: fixed
+    top: 51px
+    width: 30px
+    z-index: 2
+  @media (min-width: 992px)
+    left: 290px
+
+a.sidebar-toggle
+  background: asset-url("/assets/sidebar-toggle.svg") no-repeat left top
+  padding: 0
+  margin: 0
+  height: 28px
+  left: 182px
+  position: fixed
+  top: 50%
+  transform: translateY(-50%)
+  width: 18px
+  z-index: 2
+  border-radius: 2px 0 0 2px
+  @media (min-width: 992px)
+    left: 272px
+  &:hover
+    background-color: rgba($teal, 0.3)
+  &.reverse
+    background-position: left bottom
+
+nav#sidebar-menu, .corner, a.sidebar-toggle
+  transition: transform 0.25s ease-in-out
+  transform: translateX(0)
+  &.go-hide
+    @media (min-width: 768px)
+      transform: translateX(-180px)
+    @media (min-width: 992px)
+      transform: translateX(-270px)
+
+
 
 nav#sidebar-menu
   background: $black !important
@@ -100,25 +148,16 @@ nav#sidebar-menu
   &::-webkit-scrollbar
     display: none
 
+  
+
   @media (min-width: 768px)    
     width: 200px
-    &:after
-      content: ""
-      position: fixed
-      top: 51px
-      left: 200px
-      background: asset-url("/assets/corner.svg") no-repeat left top
-      pointer-events: none
-      width: 30px
-      height: 30px
-      z-index: 2
 
   @media (min-width: 992px)
     width: 290px
     padding-left: 30px
     padding-right: 30px
-    &:after
-      left: 290px
+
   a:not(.btn)
     color: white
     font-size: 13px

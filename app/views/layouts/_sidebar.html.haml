@@ -1,4 +1,7 @@
-%nav#sidebar-menu.col-3.col-lg-2.bg-light.sidebar
+.corner
+%a.sidebar-toggle{href: '#'}
+
+%nav#sidebar-menu.col-3.col-lg-2.bg-light.sidebar  
   .sidebar-sticky
     - if current_user && !Course.current.nil?
       - current_lecture = Lecture.current
