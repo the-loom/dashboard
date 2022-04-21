@@ -5,6 +5,10 @@ nav.navbar
   font-size: 14px
   z-index: 11
   min-height: 51px
+  &.open
+    border-bottom: 1px solid $teal
+    a.logo
+      margin-top: 3px
   @media (min-width: 768px)
     padding: 0
   > .container
@@ -54,15 +58,12 @@ nav.navbar
     display: none
     position: absolute
     right: 10px
+    top: 7px
 
   @media (min-width: 768px)
     li.nav-item
       &:nth-child(2), &:first-child
         padding-top: 6px
-
-  @media (max-width: 767px)
-    button.lines-button
-      display: block
 
   .avatar
     background: rgba(white, 0.1)
@@ -71,3 +72,34 @@ nav.navbar
     display: inline-block
     height: 35px
     width: 35px
+
+
+
+  @media (max-width: 767px)
+    button.lines-button
+      display: block
+
+    #navbarNavDropdown
+      .d-md-none
+        display: none
+
+      .user-lectures-notifications
+        flex-direction: row
+        justify-content: space-between
+        align-items: center
+        .divider:last-child
+          display: none
+
+        .dropdown
+          position: initial
+
+        .dropdown-menu
+          box-sizing: border-box
+          position: absolute
+          right: 15px
+          width: calc(100% - 30px)
+          max-height: calc(100vh - 120px)
+          a
+            white-space: normal
+            font-size: 16px
+

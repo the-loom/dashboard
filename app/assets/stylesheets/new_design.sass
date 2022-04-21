@@ -21,6 +21,8 @@ body
 
 .breadcrumb
   font-size: 13px
+  @media (max-width: 767px)
+    margin-top: 10px
 
 a
   color: $teal_dark
@@ -198,7 +200,7 @@ nav#sidebar-menu
     width: 100%
     z-index: 10
     box-sizing: border-box
-    padding: 20px
+    padding: 80px 20px 20px
     height: calc(100% - 40px)
     ul.nav
       gap: 20px

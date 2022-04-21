@@ -27,11 +27,15 @@ function equalizeHeights(selector) {
 navExpands = function () {
   $('button.lines-button.x').addClass('close');
   $('nav#sidebar-menu').show();
+  $('#navbarNavDropdown').show();
+  $('nav.navbar').addClass('open');
   $('body').addClass('no-scroll');
 }
 navCollapses = function () {
   $('button.lines-button.x').removeClass('close');
   $('nav#sidebar-menu').hide();
+  $('#navbarNavDropdown').hide();
+  $('nav.navbar').removeClass('open');
   $('body').removeClass('no-scroll');
 }
 
