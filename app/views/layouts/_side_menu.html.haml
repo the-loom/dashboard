@@ -4,13 +4,12 @@
       = render partial:'layouts/side_menu', locals: { menu: option }
 - elsif menu.class == MenuNode
   - unless menu.title.blank?
-    %h6.sidebar-heading.d-flex.justify-content-between.align-items-center.px-3.mb-1.mt-3.text-muted
-      = menu.title
+    %h6= menu.title
   = render partial:'layouts/side_menu', locals: { menu: menu.leafs }
 - elsif menu.class == MenuSeparator
 - elsif menu.class == MenuNotification
 - else
   %li.nav-item{ class: ('active' if menu.current_for?(request.env['PATH_INFO'])) }
     = link_to menu.link, { style: menu.style, class: 'nav-link' } do
-      != menu.icon_tag
+      %span.icon{ class: menu.css_class }
       = menu.title

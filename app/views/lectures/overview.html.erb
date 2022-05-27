@@ -34,6 +34,8 @@
                 <%= link_to student.full_name, user_details_url(student.nickname) %>
               </s>
             <% end %>
+            <br>
+            <%= student.alternative_id %>
           </td>
           <td>
             <%= student.total_attendance %>/<%= @lectures.required.size %>
@@ -61,7 +63,13 @@
       <th>Asist.</th>
       <th>Asist. %</th>
       <% @lectures.each do |lecture| %>
-        <th><%= @students.count { |student| student.present_at(lecture)} %></th>
+        <th>
+          <%= @students.count { |student| student.present_at(lecture)} %>
+          <br>
+          <button class="do-export btn btn-primary btn-sm" data-altids='<%= @students.select { |student| student.present_at(lecture)}.map(&:alternative_id) %>'>
+            Exportar
+          </button>
+        </th>
       <% end %>
       </tfoot>
     </table>
@@ -91,6 +99,20 @@
                   targets: 'no-sort',
                   orderable: false
               } ]
+          });
+
+          $(".do-export").on("click", function(){
+            altids = $(this).data("altids");
+            script =
+`var ids = [${altids}];
+$(".box-asistencia").click();
+ids.forEach(el => {
+  $('.box-asistencia>.info:contains("' + el + '")').click()
+  $('tr:contains("' + el + '")').find(".w3-border-green").click()
+});`;
+            console.log(script);
+            navigator.clipboard.writeText(script);
+            alert("Se ha copiado el script al portapapeles. Pegar en la consola de MIEL/SIU");
           });
       });
   </script>

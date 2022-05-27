@@ -26,7 +26,7 @@
       <% if Rails.env.development? %>
         <%= link_to 'AdminLogin', admin_login_path, class: 'btn btn-lg btn-danger', method: :post %>
       <% end %>
-      <%= link_to '/auth/github', class: 'btn btn-lg btn-success', method: :post do %>
+      <%= link_to '/auth/github', class: 'btn btn-lg btn-primary', method: :post do %>
         <i class="fa fa-github"></i> Ingresar con GitHub
       <% end %>
       <!%= link_to 'Ingresar con Google', '/auth/google_oauth2', class: 'btn btn-lg btn-success', method: :post %>

@@ -1,0 +1,28 @@
+@import colors.sass
+
+.btn
+  border-radius: 3px
+  transition: all 0.2s
+  &.btn-primary, &.btn-secondary
+    background: $teal_dark
+    color: white
+    border-color: $teal_dark
+    &:hover
+      background-color: darken($teal, 5%)
+      outline: 3px solid rgba($teal, 0.5)
+  &.btn-secondary
+    background: $violet
+    border-color: $violet
+    &:hover
+      outline: 3px solid rgba($violet, 0.5)
+      background-color: darken($violet, 5%)
+  &.btn-sm
+    font-size: 13px
+
+  &.btn-outline-primary
+    background: white
+    color: $teal_dark
+    border-color: $teal_dark
+    &:hover
+      background: rgba($teal, 0.15)
+      outline: 3px solid rgba($teal, 0.5)

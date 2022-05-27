@@ -1,0 +1,144 @@
+@import colors.sass
+
+
+.pieContainer
+  height: 198px
+  width: 198px
+  position: relative
+  background: $gray_light
+  border-radius: 50%
+  @media (max-width: 767px)
+    margin: 0 auto
+
+  .avatar-and-team
+    position: absolute
+    left: 24px
+    top: 24px
+    z-index: 2
+
+  .pieSlice
+    position: absolute
+    width: 100%
+    height: 100%
+    border-radius: 50%
+    background: $violet
+    transform: rotate(180deg)
+
+
+.profile-summary
+  background: $gray_dark
+  border-radius: 18px
+  color: white
+  font-size: 12px
+  padding: 50px 30px 30px
+  + .dashboard
+    margin-top: 35px
+  @media (min-width: 768px)
+    display: flex
+    justify-content: space-between
+    align-items: center
+  &.light
+    // background: #f1efee
+    background: rgba($teal, 0.5)
+    color: $black
+    .pieContainer
+      background: rgba(black, 0.06)
+
+
+  // no badges
+  .alert
+    margin-left: 30px
+    font-size: 15px
+    text-align: center
+    background: $black
+    color: white
+    border: 2px solid rgba(white, 0.45)
+    @media (max-width: 767px)
+      margin: 20px 0 0 0
+    p:last-child
+      margin-bottom: 0
+    
+
+  .avatar-and-team
+    max-height: 100%
+    .avatar
+      background: $gray_dark
+      border: 3px solid $gray_light
+      &.team
+        border-width: 2px
+        left: -20px
+        width: 56px
+        height: 56px
+
+  .xp
+    font-size: 16px
+    margin-top: 8px
+    text-align: center
+
+  .badges
+    flex: 2
+    ul
+      display: flex
+      list-style: none
+      align-items: flex-start
+      padding: 0
+      margin: 0 0 0 25px
+      @media (max-width: 1024px)
+        flex-wrap: wrap
+
+      li
+        text-align: center
+        margin-top: 15px
+        margin-bottom: 15px
+        &:not(:last-child)
+          margin-right: 20px
+        img
+          max-width: 100%
+          height: auto
+
+        h3
+          font-size: 12px
+          font-weight: 400
+          margin-top: 20px
+
+
+  form
+    flex: 2
+    @media (min-width: 768px)
+      margin-left: 30px
+    @media (min-width: 1220px)
+      display: flex
+      align-items: flex-start      
+      .team_name, .team_avatar
+        margin: 0 24px 0 0 !important
+
+      .btn
+        margin-top: 30px
+
+
+ul.chartReferences
+  list-style: none
+  font-size: 12px
+  li
+    margin-bottom: 10px
+  span
+    display: inline-block
+    vertical-align: middle
+  .sample    
+    height: 20px
+    margin-right: 6px
+    width: 20px
+
+
+
+// Edit Profile
+.identity_provider
+  list-style: none
+  padding: 0
+  .flex
+    @media (min-width: 768px)
+      display: flex
+      .left
+        margin-right: 20px
+
+

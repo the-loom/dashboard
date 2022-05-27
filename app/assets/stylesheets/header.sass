@@ -1,0 +1,105 @@
+@import colors.sass
+
+nav.navbar
+  background-color: $black
+  font-size: 14px
+  z-index: 11
+  min-height: 51px
+  &.open
+    border-bottom: 1px solid $teal
+    a.logo
+      margin-top: 3px
+  @media (min-width: 768px)
+    padding: 0
+  > .container
+    margin-left: 0
+    @media (min-width: 768px)
+      padding-left: 20px
+    @media (min-width: 992px)
+      padding-left: 30px
+
+    @media (min-width: 768px) and (max-width: 1600px)
+      max-width: 100%
+    @media (min-width: 1600px)
+      max-width: 1600px
+  
+  a
+    color: white
+    &:hover, &:active, &:focus
+      color: $teal
+
+  a.logo
+    width: 110px
+    height: 30px
+    display: inline-block
+    background: asset-url("/assets/loom-hover.svg") no-repeat center top
+    &:hover
+      background-position: center -30px
+
+  .dropdown-menu
+    font-size: 13px
+    max-height: calc(100vh - 100px)
+    overflow-y: scroll
+    a
+      color: $black
+
+  .divider:not(:last-child)
+    border-right: 1px solid rgba(white, 0.75)
+    margin: 12px 5px
+
+  .envelope
+    background: asset-url("/assets/icon-envelope.svg") no-repeat center center
+    display: inline-block
+    height: 18px
+    vertical-align: middle
+    width: 20px
+
+  button.lines-button
+    display: none
+    position: absolute
+    right: 10px
+    top: 7px
+
+  @media (min-width: 768px)
+    li.nav-item
+      &:nth-child(2), &:first-child
+        padding-top: 6px
+
+  .avatar
+    background: rgba(white, 0.1)
+    border-radius: 50%
+    border: 0 none
+    display: inline-block
+    height: 35px
+    width: 35px
+
+
+
+  @media (max-width: 767px)
+    button.lines-button
+      display: block
+
+    #navbarNavDropdown
+      .d-md-none
+        display: none
+
+      .user-lectures-notifications
+        flex-direction: row
+        justify-content: space-between
+        align-items: center
+        .divider:last-child
+          display: none
+
+        .dropdown
+          position: initial
+
+        .dropdown-menu
+          box-sizing: border-box
+          position: absolute
+          right: 15px
+          width: calc(100% - 30px)
+          max-height: calc(100vh - 120px)
+          a
+            white-space: normal
+            font-size: 16px
+

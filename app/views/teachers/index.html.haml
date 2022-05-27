@@ -1,7 +1,3 @@
-- nav_add 'Aula', '#'
-- nav_add 'Mis docentes', '#'
-= nav_render
-
 .team
   .row
     - @teachers.each do |teacher|
@@ -13,10 +9,6 @@
                 = image_tag entity_avatar(teacher), { alt: teacher.full_name }
             .right
               %h5.card-title= teacher.full_name
+              %span.role
+                Docente
               = teacher.bios
-
-= content_for :javascript do
-  :javascript
-    $(window).on('resize', function() {
-        equalizeHeights(".card");
-    }).resize();

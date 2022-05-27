@@ -1,13 +1,15 @@
-%nav.navbar.navbar-expand-md.navbar-dark.bg-dark.fixed-top
+%nav.navbar.navbar-expand-md.fixed-top
   .container
-    = link_to root_path, class: 'navbar-brand' do
-      = image_tag "logo.svg", { width: 25, height: 25, alt: 'Loom', title: 'Loom', class: 'navbar-brand loom-logo'}
-      loom
-    %button.navbar-toggler{"aria-controls": "navbarNavDropdown", "aria-expanded": false, "aria-label": "Cambiar navegación", "data-bs-target": "#navbarNavDropdown", "data-bs-toggle": "collapse", type: "button"}
-      %span.navbar-toggler-icon
+    = link_to root_path, class: 'logo', title: 'Loom' do
+      %span
+    / %button.navbar-toggler{"aria-controls": "navbarNavDropdown", "aria-expanded": false, "aria-label": "Cambiar navegación", "data-bs-target": "#navbarNavDropdown", "data-bs-toggle": "collapse", type: "button"}
+    /   %span.navbar-toggler-icon
+    %button.lines-button.x{"aria-label" => "Toggle Navigation", :role => "button", :type => "button"}
+      %span.lines
+
     #navbarNavDropdown.collapse.navbar-collapse
       .navbar-right
         %ul.navbar-nav.d-md-none
           = render partial: '/layouts/menub', locals: { menu: submenu }
-        %ul.navbar-nav
+        %ul.navbar-nav.user-lectures-notifications
           = render partial: '/layouts/menub', locals: { menu: menu }

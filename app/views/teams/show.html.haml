@@ -1,24 +1,29 @@
-- nav_add 'Aula', '#'
-- nav_add 'Equipos', teams_path
-- nav_add "#{@team.name}", '#'
-= nav_render
 
-.row
-  .col-md-3
-    .profile
-      .avatar
-        = image_tag entity_avatar(@team), { alt: @team.name }
-    %br/
-    %br/
-    = simple_form_for @team do |f|
-      = render :partial => 'shared/errors', locals: { f: f }
-      = f.input :name, label: 'Nombre de equipo'
-      = f.input :avatar, label: 'Imagen de perfil'
-      = f.button :submit, 'Actualizar', class: "btn-primary"
-  .col-md-9
-    #chart{"data-score" => "#{@team.score}", "data-xp" => "#{@team.points}"}
-%br/
-%hr/
+.text-center
+  .trapezoid-title.teal Mi Equipo
+
+.profile-summary.light
+  %div
+    .pieContainer
+      .pieSlice{style: "background: conic-gradient(#ccb1f0 0.00% #{@team.score * 10}%, transparent #{@team.points}% )"}
+
+      .avatar-and-team
+        = image_tag entity_avatar(@team), { alt: @team.name, class: 'avatar' }
+
+    .xp
+      #{@team.points}
+      XP
+
+  = simple_form_for @team do |f|
+    = render :partial => 'shared/errors', locals: { f: f }
+    = f.input :name, label: 'Nombre de equipo'
+    = f.input :avatar, label: 'Imagen de perfil'
+    = f.button :submit, 'Actualizar', class: "btn-secondary"
+
+
+%br
+%br
+
 .team
   %legend Integrantes
   .row

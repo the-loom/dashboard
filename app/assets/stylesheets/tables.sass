@@ -1,0 +1,108 @@
+@import colors.sass
+
+table td.mw-200
+  max-width: 200px
+
+
+table.table
+  th
+    font-weight: 500
+    font-size: 14px
+
+  a
+    color: $black
+
+  .progress
+    background-color: #dcd6d4
+    height: 8px
+    margin-bottom: 5px
+
+  tr
+    font-size: 12px
+    &.missed
+      background-color: $peach
+      a:not(.btn)
+        color: $flamingo
+      .progress
+        mix-blend-mode: multiply
+      &:hover
+        background-color: darken($peach, 5%)
+    &.finished
+      background-color: #dff0d8
+      .progress
+        background-color: $teal_dark
+      a:not(.btn)
+        color: $teal_dark
+      &:hover
+        background-color: #c6d7bf
+
+
+  tr
+    td
+      padding: 10px
+
+      .present, .absent, .unrequired
+        text-transform: uppercase
+        font-weight: 500
+        &:before
+          background: asset-url("/assets/icon-unrequired.svg") no-repeat center center
+          content: ""
+          display: inline-block
+          margin-right: 2px
+          height: 16px
+          vertical-align: middle
+          width: 16px
+          transform: translateY(-1px)
+      .present:before
+        background-image: asset-url("/assets/icon-present.svg")
+      .absent:before
+        background-image: asset-url("/assets/icon-absent.svg")
+
+
+
+      .badge
+        border-radius: 2px
+        font-size: 11px
+        font-weight: 500
+        -webkit-font-smoothing: antialiased
+        &.color
+          text-transform: uppercase
+          background: $violet
+          &.teal
+            background: $teal
+          &.flamingo
+            background: $flamingo
+          &.blue
+            background: $blue
+          &.yellow
+            background: $yellow
+          &.tuscany
+            background: $tuscany
+
+  &.table-bordered
+    td
+      &:first-child
+        border-left: 0 none
+      &:last-child
+        border-right: 0 none
+
+
+.dataTables_wrapper
+  > .row:first-child
+    font-size: 14px
+
+  table.table
+
+    a:not(.btn)
+      color: $teal_dark
+
+    .badge
+      margin-top: 3px
+
+  
+.dataTables_info
+  font-size: 11px
+
+.table-responsive
+  + br, + br + br, + br + br + br, + br + br + br + br, + br + br + br + br + br, + br + br + br + br + br + br 
+    display: none

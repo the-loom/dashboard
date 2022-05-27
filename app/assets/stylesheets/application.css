@@ -1,4 +1,19 @@
 /*
+*= require new_design
+
+*= require header
+*= require tabs
+*= require pagination
+*= require buttons
+*= require forms
+*= require animated-hamburguer-icon
+
+*= require profile
+*= require teachers
+*= require resources
+*= require faqs
+*= require welcome
+
 *= require avatars
 *= require badges
 *= require codemirror/lib/codemirror
@@ -10,14 +25,6 @@
 *= require team
 *= require_self
 */
-
-.heart {
-  color: #cb3434;
-}
-
-body {
-  margin-top: 4em;
-}
 
 .btn-suggestions {
   bottom: 7em;

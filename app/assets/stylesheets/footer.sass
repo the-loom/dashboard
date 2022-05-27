@@ -1,0 +1,47 @@
+@import colors.sass
+
+.footer
+  font-size: 13px
+  
+  .heart
+    background: asset-url("/assets/heart.svg") no-repeat center center
+    display: inline-block
+    height: 18px
+    text-indent: -3000px
+    vertical-align: middle
+    width: 20px
+    margin-left: 3px
+
+  .btn-suggestions
+    background: $teal
+    border-color: $teal
+    border-radius: 0 3px 3px 0
+    bottom: auto
+    font-size: 13px
+    position: relative
+    right: auto
+    line-height: 1
+    transform: rotate(0deg)
+
+    span.lightbulb
+      background: asset-url("/assets/lightbulb.svg") no-repeat center center
+      display: inline-block
+      height: 18px
+      vertical-align: middle
+      width: 15px
+      margin-right: 3px
+
+footer
+  @media (min-width: 768px)
+    display: none
+  @media (max-width: 767px)
+    .footer
+      max-width: 320px
+      margin: 0 auto
+      display: flex
+      align-items: center
+      justify-content: space-around
+
+      .btn-suggestions
+        border-radius: 3px
+

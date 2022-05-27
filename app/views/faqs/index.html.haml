@@ -1,22 +1,22 @@
-- nav_add 'Preguntas frecuentes', '#'
-= nav_render
 
 - if policy(Faq).manage?
   = link_to 'Nueva pregunta frecuente', new_faq_path, class: 'btn btn-primary'
-  %br/
-  %br/
+  %br
+  %br
+
 - if @faqs.empty?
   .alert.alert-info
     %p Aún no hay ninguna pregunta frecuente
 - else
-  - @faqs.each do |faq|
-    .card.faq.mb-2
-      .card-header
-        = show_tags faq.tags
-        = faq.question
-        - if policy(Faq).manage?
-          = link_to "Editar", edit_faq_path(faq)
-      .card-body
-        %blockquote.blockquote.mb-0
+  %ul.faqs
+    - @faqs.each_with_index do |faq, i|
+      %li
+        %a.toggle-trigger{href:"#faq#{i}"}
+          %h2
+            = faq.question
+            = show_tags faq.tags
+        .toggle-content{id:"faq#{i}"}
           %p
             != faq.answer
+          - if policy(Faq).manage?
+            = link_to "Editar", edit_faq_path(faq)

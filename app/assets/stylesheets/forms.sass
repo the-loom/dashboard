@@ -1,0 +1,27 @@
+@import colors.sass
+
+.form-control
+  color: $black
+  font-size: 14px
+  &:focus
+    box-shadow: 0 0 0 0.25rem rgba($violet, 0.5)
+    border-color: $violet
+  &.is-valid
+    border-color: $teal
+    background-image: asset-url("/assets/icon-checkmark.svg")
+    background-size: 24px auto
+    &:focus
+      box-shadow: 0 0 0 0.25rem rgba($teal, 0.5)
+  // &[type="text"]
+    
+    
+textarea
+  min-height: 110px !important
+
+label
+  color: $black
+  display: block
+  font-size: 15px
+  -webkit-font-smoothing: antialiased
+  font-weight: 500
+  margin-bottom: 10px

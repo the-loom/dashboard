@@ -1,38 +1,15 @@
-<% nav_add 'Aula', '#' %>
-<% nav_add 'Estudiantes', '#' %>
-<% nav_add "#{@user.full_name} - #{@user.nickname} (#{@user.uuid})", '#' %>
-<%= nav_render %>
 
-<div class="row">
-  <div class="col-md-3">
-    <div class="profile">
-      <div class="avatar-and-team">
-        <div class="avatar">
-          <%= image_tag entity_avatar(@user), { alt: @user.full_name } %>
-        </div>
-        <% if Course.current.on?(:teams) %>
-          <% team = @user.current_membership.team %>
-          <% if team.present? %>
-            <div class="team avatar">
-              <%= link_to team_profile_url(team.nickname) do %>
-                <%= image_tag entity_avatar(team), { alt: team.name } %>
-              <% end %>
-            </div>
-          <% end %>
-        <% end %>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-9">
-    <div id="chart" data-score="<%= @user.score %>" data-xp="<%= @user.points %>"></div>
-  </div>
+
+
+<div class="text-center">
+  <h1 class="trapezoid-title"><%= @user == current_user ? 'Mi Perfil' : @user.full_name %></h1>
 </div>
+<%= render partial: 'shared/profile-summary' %>
 
-<br><br>
+<!-- <div id="chart" data-score="<%= @user.score %>" data-xp="<%= @user.points %>"></div> -->
 
 <div class="row student dashboard">
-  <div class="col-md-6">
-
+  <div class="col-lg-12 col-xl-6">
     <% if Course.current.on?(:lectures) %>
 
       <% current_lecture = Lecture.current %>
@@ -63,7 +40,15 @@
               <td><%= display_day lecture.date.wday %> </td>
               <td><%= display_date lecture.date %> &mdash; <%= display_time_range(lecture.time_from, lecture.time_to) %></td>
               <td><%= lecture.summary %></td>
-              <td><%= @user.present_at(lecture) ? 'Presente' : lecture.required? ? 'Ausente' : 'No requerida' %></td>
+              <td>
+                <% if @user.present_at(lecture) %>
+                  <span class="present">Presente</span>
+                <% elsif lecture.required? %>
+                  <span class="absent">Ausente</span>
+                <% else %>
+                  <span class="unrequired">No requerida</span>
+                <% end %>
+              </td>
             </tr>
           <% end %>
           </tbody>
@@ -89,12 +74,12 @@
             <tr>
               <td><%= occurrence.updated_at.in_time_zone('Buenos Aires').strftime("%d/%m/%Y") %></td>
               <td>
-                <label class="badge bg-secondary"><%= occurrence.multiplier %>&times;</label>
+                <label class="badge bg-secondary"><%= occurrence.multiplier %>x</label>
                 <%= occurrence.event.name %>
               </td>
               <% if Course.current.on?(:competences) && occurrence.event.competence_tag %>
                 <td>
-                  <label class="badge bg-secondary">
+                  <label class="badge color <%= tag_color_for_entity(occurrence.event.competence_tag) %>">
                     <%= occurrence.event.competence_tag.name %>
                   </label>
                 </td>
@@ -108,7 +93,7 @@
     <% end %>
 
   </div>
-  <div class="col-md-6">
+  <div class="col-lg-12 col-xl-6 hidden-xs">
 
     <% if Course.current.on?(:competences) && @user.points > 0 %>
 
@@ -118,68 +103,23 @@
 
       <div class="radarChart"></div>
 
-      <p>
-        <span style="background-color: #00A0B0; min-width: 1em; display: inline-block">&nbsp;</span> Curso
-      </p>
-      <% if @user.current_membership.team.present? %>
-        <p>
-          <span style="background-color: #EDC951; min-width: 1em; display: inline-block">&nbsp;</span> Equipo
-        </p>
-      <% end %>
-      <p>
-        <span style="background-color: #CC333F; min-width: 1em; display: inline-block">&nbsp;</span> Propia
-      </p>
+      <ul class="chartReferences">
+        <li>
+          <span class="sample" style="background-color: #00A0B0"></span> <span>Curso</span>
+        </li>
+        <% if @user.current_membership.team.present? %>
+          <li>
+            <span class="sample" style="background-color: #EDC951"></span> <span>Equipo</span>
+          </li>
+        <% end %>
+        <li>
+          <span class="sample" style="background-color: #CC333F"></span> <span>Propia</span>
+        </li>
+      </ul>
 
     <% end %>
 
-    <% if Course.current.on?(:badges) %>
-
-      <legend>Emblemas
-        <small>(<%= @user.badges.size %>/<%= Badge.count %>)</small>
-      </legend>
-
-      <% if @user.earnings.size == 0 %>
-
-        <div class="alert alert-info">
-          <p>Aún no se te otorgaron emblemas...</p>
-        </div>
-
-      <% else %>
-
-        <div class="row">
-          <% @user.earnings.each do |earning| %>
-            <div class="col-sm-6">
-              <div class="card" style="width: 12rem;">
-                <div class="loom-badge">
-                  <%= image_tag earning.badge.image, { alt: earning.badge.name } %>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title"><%= earning.badge.name %></h5>
-                  <p class="card-text">
-                    <%= earning.badge.description %>
-                  </p>
-                </div>
-              </div>
-            </div>
-          <% end %>
-          <% @missing_badges.each do |badge| %>
-            <div class="col-sm-6">
-              <div class="card" style="width: 12rem;">
-                <div class="loom-badge">
-                  <%= image_tag "incognito.png", { alt: badge.name } %>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title"><%= badge.name %></h5>
-                  <p class="card-text">
-                    <%= badge.description %>
-                  </p>
-                </div>
-              </div>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
-    <% end %>
+    
   </div>
 
 </div>

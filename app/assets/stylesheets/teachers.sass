@@ -1,0 +1,33 @@
+@import colors.sass
+
+.team
+  .card
+    background: rgba($violet, 0.2)
+    border-radius: 20px
+    border: 0 none
+    margin-left: 0 !important
+    margin-right: 0 !important
+    height: auto !important
+
+    .role
+      display: block
+      font-size: 13px
+      margin: -5px 0 15px
+      text-transform: uppercase
+
+    .card-body
+      align-items: stretch
+      .left
+        background-color: #ece2fb !important
+        border-radius: 20px 0 0 20px !important
+
+        .avatar
+          border-color: $gray_light
+      .right
+        font-size: 14px
+
+    @media (max-width: 767px)
+      height: auto !important
+      .card-body
+        .left
+          border-radius: 20px 20px 0 0 !important

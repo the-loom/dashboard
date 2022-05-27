@@ -1,0 +1,71 @@
+// Animated Hamburger Icon
+button.lines-button
+  -webkit-appearance: none
+  background: transparent
+  border: 0 none
+  outline: 0 none
+
+$button-size: 1.25rem
+$transition: 0.3s // increase this to see the transformations in slow-motion
+
+=line
+  background: white
+  border-radius: $button-size / 15
+  display: inline-block
+  height: $button-size / 10
+  transition: $transition
+  width: $button-size
+
+button
+  .lines
+    background: white
+    &:before, &:after
+      background: white
+
+.lines
+  //create middle line
+  vertical-align: middle
+  +line
+  position: relative
+  //create the upper and lower lines as pseudo-elements of the middle line
+  &:before, &:after
+    +line
+    position: absolute
+    left: 0
+    content: ''
+    transform-origin: $button-size / 14 center
+    -webkit-transform-origin: $button-size / 14 center
+  &:before
+    top: $button-size / 4
+  &:after
+    top: -$button-size / 4
+
+.lines-button
+  border-radius: $button-size / 7
+  cursor: pointer
+  display: inline-block
+  padding: $button-size / 2.85
+  padding-bottom: $button-size / 2
+  transition: all 0.3s
+  user-select: none
+  &:hover
+    opacity: 1
+  &:active
+    background: rgba(0, 0, 0, 0.1)
+    transition: 0
+
+  &.x.close .lines
+    //hide the middle line
+    background: transparent
+    //overlay the lines by setting both their top values to 0
+    &:before, &:after
+      transform-origin: 50% 50%
+      -webkit-transform-origin: 50% 50%
+      top: 0
+      width: $button-size
+    // rotate the lines to form the x shape
+    &:before
+      transform: rotate3d(0, 0, 1, 45deg)
+
+    &:after
+      transform: rotate3d(0, 0, 1, -45deg)

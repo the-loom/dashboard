@@ -43,7 +43,7 @@ class Identity < ApplicationRecord
       end
       u.uuid = rand * 1000 # temp hotfix!
       u.update_with(identity)
-      u.update_attribute(uuid: (u.id + 272).to_s(16).upcase)
+      u.update_attribute(:uuid, (u.id + 272).to_s(16).upcase)
       u
     end
 end
