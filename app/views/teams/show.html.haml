@@ -25,6 +25,8 @@
 %br
 
 .team
+  Etiquetas:
+  = show_tags(@team.tags)
   %legend Integrantes
   .row
     - @team.members.each do |student|
