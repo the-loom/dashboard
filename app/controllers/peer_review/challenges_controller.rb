@@ -143,9 +143,10 @@ module PeerReview
         redirect_to(peer_review_challenges_path) && return
       end
 
-      challenge.update(awarded: true)
       begin
         ActiveRecord::Base.transaction do
+          challenge.update(awarded: true)
+
           solve = "Resolver '#{challenge.title}'"
           solve_event = Event.create(name: solve, description: solve, points: 8, min_points: 8, max_points: 8, course: Course.current)
 
@@ -167,9 +168,9 @@ module PeerReview
             base_reviews = [total_reviews, challenge.expected_reviews].min
             extra_reviews = [total_reviews - base_reviews, MAX_EXTRA_REVIEWS].min
 
-            reviewer.register(review_event, base_reviews, s.course)
+            reviewer.register(review_event, base_reviews, reviews.first.course)
 
-            reviewer.register(extra_review_event, extra_reviews, s.course)
+            reviewer.register(extra_review_event, extra_reviews, reviews.first.course)
           end
         end
       rescue ActiveRecord::RecordInvalid
