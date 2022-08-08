@@ -33,14 +33,15 @@ class User < ApplicationRecord
   validates :avatar, size: { less_than: 500.kilobyte }, content_type: [:png, :jpg, :jpeg]
 
   def self.to_csv
+    score_calculator = ScoreCalculator.new
     CSV.generate do |csv|
-      csv << ["Curso", "Grupo", "Loom ID", "Apellido", "Nombre", "Correo Electrónico", "Presente"]
+      csv << ["Curso", "Grupo", "Loom ID", "ALTID", "Apellido", "Nombre", "Correo Electrónico", "Puntos"]
 
       enabled_students_for_course = User.includes(:memberships).includes(memberships: :team).where(memberships: { course: Course.current.family_ids, role: :student, enabled: true }).order("teams.name, last_name, first_name")
       enabled_students_for_course.each do |x|
         course_name = x.current_membership.course.name
         team_name = x.current_membership.team.try(:name)
-        csv << [course_name, team_name, x.uuid.upcase, x.last_name, x.first_name, x.email]
+        csv << [course_name, team_name, x.uuid.upcase, x.alternative_id, x.last_name, x.first_name, x.email, score_calculator.score_for(x.points).round(2)]
       end
     end
   end
