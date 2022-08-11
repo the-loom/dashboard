@@ -10,10 +10,11 @@ class Lecture < ApplicationRecord
   scope :past_and_current, -> { kept.where("date < ?", Time.zone.now.end_of_day) }
 
   def self.current
-    where("date between ? and ?", Time.zone.now.beginning_of_day, Time.zone.now.end_of_day).first
+    kept.where("date between ? and ?", Time.zone.now.beginning_of_day, Time.zone.now.end_of_day).first
   end
 
   def current?
+    return false unless discarded_at.nil?
     now = Time.zone.now
     if time_from.present? && time_to.present?
       date_from = date + time_from.hour.hours + time_from.min.minutes - 30.minutes
