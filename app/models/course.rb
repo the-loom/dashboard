@@ -52,7 +52,7 @@ class Course < ApplicationRecord
   end
 
   def rotate_password
-    self.password = open("https://www.dinopass.com/password/simple").read
+    self.password = open("http://sauriopass.sipofcode.com/password").read
   end
 
   def fully_duplicate!
