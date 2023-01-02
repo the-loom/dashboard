@@ -7,7 +7,7 @@ gem "rails", "6.1.4.4"
 gem "pg", "~> 1.2"
 
 gem "bootsnap", "~> 1.9", require: false
-gem "puma", "~> 4.3"
+gem "puma", "~> 6.0"
 gem "responders", "~> 3.0"
 gem "sass-rails", "~> 6.0"
 gem "therubyracer", "~> 0.12", platforms: :ruby
